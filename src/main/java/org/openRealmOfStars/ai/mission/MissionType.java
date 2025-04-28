@@ -97,7 +97,11 @@ public enum MissionType {
   /**
    * Space monsters roam around their starting position.
    */
-  ROAM;
+  ROAM,
+  /**
+   * Spore colony, colonize or conquer planet via spores.
+   */
+  SPORE_COLONY;
 
   /**
    * Get Mission type with index
@@ -139,6 +143,8 @@ public enum MissionType {
       return 15;
     case ROAM:
       return 16;
+    case SPORE_COLONY:
+      return 17;
     default:
       return 0;
     }
@@ -181,6 +187,8 @@ public enum MissionType {
       return "Destroy fleet";
     case ROAM:
       return "Roam";
+    case SPORE_COLONY:
+      return "Spore colony";
     default:
       return "Unknown";
     }

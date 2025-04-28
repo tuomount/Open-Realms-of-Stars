@@ -130,6 +130,23 @@ public class PlanetAnimation {
   public static final int ANIMATION_TYPE_NUKING = 4;
 
   /**
+   * Animation type for ground combat
+   */
+  public static final int ANIMATION_TYPE_GROUND_COMBAT = 6;
+  /**
+   * Animation type for ground combat aim
+   */
+  public static final int ANIMATION_TYPE_GROUND_COMBAT_AIM = 5;
+  /**
+   * Animation type for spore attack
+   */
+  public static final int ANIMATION_TYPE_SPORE_ATTACK = 7;
+  /**
+   * Animation type for spore attack aim
+   */
+  public static final int ANIMATION_TYPE_SPORE_ATTACK_AIM = 8;
+
+  /**
    * Animation type
    */
   private int animationType;
@@ -174,6 +191,14 @@ public class PlanetAnimation {
     if (animationType == ANIMATION_TYPE_AIM) {
       count = 40;
       explosionAnim = GuiStatics.EXPLOSION1;
+    }
+    if (animationType == ANIMATION_TYPE_GROUND_COMBAT_AIM) {
+      explosionAnim = GuiStatics.GROUND_COMBAT;
+      count = explosionAnim.getMaxFrames() * 2;
+    }
+    if (animationType == ANIMATION_TYPE_SPORE_ATTACK_AIM) {
+      explosionAnim = GuiStatics.SPORE_ATTACK;
+      count = explosionAnim.getMaxFrames() * 3;
     }
     if (animationType == ANIMATION_TYPE_BOMBING_AIM) {
       explosionAnim = GuiStatics.EXPLOSION1;
@@ -288,6 +313,31 @@ public class PlanetAnimation {
         animFrame++;
       } else {
         showAnim = false;
+      }
+    }
+    if (animationType == ANIMATION_TYPE_GROUND_COMBAT) {
+      if (animFrame == 0) {
+        SoundPlayer.playSound(SoundPlayer.MACHINEGUN);
+      }
+      if (animFrame == 15) {
+        SoundPlayer.playSound(SoundPlayer.MACHINEGUN);
+      }
+      showAnim = true;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        animFrame++;
+      } else {
+        animFrame = 0;
+      }
+    }
+    if (animationType == ANIMATION_TYPE_SPORE_ATTACK) {
+      if (animFrame == 0) {
+        SoundPlayer.playSound(SoundPlayer.COLONIZED);
+      }
+      showAnim = true;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        animFrame++;
+      } else {
+        animFrame = 0;
       }
     }
   }

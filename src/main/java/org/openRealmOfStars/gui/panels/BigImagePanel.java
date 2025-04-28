@@ -530,6 +530,29 @@ public class BigImagePanel extends JPanel {
         g2d.drawLine(part.getX(), part.getY(), part.getX() + 1,
             part.getY() + 1);
       }
+      if ((animation.getAnimationType()
+          == PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT_AIM
+          || animation.getAnimationType()
+          == PlanetAnimation.ANIMATION_TYPE_SPORE_ATTACK_AIM)
+          && backgroundImg != null) {
+        int px = BOMB_X_OFFSET;
+        int py = BOMB_Y_OFFSET;
+        int nx = DiceGenerator.getRandom(backgroundImg.getWidth() / 4);
+        int ny = DiceGenerator.getRandom(backgroundImg.getHeight() / 4);
+        px = px + nx;
+        py = py + ny;
+        animation.setCoords(px, py, px, py);
+        if (animation.getAnimationType()
+          == PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT_AIM) {
+          animation.setAnimationType(
+              PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT);
+        }
+        if (animation.getAnimationType()
+            == PlanetAnimation.ANIMATION_TYPE_SPORE_ATTACK_AIM) {
+            animation.setAnimationType(
+                PlanetAnimation.ANIMATION_TYPE_SPORE_ATTACK);
+          }
+      }
       animation.doAnimation();
       if (animation.isAnimationFinished()) {
         animation = null;
@@ -617,7 +640,9 @@ public class BigImagePanel extends JPanel {
           if ((animation.getAnimationType()
               == PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM
               || animation.getAnimationType()
-              == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM)
+              == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM
+              || animation.getAnimationType()
+              == PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT_AIM)
               && backgroundImg != null) {
             int px = BOMB_X_OFFSET;
             int py = BOMB_Y_OFFSET;
@@ -636,6 +661,11 @@ public class BigImagePanel extends JPanel {
                 == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM) {
               animation.setAnimationType(
                   PlanetAnimation.ANIMATION_TYPE_NUKING);
+            }
+            if (animation.getAnimationType()
+                == PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT_AIM) {
+              animation.setAnimationType(
+                  PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT);
             }
           }
         }

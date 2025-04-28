@@ -28,5 +28,36 @@
     "DiplomacyMusic": "Sylvan Waltz",
     "NameGenerator": "BIG_PLANT",
     "Description": "Fernids are tree like creatures. They have two branch functioning as hands and roots working as legs."
+  },
+  {
+    "ID": "MYCOLIANS",
+    "Name": "Mycolians",
+    "NameSingle": "Mycolian",
+    "BridgeId": "Mothoid",
+    "SpaceShipId": "Mothoid",
+    "Traits": [
+               "SLOW_LEARNERS",
+               "LONG_LIFE_SPAN",
+               "PHOTOSYNTHESIS",
+               "REPULSIVE",
+               "TOLERATE_HIGH_RADIATION",
+               "INTOLERATE_COLD",
+               "SLOW_CULTURE",
+               "COMMUNAL",
+               "NO_HEIRS",
+               "SPORE_COLONIZATION",
+               "EXCELLENT_WAR_RESILIENCE"
+              ],
+    "Attitude": "EXPANSIONIST",
+    "Image": "resources/images/mushroom.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                "NONE"
+               ],
+    "SpeechSetId": "FERNIDS",
+    "BridgeEffect": "GREEN_CONSOLE",
+    "DiplomacyMusic": "Pressure",
+    "NameGenerator": "ANCIENT_ROMAN",
+    "Description": "Mycolians are mushroom like creatures which have snail like eyes and two tenctacles. They have tall body with sliding capability on they lower part. On top of their body they have a cap like feature.",
   }
 ]

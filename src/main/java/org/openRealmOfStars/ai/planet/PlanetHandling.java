@@ -579,6 +579,13 @@ public final class PlanetHandling {
               mission.setPlanetBuilding(planet.getName());
               break;
             }
+            mission = info.getMissions().getMission(
+                MissionType.SPORE_COLONY, MissionPhase.PLANNING);
+            if (mission != null && ship.isSporeShip()) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+              break;
+            }
             if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
               mission = info.getMissions().getMissionForPlanet(
                   planet.getName(), MissionType.DEFEND);

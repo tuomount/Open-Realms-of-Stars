@@ -439,6 +439,34 @@ public class TechList {
   }
 
   /**
+   * Get best possible engine with most enery and FTL speed.
+   * @return Tech
+   */
+  public Tech getBestEngineAndPowerSource() {
+    Tech best = null;
+    int bestValue = -1;
+    Tech[] list = getListForType(TechType.Propulsion);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
+      if (comp == null) {
+        continue;
+      }
+      int value = comp.getEnergyResource() + comp.getFtlSpeed();
+      if (comp.getEnergyResource() == 0) {
+        value = -1;
+      }
+      if (comp.getFtlSpeed() == 0) {
+        value = -1;
+      }
+      if (value > bestValue) {
+        best = tech;
+        bestValue = value;
+      }
+    }
+    return best;
+  }
+  /**
    * Get best Engine for current technology. If there two equally good
    * techs then it is randomized between those two.
    * @return Best engine tech or null if not found
@@ -513,7 +541,7 @@ public class TechList {
   public Tech getBestTacticalEngine() {
     Tech best = null;
     int bestValue = -1;
-    int energy = 0;
+    int otherValues = 0;
     Tech[] list = getListForType(TechType.Propulsion);
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
@@ -521,15 +549,17 @@ public class TechList {
       if (comp != null
           && (comp.getType() == ShipComponentType.ENGINE
               || comp.getType() == ShipComponentType.SPACE_FIN)) {
-        int compValue = comp.getEnergyResource() - comp.getEnergyRequirement();
+        int compValue = comp.getEnergyResource() - comp.getEnergyRequirement()
+            + comp.getSpeed() + comp.getFtlSpeed();
         if (comp.getTacticSpeed() > bestValue) {
           best = tech;
           bestValue = comp.getTacticSpeed();
-          energy = compValue;
-        } else if (comp.getTacticSpeed() == bestValue && compValue > energy) {
+          otherValues = compValue;
+        } else if (comp.getTacticSpeed() == bestValue
+            && compValue > otherValues) {
           best = tech;
           bestValue = comp.getTacticSpeed();
-          energy = compValue;
+          otherValues = compValue;
         }
       }
     }

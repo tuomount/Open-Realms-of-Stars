@@ -150,14 +150,14 @@ public class ShipImage {
    */
   public static final int LARGE_SPACE_KRAKEN = 22;
   /**
+   * Index for spore
+   */
+  public static final int SPORE = 23;
+  /**
    * Must be one bigger than last ship
    */
-  public static final int NUMBER_OF_IMAGES = 20;
+  public static final int NUMBER_OF_IMAGES = 24;
 
-  /**
-   * Number of monster images.
-   */
-  private static final int NUMBER_OF_MONSTER_IMAGES = 3;
 
   /**
    * Initialize ship images
@@ -203,6 +203,7 @@ public class ShipImage {
       case 20: return "Space worm";
       case 21: return "Space kraken";
       case 22: return "Large space kraken";
+      case 23: return "Spore";
     }
   }
   /**
@@ -218,7 +219,6 @@ public class ShipImage {
       image = IOUtilities.loadImage("/resources/images/" + fileToRead);
     }
     int number = NUMBER_OF_IMAGES;
-    number = number + NUMBER_OF_MONSTER_IMAGES;
     shipImages = new BufferedImage[number];
     normalShipImages = new BufferedImage[number];
     smallShipImages = new BufferedImage[number];
@@ -323,6 +323,11 @@ public class ShipImage {
     smallShipImages[LARGE_SPACE_KRAKEN] =
         SharedShipImages.getSmallMonsterShipImage(
             SharedShipImages.LARGE_SPACE_KRAKEN);
+    shipImages[SPORE] = SharedShipImages.getShipImage(SharedShipImages.SPORE);
+    normalShipImages[SPORE] = SharedShipImages.getNormalShipImage(
+        SharedShipImages.SPORE);
+    smallShipImages[SPORE] = SharedShipImages.getSmallShipImage(
+        SharedShipImages.SPORE);
   }
   /**
    * Capture 64x64 image from bigger one

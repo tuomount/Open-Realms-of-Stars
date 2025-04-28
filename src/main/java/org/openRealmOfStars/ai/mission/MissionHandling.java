@@ -477,7 +477,7 @@ public final class MissionHandling {
    * @param info Realm exploring
    * @param game and whole game with starmap.
    */
-  private static void findSunToExplore(final Mission mission, final Fleet fleet,
+  public static void findSunToExplore(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
     Sun sun = null;
     if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
@@ -687,7 +687,8 @@ public final class MissionHandling {
    */
   public static void handleColonyExplore(final Mission mission,
       final Fleet fleet, final PlayerInfo info, final Game game) {
-    if (mission != null && mission.getType() == MissionType.COLONY_EXPLORE) {
+    if (mission != null && mission.getType() == MissionType.COLONY_EXPLORE
+        && !fleet.isSporeFleet()) {
       if (info.getMissions().hasPlannedColonyMission()) {
         if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
           // Challenging AI immediately goes for colonize
@@ -747,6 +748,170 @@ public final class MissionHandling {
         }
       }
     } // End Of Colony Explore
+    if (mission != null && mission.getType() == MissionType.COLONY_EXPLORE
+        && fleet.isSporeFleet()) {
+      if (info.getMissions().hasPlannedColonyMission()) {
+        Mission sporeColony = info.getMissions()
+            .getBestColonizeMissionPlanning(game.getStarMap(), info,
+                fleet.getCoordinate());
+        if (sporeColony != null) {
+          info.getMissions().remove(mission);
+          fleet.setRoute(null);
+          sporeColony.setPhase(MissionPhase.TREKKING);
+          sporeColony.setFleetName(fleet.getName());
+          return;
+        }
+      }
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        findSunToExplore(mission, fleet, info, game);
+        return;
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING) {
+        int mult = 1;
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          mult = 2;
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mult = 3;
+        }
+        Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
+            fleet.getMovesLeft() * mult);
+        if (targetAnomaly == null && fleet.getCommander() != null) {
+          targetAnomaly = getNearByPlanet(info, game, fleet,
+              fleet.getMovesLeft() * mult);
+        }
+        if (info.isHuman()) {
+          // Human player should explore anomalies by it's own.
+          targetAnomaly = null;
+        }
+        if (targetAnomaly != null) {
+          // Focus on anomalies
+          fleet.setRoute(null);
+          AStarSearch search = new AStarSearch(game.getStarMap(),
+              fleet.getX(), fleet.getY(), targetAnomaly.getX(),
+              targetAnomaly.getY(), false);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+          makeRegularMoves(game, fleet, info);
+          return;
+        }
+        Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        if (planet != null && !planet.isEventActivated()
+            && planet.getPlanetPlayerInfo() == null
+            && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
+            && fleet.getCommander() != null && fleet.getMovesLeft() > 0) {
+          fleet.setMovesLeft(0);
+          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+              fleet.getY(), Route.ROUTE_EXPLORED));
+          planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+              fleet.getCommander(), info);
+          planet.handleTimedStatusForAwayTeam(game.getStarMap(),
+              fleet.getCommander(), info);
+        }
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        // Fleet has encounter obstacle, taking a detour round it
+        Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(),
+            fleet.getY());
+        if (sun != null && sun.getName().equals(mission.getSunName())) {
+          // Fleet is in correct solar system, starting explore execution mode
+          mission.setPhase(MissionPhase.EXECUTING);
+          fleet.setaStarSearch(null);
+        } else {
+          makeReroute(game, fleet, info, mission);
+        }
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        int mult = 1;
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          mult = 2;
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mult = 3;
+        }
+        Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
+            fleet.getMovesLeft() * mult);
+        if (targetAnomaly == null && fleet.getCommander() != null) {
+          targetAnomaly = getNearByPlanet(info, game, fleet,
+              fleet.getMovesLeft() * mult);
+        }
+        if (info.isHuman()) {
+          // Human player should explore anomalies by it's own.
+          targetAnomaly = null;
+        }
+        if (targetAnomaly != null) {
+          // Focus on anomalies
+          fleet.setRoute(null);
+          AStarSearch search = new AStarSearch(game.getStarMap(),
+              fleet.getX(), fleet.getY(), targetAnomaly.getX(),
+              targetAnomaly.getY(), false);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+          mission.setMissionTime(mission.getMissionTime() - 1);
+        }
+        mission.setMissionTime(mission.getMissionTime() + 1);
+        boolean missionComplete = false;
+        if (info.getAiDifficulty() == AiDifficulty.WEAK
+            && mission.getMissionTime() >= AI_EXPLORING_AMOUNT) {
+          fleet.setaStarSearch(null);
+          missionComplete = true;
+        } else if (info.getAiDifficulty() == AiDifficulty.NORMAL
+            && mission.getMissionTime() >= AI_EXPLORING_AMOUNT * 5 / 4) {
+          fleet.setaStarSearch(null);
+          missionComplete = true;
+        } else {
+          Sun sun = game.getStarMap().getSunByName(mission.getSunName());
+          int value = info.getUnchartedValueSystem(sun);
+          if (value <= 25) {
+            fleet.setaStarSearch(null);
+            missionComplete = true;
+          }
+        }
+        if (fleet.getaStarSearch() == null) {
+          Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+              fleet.getY());
+          if (planet != null && !planet.isEventActivated()
+              && fleet.getCommander() != null && fleet.getMovesLeft() > 0) {
+            fleet.setMovesLeft(0);
+            fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+                fleet.getY(), Route.ROUTE_EXPLORED));
+            planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+                fleet.getCommander(), info);
+          }
+          if (missionComplete) {
+            findSunToExplore(mission, fleet, info, game);
+            return;
+          }
+          Sun sun = game.getStarMap().getSunByName(mission.getSunName());
+          PathPoint point = info.getBestUnchartedSector(sun, fleet,
+              game.getStarMap());
+/*          if (point == null) {
+            point = info.getClosestUnchartedSector(sun, fleet);
+            if (DiceGenerator.getRandom(99) < 50) {
+              // Split exploring fleets a bit by selecting
+              // point by another method.
+              point = info.getUnchartedSector(sun, fleet);
+            }
+          }*/
+          if (point != null) {
+            mission.setTarget(new Coordinate(point.getX(), point.getY()));
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
+                false);
+            search.doSearchPreferStraightLines();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRegularMoves(game, fleet, info);
+          }
+        } else {
+          makeRegularMoves(game, fleet, info);
+        }
+      }
+    } // End Of Colony Explore with spore colony
   }
 
   /**
@@ -968,6 +1133,99 @@ public final class MissionHandling {
         }
       }
     } // End of colonize
+
+  }
+
+  /**
+   * Handle Spore Colonize mission
+   * @param mission Spore Colonize mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleSporeColony(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.SPORE_COLONY) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        mission.setPhase(MissionPhase.TREKKING);
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+      }
+      if ((mission.getPhase() == MissionPhase.TREKKING
+          || mission.getPhase() == MissionPhase.EXECUTING)
+          && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+        // Target acquired
+        mission.setPhase(MissionPhase.EXECUTING);
+        Ship ship = fleet.getSporeShip();
+        Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        if (ship != null && planet != null
+            && planet.getPlanetPlayerInfo() == null) {
+          // Make sure that ship is really spore colony and there is planet to
+          // colonize
+          planet.setPlanetOwner(game.getStarMap().getAiTurnNumber(), info);
+          // Zero-G beings colonize with orbitals
+          if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+            planet.colonizeWithOrbital();
+          }
+
+          if (!info.getRace().isEatingFood()) {
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          } else {
+            planet.setWorkers(Planet.PRODUCTION_FOOD, 1);
+          }
+          // Remove the ship and AI just colonized planet
+          info.getMissions().remove(mission);
+          fleet.removeShip(ship);
+          if (fleet.getNumberOfShip() == 0) {
+            if (fleet.getCommander() != null) {
+              fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+              fleet.setCommander(null);
+            }
+            // Remove also empty fleet
+            info.getFleets().recalculateList();
+          }
+          ShipStat stat = info.getShipStatByName(ship.getName());
+          if (stat != null) {
+            stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+          }
+          EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED,
+              planet.getCoordinate(),
+              planet.getName(), game.getStarMap().getAiTurnNumber());
+          event.setText(info.getEmpireName()
+              + " colonized planet " + planet.getName()
+              + ". ");
+          game.getStarMap().getHistory().addEvent(event);
+          planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+              null, null);
+        }
+        if (ship != null && planet != null
+            && planet.getPlanetPlayerInfo() != null
+            && planet.getPlanetPlayerInfo() != info) {
+          // Target acquired, mission completed!
+          info.getMissions().remove(mission);
+          if (planet.getPlanetPlayerInfo() != null
+              && planet.getPlanetPlayerInfo().isHuman()) {
+            // Spore colonize human planet
+            int attackerIndex = game.getStarMap().getPlayerList().getIndex(
+                info);
+            PlanetBombingView bombView = new PlanetBombingView(planet, fleet,
+                info, attackerIndex, game);
+            game.changeGameState(GameState.PLANETBOMBINGVIEW, bombView);
+          } else {
+            // Spore colonize AI planet
+            PlanetBombingView bombingView = new PlanetBombingView(planet, fleet,
+                info, game.getStarMap().getPlayerList().getIndex(info), game);
+            bombingView.setStarMap(game.getStarMap());
+            bombingView.handleAiToAiAttack();
+          }
+        }
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+          makeReroute(game, fleet, info, mission);
+      }
+    } // End of spore colony
 
   }
 
@@ -2381,6 +2639,9 @@ public final class MissionHandling {
       }
       war = map.isWarBetween(info, infoAtTarget);
       if (fleet.isPrivateerFleet()) {
+        war = true;
+      }
+      if (fleetAtTarget != null && fleetAtTarget.isPrivateerFleet()) {
         war = true;
       }
       if (war && info != infoAtTarget

@@ -300,6 +300,14 @@ public final class GuiStatics {
   public static final AnimatedImage EXPLOSION4 = new AnimatedImage(64, 64,
       "/resources/images/explosion4.png");
 
+  /** Ground combat animation */
+  public static final AnimatedImage GROUND_COMBAT = new AnimatedImage(64, 64,
+      "/resources/images/ground_combat.png");
+
+  /** Spore attack animation */
+  public static final AnimatedImage SPORE_ATTACK = new AnimatedImage(64, 64,
+      "/resources/images/spore_attack.png");
+
   /** Gravity ripper animation */
   public static final AnimatedImage GRAVITY_RIPPER = new AnimatedImage(64, 64,
       "/resources/images/gravity_ripper.png");

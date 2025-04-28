@@ -109,6 +109,9 @@ public final class DefaultScoring {
           if (info.getDiplomacy().getNumberOfWar() > 0) {
             score = score + info.getDiplomacy().getNumberOfWar() * 3;
           }
+          if (info.isEnemyShipsDetected()) {
+            score = score + ship.getTotalMilitaryPower() * 2;
+          }
           Mission defendMission = info.getMissions()
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
           Mission attackMission = info.getMissions().getMission(
@@ -792,7 +795,7 @@ public final class DefaultScoring {
       final PlayerInfo info, final StarMap map, final Attitude attitude,
       final Planet planet) {
     int score = preScore;
-    if (ship.isColonyModule()) {
+    if (ship.isColonyModule() || ship.isSporeShip()) {
       // Colony ship should be built only on request
       Mission mission = info.getMissions().getBestColonizeMissionPlanning(map,
           info, planet.getCoordinate());
@@ -817,6 +820,11 @@ public final class DefaultScoring {
         }
         score = score + info.getMissions().getNumberOfMissionTypes(
             MissionType.COLONIZE, MissionPhase.PLANNING) * 5;
+        score = score + info.getMissions().getNumberOfMissionTypes(
+            MissionType.SPORE_COLONY, MissionPhase.PLANNING) * 5;
+        if (ship.isSporeShip()) {
+          score = score + 10;
+        }
         if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
           score = score + 40;
         }

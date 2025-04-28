@@ -370,7 +370,8 @@ public class StarMapGenerator {
       if (stat.getDesign().isMilitaryShip()) {
           numShip = playerInfo.getStartingScenario().getNumberOfScouts();
       }
-      if (stat.getDesign().getName().startsWith("Colony")) {
+      if (stat.getDesign().getName().startsWith("Colony")
+          || stat.getDesign().getName().startsWith("Spore")) {
         numShip = playerInfo.getStartingScenario().getNumberOfColonyShips();
       }
       for (int j = 0; j < numShip; j++) {
@@ -384,7 +385,9 @@ public class StarMapGenerator {
         playerInfo.getFleets().add(fleet);
         if (ship.isColonyModule()) {
           fleet.setName("Colony #" + count);
-          fleet.getColonyShip(false).setColonist(2);
+          if (!fleet.isSporeFleet()) {
+            fleet.getColonyShip(false).setColonist(2);
+          }
           makeStartingFleetTutorialTexts(playerInfo, fleet);
         } else {
           fleet.setName("Scout #" + count);

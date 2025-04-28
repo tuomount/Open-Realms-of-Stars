@@ -48,6 +48,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
@@ -319,6 +320,9 @@ public class AITurnView extends BlackPanel {
       case COLONIZE:
         MissionHandling.handleColonize(mission, fleet, info, game);
         break;
+      case SPORE_COLONY:
+        MissionHandling.handleSporeColony(mission, fleet, info, game);
+        break;
       case EXPLORE:
         MissionHandling.handleExploring(mission, fleet, info, game);
         break;
@@ -406,11 +410,18 @@ public class AITurnView extends BlackPanel {
         mission = new Mission(MissionType.COLONY_EXPLORE,
             MissionPhase.EXECUTING, sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());
-        mission.setSunName(sun.getName());
-        if (planet != null) {
-          mission.setPlanetBuilding(planet.getName());
+        Mission explore =  info.getMissions().getExploringForSun(sun.getName());
+        if (explore == null) {
+          mission.setSunName(sun.getName());
+          if (planet != null) {
+            mission.setPlanetBuilding(planet.getName());
+          }
+          mission.setTarget(fleet.getCoordinate());
+          info.getMissions().add(mission);
+          // Mission assigned continue...
+          return;
         }
-        mission.setTarget(fleet.getCoordinate());
+        MissionHandling.findSunToExplore(mission, fleet, info, game);
         info.getMissions().add(mission);
         // Mission assigned continue...
         return;
@@ -752,6 +763,7 @@ public class AITurnView extends BlackPanel {
     Mission mission = new Mission(MissionType.ATTACK,
         MissionPhase.PLANNING, planet.getCoordinate());
     calculateAttackRendevuezSector(info, planet.getX(), planet.getY());
+    //TODO: Check if planet actual has star port.
     Planet homeWorld = game.getStarMap().getClosestHomePort(info,
         planet.getCoordinate());
     mission.setFleetName("Attacker of " + planet.getName());
@@ -772,6 +784,38 @@ public class AITurnView extends BlackPanel {
         info.getMissions().add(mission);
       }
       addGatherMission(info, mission);
+    }
+  }
+  /**
+   * Adding spore attack mission to mission list
+   * @param planet Planet where to attack
+   * @param info Player who is attacking
+   */
+  public void addSporeAttackMission(final Planet planet,
+      final PlayerInfo info) {
+    int aggressive = 3;
+    switch (info.getAiAttitude()) {
+      case AGGRESSIVE: aggressive = aggressive + 2; break;
+      case BACKSTABBING:
+      case MILITARISTIC:
+      case EXPANSIONIST: aggressive = aggressive + 1; break;
+      case PEACEFUL: aggressive = aggressive - 1; break;
+      default:
+        break;
+    }
+    // New planet to conquer, adding it to mission list
+    for (int i = 0; i < aggressive; i++) {
+      Mission mission = new Mission(MissionType.SPORE_COLONY,
+          MissionPhase.PLANNING, planet.getCoordinate());
+      if (info.getMissions().getNumberOfSporeAttackMissions(
+          planet.getName()) < aggressive) {
+        // No attack spore colony mission for this planet found, so adding it.
+        if (planet.isHomeWorld()) {
+          info.getMissions().addHighestPriority(mission);
+        } else {
+          info.getMissions().add(mission);
+        }
+      }
     }
   }
   /**
@@ -1018,6 +1062,7 @@ public class AITurnView extends BlackPanel {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman() && !info.isBoard()) {
+      info.setEnemyShipsDetected(false);
       info.cleanInterceptableFleetList();
       int maxPlayer = game.getPlayers().getCurrentMaxRealms();
       for (int i = 0; i < maxPlayer; i++) {
@@ -1035,7 +1080,33 @@ public class AITurnView extends BlackPanel {
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
                   .getAiTurnNumber()) {
+                if (info.getAiDifficulty() != AiDifficulty.WEAK) {
+                  info.setEnemyShipsDetected(true);
+                }
                 info.addInterceptableFleet(fleet);
+              }
+            }
+          }
+        }
+        if (fleetOwner != info && !info.getDiplomacy().isWar(i)) {
+          int numberOfFleets = fleetOwner.getFleets().getNumberOfFleets();
+          for (int j = 0; j < numberOfFleets; j++) {
+            Fleet fleet = fleetOwner.getFleets().getByIndex(j);
+            if (fleet.isPrivateerFleet()) {
+              int detect = info.getSectorCloakDetection(fleet.getX(),
+                  fleet.getY());
+              byte visibility = info.getSectorVisibility(fleet.getCoordinate());
+              if (detect >= fleet.getFleetCloackingValue()
+                  && visibility >= PlayerInfo.VISIBLE) {
+                CulturePower culture = game.getStarMap().getSectorCulture(
+                    fleet.getX(), fleet.getY());
+                if (culture.getHighestCulture() == game.getStarMap()
+                    .getAiTurnNumber()) {
+                  if (info.getAiDifficulty() != AiDifficulty.WEAK) {
+                    info.setEnemyShipsDetected(true);
+                  }
+                  info.addInterceptableFleet(fleet);
+                }
               }
             }
           }
@@ -1216,7 +1287,8 @@ public class AITurnView extends BlackPanel {
       info.getMissions().addHighestPriority(bestMission);
       Mission mission = info.getMissions().getMission(
           MissionType.COLONY_EXPLORE, MissionPhase.EXECUTING);
-      if (mission != null) {
+      if (mission != null
+          && !info.getRace().hasTrait(TraitIds.SPORE_COLONIZATION)) {
         // Colony ship was exploring, calling it back to home
         mission.setPhase(MissionPhase.TREKKING);
       }
@@ -1357,6 +1429,12 @@ public class AITurnView extends BlackPanel {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman()) {
+      boolean sporeMission = info.getRace().hasTrait(
+          TraitIds.SPORE_COLONIZATION);
+      MissionType missionType = MissionType.COLONIZE;
+      if (sporeMission) {
+        missionType = MissionType.SPORE_COLONY;
+      }
       Planet[] planets = StarMapUtilities.getBestFreePlanets(game.getStarMap(),
           info);
       int colonizations = info.getMissions().getNumberOfMissionTypes(
@@ -1372,7 +1450,7 @@ public class AITurnView extends BlackPanel {
             && info.getSectorVisibility(planet.getCoordinate())
             >= PlayerInfo.VISIBLE) {
           // New planet to colonize, adding it to mission list
-          Mission mission = new Mission(MissionType.COLONIZE,
+          Mission mission = new Mission(missionType,
               MissionPhase.PLANNING, planet.getCoordinate());
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
@@ -1386,7 +1464,7 @@ public class AITurnView extends BlackPanel {
             && info.getSectorVisibility(planet.getCoordinate())
             == PlayerInfo.FOG_OF_WAR) {
           // New planet to colonize, adding it to mission list
-          Mission mission = new Mission(MissionType.COLONIZE,
+          Mission mission = new Mission(missionType,
               MissionPhase.PLANNING, planet.getCoordinate());
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
@@ -1408,6 +1486,9 @@ public class AITurnView extends BlackPanel {
                 ownerIndex);
             if (list != null && list.isBonusType(DiplomacyBonusType.IN_WAR)
                 && attacks < LIMIT_ATTACKS) {
+              if (sporeMission) {
+                addSporeAttackMission(planet, info);
+              }
               attackMissions.add(planet);
             } else {
               if (owner.isHuman()) {
@@ -1443,6 +1524,9 @@ public class AITurnView extends BlackPanel {
             if (list != null
                 && list.isBonusType(DiplomacyBonusType.IN_WAR)
                 && attacks < LIMIT_ATTACKS) {
+              if (sporeMission) {
+                addSporeAttackMission(planet, info);
+              }
               // Got new map part maybe in trade and found planet owned by
               // player which is being at war now.
               attackMissions.add(planet);
@@ -1502,7 +1586,7 @@ public class AITurnView extends BlackPanel {
   /**
    * Get closes intercept mission.
    * @param origin Origin fleet which doing intercept mission
-   * @param info Realm who is planning interceptiong
+   * @param info Realm who is planning intercepting
    * @param map Starmap
    * @return Interceptable fleet or null none available.
    */
@@ -1516,6 +1600,7 @@ public class AITurnView extends BlackPanel {
     Mission mission = info.getMissions().getMissionForFleet(origin.getName());
     if (mission != null && (mission.getType() == MissionType.COLONIZE
          || mission.getType() == MissionType.COLONY_EXPLORE
+         || mission.getType() == MissionType.SPORE_COLONY
          || mission.getType() == MissionType.DEPLOY_STARBASE
          || mission.getType() == MissionType.DIPLOMATIC_DELEGACY
          || mission.getType() == MissionType.TRADE_FLEET)) {
@@ -1602,8 +1687,22 @@ public class AITurnView extends BlackPanel {
         if (planet != null && planet.getPlanetPlayerInfo() == info) {
           fleet.aiUpgradeShips(info, planet);
         }
-        Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
-            MissionPhase.PLANNING);
+        Mission mission = null;
+        if (info.getAiDifficulty() == AiDifficulty.WEAK) {
+          mission = info.getMissions().getMission(MissionType.COLONIZE,
+              MissionPhase.PLANNING);
+        }
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          if (DiceGenerator.getBoolean()) {
+            mission = info.getMissions().getMission(MissionType.COLONIZE,
+                MissionPhase.PLANNING);
+          } else {
+            mission = info.getMissions().getClosestColonyMission(fleet, false);
+          }
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mission = info.getMissions().getClosestColonyMission(fleet, false);
+        }
         Mission fleetMission = info.getMissions().getMissionForFleet(
             fleet.getName());
         if (mission != null && fleet.getColonyShip() != null
@@ -1619,6 +1718,39 @@ public class AITurnView extends BlackPanel {
           info.getFleets().add(newFleet);
           fleet = newFleet;
           fleet.setName(info.getFleets().generateUniqueName("Colony"));
+          info.getFleets().recalculateList();
+          mission.setPhase(MissionPhase.TREKKING);
+          mission.setFleetName(fleet.getName());
+        }
+        if (info.getAiDifficulty() == AiDifficulty.WEAK) {
+          mission = info.getMissions().getMission(MissionType.SPORE_COLONY,
+              MissionPhase.PLANNING);
+        }
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          if (DiceGenerator.getBoolean()) {
+            mission = info.getMissions().getMission(MissionType.SPORE_COLONY,
+                MissionPhase.PLANNING);
+          } else {
+            mission = info.getMissions().getClosestColonyMission(fleet, true);
+          }
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mission = info.getMissions().getClosestColonyMission(fleet, true);
+        }
+        fleetMission = info.getMissions().getMissionForFleet(
+            fleet.getName());
+        if (mission != null && fleet.getSporeShip() != null
+            && fleetMission == null) {
+          Ship ship = fleet.getSporeShip();
+          if (fleet.getNumberOfShip() == 0
+              && fleet.getCommander() != null) {
+            fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+            fleet.setCommander(null);
+          }
+          Fleet newFleet = fleet.splitFromFleet(true, ship);
+          info.getFleets().add(newFleet);
+          fleet = newFleet;
+          fleet.setName(info.getFleets().generateUniqueName("Spore"));
           info.getFleets().recalculateList();
           mission.setPhase(MissionPhase.LOADING);
           mission.setFleetName(fleet.getName());
@@ -3493,6 +3625,10 @@ public class AITurnView extends BlackPanel {
           for (int k = 0; k < realm.getFleets().getNumberOfFleets(); k++) {
             Fleet fleet = realm.getFleets().getByIndex(k);
             if (fleet != null && fleet.getColonyShip() != null) {
+              colonyShips = true;
+              break;
+            }
+            if (fleet != null && fleet.isSporeFleet()) {
               colonyShips = true;
               break;
             }

@@ -1358,16 +1358,34 @@ private int increaseHitChanceByComponent() {
           && hasComponentEnergy(i)) {
         return true;
       }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SPORE_MODULE
+          && hasComponentEnergy(i)) {
+        return true;
+      }
     }
     return false;
   }
 
+  /**
+   * Is Spore ship?
+   * @return True if spore otherwise false
+   */
+  public boolean isSporeShip() {
+    if (hull.getName().equals("Spore")) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Is ship privaatering ship or not
    * @return True if ship hull is privateer
    */
   public boolean isPrivateeringShip() {
     if (hull.getHullType() == ShipHullType.PRIVATEER) {
+      return true;
+    }
+    if (isSporeShip()) {
+      // Spore ships are "unknown", so these will considered as privateers.
       return true;
     }
     return false;
@@ -1452,6 +1470,9 @@ private int increaseHitChanceByComponent() {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getType() == ShipComponentType.COLONY_MODULE) {
+        return true;
+      }
+      if (comp.getType() == ShipComponentType.SPORE_MODULE) {
         return true;
       }
     }

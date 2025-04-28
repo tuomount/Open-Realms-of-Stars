@@ -555,7 +555,8 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       metal.setText(": " + planet.getMetal());
       if (conquerBtn != null) {
         if (fleet.getTrooperShip() != null
-          || fleet.getBomberShip() != null) {
+          || fleet.getBomberShip() != null
+          || fleet.isSporeFleet()) {
           conquerBtn.setEnabled(true);
         } else {
           conquerBtn.setEnabled(false);

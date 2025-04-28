@@ -250,6 +250,11 @@ public class PlayerInfo {
   private String backgroundStory;
 
   /**
+   * Enemy ships detected, add defend mission on every planet.
+   */
+  private boolean enemyShipsDetected;
+
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -314,6 +319,7 @@ public class PlayerInfo {
     strategy = WinningStrategy.GENERIC;
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
+    enemyShipsDetected = false;
     fleets = new FleetList();
     elderRealm = false;
     leaderPool = new ArrayList<>();
@@ -337,6 +343,9 @@ public class PlayerInfo {
     // This is the old way of government
     setGovernment(GovernmentFactory.createOne("AI"));
     setWarFatigue(0);
+    if (!getRace().isPirate() && !getRace().isMonster()) {
+      addColonyTechs();
+    }
     if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       addZeroGravityTechs(extraTech);
     } else {
@@ -424,10 +433,10 @@ public class PlayerInfo {
    */
   private void addDefaultTechs(final String[] extraTech) {
     final String[] techs1 = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+      "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
     };
     final String[] techs2 = {
-        "Colony", "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
+       "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
       };
     if (DiceGenerator.getBoolean()) {
       addTechs(techs1);
@@ -444,12 +453,29 @@ public class PlayerInfo {
     designInitialShips();
   }
 
+  /**
+   * Add Zero Gravity techs and ship designs.
+   */
+  private void addColonyTechs() {
+    final String[] defaultColony = {
+      "Colony"
+    };
+    final String[] sporeColony = {
+        "Spore", "Solar drive"
+      };
+    if (getRace().hasTrait(TraitIds.SPORE_COLONIZATION)) {
+      addTechs(sporeColony);
+    } else {
+      addTechs(defaultColony);
+    }
+  }
+
   /** Add Zero Gravity techs and ship designs.
    * @param extraTech Extra tech based on starting scenario.
    */
   private void addZeroGravityTechs(final String[] extraTech) {
     final String[] techs = {
-      "Railgun Mk1", "Shield Mk1", "Colony", "Scout Mk1", "Minor orbital",
+      "Railgun Mk1", "Shield Mk1", "Scout Mk1", "Minor orbital",
       "Nuclear drive Mk1", "Fission source Mk1",
     };
     addTechs(techs);
@@ -2186,6 +2212,20 @@ public class PlayerInfo {
    */
   public void cleanInterceptableFleetList() {
     interceptableFleets = new ArrayList<>();
+  }
+  /**
+   * Is enemy ships detected.
+   * @return True if enemy ships spotted.
+   */
+  public boolean isEnemyShipsDetected() {
+    return enemyShipsDetected;
+  }
+  /**
+   * Set flag if enemy ships has been spotted.
+   * @param enemyShipsDetected Boolean if enemy ships has been detected
+   */
+  public void setEnemyShipsDetected(final boolean enemyShipsDetected) {
+    this.enemyShipsDetected = enemyShipsDetected;
   }
   /**
    * Get Center of realm. This will return

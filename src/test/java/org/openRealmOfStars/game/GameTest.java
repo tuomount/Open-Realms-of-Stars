@@ -181,12 +181,20 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
+    int turn = 0;
+    int maxTurns = 800;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
         singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("Mixed AI, 800 turns", game);
@@ -213,12 +221,20 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
+    int turn = 0;
+    int maxTurns = 200;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
         singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("All normal AI, short 200 turns", game);
@@ -241,12 +257,20 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
+    int turn = 0;
+    int maxTurns = 400;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("All challening AI, medium 400 turns", game);
@@ -263,6 +287,9 @@ public class GameTest {
     config.setScoringVictoryTurns(400);
     config.setAiOnly(true);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setRace(0,  SpaceRaceFactory.createOne("MYCOLIANS"));
+    config.setPlayerGovernment(0, GovernmentFactory.createOne("HIVEMIND"));
+    config.setPlayerName(0, "Hive-mind of Mycolians");
     config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
     config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
     config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
@@ -274,12 +301,20 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
+    int turn = 0;
+    int maxTurns = 400;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("Full game with 8 realms, medium 400 turns", game);
@@ -316,12 +351,20 @@ public class GameTest {
         AiDifficulty.WEAK);
     game.getPlayers().getPlayerInfoByIndex(7).setAiDifficulty(
         AiDifficulty.WEAK);
+    int turn = 0;
+    int maxTurns = 400;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("Full game with 8 realms + pirate, medium 400 turns",
@@ -360,12 +403,20 @@ public class GameTest {
         AiDifficulty.NORMAL);
     game.getPlayers().getPlayerInfoByIndex(2).setAiDifficulty(
         AiDifficulty.WEAK);
+    int turn = 0;
+    int maxTurns = 400;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("Three terrans, medium 400 turns", game);
@@ -400,12 +451,20 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
+    int turn = 0;
+    int maxTurns = 600;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("12 Realms, 600 turns", game);
@@ -431,12 +490,20 @@ public class GameTest {
       game = new Game(false);
       game.setGalaxyConfig(config);
       game.makeNewGame(false);
+      int turn = 0;
+      int maxTurns = 400;
       do {
         game.setAITurnView(new AITurnView(game));
         boolean singleTurnEnd = false;
         do {
           singleTurnEnd = game.getAITurnView().handleAiTurn();
         } while (!singleTurnEnd);
+        if (turn != game.getStarMap().getTurn()) {
+          turn = game.getStarMap().getTurn();
+          if (turn % 50 == 0) {
+            System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+          }
+        }
         assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
       } while (!game.getStarMap().isGameEnded());
       String name = "Full game(" + i + "), 8 realms, 400 turns";
@@ -477,12 +544,20 @@ public class GameTest {
 
     game.setGalaxyConfig(config);
     game.makeNewGame(false);
+    int turn = 0;
+    int maxTurns = 400;
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
         singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("8 Realms, two elders, medium 400 turns", game);

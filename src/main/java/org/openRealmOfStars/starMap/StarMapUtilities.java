@@ -1184,4 +1184,67 @@ public final class StarMapUtilities {
     }
 
   }
+
+  /**
+   * Calculate direction based on coordinate system.
+   * Return direction in degree.
+   *
+   * @param sx Start X coordinate
+   * @param sy Start Y Coordinate
+   * @param ex End X coordinate
+   * @param ey End Y coordinate
+   * @return Direction in degree
+   */
+  public static int getDirection(final int sx, final int sy, final int ex,
+      final int ey) {
+    final double radToDeg = 57.29578;
+    double mx = Math.abs(ex - sx);
+    double my = Math.abs(ey - sy);
+    /**
+     * Quadrant
+     *         |
+     *      1  |  0
+     * --------|-------
+     *      2  |  3
+     *         |
+     */
+    if (ex == sx) {
+      if (sy > ey) {
+        return 90;
+      }
+      return 270;
+    }
+    if (ey == sy) {
+      if (sx > ex) {
+        return 180;
+      }
+      return 0;
+    }
+    int quadrant;
+    if (sx < ex) {
+      if (sy < ey) {
+        quadrant = 3;
+      } else {
+        quadrant = 0;
+      }
+    } else {
+      if (sy < ey) {
+        quadrant = 2;
+      } else {
+        quadrant = 1;
+      }
+    }
+    double rad = Math.atan(my / mx);
+    double degree = rad * radToDeg;
+    if (quadrant == 1) {
+      degree = degree + 90;
+    }
+    if (quadrant == 2) {
+      degree = degree + 180;
+    }
+    if (quadrant == 3) {
+      degree = degree + 270;
+    }
+    return (int) degree;
+  }
 }

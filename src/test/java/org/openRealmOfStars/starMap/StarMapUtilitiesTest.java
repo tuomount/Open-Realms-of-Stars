@@ -835,4 +835,29 @@ public class StarMapUtilitiesTest {
 
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDirection() {
+    int degree = StarMapUtilities.getDirection(3, 3, 6, 6);
+    assertEquals(315, degree);
+    degree = StarMapUtilities.getDirection(3, 6, 6, 3);
+    assertEquals(45, degree);
+    degree = StarMapUtilities.getDirection(6, 6, 3, 3);
+    assertEquals(135, degree);
+    degree = StarMapUtilities.getDirection(6, 3, 3, 6);
+    assertEquals(225, degree);
+    degree = StarMapUtilities.getDirection(80, 40, 15, 20);
+    assertEquals(107, degree);
+    degree = StarMapUtilities.getDirection(40, 40, 40, 20);
+    assertEquals(90, degree);
+    degree = StarMapUtilities.getDirection(40, 20, 40, 40);
+    assertEquals(270, degree);
+    degree = StarMapUtilities.getDirection(80, 20, 40, 20);
+    assertEquals(180, degree);
+    degree = StarMapUtilities.getDirection(10, 20, 40, 20);
+    assertEquals(0, degree);
+    degree = StarMapUtilities.getDirection(20, 20, 20, 20);
+    assertEquals(270, degree);
+  }
+
 }

@@ -44,6 +44,8 @@ import org.openRealmOfStars.player.scenario.StartingScenarioType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -1010,6 +1012,10 @@ public class StarMapGenerator {
               .equals(ScenarioIds.METAL_PLANET)) {
             planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
             planet.setMetal(HOMEWORLD_METAL / 2);
+            EventOnPlanet event = new EventOnPlanet(
+                EventType.ARTIFICAL_PLANET_CREATED, planet.getCoordinate(),
+                planet.getName(), playerIndex);
+            starMap.getHistory().addEvent(event);
           } else if (playerInfo.getStartingScenario().getId()
               .equals(ScenarioIds.VOLCANIC_DISASTER)) {
             int lastTurn = 80 + DiceGenerator.getRandom(60);

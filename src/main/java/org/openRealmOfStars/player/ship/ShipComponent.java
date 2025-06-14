@@ -499,7 +499,7 @@ public class ShipComponent {
       sb.append("Repair module for fixing armor and hull damage\n");
       sb.append("when overloaded in combat.");
       if (getDefenseValue() > 0) {
-        sb.append("Armor value: ");
+        sb.append("\nArmor value: ");
         sb.append(getDefenseValue());
       }
       sb.append("\n");

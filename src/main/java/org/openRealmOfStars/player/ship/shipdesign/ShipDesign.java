@@ -344,6 +344,10 @@ public class ShipDesign {
           && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
         armor = armor + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.REPAIR_MODULE) {
+        armor = armor + comp.getDefenseValue();
+      }
     }
     return armor;
   }

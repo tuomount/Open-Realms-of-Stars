@@ -1717,6 +1717,10 @@ private int increaseHitChanceByComponent() {
           && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
         totalArmor = totalArmor + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.REPAIR_MODULE) {
+        totalArmor = totalArmor + comp.getDefenseValue();
+      }
     }
     return totalArmor;
   }

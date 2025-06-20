@@ -29,6 +29,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -47,7 +48,6 @@ import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
@@ -135,16 +135,6 @@ public class ShipDesignView extends BlackPanel {
    * List of ship's components in priority order
    */
   private JList<ShipComponent> componentList;
-
-  /**
-   * Text is containing information about the ship design
-   */
-  private BaseInfoTextArea designInfoText;
-
-  /**
-   * Text is containing information about the ship design what is missing
-   */
-  private BaseInfoTextArea designFlawsText;
 
   /**
    * Ship's hull image
@@ -273,7 +263,7 @@ public class ShipDesignView extends BlackPanel {
 
       @Override
       public void focusLost(final FocusEvent e) {
-        updatePanels();
+        updatePanels(false);
       }
 
       @Override
@@ -291,8 +281,8 @@ public class ShipDesignView extends BlackPanel {
       @Override
       public void keyReleased(final KeyEvent e) {
         design.setName(designNameText.getText());
-        designInfoText.setText(design.getDesignInfo());
-        designInfoText.repaint();
+        hullInfoText.setText(design.getDesignInfo());
+        hullInfoText.repaint();
       }
 
       @Override
@@ -313,6 +303,8 @@ public class ShipDesignView extends BlackPanel {
     hullInfoText = new InfoTextArea(10, 30);
     hullInfoText.setEditable(false);
     hullInfoText.setFont(GuiFonts.getFontCubellanSmaller());
+    hullInfoText.setTextHighlightColor(GuiStatics.getWarningActiveColor(),
+        GuiStatics.getWarningShadowColor());
     JScrollPane scroll = new JScrollPane(hullInfoText);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
@@ -468,41 +460,7 @@ public class ShipDesignView extends BlackPanel {
     componentPanel.add(greyPanel);
     componentPanel.add(Box.createRigidArea(new Dimension(25, 5)));
 
-    // Design Panel
-    InfoPanel designPanel = new InfoPanel();
-    designPanel.setLayout(new BoxLayout(designPanel, BoxLayout.X_AXIS));
-    designPanel.setTitle("Design information");
-    greyPanel = new SpaceGreyPanel();
-    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    designInfoText = new BaseInfoTextArea(10, 30);
-    designInfoText.setEditable(false);
-    designInfoText.setFont(GuiFonts.getFontCubellanSmaller());
-    scroll = new JScrollPane(designInfoText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
-    label = new SpaceLabel("Design info");
-    label.setAlignmentX(Component.CENTER_ALIGNMENT);
-    greyPanel.add(label);
-    greyPanel.add(scroll);
-    designPanel.add(Box.createRigidArea(new Dimension(15, 5)));
-    designPanel.add(greyPanel);
-    designPanel.add(Box.createRigidArea(new Dimension(15, 5)));
-
-    greyPanel = new SpaceGreyPanel();
-    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    designFlawsText = new BaseInfoTextArea(10, 30);
-    designFlawsText.setEditable(false);
-    designFlawsText.setFont(GuiFonts.getFontCubellanSmaller());
-    scroll = new JScrollPane(designFlawsText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
-    label = new SpaceLabel("Design flaws");
-    label.setAlignmentX(Component.CENTER_ALIGNMENT);
-    greyPanel.add(label);
-    greyPanel.add(scroll);
-    designPanel.add(greyPanel);
-    designPanel.add(Box.createRigidArea(new Dimension(15, 5)));
-
     back.add(componentPanel);
-    back.add(designPanel);
 
     base.add(back, BorderLayout.CENTER);
 
@@ -525,10 +483,8 @@ public class ShipDesignView extends BlackPanel {
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
 
-    designInfoText.setText(design.getDesignInfo());
-    designInfoText.repaint();
     updateVariants();
-    updatePanels();
+    updatePanels(false);
   }
 
   /**
@@ -625,20 +581,23 @@ public class ShipDesignView extends BlackPanel {
         }
       }
     }
+    Collections.reverse(components);
     return components.toArray(new ShipComponent[components.size()]);
   }
 
   /**
    * Update visible panels
+   * @param updateHull Boolean flag if updating just hull part
    */
-  public void updatePanels() {
+  public void updatePanels(final boolean updateHull) {
     ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
-    if (hull != null) {
+    if (hull != null && updateHull) {
       hullInfoText.setText(hull.getDescription(
           player.getGovernment().allowArmedFreighters()));
       hullImage.setImage(hull.getImage());
+      hullInfoText.setHighlightText(null);
     }
-    if (design != null) {
+    if (design != null && !updateHull) {
       designNameText.setText(design.getName());
       String flaws = design.getFlaws(banNukes, banPrivateer,
           player.getGovernment().allowArmedFreighters());
@@ -646,18 +605,18 @@ public class ShipDesignView extends BlackPanel {
       if (duplicate) {
         illegalName = true;
         designNameText.setForeground(GuiStatics.COLOR_RED_TEXT);
-        flaws = flaws + " Ship design with name " + design.getName()
+        flaws = flaws + "\nShip design with name \n" + design.getName()
             + " already exists!";
       } else {
         illegalName = false;
         designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
       }
       if (flaws.equals(ShipDesignConsts.DESIGN_OK)) {
-        designFlawsText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+        hullInfoText.setHighlightText(null);
       } else {
-        designFlawsText.setForeground(GuiStatics.COLOR_RED_TEXT);
+        hullInfoText.setHighlightText(flaws);
       }
-      designFlawsText.setText(flaws);
+      hullInfoText.setText(design.getDesignInfo() + "\n\n" + flaws);
     }
     ShipComponent component = (ShipComponent) componentSelect.getSelectedItem();
     if (component != null) {
@@ -699,12 +658,12 @@ public class ShipDesignView extends BlackPanel {
         .equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
       SoundPlayer.playMenuSound();
       updateVariants();
-      updatePanels();
+      updatePanels(true);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_VARIANT_SELECTED)) {
       SoundPlayer.playMenuSound();
-      updatePanels();
+      updatePanels(true);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_AUTODESIGN)) {
@@ -742,10 +701,10 @@ public class ShipDesignView extends BlackPanel {
               banNukes);
         }
         design.setName(designNameText.getText());
-        designInfoText.setText(design.getDesignInfo());
-        designInfoText.repaint();
+        hullInfoText.setText(design.getDesignInfo());
+        hullInfoText.repaint();
       }
-      updatePanels();
+      updatePanels(false);
     }
 
     if (arg0.getActionCommand()
@@ -755,13 +714,13 @@ public class ShipDesignView extends BlackPanel {
         componentSelect
             .setModel(new DefaultComboBoxModel<>(filterComponents(filter)));
         SoundPlayer.playMenuSound();
-        updatePanels();
+        updatePanels(false);
       }
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED)) {
       SoundPlayer.playMenuSound();
-      updatePanels();
+      updatePanels(false);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_CHANGEHULL)) {
@@ -769,11 +728,11 @@ public class ShipDesignView extends BlackPanel {
       if (hull != null) {
         design = new ShipDesign(hull);
         design.setName(designNameText.getText());
-        designInfoText.setText(design.getDesignInfo());
-        designInfoText.repaint();
+        hullInfoText.setText(design.getDesignInfo());
+        hullInfoText.repaint();
       }
       SoundPlayer.playMenuSound();
-      updatePanels();
+      updatePanels(true);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED)
@@ -781,10 +740,10 @@ public class ShipDesignView extends BlackPanel {
         && design.getNumberOfComponents() < design.getHull().getMaxSlot()) {
       design.addComponent((ShipComponent) componentSelect.getSelectedItem());
       design.setName(designNameText.getText());
-      designInfoText.setText(design.getDesignInfo());
-      designInfoText.repaint();
+      hullInfoText.setText(design.getDesignInfo());
+      hullInfoText.repaint();
       SoundPlayer.playMenuSound();
-      updatePanels();
+      updatePanels(false);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTREMOVED)
@@ -792,10 +751,10 @@ public class ShipDesignView extends BlackPanel {
       int index = componentList.getSelectedIndex();
       design.removeComponent(index);
       design.setName(designNameText.getText());
-      designInfoText.setText(design.getDesignInfo());
-      designInfoText.repaint();
+      hullInfoText.setText(design.getDesignInfo());
+      hullInfoText.repaint();
       SoundPlayer.playMenuSound();
-      updatePanels();
+      updatePanels(false);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI)
@@ -804,7 +763,7 @@ public class ShipDesignView extends BlackPanel {
       index = design.changePriority(index, true);
       int[] indices = new int[1];
       indices[0] = index;
-      updatePanels();
+      updatePanels(false);
       SoundPlayer.playMenuSound();
       componentList.setSelectedIndices(indices);
     }
@@ -815,7 +774,7 @@ public class ShipDesignView extends BlackPanel {
       index = design.changePriority(index, false);
       int[] indices = new int[1];
       indices[0] = index;
-      updatePanels();
+      updatePanels(false);
       SoundPlayer.playMenuSound();
       componentList.setSelectedIndices(indices);
     }
@@ -827,7 +786,7 @@ public class ShipDesignView extends BlackPanel {
    * @return True if design is ready false if not
    */
   public boolean isDesignOK() {
-    updatePanels();
+    updatePanels(false);
      if (design != null
             && design.getFlaws(banNukes, banPrivateer,
                 player.getGovernment().allowArmedFreighters()).equals(

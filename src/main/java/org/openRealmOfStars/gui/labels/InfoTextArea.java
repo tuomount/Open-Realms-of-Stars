@@ -404,18 +404,25 @@ public class InfoTextArea extends JTextArea {
       for (int i = 0; i < texts.length; i++) {
         boolean[] highlightLocation = null;
         if (highlightText != null) {
-          String tmp = texts[i];
-          int index = tmp.toLowerCase().indexOf(highlightText.toLowerCase());
-          int offset = 0;
-          if (index != -1) {
-            highlightLocation = new boolean[texts[i].length()];
-            while (index != -1) {
-              for (int j = 0; j < highlightText.length(); j++) {
-                highlightLocation[offset + index + j] = true;
+          String[] highlights = highlightText.split("\n");
+          for (String highLight : highlights) {
+            highLight = highLight.trim();
+            if (highLight.length() == 0) {
+              continue;
+            }
+            String tmp = texts[i];
+            int index = tmp.toLowerCase().indexOf(highLight.toLowerCase());
+            int offset = 0;
+            if (index != -1) {
+              highlightLocation = new boolean[texts[i].length()];
+              while (index != -1) {
+                for (int j = 0; j < highLight.length(); j++) {
+                  highlightLocation[offset + index + j] = true;
+                }
+                offset = offset + index + highLight.length();
+                tmp = tmp.substring(index + highLight.length());
+                index = tmp.toLowerCase().indexOf(highLight.toLowerCase());
               }
-              offset = offset + index + highlightText.length();
-              tmp = tmp.substring(index + highlightText.length());
-              index = tmp.toLowerCase().indexOf(highlightText.toLowerCase());
             }
           }
         }

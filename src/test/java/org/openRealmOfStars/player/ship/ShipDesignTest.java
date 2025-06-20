@@ -44,9 +44,6 @@ public class ShipDesignTest extends TestCase {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
-
-
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
@@ -78,14 +75,14 @@ public class ShipDesignTest extends TestCase {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     ShipComponent engine2 = ShipComponentFactory.createByName("Nuclear drive Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(armor);
     design.addComponent(engine2);
     assertEquals(true,ShipDesignConsts.TWO_ENGINES.equals(design.getFlaws()));
     design = new ShipDesign(hull);
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    assertEquals(true,design.getFlaws().contains(ShipDesignConsts.ENGINE_IS_MISSING) );
+    assertEquals(true,design.getFlaws().contains(ShipDesignConsts.NO_COMPONENTS) );
     design.addComponent(weapon);
     design.addComponent(engine2);
     design.addComponent(armor);
@@ -106,9 +103,6 @@ public class ShipDesignTest extends TestCase {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
     ShipComponent module = ShipComponentFactory.createByName("Colony Module");
-
-
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
@@ -152,7 +146,6 @@ public class ShipDesignTest extends TestCase {
     ShipComponent spyKit = ShipComponentFactory.createByName("Espionage module Mk1");
 
 
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.NO_WEAPONS_ALLOWED));
@@ -202,7 +195,6 @@ public class ShipDesignTest extends TestCase {
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
     ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
     ShipComponent jammer = ShipComponentFactory.createByName("Jammer Mk1");
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
@@ -257,7 +249,6 @@ public class ShipDesignTest extends TestCase {
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
     ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
     ShipComponent bomb = ShipComponentFactory.createByName("Orbital Bombs Mk1");
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
@@ -281,7 +272,6 @@ public class ShipDesignTest extends TestCase {
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
     ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
     ShipComponent bomb = ShipComponentFactory.createByName("Orbital fusion bomb");
-    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);

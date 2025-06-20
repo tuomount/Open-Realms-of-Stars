@@ -1101,6 +1101,22 @@ public final class GuiStatics {
   }
 
   /**
+   * Get warning active color
+   * @return Color
+   */
+  public static Color getWarningActiveColor() {
+    return schemeType.getWarningColorActive();
+  }
+
+  /**
+   * Get warning shadow color
+   * @return Color
+   */
+  public static Color getWarningShadowColor() {
+    return schemeType.getWarningColorShadow();
+  }
+
+  /**
    * Get Small arrow icon based on scheme.
    * @param name Arrow type name
    * @return Icon16x16

@@ -42,7 +42,7 @@ public class ShipDesignViewTest {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
         4, 0);
     ShipDesignView view = new ShipDesignView(info, null, listener);
-    view.updatePanels();
+    view.updatePanels(false);
     assertEquals(false, view.isDesignOK());
     ShipComponent[] list = view.filterComponents("All");
     assertEquals(5, list.length);

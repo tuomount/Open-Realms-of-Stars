@@ -852,6 +852,11 @@ public class ShipDesign {
     boolean designOk = true;
     boolean flawNoCargoSpace = false;
     StringBuilder sb = new StringBuilder();
+    if (getNumberOfComponents() == 0) {
+      designOk = false;
+      sb.append(ShipDesignConsts.NO_COMPONENTS);
+      sb.append("\n");
+    }
     if (!hasEngine() && getHull().getHullType() != ShipHullType.ORBITAL) {
       designOk = false;
       sb.append(ShipDesignConsts.ENGINE_IS_MISSING);

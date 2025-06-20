@@ -112,6 +112,14 @@ public class YellowScheme extends BaseScheme {
   public static final Color COLOR_SCIFI_BORDER_TEXT = new Color(222, 188, 0,
       230);
 
+  /** Red Warning active */
+  public static final Color COLOR_ORANGE_WARNING_TEXT = new Color(255, 118, 48,
+      255);
+
+  /** Red Warning shadow */
+  public static final Color COLOR_ORANGE_WARNING_SHADOW = new Color(238, 80, 0,
+      255);
+
   /**
    * Icon for small scroll up.
    */
@@ -341,6 +349,16 @@ public class YellowScheme extends BaseScheme {
   @Override
   public Color getCheckBoxDisabledColor() {
     return COLOR_CHECKBOX_DISABLED;
+  }
+
+  @Override
+  public Color getWarningColorActive() {
+    return COLOR_ORANGE_WARNING_TEXT;
+  }
+
+  @Override
+  public Color getWarningColorShadow() {
+    return COLOR_ORANGE_WARNING_SHADOW;
   }
 
 }

@@ -165,4 +165,16 @@ public abstract class BaseScheme {
    * @return Color
    */
   public abstract Color getCheckBoxDisabledColor();
+
+  /**
+   * Get warning color active.
+   * @return Color
+   */
+  public abstract Color getWarningColorActive();
+  /**
+   * Get warning color shadow.
+   * @return Color
+   */
+  public abstract Color getWarningColorShadow();
+
 }

@@ -1170,7 +1170,7 @@ public class PlanetBombingView extends BlackPanel {
         updatePanel();
         imgBase.repaint();
       } else {
-        if (aiControlled && !aiExitLoop
+        if (aiControlled && !aiExitLoop && bombers.size() > 0
             && bombers.get(shipIndex).getActions() > 0) {
           Ship ship = fleet.getShipByIndex(shipIndex);
           ShipComponent component = ship.getComponent(aiComponentIndex);

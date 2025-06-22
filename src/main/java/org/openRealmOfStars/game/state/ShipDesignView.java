@@ -594,8 +594,10 @@ public class ShipDesignView extends BlackPanel {
     if (hull != null && updateHull) {
       hullInfoText.setText(hull.getDescription(
           player.getGovernment().allowArmedFreighters()));
-      hullImage.setImage(hull.getImage());
       hullInfoText.setHighlightText(null);
+    }
+    if (hull != null) {
+      hullImage.setImage(hull.getImage());
     }
     if (design != null && !updateHull) {
       designNameText.setText(design.getName());

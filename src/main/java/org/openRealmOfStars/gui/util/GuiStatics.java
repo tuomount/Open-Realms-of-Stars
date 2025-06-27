@@ -521,6 +521,7 @@ public final class GuiStatics {
       "resources/images/smaugirian_race.png",
       "resources/images/synthdroid_race.png",
       "resources/images/alteirian_race.png",
+      "resources/images/mushroom.png",
       "resources/images/alonian_race.png"
   };
 

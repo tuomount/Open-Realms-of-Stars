@@ -85,6 +85,11 @@
     "y-offset": 35
   },
   {
+    "id": "Mycolian",
+    "path": "/resources/images/mushroom_bridge.png",
+    "y-offset": 60
+  },
+  {
     "id": "Dwarf",
     "path": "/resources/images/alonian_bridge.png",
     "y-offset": 35

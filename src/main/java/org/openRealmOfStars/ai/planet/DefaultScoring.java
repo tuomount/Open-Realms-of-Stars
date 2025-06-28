@@ -388,11 +388,25 @@ public final class DefaultScoring {
     if (metalProd < prodProd) {
       score = score + building.getMineBonus() * 20;
     }
+    if (building.getName().equals("United Galaxy Tower")) {
+      if (attitude == Attitude.DIPLOMATIC || attitude == Attitude.PEACEFUL) {
+        score = score + 20;
+      }
+      if (attitude == Attitude.LOGICAL) {
+        score = score + 15;
+      }
+    }
     if (building.getName().equals("United Galaxy Tower")
         && metalProd > 5 && prodProd > 5
         && info.getStrategy() == WinningStrategy.DIPLOMATIC) {
       score += 400;
     }
+    if (info.getStrategy() == WinningStrategy.SCIENCE
+        && prodProd > 7 && metalProd > 7
+        && building.getScientificAchievement()) {
+      score = score + 400;
+    }
+
     if (building.getMineBonus() > 0
         && planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET
         && info.getRace().isLithovorian()) {
@@ -570,17 +584,6 @@ public final class DefaultScoring {
     }
     if (time > 25) {
       score = -1;
-    }
-    if (building.getName().equals("United Galaxy Tower")) {
-      if (attitude == Attitude.DIPLOMATIC || attitude == Attitude.PEACEFUL) {
-        score = score + 20;
-      }
-      if (attitude == Attitude.LOGICAL) {
-        score = score + 15;
-      }
-      if (info.getStrategy() == WinningStrategy.DIPLOMATIC) {
-        score = score + 80;
-      }
     }
     if (info.getStrategy() == WinningStrategy.CULTURAL) {
       if (building.isBroadcaster() && !planet.broadcaster()) {

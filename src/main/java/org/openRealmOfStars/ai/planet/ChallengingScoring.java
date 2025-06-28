@@ -126,6 +126,17 @@ public final class ChallengingScoring {
             && building.getName().equals("United Galaxy Tower")) {
           scores[i] = scores[i] + 20;
         }
+        if (info.getStrategy() == WinningStrategy.SCIENCE
+            && prod > 7
+            && building.getScientificAchievement()) {
+          scores[i] = scores[i] + 20;
+          if (planet.getMetal() > 100 || metalProd > 8) {
+            scores[i] = scores[i] + 20;
+          }
+          if (planet.getMetal() >= building.getMetalCost()) {
+            scores[i] = scores[i] + 60;
+          }
+        }
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];

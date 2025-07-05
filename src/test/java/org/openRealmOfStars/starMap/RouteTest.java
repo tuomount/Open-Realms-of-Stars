@@ -232,6 +232,41 @@ public class RouteTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRouteLengthNormal() {
+    route.setStartX(3);
+    route.setStartY(3);
+    route.setEndX(3);
+    route.setEndY(6);
+    route.setFtlSpeed(3);
+    assertEquals(3, route.getDistance());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRouteLengthMultiPoint2() {
+    route.setStartX(3);
+    route.setStartY(3);
+    route.setEndX(3);
+    route.setEndY(6);
+    route.addNewPoint(new Coordinate(3,9));
+    route.setFtlSpeed(3);
+    assertEquals(6, route.getDistance());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRouteLengthMultiPoint3() {
+    route.setStartX(3);
+    route.setStartY(3);
+    route.setEndX(7);
+    route.setEndY(6);
+    route.addNewPoint(new Coordinate(12,6));
+    route.setFtlSpeed(3);
+    assertEquals(9, route.getDistance());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testRegularRoute3() {
     route.setStartX(3);
     route.setStartY(3);

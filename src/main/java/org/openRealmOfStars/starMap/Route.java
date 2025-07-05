@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,6 +18,7 @@ package org.openRealmOfStars.starMap;
  */
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -47,6 +48,10 @@ public class Route {
    */
   private double endY;
 
+  /**
+   * Possible next points in route.
+   */
+  private ArrayList<Coordinate> nextPoints;
   /**
    * FTL speed
    */
@@ -87,6 +92,28 @@ public class Route {
     this.endX = ex;
     this.endY = ey;
     this.ftlSpeed = speed;
+    nextPoints = null;
+  }
+
+  /**
+   * Get array list of next points. This will return null if there is
+   * only single point in the route.
+   * @return ArrayList of next points or null.
+   */
+  public ArrayList<Coordinate> getNextPoints() {
+    return nextPoints;
+  }
+
+  /**
+   * Add new point for route. This will make route to multipoint route.
+   * If route was not multipoint before, this will change it to multipoint.
+   * @param coord Next point in coordinates.
+   */
+  public void addNewPoint(final Coordinate coord) {
+    if (nextPoints == null) {
+      nextPoints = new ArrayList<>();
+    }
+    nextPoints.add(coord);
   }
 
   /**
@@ -171,11 +198,36 @@ public class Route {
         } else {
           return false;
         }
+        if (endOfPoint() && nextPoints != null) {
+          startX = endX;
+          startY = endY;
+          endX = nextPoints.get(0).getX();
+          endY = nextPoints.get(0).getY();
+          nextPoints.remove(0);
+          if (nextPoints.size() == 0) {
+            nextPoints = null;
+          }
+        }
       }
     }
     return true;
   }
 
+  /**
+   * Has end of one path point received.
+   * @return boolean
+   */
+  private boolean endOfPoint() {
+    if (isDefending() || isFixing()) {
+      // fleet has special route
+      return false;
+    }
+    if (Math.round(endX) == Math.round(startX)
+        && Math.round(endY) == Math.round(startY)) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Is route's end reached?
    * @return boolean
@@ -186,7 +238,8 @@ public class Route {
       return false;
     }
     if (Math.round(endX) == Math.round(startX)
-        && Math.round(endY) == Math.round(startY)) {
+        && Math.round(endY) == Math.round(startY)
+        && nextPoints == null) {
       return true;
     }
     return false;
@@ -209,29 +262,62 @@ public class Route {
     double originalStartY = startY;
     double tmpX = startX;
     double tmpY = startY;
-    for (int i = 0; i < getDistance() + 1; i++) {
-      startX = tmpX;
-      startY = tmpY;
-      int sx = getX();
-      int sy = getY();
-      if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
-        if (ftlRoute) {
-          result[sx][sy] = 1;
-        } else {
-          if (i <= getRegularSpeed()) {
-            result[sx][sy] = 2;
+    if (nextPoints == null) {
+      for (int i = 0; i < getDistance() + 1; i++) {
+        startX = tmpX;
+        startY = tmpY;
+        int sx = getX();
+        int sy = getY();
+        if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
+          if (ftlRoute) {
+            result[sx][sy] = 1;
           } else {
-            result[sx][sy] = 3;
+            if (i <= getRegularSpeed()) {
+              result[sx][sy] = 2;
+            } else {
+              result[sx][sy] = 3;
+            }
+          }
+        }
+        startX = startX + getMx();
+        startY = startY + getMy();
+        tmpX = startX;
+        tmpY = startY;
+        startX = originalStartX;
+        startY = originalStartY;
+      }
+    } else {
+      double sdx = startX;
+      double sdy = startY;
+      int ex = (int) Math.round(endX);
+      int ey = (int) Math.round(endY);
+      int index = 0;
+      if (nextPoints != null) {
+        for (int i = 0; i < getDistance() + 1; i++) {
+          sdx = sdx + getMx(index);
+          sdy = sdy + getMy(index);
+          int sx = (int) Math.round(sdx);
+          int sy = (int) Math.round(sdy);
+          if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
+            if (ftlRoute) {
+              result[sx][sy] = 1;
+            } else {
+              if (i <= getRegularSpeed()) {
+                result[sx][sy] = 2;
+              } else {
+                result[sx][sy] = 3;
+              }
+            }
+          }
+          if (sx == ex && sy == ey) {
+            index++;
+            sdx = sx;
+            sdy = sy;
+            ex = nextPoints.get(index - 1).getX();
+            ey = nextPoints.get(index - 1).getY();
           }
         }
       }
-      startX = startX + getMx();
-      startY = startY + getMy();
-      tmpX = startX;
-      tmpY = startY;
-      startX = originalStartX;
-      startY = originalStartY;
-
     }
     return result;
   }
@@ -558,7 +644,7 @@ public class Route {
    * @return internal movement speed
    */
   public double getMx() {
-    int distance = getDistance();
+    int distance = getDistance(0);
     double mx;
     if (distance > 0) {
       mx = (endX - startX) / distance;
@@ -569,11 +655,55 @@ public class Route {
   }
 
   /**
+   * Get movement of X coordinate based on index.
+   * @param index Index to route
+   * @return Movement of X
+   */
+  private double getMx(final int index) {
+    int distance = getDistance(index);
+    double mx;
+    if (distance > 0) {
+      if (index == 0) {
+        mx = (endX - startX) / distance;
+      } else if (index == 1) {
+        mx = (nextPoints.get(0).getX() - endX) / distance;
+      } else {
+        mx = (nextPoints.get(index - 1).getX() - nextPoints.get(index).getX())
+            / distance;
+      }
+    } else {
+      mx = 0;
+    }
+    return mx;
+  }
+  /**
+   * Get movement of Y coordinate based on index.
+   * @param index Index to route
+   * @return Movement of Y
+   */
+  private double getMy(final int index) {
+    int distance = getDistance(index);
+    double my;
+    if (distance > 0) {
+      if (index == 0) {
+        my = (endY - startY) / distance;
+      } else if (index == 1) {
+        my = (nextPoints.get(0).getX() - endY) / distance;
+      } else {
+        my = (nextPoints.get(index - 1).getX() - nextPoints.get(index).getX())
+            / distance;
+      }
+    } else {
+      my = 0;
+    }
+    return my;
+  }
+  /**
    * Get internal movement speed
    * @return internal movement speed
    */
   public double getMy() {
-    int distance = getDistance();
+    int distance = getDistance(0);
     double my;
     if (distance > 0) {
       my = (endY - startY) / distance;
@@ -584,16 +714,70 @@ public class Route {
   }
 
   /**
-   * Get distance in coordinates
+   * Calculate single distance between two pathpoints.
+   * Index 0 is for first path point.
+   * @param index Pathpoint index
+   * @return Distance between two points
+   */
+  public int getDistance(final int index) {
+    int distance = 0;
+    if (index == 0 || nextPoints == null) {
+      double dx = Math.abs(startX - endX);
+      double dy = Math.abs(startY - endY);
+      distance = (int) dy;
+      if (dx > dy) {
+        distance = (int) dx;
+      }
+    }
+    if (nextPoints != null) {
+      if (index == 1) {
+        double dx = Math.abs(endX - nextPoints.get(0).getX());
+        double dy = Math.abs(endY - nextPoints.get(0).getY());
+        distance = (int) dy;
+        if (dx > dy) {
+          distance = (int) dx;
+        }
+      } else if (index > 1) {
+        double dx = Math.abs(nextPoints.get(index - 2).getX()
+            - nextPoints.get(index - 1).getX());
+        double dy = Math.abs(nextPoints.get(index - 2).getY()
+            - nextPoints.get(index - 1).getY());
+        distance = (int) dy;
+        if (dx > dy) {
+          distance = (int) dx;
+        }
+      }
+    }
+    return distance;
+  }
+  /**
+   * Get full distance in coordinates
    * @return distance in coordinates
    */
   public int getDistance() {
     int distance;
-    double dx = Math.abs(startX - endX);
-    double dy = Math.abs(startY - endY);
-    distance = (int) dy;
-    if (dx > dy) {
-      distance = (int) dx;
+    if (nextPoints == null) {
+      distance = getDistance(0);
+    } else {
+      double dx = Math.abs(startX - endX);
+      double dy = Math.abs(startY - endY);
+      distance = (int) dy;
+      if (dx > dy) {
+        distance = (int) dx;
+      }
+      int px = (int) Math.round(endX);
+      int py = (int) Math.round(endY);
+      for (Coordinate coord : nextPoints) {
+        int dix = Math.abs(px - coord.getX());
+        int diy = Math.abs(py - coord.getY());
+        if (dix > diy) {
+          distance = distance + dix;
+        } else {
+          distance = distance + diy;
+        }
+        px = coord.getX();
+        py = coord.getY();
+      }
     }
     return distance;
   }

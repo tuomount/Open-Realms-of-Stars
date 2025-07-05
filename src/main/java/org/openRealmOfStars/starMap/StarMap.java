@@ -318,7 +318,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.26";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.27";
 
 
   /**

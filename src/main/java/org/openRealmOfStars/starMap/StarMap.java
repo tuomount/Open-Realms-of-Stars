@@ -695,7 +695,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.26");
+    IOUtilities.writeString(dos, MAGIC_STRING);
     // Turn number
     dos.writeInt(turn);
     // Victory conditions

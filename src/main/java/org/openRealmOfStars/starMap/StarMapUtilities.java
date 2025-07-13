@@ -1247,4 +1247,21 @@ public final class StarMapUtilities {
     }
     return (int) degree;
   }
+
+  /**
+   * Move path point by angle and amount.
+   * @param x Path point to move X-coordinate
+   * @param y Path point to move Y-coordinate
+   * @param angle Angle in degrees
+   * @param amount How many steps to take
+   * @return New moved coordinate
+   */
+  public static Coordinate movePathByAngle(final int x, final int y,
+      final int angle, final int amount) {
+    final double degToRad = 0.017453293;
+    double rad = angle * degToRad;
+    double mx = Math.cos(rad) * amount;
+    double my = -Math.sin(rad) * amount;
+    return new Coordinate((int) Math.round(mx), (int) Math.round(my));
+  }
 }

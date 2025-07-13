@@ -214,6 +214,29 @@ public class Route {
   }
 
   /**
+   * Check if route is being blocked by map object.
+   * @param starMap StarMap
+   * @return Last free available coordinate or null if no blocks
+   */
+  public Coordinate checkBlockedCoordinate(final StarMap starMap) {
+    double origStartX = startX;
+    double origStartY = startY;
+    if (nextPoints == null) {
+      while (!isEndReached()) {
+        if (!makeNextMove(starMap)) {
+          int tempX = getX();
+          int tempY = getY();
+          startX = origStartX;
+          startY = origStartY;
+          return new Coordinate(tempX, tempY);
+        }
+      }
+    }
+    startX = origStartX;
+    startY = origStartY;
+    return null;
+  }
+  /**
    * Has end of one path point received.
    * @return boolean
    */

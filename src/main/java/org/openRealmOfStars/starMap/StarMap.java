@@ -3243,6 +3243,91 @@ public class StarMap {
   }
 
   /**
+   * Generate Multipath route based on blocked sectors on starmap.
+   * @param simpleRoute Simple route from A to B
+   * @return Multipath route from A to B, otherwise null.
+   */
+  public Route generateMultiPathRoute(final Route simpleRoute) {
+    Route result = null;
+    Coordinate blocked = simpleRoute.checkBlockedCoordinate(this);
+    if (blocked == null) {
+      return simpleRoute;
+    }
+    int endX = (int) Math.round(simpleRoute.getEndX());
+    int endY = (int) Math.round(simpleRoute.getEndY());
+    int curX = (int) Math.round(simpleRoute.getStartX());
+    int curY = (int) Math.round(simpleRoute.getStartY());
+    boolean givenUp = false;
+    while (!givenUp) {
+      if (blocked != null) {
+        int angle = StarMapUtilities.getDirection(curX, curY, blocked.getX(),
+            blocked.getY());
+        angle = angle + 90;
+        if (angle > 359) {
+          angle = angle - 360;
+        }
+        boolean newPathPointFound = false;
+        for (int i = 0; i < 4; i++) {
+          Coordinate pathPoint = StarMapUtilities.movePathByAngle(
+              blocked.getX(), blocked.getY(), angle, i + 1);
+          Route testRoute = new Route(curX, curY, pathPoint.getX(),
+              pathPoint.getY(), simpleRoute.getFtlSpeed());
+          testRoute.setRawValue(simpleRoute.getRawValue());
+          if (testRoute.checkBlockedCoordinate(this) == null) {
+            if (result == null) {
+              result = new Route(curX, curY, pathPoint.getX(),
+                  pathPoint.getY(), simpleRoute.getFtlSpeed());
+              result.setRawValue(simpleRoute.getRawValue());
+              newPathPointFound = true;
+              curX = pathPoint.getX();
+              curY = pathPoint.getY();
+            } else {
+              result.addNewPoint(pathPoint);
+              newPathPointFound = true;
+              curX = pathPoint.getX();
+              curY = pathPoint.getY();
+            }
+          } else {
+            pathPoint = StarMapUtilities.movePathByAngle(
+                blocked.getX(), blocked.getY(), angle, -(i + 1));
+            testRoute = new Route(curX, curY, pathPoint.getX(),
+                pathPoint.getY(), simpleRoute.getFtlSpeed());
+            testRoute.setRawValue(simpleRoute.getRawValue());
+            if (testRoute.checkBlockedCoordinate(this) == null) {
+              if (result == null) {
+                result = new Route(curX, curY, pathPoint.getX(),
+                    pathPoint.getY(), simpleRoute.getFtlSpeed());
+                result.setRawValue(simpleRoute.getRawValue());
+                newPathPointFound = true;
+                curX = pathPoint.getX();
+                curY = pathPoint.getY();
+              } else {
+                result.addNewPoint(pathPoint);
+                newPathPointFound = true;
+                curX = pathPoint.getX();
+                curY = pathPoint.getY();
+              }
+            }
+          }
+          if (newPathPointFound) {
+            break;
+          }
+        }
+        if (!newPathPointFound) {
+          givenUp = true;
+        }
+        Route testRoute = new Route(curX, curY, endX, endY,
+            simpleRoute.getFtlSpeed());
+        testRoute.setRawValue(simpleRoute.getRawValue());
+        blocked = testRoute.checkBlockedCoordinate(this);
+      }
+    }
+    if (result == null) {
+      return simpleRoute;
+    }
+    return result;
+  }
+  /**
    * Is tile good for ascension vein
    * @param x X coordinate
    * @param y Y Coordinate

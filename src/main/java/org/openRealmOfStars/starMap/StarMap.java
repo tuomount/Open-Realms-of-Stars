@@ -3249,6 +3249,10 @@ public class StarMap {
    */
   public Route generateMultiPathRoute(final Route simpleRoute) {
     Route result = null;
+    if (isBlocked((int) Math.round(simpleRoute.getEndX()),
+        (int) Math.round(simpleRoute.getEndY()))) {
+      return simpleRoute;
+    }
     Coordinate blocked = simpleRoute.checkBlockedCoordinate(this);
     if (blocked == null) {
       return simpleRoute;
@@ -3258,7 +3262,12 @@ public class StarMap {
     int curX = (int) Math.round(simpleRoute.getStartX());
     int curY = (int) Math.round(simpleRoute.getStartY());
     boolean givenUp = false;
+    int count = 1000;
     while (!givenUp) {
+      count--;
+      if (count <= 0) {
+        givenUp = true;
+      }
       if (blocked != null) {
         int angle = StarMapUtilities.getDirection(curX, curY, blocked.getX(),
             blocked.getY());
@@ -3267,7 +3276,7 @@ public class StarMap {
           angle = angle - 360;
         }
         boolean newPathPointFound = false;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
           Coordinate pathPoint = StarMapUtilities.movePathByAngle(
               blocked.getX(), blocked.getY(), angle, i + 1);
           Route testRoute = new Route(curX, curY, pathPoint.getX(),
@@ -3320,6 +3329,11 @@ public class StarMap {
             simpleRoute.getFtlSpeed());
         testRoute.setRawValue(simpleRoute.getRawValue());
         blocked = testRoute.checkBlockedCoordinate(this);
+      }
+      if (blocked == null) {
+        Coordinate endCoord = new Coordinate(endX, endY);
+        result.addNewPoint(endCoord);
+        givenUp = true;
       }
     }
     if (result == null) {

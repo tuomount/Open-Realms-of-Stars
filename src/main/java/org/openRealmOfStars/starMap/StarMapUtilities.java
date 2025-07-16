@@ -1260,8 +1260,8 @@ public final class StarMapUtilities {
       final int angle, final int amount) {
     final double degToRad = 0.017453293;
     double rad = angle * degToRad;
-    double mx = Math.cos(rad) * amount;
-    double my = -Math.sin(rad) * amount;
+    double mx = x + Math.cos(rad) * amount;
+    double my = y + -Math.sin(rad) * amount;
     return new Coordinate((int) Math.round(mx), (int) Math.round(my));
   }
 }

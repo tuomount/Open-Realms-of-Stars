@@ -186,13 +186,24 @@ public class Route {
     if (speed == 0 && getRegularSpeed() > 0) {
       speed = 1;
     }
+    return makeNextMove(starMap, speed);
+  }
+
+  /**
+   * Move a bit closed to end
+   * @param starMap to check if sector is block or not. If this is null
+   *        then blocked check is not done
+   * @param speed Movement speed
+   * @return true if move was possible and false if not
+   */
+  public boolean makeNextMove(final StarMap starMap, final int speed) {
     for (int i = 0; i < speed; i++) {
       if (getDistance() > 0) {
         if (starMap == null) {
           startX = startX + getMx();
           startY = startY + getMy();
-        } else if (!starMap.isBlocked((int) (startX + getMx()), (int) (startY
-                + getMy()))) {
+        } else if (!starMap.isBlocked((int) Math.round(startX + getMx()),
+            (int) Math.round(startY + getMy()))) {
           startX = startX + getMx();
           startY = startY + getMy();
         } else {
@@ -214,18 +225,22 @@ public class Route {
   }
 
   /**
-   * Check if route is being blocked by map object.
+   * Check if route is being blocked by map object. This is done only if
+   * route is simple from point A to point B.
    * @param starMap StarMap
-   * @return Last free available coordinate or null if no blocks
+   * @return blocked coordinate or null if no blocks
    */
   public Coordinate checkBlockedCoordinate(final StarMap starMap) {
     double origStartX = startX;
     double origStartY = startY;
+    if (starMap.isBlocked(getX(), getY())) {
+      return new Coordinate(getX(), getY());
+    }
     if (nextPoints == null) {
       while (!isEndReached()) {
-        if (!makeNextMove(starMap)) {
-          int tempX = getX();
-          int tempY = getY();
+        if (!makeNextMove(starMap, 1)) {
+          int tempX = (int) Math.round(startX + getMx());
+          int tempY = (int) Math.round(startY + getMy());
           startX = origStartX;
           startY = origStartY;
           return new Coordinate(tempX, tempY);
@@ -316,7 +331,7 @@ public class Route {
       int ey = (int) Math.round(endY);
       int index = 0;
       if (nextPoints != null) {
-        for (int i = 0; i < getDistance() + 1; i++) {
+        for (int i = 0; i < getDistance(); i++) {
           sdx = sdx + getMx(index);
           sdy = sdy + getMy(index);
           int sx = (int) Math.round(sdx);
@@ -336,8 +351,10 @@ public class Route {
             index++;
             sdx = sx;
             sdy = sy;
-            ex = nextPoints.get(index - 1).getX();
-            ey = nextPoints.get(index - 1).getY();
+            if (index <= nextPoints.size()) {
+              ex = nextPoints.get(index - 1).getX();
+              ey = nextPoints.get(index - 1).getY();
+            }
           }
         }
       }
@@ -683,7 +700,7 @@ public class Route {
    * @return Movement of X
    */
   private double getMx(final int index) {
-    int distance = getDistance(index);
+    double distance = getDistance(index);
     double mx;
     if (distance > 0) {
       if (index == 0) {
@@ -691,8 +708,8 @@ public class Route {
       } else if (index == 1) {
         mx = (nextPoints.get(0).getX() - endX) / distance;
       } else {
-        mx = (nextPoints.get(index - 1).getX() - nextPoints.get(index).getX())
-            / distance;
+        mx = (nextPoints.get(index - 1).getX()
+            - nextPoints.get(index - 2).getX()) / distance;
       }
     } else {
       mx = 0;
@@ -705,16 +722,16 @@ public class Route {
    * @return Movement of Y
    */
   private double getMy(final int index) {
-    int distance = getDistance(index);
+    double distance = getDistance(index);
     double my;
     if (distance > 0) {
       if (index == 0) {
         my = (endY - startY) / distance;
       } else if (index == 1) {
-        my = (nextPoints.get(0).getX() - endY) / distance;
+        my = (nextPoints.get(0).getY() - endY) / distance;
       } else {
-        my = (nextPoints.get(index - 1).getX() - nextPoints.get(index).getX())
-            / distance;
+        my = (nextPoints.get(index - 1).getY()
+            - nextPoints.get(index - 2).getY()) / distance;
       }
     } else {
       my = 0;

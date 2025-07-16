@@ -213,6 +213,7 @@ public class StarMapMouseListener extends MouseAdapter {
         if (isRegularRoute()) {
           route.setRegularSpeed(lastClickedFleet.getFleetSpeed());
         }
+        route = starMap.generateMultiPathRoute(route);
         mapPanel.setRoute(route);
       } else {
         routePlanning = false;
@@ -301,6 +302,7 @@ public class StarMapMouseListener extends MouseAdapter {
         if (isRegularRoute()) {
           route.setRegularSpeed(lastClickedFleet.getFleetSpeed());
         }
+        route = starMap.generateMultiPathRoute(route);
         mapPanel.setRoute(route);
       }
     } else {

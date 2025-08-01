@@ -3249,18 +3249,36 @@ public class StarMap {
    */
   public Route generateMultiPathRoute(final Route simpleRoute) {
     Route result = null;
-    if (isBlocked((int) Math.round(simpleRoute.getEndX()),
-        (int) Math.round(simpleRoute.getEndY()))) {
-      return simpleRoute;
+    Route origRoute = simpleRoute;
+    if (isBlocked((int) Math.round(origRoute.getEndX()),
+        (int) Math.round(origRoute.getEndY()))) {
+      int endX = (int) Math.round(origRoute.getEndX());
+      int endY = (int) Math.round(origRoute.getEndY());
+      int curX = (int) Math.round(origRoute.getStartX());
+      int curY = (int) Math.round(origRoute.getStartY());
+      int angle = StarMapUtilities.getDirection(curX, curY, endX, endY);
+      angle = angle + 180;
+      if (angle > 360) {
+        angle = angle - 360;
+      }
+      for (int i = 0; i < 6; i++) {
+        Coordinate pathPoint = StarMapUtilities.movePathByAngle(
+            endX, endY, angle, i + 1);
+        if (!isBlocked(pathPoint.getX(), pathPoint.getY())) {
+          origRoute.setEndX(pathPoint.getX());
+          origRoute.setEndY(pathPoint.getY());
+          break;
+        }
+      }
     }
-    Coordinate blocked = simpleRoute.checkBlockedCoordinate(this);
+    Coordinate blocked = origRoute.checkBlockedCoordinate(this);
     if (blocked == null) {
-      return simpleRoute;
+      return origRoute;
     }
-    int endX = (int) Math.round(simpleRoute.getEndX());
-    int endY = (int) Math.round(simpleRoute.getEndY());
-    int curX = (int) Math.round(simpleRoute.getStartX());
-    int curY = (int) Math.round(simpleRoute.getStartY());
+    int endX = (int) Math.round(origRoute.getEndX());
+    int endY = (int) Math.round(origRoute.getEndY());
+    int curX = (int) Math.round(origRoute.getStartX());
+    int curY = (int) Math.round(origRoute.getStartY());
     boolean givenUp = false;
     int count = 1000;
     while (!givenUp) {
@@ -3280,13 +3298,13 @@ public class StarMap {
           Coordinate pathPoint = StarMapUtilities.movePathByAngle(
               blocked.getX(), blocked.getY(), angle, i + 1);
           Route testRoute = new Route(curX, curY, pathPoint.getX(),
-              pathPoint.getY(), simpleRoute.getFtlSpeed());
-          testRoute.setRawValue(simpleRoute.getRawValue());
+              pathPoint.getY(), origRoute.getFtlSpeed());
+          testRoute.setRawValue(origRoute.getRawValue());
           if (testRoute.checkBlockedCoordinate(this) == null) {
             if (result == null) {
               result = new Route(curX, curY, pathPoint.getX(),
-                  pathPoint.getY(), simpleRoute.getFtlSpeed());
-              result.setRawValue(simpleRoute.getRawValue());
+                  pathPoint.getY(), origRoute.getFtlSpeed());
+              result.setRawValue(origRoute.getRawValue());
               newPathPointFound = true;
               curX = pathPoint.getX();
               curY = pathPoint.getY();
@@ -3300,13 +3318,13 @@ public class StarMap {
             pathPoint = StarMapUtilities.movePathByAngle(
                 blocked.getX(), blocked.getY(), angle, -(i + 1));
             testRoute = new Route(curX, curY, pathPoint.getX(),
-                pathPoint.getY(), simpleRoute.getFtlSpeed());
-            testRoute.setRawValue(simpleRoute.getRawValue());
+                pathPoint.getY(), origRoute.getFtlSpeed());
+            testRoute.setRawValue(origRoute.getRawValue());
             if (testRoute.checkBlockedCoordinate(this) == null) {
               if (result == null) {
                 result = new Route(curX, curY, pathPoint.getX(),
-                    pathPoint.getY(), simpleRoute.getFtlSpeed());
-                result.setRawValue(simpleRoute.getRawValue());
+                    pathPoint.getY(), origRoute.getFtlSpeed());
+                result.setRawValue(origRoute.getRawValue());
                 newPathPointFound = true;
                 curX = pathPoint.getX();
                 curY = pathPoint.getY();
@@ -3326,8 +3344,8 @@ public class StarMap {
           givenUp = true;
         }
         Route testRoute = new Route(curX, curY, endX, endY,
-            simpleRoute.getFtlSpeed());
-        testRoute.setRawValue(simpleRoute.getRawValue());
+            origRoute.getFtlSpeed());
+        testRoute.setRawValue(origRoute.getRawValue());
         blocked = testRoute.checkBlockedCoordinate(this);
       }
       if (blocked == null) {
@@ -3337,10 +3355,11 @@ public class StarMap {
       }
     }
     if (result == null) {
-      return simpleRoute;
+      return origRoute;
     }
     return result;
   }
+
   /**
    * Is tile good for ascension vein
    * @param x X coordinate

@@ -1237,13 +1237,13 @@ public final class StarMapUtilities {
     double rad = Math.atan(my / mx);
     double degree = rad * radToDeg;
     if (quadrant == 1) {
-      degree = degree + 90;
+      degree = 180 - degree;
     }
     if (quadrant == 2) {
       degree = degree + 180;
     }
     if (quadrant == 3) {
-      degree = degree + 270;
+      degree = 360 - degree;
     }
     return (int) degree;
   }

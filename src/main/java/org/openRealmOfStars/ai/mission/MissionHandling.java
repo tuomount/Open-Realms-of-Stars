@@ -440,6 +440,10 @@ public final class MissionHandling {
             mission.setTarget(sun.getCenterCoordinate());
             fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
                 mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
             mission.setSunName(sun.getName());
             mission.setPhase(MissionPhase.TREKKING);
             // Change solar system for privateering mission
@@ -505,6 +509,10 @@ public final class MissionHandling {
         mission.setTarget(sun.getCenterCoordinate());
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
             mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
         mission.setSunName(sun.getName());
         mission.setPhase(MissionPhase.TREKKING);
         // Starting the new exploring mission
@@ -1036,6 +1044,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           }
           if (planet.getTotalPopulation() > 3 && planet.takeColonist()
               && ships[colony].getFreeCargoColonists() > 0) {
@@ -1151,6 +1163,10 @@ public final class MissionHandling {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
         fleet.setRoute(route);
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
       }
       if ((mission.getPhase() == MissionPhase.TREKKING
           || mission.getPhase() == MissionPhase.EXECUTING)
@@ -1309,6 +1325,10 @@ public final class MissionHandling {
               Route route = new Route(fleet.getX(), fleet.getY(),
                   newTarget.getX(), newTarget.getY(), fleet.getFleetFtlSpeed());
               fleet.setRoute(route);
+              if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+                fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                    fleet.getRoute()));
+              }
               info.getMissions().remove(mission);
             } else {
               // Anchor has been taken, no more deploy starbase mission
@@ -1344,6 +1364,10 @@ public final class MissionHandling {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
         fleet.setRoute(route);
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
         mission.setPhase(MissionPhase.TREKKING);
       }
       if (mission.getPhase() == MissionPhase.TREKKING
@@ -1390,6 +1414,10 @@ public final class MissionHandling {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
         fleet.setRoute(route);
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
         mission.setPhase(MissionPhase.TREKKING);
       }
       if (mission.getPhase() == MissionPhase.TREKKING
@@ -1619,6 +1647,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           } else {
             // No home port so just remove the mission
             info.getMissions().remove(mission);
@@ -1643,6 +1675,10 @@ public final class MissionHandling {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
         fleet.setRoute(route);
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
         mission.setPhase(MissionPhase.TREKKING);
       }
       if (mission.getPhase() == MissionPhase.LOADING) {
@@ -1682,6 +1718,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           }
           while (planet.getTotalPopulation() > 3 && planet.takeColonist()
               && ships[trooper].getFreeCargoColonists() > 0) {
@@ -1723,6 +1763,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           }
         }
         makeReroute(game, fleet, info, mission);
@@ -1740,6 +1784,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           }
         }
       }
@@ -1768,6 +1816,10 @@ public final class MissionHandling {
           mission.setTarget(planet.getCoordinate());
           fleet.setRoute(new Route(fleet.getX(), fleet.getY(), planet.getX(),
               planet.getY(), fleet.getFleetFtlSpeed()));
+          if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+            fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                fleet.getRoute()));
+          }
         }
         Ship[] ships = fleet.getShips();
         for (int i = 0; i < ships.length; i++) {
@@ -1825,6 +1877,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           }
           while (planet.getTotalPopulation() > 3 && planet.takeColonist()
               && ships[trooper].getFreeCargoColonists() > 0) {
@@ -1848,6 +1904,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           } else {
             // No home port so just remove the mission
             info.getMissions().remove(mission);
@@ -1895,6 +1955,10 @@ public final class MissionHandling {
             Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed());
             fleet.setRoute(route);
+            if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+              fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                  fleet.getRoute()));
+            }
           } else {
             // No home port so just remove the mission
             info.getMissions().remove(mission);
@@ -2848,6 +2912,10 @@ public final class MissionHandling {
       if (search.getTargetDistance() > 0) {
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed()));
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
       }
       fleet.setaStarSearch(null);
     }

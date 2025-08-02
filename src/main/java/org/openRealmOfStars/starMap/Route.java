@@ -96,6 +96,38 @@ public class Route {
   }
 
   /**
+   * Private constructor for copy method.
+   * @param sx Start x coordinate
+   * @param sy Start y coordinate
+   * @param ex End X coordinate
+   * @param ey End Y coordinate
+   * @param actualSpeed Raw speed
+   */
+  private Route(final double sx, final double sy, final double ex,
+      final double ey, final int actualSpeed) {
+    this.startX = sx;
+    this.startY = sy;
+    this.endX = ex;
+    this.endY = ey;
+    this.ftlSpeed = actualSpeed;
+    nextPoints = null;
+  }
+
+  /**
+   * Creates a copy of route.
+   * @return Copy of route
+   */
+  public Route copy() {
+    Route result = new Route(this.startX, this.getY(), this.endX, this.endY,
+        this.getRawValue());
+    if (this.nextPoints != null) {
+      for (Coordinate coord : this.nextPoints) {
+        result.addNewPoint(coord);
+      }
+    }
+    return result;
+  }
+  /**
    * Get array list of next points. This will return null if there is
    * only single point in the route.
    * @return ArrayList of next points or null.

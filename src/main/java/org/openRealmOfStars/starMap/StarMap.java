@@ -3245,11 +3245,14 @@ public class StarMap {
   /**
    * Generate Multipath route based on blocked sectors on starmap.
    * @param simpleRoute Simple route from A to B
-   * @return Multipath route from A to B, otherwise null.
+   * @return Multipath route from A to B, otherwise original simple route.
    */
   public Route generateMultiPathRoute(final Route simpleRoute) {
     Route result = null;
-    Route origRoute = simpleRoute;
+    Route origRoute = simpleRoute.copy();
+    if (simpleRoute.getRawValue() <= 0) {
+      return simpleRoute;
+    }
     if (isBlocked((int) Math.round(origRoute.getEndX()),
         (int) Math.round(origRoute.getEndY()))) {
       int endX = (int) Math.round(origRoute.getEndX());
@@ -3270,6 +3273,10 @@ public class StarMap {
           break;
         }
       }
+    }
+    if (Math.round(origRoute.getX()) == Math.round(origRoute.getEndX())
+        && Math.round(origRoute.getY()) == Math.round(origRoute.getEndY())) {
+      return simpleRoute;
     }
     Coordinate blocked = origRoute.checkBlockedCoordinate(this);
     if (blocked == null) {

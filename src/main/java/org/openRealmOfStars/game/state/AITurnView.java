@@ -384,6 +384,10 @@ public class AITurnView extends BlackPanel {
         info.getMissions().add(mission);
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed()));
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
         // Mission assigned continue...
         return;
       }
@@ -438,6 +442,10 @@ public class AITurnView extends BlackPanel {
         info.getMissions().add(mission);
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed()));
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+              fleet.getRoute()));
+        }
         // Mission assigned continue...
         return;
       }
@@ -493,6 +501,10 @@ public class AITurnView extends BlackPanel {
               Route route = new Route(fleet.getX(), fleet.getY(),
                   mission.getX(), mission.getY(), fleet.getFleetFtlSpeed());
               fleet.setRoute(route);
+              if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+                fleet.setRoute(game.getStarMap().generateMultiPathRoute(
+                    fleet.getRoute()));
+              }
             }
             if (planet.getTotalPopulation() > 3 && planet.takeColonist()
                 && ships[colony].getFreeCargoColonists() > 0) {

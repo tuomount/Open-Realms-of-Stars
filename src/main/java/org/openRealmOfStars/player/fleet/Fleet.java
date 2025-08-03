@@ -922,6 +922,19 @@ public class Fleet {
   }
 
   /**
+   * Is Fleet spy fleet. Only one spy ship is required.
+   * @return true if spy fleet.
+   */
+  public boolean isSpyFleet() {
+    for (Ship ship : ships) {
+      if (ship.getEspionageBonus() > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Fleet has colony ship with working colony module and at least one colonist.
    * @return True if has working colony ship.
    */

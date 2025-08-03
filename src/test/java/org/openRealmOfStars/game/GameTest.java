@@ -28,6 +28,7 @@ import org.openRealmOfStars.game.state.AITurnView;
 import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.tech.TechType;
@@ -87,9 +88,21 @@ public class GameTest {
     int charted[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int combats[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int conquest[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int maxProd[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int militaryPower[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int tradeShips[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int spies[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     for (Planet planet : game.getStarMap().getPlanetList()) {
       if (planet.getPlanetOwnerIndex() != -1) {
         planets[planet.getPlanetOwnerIndex()]++;
+        int prod = 0;
+        prod = prod + planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
+        prod = prod + planet.getTotalProduction(Planet.PRODUCTION_METAL);
+        prod = prod + planet.getTotalProduction(Planet.PRODUCTION_CREDITS);
+        prod = prod + planet.getTotalProduction(Planet.PRODUCTION_RESEARCH);
+        if (prod > maxProd[planet.getPlanetOwnerIndex()]) {
+          maxProd[planet.getPlanetOwnerIndex()] = prod;
+        }
       }
       int maxSectors = game.getStarMap().getMaxX() * game.getStarMap().getMaxY();
       for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
@@ -108,6 +121,17 @@ public class GameTest {
           }
         }
         charted[j] = charting * 100 / maxSectors;
+        PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(j);
+        for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
+          Fleet fleet = info.getFleets().getByIndex(k);
+          militaryPower[j] = militaryPower[j] + fleet.getMilitaryValue();
+          if (fleet.isTradeFleet()) {
+            tradeShips[j] = tradeShips[j] + 1;
+          }
+          if (fleet.isSpyFleet()) {
+            spies[j] = spies[j] + 1;
+          }
+        }
       }
     }
     for (int i = 0; i < game.getStarMap().getHistory().numberOfTurns(); i++) {
@@ -145,10 +169,13 @@ public class GameTest {
       String resultText = i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
           + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
-          .toString() + ")"
+          .toString() + ")\n"
           + " - planets " + planets[i] + "/" + maxPlanets[i] + " - Charted: "
           + charted[i] + "% Combats: " + combats[i] + " Conquest: "
-          + conquest[i] + " Tech:" + tech+ " Scen:" + scenario;
+          + conquest[i] + " Tech:" + tech + " Max Prod: " + maxProd[i]
+          + " Military: " + militaryPower[i] + " Trade: " + tradeShips[i]
+          + " Spies: " + spies[i]
+          + "\nScen:" + scenario;
       if (game.getPlayers().getPlayerInfoByIndex(i).isElderRealm()) {
         resultText = resultText + " - Elder";
       }

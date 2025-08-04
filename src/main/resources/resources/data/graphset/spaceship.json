@@ -95,6 +95,11 @@
     "monsters": false
   },
   {
+    "id": "Mycolian",
+    "path": "mushroomships.png",
+    "monsters": false
+  },
+  {
     "id": "Default",
     "path": "humanships.png",
     "monsters": false

@@ -3573,6 +3573,132 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate mushroom leader name
+   * @param gender Leader gender
+   * @return mushroom leader name
+   */
+  private static String generateMushroom(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    Gender tmpGender = gender;
+    if (gender == Gender.NONE) {
+      if (DiceGenerator.getBoolean()) {
+        tmpGender = Gender.MALE;
+      } else {
+        tmpGender = Gender.FEMALE;
+      }
+    }
+    if (tmpGender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(10)) {
+        default:
+        case 0: sb.append("Common "); break;
+        case 1: sb.append("Dark "); break;
+        case 2: sb.append(""); break;
+        case 3: sb.append("Black "); break;
+        case 4: sb.append("Blue "); break;
+        case 5: sb.append("White "); break;
+        case 6: sb.append("Red "); break;
+        case 7: sb.append("Slipery "); break;
+        case 8: sb.append("Purple "); break;
+        case 9: sb.append("Brown "); break;
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Death"); break;
+        case 1: sb.append("Wrinkeled"); break;
+        case 2: sb.append("Many-Forked"); break;
+        case 3: sb.append("Ashy"); break;
+        case 4: sb.append("Sulphur"); break;
+        case 5: sb.append("Bracket"); break;
+        case 6: sb.append("Jelly"); break;
+        case 7: sb.append("Mug"); break;
+        case 8: sb.append("Crypt"); break;
+        case 9: sb.append("Mold"); break;
+        case 10: sb.append("Knight"); break;
+        case 11: sb.append("Toadskin"); break;
+        case 12: sb.append("Deadly"); break;
+        case 13: sb.append("Inky"); break;
+        case 14: sb.append("Butter"); break;
+        case 15: sb.append("Hoof"); break;
+        case 16: sb.append("Carbon"); break;
+        case 17: sb.append("Dung"); break;
+        case 18: sb.append("Brain"); break;
+        case 19: sb.append("Shield"); break;
+      }
+    }
+    if (tmpGender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(10)) {
+        default:
+        case 0: sb.append("Clustered "); break;
+        case 1: sb.append("Shaly "); break;
+        case 2: sb.append(""); break;
+        case 3: sb.append("Flaky "); break;
+        case 4: sb.append("Fairy "); break;
+        case 5: sb.append("Light "); break;
+        case 6: sb.append("Blushing "); break;
+        case 7: sb.append("Spring "); break;
+        case 8: sb.append("Copper "); break;
+        case 9: sb.append("Silver "); break;
+      }
+      switch (DiceGenerator.getRandom(20)) {
+        default:
+        case 0: sb.append("Amethyst"); break;
+        case 1: sb.append("Apricot"); break;
+        case 2: sb.append("Lemon"); break;
+        case 3: sb.append("Coral"); break;
+        case 4: sb.append("Cauliflower"); break;
+        case 5: sb.append("Rosy"); break;
+        case 6: sb.append("Inky"); break;
+        case 7: sb.append("Cinnamon"); break;
+        case 8: sb.append("Tube"); break;
+        case 9: sb.append("Birch"); break;
+        case 10: sb.append("Conifer"); break;
+        case 11: sb.append("Delicious"); break;
+        case 12: sb.append("Slime"); break;
+        case 13: sb.append("Sweet"); break;
+        case 14: sb.append("Cone"); break;
+        case 15: sb.append("Elegant"); break;
+        case 16: sb.append("Sunburst"); break;
+        case 17: sb.append("Waxy"); break;
+        case 18: sb.append("Bitter"); break;
+        case 19: sb.append("Orange"); break;
+        case 20: sb.append("Milk"); break;
+      }
+    }
+    sb.append(" ");
+    switch (DiceGenerator.getRandom(26)) {
+      default:
+      case 0: sb.append("Mushroom"); break;
+      case 1: sb.append("Lichen"); break;
+      case 2: sb.append("Polypore"); break;
+      case 3: sb.append("Spore"); break;
+      case 4: sb.append("Cup"); break;
+      case 5: sb.append("Fungus"); break;
+      case 6: sb.append("Twiglet"); break;
+      case 7: sb.append("Horn"); break;
+      case 8: sb.append("Spike"); break;
+      case 9: sb.append("Disc"); break;
+      case 10: sb.append("Saddle"); break;
+      case 11: sb.append("Disco"); break;
+      case 12: sb.append("Amanita"); break;
+      case 13: sb.append("Armillaria"); break;
+      case 14: sb.append("Auricularia"); break;
+      case 15: sb.append("Boletus"); break;
+      case 16: sb.append("Entoloma"); break;
+      case 17: sb.append("Mycena"); break;
+      case 18: sb.append("Pholiota"); break;
+      case 19: sb.append("Polyporus"); break;
+      case 20: sb.append("Russula"); break;
+      case 21: sb.append("Tapinella"); break;
+      case 22: sb.append("Deceiver"); break;
+      case 23: sb.append("Scalycap"); break;
+      case 24: sb.append("Deathcap"); break;
+      case 25: sb.append("Puffball"); break;
+      case 26: sb.append("Stalk"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate Leader name.
    * @param type NameGeneratorType
    * @param gender Leader gender
@@ -3581,7 +3707,7 @@ public final class NameGenerator {
   public static String generateName(final NameGeneratorType type,
       final Gender gender) {
     if (type == NameGeneratorType.ALL) {
-      switch (DiceGenerator.getRandom(16)) {
+      switch (DiceGenerator.getRandom(17)) {
         default:
         case 0: return generateScifiHumanName(gender);
         case 1: return generateSpaceOrc(gender);
@@ -3600,6 +3726,7 @@ public final class NameGenerator {
         case 14: return generateFemaleRobotName();
         case 15: return generateBigPlant(gender);
         case 16: return generateDwarvenName(gender);
+        case 17: return generateMushroom(gender);
       }
     }
     if (type == NameGeneratorType.SCIFI_HUMAN) {
@@ -3652,6 +3779,9 @@ public final class NameGenerator {
     }
     if (type == NameGeneratorType.DWARF) {
       return generateDwarvenName(gender);
+    }
+    if (type == NameGeneratorType.MUSHROOM) {
+      return generateMushroom(gender);
     }
     return "Noname";
   }

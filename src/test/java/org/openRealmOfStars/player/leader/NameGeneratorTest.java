@@ -429,6 +429,42 @@ public class NameGeneratorTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMushroomMale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.MUSHROOM,
+          Gender.MALE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMushroomFemale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.MUSHROOM,
+          Gender.FEMALE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMushroomNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.MUSHROOM,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testScifiHumanMale() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(NameGeneratorType.SCIFI_HUMAN,

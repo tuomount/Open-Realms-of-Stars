@@ -299,6 +299,13 @@ public final class MusicPlayer {
   /**
    * Sylvan Waltz By Otto Halmén CC-BY 3.0
    */
+  public static final MusicFileInfo DARK_AMBIENCE = new MusicFileInfo(
+      "Dark Ambience Loop", "Iwan Gabovitch",
+      "/resources/musics/Iwan Gabovitch - Dark Ambience Loop.ogg");
+
+  /**
+   * Sylvan Waltz By Otto Halmén CC-BY 3.0
+   */
   public static final MusicFileInfo SYLVAN_WALTZ = new MusicFileInfo(
       "Sylvan Waltz", "Otto Halmén",
       "/resources/musics/Otto Halmén - Sylvan Waltz.ogg");
@@ -322,7 +329,8 @@ public final class MusicPlayer {
       WALKING_WITH_POSEIDON, ABANDONED_STEEL_MILL, CONQUERORS, TROGL,
       OVE_MELAA_DIPLOMACY, FANTASY_CHOIR_2, PRESSURE, INTERPLANETARY_ODYSSEY,
       MALLOGA_BALLING, SET_FIRE_TO_REALITY, MENACE, BRAINDEAD,
-      TECHNODRIVE, SKY_PORTAL, GUITAR_SONG, CYBORG, DARK_INTRO, SYLVAN_WALTZ};
+      TECHNODRIVE, SKY_PORTAL, GUITAR_SONG, CYBORG, DARK_INTRO, SYLVAN_WALTZ,
+      DARK_AMBIENCE};
 
   /**
    * What music file is currently playing

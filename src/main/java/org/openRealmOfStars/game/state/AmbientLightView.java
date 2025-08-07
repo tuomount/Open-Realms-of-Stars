@@ -547,6 +547,9 @@ public class AmbientLightView extends BlackPanel
         if (effectName.equals(Bridge.EFFECT_JUNGLE)) {
           bridge.setNextCommand(BridgeCommandType.JUNGLE);
         }
+        if (effectName.equals(Bridge.EFFECT_FUNGUS)) {
+          bridge.setNextCommand(BridgeCommandType.FUNGUS);
+        }
       }
     }
     if (arg0.getActionCommand()

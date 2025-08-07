@@ -120,6 +120,10 @@ public class Bridge {
    */
   public static final String EFFECT_JUNGLE = "Jungle";
   /**
+   * Effect fungus
+   */
+  public static final String EFFECT_FUNGUS = "Fungus";
+  /**
    * Name for contact Hue bridge.
    */
   public static final String DEVICE_TYPE = "OROS AMBIENT LIGHTS";
@@ -245,7 +249,7 @@ public class Bridge {
         Bridge.EFFECT_BLUEISH_WHITE, Bridge.EFFECT_DARK_ORANGE,
         Bridge.EFFECT_DARK_RED, Bridge.EFFECT_PURPLE_DREAM,
         Bridge.EFFECT_ORANGE_BLINK, Bridge.EFFECT_ORANGE_BLUE,
-        Bridge.EFFECT_GREY_BLUE, Bridge.EFFECT_JUNGLE};
+        Bridge.EFFECT_GREY_BLUE, Bridge.EFFECT_JUNGLE, Bridge.EFFECT_FUNGUS};
     return effectList;
   }
 
@@ -1003,6 +1007,52 @@ public class Bridge {
     bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
     light = getCenterLight();
     makeLightEffect(light, hue, 255, bri);
+  }
+  /**
+   * Makes white, red and green floating effect
+   */
+  public void effectFungus() {
+    int centerGreen = 21845;
+    int centerYellow = 10012;
+    int centerRed = 250;
+    int amp = 6500;
+    int inc = 2;
+    int trickle = 100;
+    if (intense == 4) {
+      trickle = 60;
+      inc = 10;
+    }
+    if (intense == 3) {
+      trickle = 50;
+      inc = 8;
+    }
+    if (intense == 2) {
+      trickle = 40;
+      inc = 6;
+    }
+    if (intense == 1) {
+      trickle = 40;
+      inc = 4;
+    }
+    phase = phase + inc;
+    if (phase > 359) {
+      phase = phase - 359;
+    }
+    int hue = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    hue = hue + centerGreen;
+    int bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
+    Light light = getLeftLight();
+    makeLightEffect(light, hue, 255, bri);
+    hue = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    hue = hue + centerRed;
+    bri = 150 + (int) (Math.cos(Math.toRadians(phase * 2)) * trickle);
+    light = getRightLight();
+    makeLightEffect(light, hue, 255, bri);
+    hue = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    hue = hue + centerYellow;
+    bri = 210 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle / 2);
+    light = getCenterLight();
+    makeLightEffect(light, hue, 128, bri);
   }
   /**
    * Makes left light green, and right blueish space.

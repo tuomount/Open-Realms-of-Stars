@@ -129,7 +129,11 @@ public enum BridgeCommandType {
   /**
    * Jungle
    */
-  JUNGLE;
+  JUNGLE,
+  /**
+   * Fungus
+   */
+  FUNGUS;
 
   /**
    * Get BridgeCommandType as a string.
@@ -163,6 +167,7 @@ public enum BridgeCommandType {
     case ORANGE_BLUE: return "orange_blue";
     case GREYBLUE: return "greyblue";
     case JUNGLE: return "jungle";
+    case FUNGUS: return "fungus";
     default:
       throw new IllegalArgumentException("Missing bridge command name.");
     }

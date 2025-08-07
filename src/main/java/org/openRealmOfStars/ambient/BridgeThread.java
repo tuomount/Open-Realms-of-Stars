@@ -159,6 +159,8 @@ public class BridgeThread extends Thread {
         bridge.effectBlueSpace();
       } else if (command == BridgeCommandType.JUNGLE) {
         bridge.effectJungle();
+      }  else if (command == BridgeCommandType.FUNGUS) {
+        bridge.effectFungus();
       } else if (command == BridgeCommandType.SPACE_CONSOLE) {
         bridge.effectSpaceConsole(1);
       } else if (command == BridgeCommandType.SPACE_CONSOLE2) {

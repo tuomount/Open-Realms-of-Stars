@@ -311,17 +311,75 @@ public final class MusicPlayer {
       "/resources/musics/Otto Halmén - Sylvan Waltz.ogg");
 
   /**
+   * Joining Forces By Vitalezzz CC0
+   */
+  public static final MusicFileInfo JOINING_FORCES = new MusicFileInfo(
+      "Joining Forces", "Vitalezzz",
+      "/resources/musics/joining_forces.ogg");
+
+  /**
+   * The Final Frontier By Vitalezzz CC0
+   */
+  public static final MusicFileInfo FINAL_FRONTIER = new MusicFileInfo(
+      "The Final Frontier", "Vitalezzz",
+      "/resources/musics/the_final_frontier.ogg");
+
+  /**
+   * Hostile Fleet Interception By Vitalezzz CC0
+   */
+  public static final MusicFileInfo HOSTILE_FLEET_INTERCEPTION =
+      new MusicFileInfo("Hostile Fleet Interception", "Vitalezzz",
+      "/resources/musics/hostile_fleet_interception.ogg");
+
+  /**
+   * Hunter-class Lifeform By Vitalezzz CC0
+   */
+  public static final MusicFileInfo HUNTER_CLASS_LIFEFORM = new MusicFileInfo(
+      "Hunter-class Lifeform", "Vitalezzz",
+      "/resources/musics/hunter-class_lifeform.ogg");
+
+  /**
+   * Hyperspace By Vitalezzz CC0
+   */
+  public static final MusicFileInfo HYPERSPACE = new MusicFileInfo(
+      "Hyperspace", "Vitalezzz",
+      "/resources/musics/hyperspace.ogg");
+
+  /**
+   * Descent By Vitalezzz CC0
+   */
+  public static final MusicFileInfo DESCENT = new MusicFileInfo(
+      "Descent", "Vitalezzz",
+      "/resources/musics/descent.ogg");
+
+  /**
+   * Orbital Graveyard By Vitalezzz CC0
+   */
+  public static final MusicFileInfo ORBITAL_GRAVEYARD = new MusicFileInfo(
+      "Orbital Graveyard", "Vitalezzz",
+      "/resources/musics/orbital_graveyard.ogg");
+
+  /**
+   * Wobble By Trevor Lentz CC-BY-SA3.0
+   */
+  public static final MusicFileInfo WOBBLE = new MusicFileInfo(
+      "Wobble", "Trevor Lentz",
+      "/resources/musics/Wobble.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
       MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL,
       I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS, COSMIC_CREATURE,
-      PLANETARY_ASSAULT, SOLAR_SAIL};
+      PLANETARY_ASSAULT, SOLAR_SAIL, JOINING_FORCES, FINAL_FRONTIER,
+      HYPERSPACE, DESCENT, ORBITAL_GRAVEYARD};
   /**
    * List of music to played while combat
    */
   protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
-      THRUST_SEQUENCE, FIGHT_THEME01, LAW_IN_THE_CITY, UNSTOPPABLE_DRIVER};
+      THRUST_SEQUENCE, FIGHT_THEME01, LAW_IN_THE_CITY, UNSTOPPABLE_DRIVER,
+      HUNTER_CLASS_LIFEFORM, WOBBLE};
   /**
    * List of music to played in diplomacy
    */

@@ -644,4 +644,20 @@ Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 Solar Sail by Vitalezzz
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
+Joining Forces by Vitalezzz (CC0)
 
+The Final Frontier by Vitalezzz (CC0)
+
+Hostile Fleet Interception by Vitalezzz (CC0)
+
+Hunter-class Lifeform by Vitalezzz (CC0)
+
+Hyperspace by Vitalezzz (CC0)
+
+Descent by Vitalezzz (CC0)
+
+Orbital Graveyard by Vitalezzz (CC0)
+
+Wobble by
+Trevor Lentz https://open.spotify.com/artist/3AjWA7sRmeZSKqr7PoKL6k
+Licensed under CC BY SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/

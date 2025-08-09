@@ -75,6 +75,9 @@ public class GameTest {
     assertEquals("Test Text", list.get(1).getText());
   }
 
+  private static String addEmptySpace(String s, int n) {
+    return String.format("%-" + n + "s", s);  
+}
   /**
    * Print end game results for containing debug information.
    * @param testGameName Test game name
@@ -104,33 +107,35 @@ public class GameTest {
           maxProd[planet.getPlanetOwnerIndex()] = prod;
         }
       }
-      int maxSectors = game.getStarMap().getMaxX() * game.getStarMap().getMaxY();
       for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
         if (planet.isColonizeablePlanet(game.getPlayers()
             .getPlayerInfoByIndex(j))
             && planet.getPlanetOwnerIndex() == -1) {
           maxPlanets[j]++;
         }
-        int charting = 0;
-        for (int y = 0; y < game.getStarMap().getMaxY(); y++) {
-          for (int x = 0; x < game.getStarMap().getMaxX(); x++) {
-            if (game.getPlayers().getPlayerInfoByIndex(j).getSectorVisibility(
-                new Coordinate(x, y)) > PlayerInfo.UNCHARTED) {
-              charting++;
-            }
+      }
+    }
+    int maxSectors = game.getStarMap().getMaxX() * game.getStarMap().getMaxY();
+    for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
+      int charting = 0;
+      for (int y = 0; y < game.getStarMap().getMaxY(); y++) {
+        for (int x = 0; x < game.getStarMap().getMaxX(); x++) {
+          if (game.getPlayers().getPlayerInfoByIndex(j).getSectorVisibility(
+              new Coordinate(x, y)) > PlayerInfo.UNCHARTED) {
+            charting++;
           }
         }
-        charted[j] = charting * 100 / maxSectors;
-        PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(j);
-        for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
-          Fleet fleet = info.getFleets().getByIndex(k);
-          militaryPower[j] = militaryPower[j] + fleet.getMilitaryValue();
-          if (fleet.isTradeFleet()) {
-            tradeShips[j] = tradeShips[j] + 1;
-          }
-          if (fleet.isSpyFleet()) {
-            spies[j] = spies[j] + 1;
-          }
+      }
+      charted[j] = charting * 100 / maxSectors;
+      PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(j);
+      for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
+        Fleet fleet = info.getFleets().getByIndex(k);
+        militaryPower[j] = militaryPower[j] + fleet.getMilitaryValue();
+        if (fleet.isTradeFleet()) {
+          tradeShips[j]++;
+        }
+        if (fleet.isSpyFleet()) {
+          spies[j]++;
         }
       }
     }
@@ -166,20 +171,31 @@ public class GameTest {
       tech = tech * 10 / 6;
       String scenario = game.getPlayers().getPlayerInfoByIndex(i)
           .getStartingScenario().getName();
-      String resultText = i + ": "
-          + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
-          + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
-          .toString() + ")\n"
-          + " - planets " + planets[i] + "/" + maxPlanets[i] + " - Charted: "
-          + charted[i] + "% Combats: " + combats[i] + " Conquest: "
-          + conquest[i] + " Tech:" + tech + " Max Prod: " + maxProd[i]
-          + " Military: " + militaryPower[i] + " Trade: " + tradeShips[i]
-          + " Spies: " + spies[i]
-          + "\nScen:" + scenario;
+      StringBuilder sb = new StringBuilder();
+      sb.append(i);
+      sb.append(": ");
+      sb.append(game.getPlayers().getPlayerInfoByIndex(i).getEmpireName());
+      sb.append(" (");
+      sb.append(game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
+          .toString());
+      sb.append(")\n");
+      sb.append(addEmptySpace(" planets " + planets[i] + "/" + maxPlanets[i],
+          16));
+      sb.append(addEmptySpace("Charted: " + charted[i] + "%", 14));
+      sb.append(addEmptySpace("Military: " + militaryPower[i], 22));
+      sb.append(addEmptySpace("Combats: " + combats[i], 15));
+      sb.append(addEmptySpace("Conquest: " + conquest[i], 15));
+      sb.append(addEmptySpace("Tech: " + tech, 10));
+      sb.append(addEmptySpace("Max Prod: " + maxProd[i], 15));
+      sb.append(addEmptySpace("Trade: " + tradeShips[i], 15));
+      sb.append(addEmptySpace("Spies: " + spies[i], 15));
+      sb.append("\n");
+      sb.append("Scenario: ");
+      sb.append(scenario);
       if (game.getPlayers().getPlayerInfoByIndex(i).isElderRealm()) {
-        resultText = resultText + " - Elder";
+        sb.append(" - Elder");
       }
-      System.out.println(resultText);
+      System.out.println(sb.toString());
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
     System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");

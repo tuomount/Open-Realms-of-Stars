@@ -35,6 +35,8 @@ public final class StartingScenarioFactory {
 
   /** Random scenario ID. */
   public static final String RANDOM_ID = "RANDOM";
+  /** Regular Random scenario ID. */
+  public static final String REGULAR_RANDOM_ID = "REGULAR_RANDOM";
   /** The Singleton */
   private static final StartingScenarioFactory SINGLETON =
       new StartingScenarioFactory();
@@ -61,6 +63,14 @@ public final class StartingScenarioFactory {
   public static StartingScenario createRandom() {
     return new StartingScenario(RANDOM_ID,
         StartingScenarioType.REGULAR, "Random");
+  }
+  /**
+   * Create pseudo starting scenario for random.
+   * @return Starting scenario.
+   */
+  public static StartingScenario createRandomOnlyRegular() {
+    return new StartingScenario(REGULAR_RANDOM_ID,
+        StartingScenarioType.REGULAR, "Random regular planets");
   }
   /**
    * Create default starting scenario for JUnits.

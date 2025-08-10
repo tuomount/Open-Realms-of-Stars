@@ -462,15 +462,16 @@ public class RealmSetupView extends BlackPanel {
     label = new SpaceLabel("Realm's starting scenario:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
-    int numberOfScenarios = StartingScenarioFactory.getValues().length + 1;
+    int numberOfScenarios = StartingScenarioFactory.getValues().length + 2;
     boolean metalPlanetNotAllowed = false;
     if (config.getScoreLimitResearch() == 1) {
       numberOfScenarios--;
       metalPlanetNotAllowed = true;
     }
     StartingScenario[] scenarioList = new StartingScenario[numberOfScenarios];
-    scenarioList[0] = StartingScenarioFactory.createRandom();
-    int j = 0;
+    scenarioList[0] = StartingScenarioFactory.createRandomOnlyRegular();
+    scenarioList[1] = StartingScenarioFactory.createRandom();
+    int j = 1;
     for (StartingScenario scenario : StartingScenarioFactory.getSorted()) {
       if (!metalPlanetNotAllowed
           || !scenario.getId().equals(ScenarioIds.METAL_PLANET)

@@ -136,6 +136,48 @@ public class PlayerList {
     return scenarios.toArray(new StartingScenario[0]);
   }
   /**
+   * Get possible starting scenarios when using regular starting planets.
+   * @param race Space Race
+   * @param scenarioList Scenarios available.
+   * @return Array of starting scenarios
+   */
+  public static StartingScenario[] getPossibleStartingScenariosRegularPlanets(
+      final SpaceRace race, final StartingScenario[] scenarioList) {
+    ArrayList<StartingScenario> scenarios = new ArrayList<>();
+    PlayerInfo info = new PlayerInfo(race);
+    for (StartingScenario scenario : scenarioList) {
+      info.setStartingScenario(scenario);
+      if (scenario.getType() == StartingScenarioType.REGULAR) {
+        Planet planet = new Planet(new Coordinate(5, 5), "TempPlanet",
+            0, false);
+        planet.setRadiationLevel(RadiationType.NO_RADIATION);
+        planet.setTemperatureType(scenario.getTemperature());
+        planet.setWaterLevel(scenario.getWaterLevel());
+        planet.setGroundSize(scenario.getPlanetSize());
+        planet.generateGravityBasedOnSize();
+        if (scenario.getId().equals(ScenarioIds.METAL_PLANET)) {
+          planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
+        } else {
+          planet.generateWorldType();
+        }
+        int value = info.getPlanetSuitabilityValue(planet);
+        if (race.hasTrait(TraitIds.PHOTOSYNTHESIS)
+            && scenario.getWaterLevel() == WaterLevelType.DESERT
+            || scenario.getWaterLevel() == WaterLevelType.BARREN) {
+          value = 0;
+        }
+        if (race.hasTrait(TraitIds.ZERO_GRAVITY_BEING) && value > 0) {
+          // Zero gravity being lives on orbitals.
+          value = 100;
+        }
+        if (value >= 75) {
+          scenarios.add(scenario);
+        }
+      }
+    }
+    return scenarios.toArray(new StartingScenario[0]);
+  }
+  /**
    * Get possible starting scenarios when using random scenario.
    * @param race Space Race
    * @return Array of starting scenarios
@@ -143,6 +185,16 @@ public class PlayerList {
   public static StartingScenario[] getPossibleStartingScenarios(
       final SpaceRace race) {
     return getPossibleStartingScenarios(race,
+        StartingScenarioFactory.getValues());
+  }
+  /**
+   * Get possible starting scenarios when using random scenario.
+   * @param race Space Race
+   * @return Array of starting scenarios
+   */
+  public static StartingScenario[] getPossibleStartingScenariosRegular(
+      final SpaceRace race) {
+    return getPossibleStartingScenariosRegularPlanets(race,
         StartingScenarioFactory.getValues());
   }
   /**
@@ -173,6 +225,10 @@ public class PlayerList {
       if (scenario.getId().equals(StartingScenarioFactory.RANDOM_ID)) {
         scenario = DiceGenerator.pickRandom(
             getPossibleStartingScenarios(galaxyConfig.getRace(i)));
+      }
+      if (scenario.getId().equals(StartingScenarioFactory.REGULAR_RANDOM_ID)) {
+        scenario = DiceGenerator.pickRandom(
+            getPossibleStartingScenariosRegular(galaxyConfig.getRace(i)));
       }
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
           maxPlayers, i, boardIndex, scenario);

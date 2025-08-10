@@ -299,7 +299,7 @@ public class AiRealmSetupView extends BlackPanel {
     noHomeStart.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     noHomeStart.setAlignmentX(CENTER_ALIGNMENT);
     noHomeStart.addActionListener(listener);
-    noHomeStart.setSelected(true);
+    noHomeStart.setSelected(false);
     info.add(noHomeStart);
     info.add(Box.createRigidArea(new Dimension(2, 2)));
     utopiaStart = new SpaceCheckBox("Allow utopia starting scenario");
@@ -316,7 +316,7 @@ public class AiRealmSetupView extends BlackPanel {
     doomedStart.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     doomedStart.setAlignmentX(CENTER_ALIGNMENT);
     doomedStart.addActionListener(listener);
-    doomedStart.setSelected(true);
+    doomedStart.setSelected(false);
     info.add(doomedStart);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceButton btn = new SpaceButton("Edit details",

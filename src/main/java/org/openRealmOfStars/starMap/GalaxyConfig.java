@@ -290,7 +290,7 @@ public class GalaxyConfig {
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       setRace(i, SpaceRaceFactory.getRandomRace());
       setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
-      setStartingScenario(i, StartingScenarioFactory.createRandom());
+      setStartingScenario(i, StartingScenarioFactory.createRandomOnlyRegular());
       while (true) {
         Government gov = GovernmentFactory.getRandomGovernment();
         setPlayerGovernment(i, gov);

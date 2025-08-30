@@ -154,6 +154,19 @@ public class TechListTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testHighestMk() {
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk2", 2));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk3", 3));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk4", 4));
+    list.addTech(TechFactory.createDefenseTech("Solar armor Mk1", 3));
+    assertEquals(4, list.getHighestMk(TechType.Defense,"Armor plating Mk"));
+    assertEquals(1, list.getHighestMk(TechType.Defense,"Solar armor Mk"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechCombat() {
     TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(false, list.isUpgradeable(TechType.Combat));

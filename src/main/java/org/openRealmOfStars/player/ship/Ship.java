@@ -748,6 +748,21 @@ private int getRemainingEnergy(final int index) {
   }
 
   /**
+   * Is there a multi dimension shield
+   * @return true if there is functioning multi dimension shield
+   */
+  public boolean hasMultiDimensionShield() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && hasComponentEnergy(i)
+          && comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Are there any bombs left
    * @return true if there are weapons left
    */
@@ -1127,16 +1142,16 @@ private int increaseHitChanceByComponent() {
       break;
     }
     case GRAVITY_RIPPER: {
-      if (this.getShield() > weapon.getDamage()) {
+      if (this.hasMultiDimensionShield()) {
         return new ShipDamage(ShipDamage.NO_DAMAGE,
-            "Attack deflected to shield!");
+            "Multi dimesion shield protected!");
       } else if (this.getShield() == weapon.getDamage()) {
-        this.setShield(this.getShield() - 1);
+        this.setShield(this.getShield() - 2);
         return new ShipDamage(ShipDamage.NO_DAMAGE,
             "Attack lowered shield but was deflected!");
       }
       damage = weapon.getDamage() - this.getShield();
-      this.setShield(this.getShield() - 1);
+      this.setShield(this.getShield() - 2);
       if (damage <= this.getArmor()) {
         this.setArmor(this.getArmor() - damage);
         return new ShipDamage(ShipDamage.NO_DAMAGE,

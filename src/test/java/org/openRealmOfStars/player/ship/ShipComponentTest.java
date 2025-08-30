@@ -197,7 +197,7 @@ public class ShipComponentTest {
         + "\n"
         + "Multi-dimension shield works as a shield\n"
         + "and jammer making hitting more difficult.\n"
-        + "Also protects against tractor beam and ascension portal.\n",
+        + "Also protects against tractor beam and gravity ripper.\n",
         component.toString());
   }
 

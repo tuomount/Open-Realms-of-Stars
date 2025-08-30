@@ -328,6 +328,35 @@ public class TechList {
   }
 
   /**
+   * Get Highest Mk component. Please leave the number away when
+   * searching the component.
+   * @param type TechType
+   * @param techName Component name without number in Mk.
+   * @return Highest Mk found or zero
+   */
+  public int getHighestMk(final TechType type, final String techName) {
+    Tech[] list = getListForType(type);
+    int highest = 0;
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].getName().startsWith(techName)) {
+        String foundStr = list[i].getName();
+        int index = foundStr.indexOf("Mk");
+        if (index > 0) {
+          String mkStr = foundStr.substring(index + 2);
+          try {
+            int value = Integer.valueOf(mkStr).intValue();
+            if (value > highest) {
+              highest = value;
+            }
+          } catch (NumberFormatException e) {
+            ErrorLogger.log(e);
+          }
+        }
+      }
+    }
+    return highest;
+  }
+  /**
    * Get component difference in techs
    * @param tech Tech that other one owns
    * @param ownTech Tech we own

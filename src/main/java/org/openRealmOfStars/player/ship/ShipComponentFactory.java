@@ -1014,14 +1014,17 @@ public final class ShipComponentFactory {
   /**
    * Component Ascension portal scanner Mk1
    */
+  // TODO: Change these something else
   public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK1 = 205;
   /**
    * Component Ascension portal scanner Mk2
    */
+  // TODO: Change these something else
   public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK2 = 206;
   /**
    * Component Ascension portal scanner Mk3
    */
+  // TODO: Change these something else
   public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK3 = 207;
   /**
    * Combat thrusters Mk2

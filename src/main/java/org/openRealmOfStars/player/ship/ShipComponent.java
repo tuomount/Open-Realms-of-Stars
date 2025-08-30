@@ -537,7 +537,7 @@ public class ShipComponent {
       sb.append("\n\n");
       sb.append("Multi-dimension shield works as a shield\n"
           + "and jammer making hitting more difficult.\n"
-          + "Also protects against tractor beam and ascension portal.");
+          + "Also protects against tractor beam and gravity ripper.");
       sb.append("\n");
       break;
     }
@@ -781,10 +781,10 @@ public class ShipComponent {
       sb.append(getWeaponRange());
       sb.append("\nHit: ");
       sb.append(getHitChance());
-      sb.append("%, Shield stops");
+      sb.append("%, Multi dimension shield stops");
       sb.append("\n\n");
       sb.append("Short range weapon against armor and hull."
-          + "\nIf target has any shield gravity ripper is deflected.");
+          + "\nDeclines regular shield twice as fast.");
       sb.append("\n");
       break;
     }

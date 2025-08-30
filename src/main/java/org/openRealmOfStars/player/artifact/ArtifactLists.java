@@ -357,31 +357,32 @@ public class ArtifactLists {
         sb.append(" becomes expert on researching artifacts. ");
       }
       if (artifact.getArtifactType() == ArtifactType.MILITARY) {
-        boolean techGained = false;
-        String techName = "Gravity ripper Mk1";
-        String event = generateAncientTech(info, techName, 6, TechType.Combat,
-            ArtifactType.MILITARY);
+        String techName = "Gravity ripper Mk";
+        int techLevel = 1;
+        int highestMk = info.getTechList().getHighestMk(TechType.Combat,
+            techName);
+        switch (highestMk) {
+          default:
+          case 0: {
+            techName = "Gravity ripper Mk1";
+            techLevel = 6;
+            break;
+          }
+          case 1: {
+            techName = "Gravity ripper Mk2";
+            techLevel = 8;
+            break;
+          }
+          case 2: {
+            techName = "Gravity ripper Mk3";
+            techLevel = 10;
+            break;
+          }
+        }
+        String event = generateAncientTech(info, techName, techLevel,
+            TechType.Combat, ArtifactType.MILITARY);
         if (event != null) {
-          techGained = true;
           sb.append(event);
-        }
-        techName = "Gravity ripper Mk2";
-        if (!techGained) {
-          event = generateAncientTech(info, techName, 8, TechType.Combat,
-              ArtifactType.MILITARY);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
-          }
-        }
-        techName = "Gravity ripper Mk3";
-        if (!techGained) {
-          event = generateAncientTech(info, techName, 10, TechType.Combat,
-              ArtifactType.MILITARY);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
-          }
         }
       }
       if (artifact.getArtifactType() == ArtifactType.DEFENSE) {
@@ -393,106 +394,82 @@ public class ArtifactLists {
         }
       }
       if (artifact.getArtifactType() == ArtifactType.SHIPHULL) {
-        boolean techGained = false;
-        String techName = "Repair module Mk1";
-        String event = generateAncientTech(info, techName, 3, TechType.Hulls,
-            ArtifactType.SHIPHULL);
+        String techName = "Repair module Mk";
+        int techLevel = 1;
+        int highestMk = info.getTechList().getHighestMk(TechType.Hulls,
+            techName);
+        switch (highestMk) {
+          default:
+          case 0: {
+            techName = "Repair module Mk1";
+            techLevel = 3;
+            break;
+          }
+          case 1: {
+            techName = "Repair module Mk2";
+            techLevel = 5;
+            break;
+          }
+          case 2: {
+            techName = "Repair module Mk3";
+            techLevel = 7;
+            break;
+          }
+        }
+        String event = generateAncientTech(info, techName, techLevel,
+            TechType.Hulls, ArtifactType.SHIPHULL);
         if (event != null) {
-          techGained = true;
           sb.append(event);
-        }
-        if (!techGained) {
-          techName = "Repair module Mk2";
-          event = generateAncientTech(info, techName, 5, TechType.Hulls,
-              ArtifactType.SHIPHULL);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
-          }
-        }
-        if (!techGained) {
-          techName = "Repair module Mk3";
-          event = generateAncientTech(info, techName, 7, TechType.Hulls,
-              ArtifactType.SHIPHULL);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
-          }
         }
       }
       if (artifact.getArtifactType() == ArtifactType.ENERGY) {
         boolean techGained = false;
         String techName = "Tachyon source Mk3";
-        String event = generateAncientTech(info, techName, 5,
-            TechType.Propulsion, ArtifactType.ENERGY);
-        if (event != null) {
-          techGained = true;
-          sb.append(event);
-        }
-        if (!techGained) {
-          techName = "Antimatter source Mk3";
-          event = generateAncientTech(info, techName, 8,
+        if (!info.getTechList().hasTech(techName)) {
+          String event = generateAncientTech(info, techName, 5,
               TechType.Propulsion, ArtifactType.ENERGY);
           if (event != null) {
             techGained = true;
             sb.append(event);
+          }
+        }
+        if (!techGained) {
+          techName = "Antimatter source Mk3";
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 8,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
           }
         }
         if (!techGained) {
           techName = "Zero-point source Mk3";
-          event = generateAncientTech(info, techName, 10,
-              TechType.Propulsion, ArtifactType.ENERGY);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 10,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
           }
         }
       }
       if (artifact.getArtifactType() == ArtifactType.FACILITY) {
-        boolean techGained = false;
+        String techName = "Planetary ascension portal";
+        String event = generateAncientTech(info, techName, 9,
+            TechType.Improvements, ArtifactType.FACILITY);
+        if (event != null) {
+            sb.append(event);
+        }
+      }
+      if (artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
         String techName = "Starbase ascension portal";
         String event = generateAncientTech(info, techName, 7,
             TechType.Improvements, ArtifactType.FACILITY);
         if (event != null) {
-          techGained = true;
           sb.append(event);
-        }
-        if (!techGained) {
-          techName = "Planetary ascension portal";
-          event = generateAncientTech(info, techName, 9,
-              TechType.Improvements, ArtifactType.FACILITY);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
-          }
-        }
-      }
-      if (artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
-        boolean techGained = false;
-        String techName = "Ascension portal scanner Mk1";
-        String event = generateAncientTech(info, techName, 4,
-            TechType.Electrics, ArtifactType.ELECTRONIC);
-        if (event != null) {
-          techGained = true;
-          sb.append(event);
-        }
-        if (!techGained) {
-          techName = "Ascension portal scanner Mk2";
-          event = generateAncientTech(info, techName, 6,
-              TechType.Electrics, ArtifactType.ELECTRONIC);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
-          }
-        }
-        if (!techGained) {
-          techName = "Ascension portal scanner Mk3";
-          event = generateAncientTech(info, techName, 8,
-              TechType.Electrics, ArtifactType.ELECTRONIC);
-          if (event != null) {
-            techGained = true;
-            sb.append(event);
-          }
         }
       }
       int chance = researchedArtifacts.size() * 10;

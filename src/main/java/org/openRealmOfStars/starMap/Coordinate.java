@@ -209,6 +209,20 @@ public class Coordinate {
       return false;
     }
 
+    /**
+     * Check if two coordinate matches. Give coordinates separate values.
+     * @param x2 X coordinate to check
+     * @param y2 Y coordiante to check
+     * @return true if two coordinates are same, otherwise false
+     */
+    public boolean sameAs(final int x2, final int y2) {
+      if (x2 == this.getX()
+          && y2 == this.getY()) {
+        return true;
+      }
+      return false;
+    }
+
     @Override
     public int hashCode() {
       final int prime = 31;

@@ -188,6 +188,9 @@ public class StarMap {
    */
   private ArrayList<Planet> planetList;
 
+  /** Ascension Planet's coordinate */
+  private Coordinate ascensionPlanetCoordinate;
+
   /**
    * List of players
    */
@@ -346,6 +349,7 @@ public class StarMap {
     culture = new CulturePower[maxX][maxY];
     sunList = new ArrayList<>();
     planetList = new ArrayList<>();
+    ascensionPlanetCoordinate = new Coordinate(maxX / 2, maxY / 2);
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
     for (int i = 0; i < maxX; i++) {
       for (int j = 0; j < maxY; j++) {
@@ -653,6 +657,9 @@ public class StarMap {
         Planet planet = new PlanetRepository().restorePlanet(dis, players);
         planetList.add(planet);
       }
+      int ascensionX = dis.readInt();
+      int ascensionY = dis.readInt();
+      ascensionPlanetCoordinate = new Coordinate(ascensionX, ascensionY);
       setAllNewsEnabled(dis.readBoolean());
       NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
@@ -729,6 +736,8 @@ public class StarMap {
     for (int i = 0; i < planetList.size(); i++) {
       new PlanetRepository().savePlanet(dos, planetList.get(i));
     }
+    dos.writeInt(getAscensionPlanetCoordinate().getX());
+    dos.writeInt(getAscensionPlanetCoordinate().getY());
     dos.writeBoolean(allNewsEnabled);
     NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
     newsCorpRepo.saveNewsCorp(dos, newsCorpData);
@@ -4218,6 +4227,20 @@ public class StarMap {
     return null;
   }
 
+  /**
+   * Get Ascension planet coordinate
+   * @return Coordinate
+   */
+  public Coordinate getAscensionPlanetCoordinate() {
+    return ascensionPlanetCoordinate;
+  }
+  /**
+   * Set Ascension planet coordinate.
+   * @param coord Ascension planet coordinate
+   */
+  public void setAscensionPlanetCoordinate(final Coordinate coord) {
+    this.ascensionPlanetCoordinate = coord;
+  }
   /**
    * Find closest sector from certain coordinate for certain realm.
    * This sector must be visible for searcher.

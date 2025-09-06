@@ -151,53 +151,66 @@ public class StarMapGenerator {
     // Rogue planets
     generateRoguePlanets(config);
     // Planetary Ascension portal
-    // TODO: Implment later
-    /*int ascensionPortalX = -1;
+    // TODO: Implement later
+    int ascensionPortalX = -1;
     int ascensionPortalY = -1;
     for (int i = 0; i < 100; i++) {
       Planet planet = DiceGenerator.pickRandom(starMap.getPlanetList());
-      if (planet.isGasGiant()) {
+      if (!isValidAscensionPlanet(planet)) {
         continue;
       }
-      for (int j = 0; j < 4; j++) {
-        int mx = 0;
-        int my = 0;
-        if (j == 0) {
-          my = -1;
-        }
-        if (j == 1) {
-          mx = 1;
-        }
-        if (j == 2) {
-          my = 1;
-        }
-        if (j == 3) {
-          mx = -1;
-        }
-        int x = planet.getX() + mx;
-        int y = planet.getY() + my;
-        if (starMap.isValidCoordinate(x, y)
-            && starMap.getTileIndex(x, y) == 0) {
-          ascensionPortalX = x;
-          ascensionPortalY = y;
-        }
-        if (ascensionPortalX != -1 && DiceGenerator.getBoolean()) {
-          break;
-        }
-      }
+      ascensionPortalX = planet.getX();
+      ascensionPortalY = planet.getY();
       if (ascensionPortalX != -1) {
         break;
       }
-    }*/
+    }
+    starMap.setAscensionPlanetCoordinate(new Coordinate(ascensionPortalX,
+      ascensionPortalY));
     generateDeepSpaceAnchors(config);
     generateSpaceAnomalies(config);
-    // TODO This is for ascension victory
-    /*generateAscensionPortal(ascensionPortalX, ascensionPortalY);
-    smoothAscensionVeins();
-    revealWholeMap(getCurrentPlayerInfo());*/
+    /* TODO This is for ascension victory
+     This should be called after gravity ripper has been
+     applied to black hole. These are here for testing generation of ascension
+     veins.
+     */
+    //generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    //smoothAscensionVeins();
+    //starMap.revealWholeMap(players.getCurrentPlayerInfo());
     return starMap;
   }
 
+  /**
+   * Check if planet is valid for ascension planet.
+   * This basically mean that all space race can at least in theory
+   * colonize this planet.
+   * @param planet Planet to check
+   * @return True if valid for ascension planet.
+   */
+  private static boolean isValidAscensionPlanet(final Planet planet) {
+    if (planet.isGasGiant()) {
+      return false;
+    }
+    if (planet.getTemperatureType() == TemperatureType.FROZEN) {
+      return false;
+    }
+    if (planet.getTemperatureType() == TemperatureType.ARCTIC) {
+      return false;
+    }
+    if (planet.getTemperatureType() == TemperatureType.INFERNO) {
+      return false;
+    }
+    if (planet.getTemperatureType() == TemperatureType.VOLCANIC) {
+      return false;
+    }
+    if (planet.getWaterLevel() == WaterLevelType.BARREN) {
+      return false;
+    }
+    if (planet.getRadiationLevel() == RadiationType.VERY_HIGH_RAD) {
+      return false;
+    }
+    return true;
+  }
   /**
    * Create realm to planet. This will add require buildings, workers
    * and ships. This will also add message about new realm starting.
@@ -424,6 +437,7 @@ public class StarMapGenerator {
    * Smooth ascension veins.
    */
   public void smoothAscensionVeins() {
+    Coordinate coord = starMap.getAscensionPlanetCoordinate();
     for (int y = 0; y < getMaxY(); y++) {
       for (int x = 0; x < getMaxX(); x++) {
         boolean north = false;
@@ -437,7 +451,7 @@ public class StarMapGenerator {
           if (starMap.isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
             if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
               north = true;
             }
           }
@@ -446,7 +460,7 @@ public class StarMapGenerator {
           if (starMap.isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
             if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
               south = true;
             }
           }
@@ -455,7 +469,7 @@ public class StarMapGenerator {
           if (starMap.isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
             if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
               west = true;
             }
           }
@@ -464,7 +478,7 @@ public class StarMapGenerator {
           if (starMap.isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
             if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
               east = true;
             }
           }
@@ -558,8 +572,8 @@ public class StarMapGenerator {
           break;
         }
       } while (!search.isLastMove());
-      starMap.setTile(x, y, Tiles.getTileByName(
-          TileNames.ASCENSION_PORTAL1).getIndex());
+/*      starMap.setTile(x, y, Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex());*/
     }
   }
 

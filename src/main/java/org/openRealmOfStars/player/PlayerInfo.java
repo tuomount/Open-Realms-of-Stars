@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  * Copyright (C) 2024 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -59,7 +59,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
-import org.openRealmOfStars.starMap.event.RandomEvent;
+import org.openRealmOfStars.starMap.event.karmaEvents.RandomEvent;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;

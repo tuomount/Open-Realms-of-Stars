@@ -1,7 +1,6 @@
-package org.openRealmOfStars.starMap.event;
+package org.openRealmOfStars.starMap.event.ascensionEvents;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2024 BottledByte
  * Copyright (C) 2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -18,26 +17,30 @@ package org.openRealmOfStars.starMap.event;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import org.openRealmOfStars.starMap.StarMap;
-
-/** Interface for StarMap-wide event system. */
-public interface GalaxyEvents {
-
+/**
+ * Enumeration of events that move closer to ascension victory.
+ */
+public enum AscensionEventType {
   /**
-   * Handle galaxy events
-   * @param map StarMap
+   * Realm researches single artifact
    */
-  void handleEvents(StarMap map);
-
+  RESEARCH_ARTIFACT,
   /**
-   * Save galaxy events to data output stream.
-   * Remember to implment also constructor which reads from DataInputStream.
-   * @param dos DataOutputStream
-   * @throws IOException If writing fails.
+   * Realm has researched gravity ripper while researching artifacts.
    */
-  void save(final DataOutputStream dos) throws IOException;
-
+  GAIN_GRAVITY_RIPPER,
+  /**
+   * Realm has researched one the ascension portal tech while researching
+   *  artifacts.
+   */
+  GAIN_ASCENSION_PORTAL_TECH,
+  /**
+   * Realm has activated gravity ripper near black hole. Ascension planet
+   * has been revealed.
+   */
+  ACTIVATE_GRAVITY_RIPPER,
+  /**
+   * Realm has built ascension portal, almost done.
+   */
+  ACTIVATE_ASCENSION_PORTAL
 }

@@ -43,7 +43,7 @@ import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
-import org.openRealmOfStars.starMap.event.KarmaType;
+import org.openRealmOfStars.starMap.event.karmaEvents.KarmaType;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;

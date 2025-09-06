@@ -19,8 +19,6 @@ package org.openRealmOfStars.starMap;
 
 import java.util.ArrayList;
 
-import org.openRealmOfStars.ai.pathfinding.AStarSearch;
-import org.openRealmOfStars.ai.pathfinding.PathPoint;
 import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -151,7 +149,6 @@ public class StarMapGenerator {
     // Rogue planets
     generateRoguePlanets(config);
     // Planetary Ascension portal
-    // TODO: Implement later
     int ascensionPortalX = -1;
     int ascensionPortalY = -1;
     for (int i = 0; i < 100; i++) {
@@ -433,149 +430,7 @@ public class StarMapGenerator {
     playerInfo.getMsgList().addNewMessage(msgStart);
   }
 
-  /**
-   * Smooth ascension veins.
-   */
-  public void smoothAscensionVeins() {
-    Coordinate coord = starMap.getAscensionPlanetCoordinate();
-    for (int y = 0; y < getMaxY(); y++) {
-      for (int x = 0; x < getMaxX(); x++) {
-        boolean north = false;
-        boolean west = false;
-        boolean east = false;
-        boolean south = false;
-        Tile tile = Tiles.getTileByIndex(starMap.getTileIndex(x, y));
-        if (tile.isAscensionVein()) {
-          int mx = x;
-          int my = y - 1;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
-              north = true;
-            }
-          }
-          mx = x;
-          my = y + 1;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
-              south = true;
-            }
-          }
-          mx = x - 1;
-          my = y;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
-              west = true;
-            }
-          }
-          mx = x + 1;
-          my = y;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
-              east = true;
-            }
-          }
-          tile = Tiles.getTileByIndex(starMap.getTileIndex(x, y));
-          if (north && south && west && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
-          } else if (north && south && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1);
-          } else if (north && east && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1);
-          } else if (north && south && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1);
-          } else if (south && east && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1);
-          } else if (north && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1);
-          } else if (north && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NW1);
-          } else if (south && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SW1);
-          } else if (south && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1);
-          } else if (west && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_WE1);
-          } else if (north && south) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NS1);
-          }
-          starMap.setTile(x, y, tile);
-        }
-      }
-    }
-  }
 
-  /**
-   * Generate Ascension portal to map and ascension veins.
-   *
-   * @param x X coordinate for portal
-   * @param y Y Coordinate for portal
-   */
-  public void generateAscensionPortal(final int x, final int y) {
-    int cx = getMaxX() / 2;
-    int cy = getMaxY() / 2;
-    int[] sax = new int[4];
-    int[] say = new int[4];
-    sax[0] = cx;
-    say[0] = cy - 2;
-    sax[1] = cx + 2;
-    say[1] = cy;
-    sax[2] = cx;
-    say[2] = cy + 2;
-    sax[3] = cx - 2;
-    say[3] = cy;
-    int best = -1;
-    double bestDist = 999;
-    for (int i = 0; i < sax.length; i++) {
-      Coordinate target = new Coordinate(x, y);
-      Coordinate start = new Coordinate(sax[i], say[i]);
-      double dist = target.calculateDistance(start);
-      if (dist < bestDist) {
-        best = i;
-        bestDist = dist;
-      }
-    }
-    int sx = sax[best];
-    int sy = say[best];
-    Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
-    starMap.setTile(sx, sy, tile);
-    starMap.setSquareInfo(sx, sy, new SquareInfo(
-        SquareInfo.TYPE_ASCENSION_VEIN, 0));
-    AStarSearch search = new AStarSearch(starMap, sx, sy, x, y);
-    if (search.doSquareSearch()) {
-      search.doSquareRoute();
-      int count = 0;
-      do {
-        count++;
-        PathPoint point = search.getMove();
-        if (point != null) {
-          starMap.setTile(point.getX(), point.getY(), tile.getIndex());
-          starMap.setSquareInfo(point.getX(), point.getY(), new SquareInfo(
-              SquareInfo.TYPE_ASCENSION_VEIN, count));
-          search.nextMove();
-          if (search.isLastMove()) {
-            point = search.getMove();
-            if (point != null) {
-              starMap.setTile(point.getX(), point.getY(), tile.getIndex());
-              starMap.setSquareInfo(point.getX(), point.getY(), new SquareInfo(
-                  SquareInfo.TYPE_ASCENSION_VEIN, count));
-            }
-          }
-        } else {
-          break;
-        }
-      } while (!search.isLastMove());
-/*      starMap.setTile(x, y, Tiles.getTileByName(
-          TileNames.ASCENSION_PORTAL1).getIndex());*/
-    }
-  }
 
   /**
    * Reinit whole starmap.
@@ -1798,45 +1653,6 @@ public class StarMapGenerator {
       Tile anomaly = Tiles.getTileByName(TileNames.SPACE_ANOMALY_NEWS_STATION);
       starMap.setTile(bx, by, anomaly);
     }
-    // TODO This is for ascension victory
-    //generateAscensionPortal(ascensionPortalX, ascensionPortalY);
-/*    int ascensionPortalX = -1;
-    int ascensionPortalY = -1;
-    if (anchors.size() > 0) {
-      for (int i = 0; i < 100; i++) {
-        Coordinate coordinate = DiceGenerator.pickRandom(anchors);
-        for (int j = 0; j < 4; j++) {
-          int mx = 0;
-          int my = 0;
-          if (j == 0) {
-            my = -1;
-          }
-          if (j == 1) {
-            mx = 1;
-          }
-          if (j == 2) {
-            my = 1;
-          }
-          if (j == 3) {
-            mx = -1;
-          }
-          int x = coordinate.getX() + mx;
-          int y = coordinate.getY() + my;
-          if (starMap.isValidCoordinate(x, y)
-              && starMap.getTileIndex(x, y) == 0) {
-            ascensionPortalX = x;
-            ascensionPortalY = y;
-          }
-          if (ascensionPortalY != -1 && DiceGenerator.getBoolean()) {
-            break;
-          }
-        }
-        if (ascensionPortalY != -1) {
-          break;
-        }
-      }
-    }*/
-
   }
 
   /**

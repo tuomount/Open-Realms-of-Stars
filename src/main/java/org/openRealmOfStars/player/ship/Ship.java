@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -1452,6 +1452,21 @@ private int increaseHitChanceByComponent() {
     return false;
   }
 
+  /**
+   * Check if ship has gravity ripper.
+   * @return True, if it has.
+   */
+  public boolean hasGravityRipper() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.GRAVITY_RIPPER
+          && hasComponentEnergy(i) && getColonist() > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Get Troop power
    * @return Get Total troop power where improvements are taken to count

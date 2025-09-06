@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap.event;
+package org.openRealmOfStars.starMap.event.karmaEvents;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2019-2020 Tuomo Untinen

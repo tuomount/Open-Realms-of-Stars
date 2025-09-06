@@ -1,8 +1,8 @@
-package org.openRealmOfStars.starMap.event;
+package org.openRealmOfStars.starMap.event.karmaEvents;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2024 BottledByte
- * Copyright (C) 2019-2021 Tuomo Untinen
+ * Copyright (C) 2019-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.event.GalaxyEvents;
 import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
@@ -71,11 +72,7 @@ public class KarmaEvents implements GalaxyEvents {
     badKarmaCount = dis.readInt();
   }
 
-  /**
-   * Save to data stream
-   * @param dos DataOutputStream
-   * @throws IOException Serialization error
-   */
+  @Override
   public void save(final DataOutputStream dos) throws IOException {
     dos.writeByte(karmaSelection.getIndex());
     dos.writeByte(karmaSpeed);

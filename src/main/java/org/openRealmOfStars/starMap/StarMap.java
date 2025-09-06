@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,6 +26,8 @@ import org.openRealmOfStars.ai.mission.Mission;
 import org.openRealmOfStars.ai.mission.MissionHandling;
 import org.openRealmOfStars.ai.mission.MissionPhase;
 import org.openRealmOfStars.ai.mission.MissionType;
+import org.openRealmOfStars.ai.pathfinding.AStarSearch;
+import org.openRealmOfStars.ai.pathfinding.PathPoint;
 import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.ai.research.Research;
 import org.openRealmOfStars.game.Game;
@@ -61,8 +63,10 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
-import org.openRealmOfStars.starMap.event.KarmaEvents;
-import org.openRealmOfStars.starMap.event.KarmaType;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEventType;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
+import org.openRealmOfStars.starMap.event.karmaEvents.KarmaEvents;
+import org.openRealmOfStars.starMap.event.karmaEvents.KarmaType;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
@@ -283,6 +287,8 @@ public class StarMap {
 
   /** Karma event system */
   private KarmaEvents karmaEvents;
+  /** Ascension event system */
+  private AscensionEvents ascensionEvents;
 
   /**
    * Flag for tutorial enabled
@@ -350,6 +356,7 @@ public class StarMap {
     sunList = new ArrayList<>();
     planetList = new ArrayList<>();
     ascensionPlanetCoordinate = new Coordinate(maxX / 2, maxY / 2);
+    ascensionEvents = new AscensionEvents();
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
     for (int i = 0; i < maxX; i++) {
       for (int j = 0; j < maxY; j++) {
@@ -611,6 +618,7 @@ public class StarMap {
       setScorePopulation(dis.readInt());
       setPirateDifficulty(PirateDifficultLevel.getLevelByInt(dis.read()));
       karmaEvents = new KarmaEvents(dis);
+      ascensionEvents = new AscensionEvents(dis);
       maxX = dis.readInt();
       maxY = dis.readInt();
       culture = new CulturePower[maxX][maxY];
@@ -2655,6 +2663,151 @@ public class StarMap {
   }
 
   /**
+   * Smooth ascension veins.
+   */
+  public void smoothAscensionVeins() {
+    Coordinate coord = getAscensionPlanetCoordinate();
+    for (int y = 0; y < getMaxY(); y++) {
+      for (int x = 0; x < getMaxX(); x++) {
+        boolean north = false;
+        boolean west = false;
+        boolean east = false;
+        boolean south = false;
+        Tile tile = Tiles.getTileByIndex(getTileIndex(x, y));
+        if (tile.isAscensionVein()) {
+          int mx = x;
+          int my = y - 1;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
+              north = true;
+            }
+          }
+          mx = x;
+          my = y + 1;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
+              south = true;
+            }
+          }
+          mx = x - 1;
+          my = y;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
+              west = true;
+            }
+          }
+          mx = x + 1;
+          my = y;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal() || coord.sameAs(mx, my)) {
+              east = true;
+            }
+          }
+          tile = Tiles.getTileByIndex(getTileIndex(x, y));
+          if (north && south && west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+          } else if (north && south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1);
+          } else if (north && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1);
+          } else if (north && south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1);
+          } else if (south && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1);
+          } else if (north && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1);
+          } else if (north && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NW1);
+          } else if (south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SW1);
+          } else if (south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1);
+          } else if (west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_WE1);
+          } else if (north && south) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NS1);
+          }
+          setTile(x, y, tile);
+        }
+      }
+    }
+  }
+
+
+  /**
+   * Generate Ascension portal to map and ascension veins.
+   *
+   * @param x X coordinate for portal
+   * @param y Y Coordinate for portal
+   */
+  public void generateAscensionPortal(final int x, final int y) {
+    int cx = getMaxX() / 2;
+    int cy = getMaxY() / 2;
+    int[] sax = new int[4];
+    int[] say = new int[4];
+    sax[0] = cx;
+    say[0] = cy - 2;
+    sax[1] = cx + 2;
+    say[1] = cy;
+    sax[2] = cx;
+    say[2] = cy + 2;
+    sax[3] = cx - 2;
+    say[3] = cy;
+    int best = -1;
+    double bestDist = 999;
+    for (int i = 0; i < sax.length; i++) {
+      Coordinate target = new Coordinate(x, y);
+      Coordinate start = new Coordinate(sax[i], say[i]);
+      double dist = target.calculateDistance(start);
+      if (dist < bestDist) {
+        best = i;
+        bestDist = dist;
+      }
+    }
+    int sx = sax[best];
+    int sy = say[best];
+    Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+    setTile(sx, sy, tile);
+    setSquareInfo(sx, sy, new SquareInfo(
+        SquareInfo.TYPE_ASCENSION_VEIN, 0));
+    AStarSearch search = new AStarSearch(this, sx, sy, x, y);
+    if (search.doSquareSearch()) {
+      search.doSquareRoute();
+      int count = 0;
+      do {
+        count++;
+        PathPoint point = search.getMove();
+        if (point != null) {
+          setTile(point.getX(), point.getY(), tile.getIndex());
+          setSquareInfo(point.getX(), point.getY(), new SquareInfo(
+              SquareInfo.TYPE_ASCENSION_VEIN, count));
+          search.nextMove();
+          if (search.isLastMove()) {
+            point = search.getMove();
+            if (point != null) {
+              setTile(point.getX(), point.getY(), tile.getIndex());
+              setSquareInfo(point.getX(), point.getY(), new SquareInfo(
+                  SquareInfo.TYPE_ASCENSION_VEIN, count));
+            }
+          }
+        } else {
+          break;
+        }
+      } while (!search.isLastMove());
+/*      starMap.setTile(x, y, Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex());*/
+    }
+  }
+
+  /**
    * Show message based on tiles.
    * @param info PlayerInfo who is exploring
    * @param sx X coordinate
@@ -2911,6 +3064,45 @@ public class StarMap {
     }
 
   }
+
+  /**
+   * Ascension event on tile happens.
+   * @param info PlayerInfo
+   * @param sx X coordinate
+   * @param sy Y coordinate
+   * @param fleet Fleet
+   */
+  private void ascensionEventsOnTiles(final PlayerInfo info, final int sx,
+      final int sy, final Fleet fleet) {
+    Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
+    if (tile.isBlackhole()
+        && fleet.getCoordinate().calculateDistance(new Coordinate(sx, sy)) == 1
+        && fleet.hasGravityRipper()) {
+      Message msg = new Message(MessageType.RESEARCH,
+          "Gravity ripper activated near the galaxy's black hole. This massive"
+          + " weapon rips open ascension vein which now points to planet where"
+          + " ascension portal can be built. This also changes fabric of galaxy"
+          + " and unusual events beyond this galaxy are more likely to happen.",
+          Icons.getIconByName(Icons.ICON_RESEARCH));
+      msg.setCoordinate(new Coordinate(sx, sy));
+      info.getMsgList().addNewMessage(msg);
+      ascensionEvents.eventHappens(AscensionEventType.ACTIVATE_GRAVITY_RIPPER);
+      generateAscensionPortal(getAscensionPlanetCoordinate().getX(),
+          getAscensionPlanetCoordinate().getY());
+      smoothAscensionVeins();
+    }
+    if (tile.isAscensionPortal()
+        && fleet.getCoordinate().calculateDistance(
+            new Coordinate(sx, sy)) == 0) {
+      Message msg = new Message(MessageType.RESEARCH,
+          "Fleet passes through the ascension portal. First fleet is the"
+          + " pioneer and rest of the fleets follow soon it.",
+          Icons.getIconByName(Icons.ICON_RESEARCH));
+      msg.setCoordinate(new Coordinate(sx, sy));
+      info.getMsgList().addNewMessage(msg);
+      //TODO End game here.
+    }
+  }
   /**
    * Draw visibility line and set visibility info for one player
    * @param info PlayerInfo
@@ -2948,6 +3140,9 @@ public class StarMap {
     info.setSectorVisibility(sx, sy, PlayerInfo.VISIBLE);
     tutorialBasedOnTiles(info, sx, sy);
     rareTechBasedOnTiles(info, sx, sy);
+    if (fleet != null) {
+      ascensionEventsOnTiles(info, sx, sy, fleet);
+    }
     if (detectValue > 0) {
       info.setSectorCloakingDetection(sx, sy, detectValue);
     }
@@ -2971,6 +3166,9 @@ public class StarMap {
         info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
         tutorialBasedOnTiles(info, nx, ny);
         rareTechBasedOnTiles(info, nx, ny);
+        if (fleet != null) {
+          ascensionEventsOnTiles(info, nx, ny, fleet);
+        }
         if (detectValue > 0
             && info.getSectorCloakDetection(nx, ny) < detectValue) {
           info.setSectorCloakingDetection(nx, ny, detectValue);

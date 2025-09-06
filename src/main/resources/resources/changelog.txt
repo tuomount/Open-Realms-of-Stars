@@ -1,12 +1,21 @@
 - New features and updates -
 
 * Adds more spacing to UI.
-* New font colors for checkboxes
+* Redesign ship design view.
+* New font colors for check boxes
 * Adds delete saved game feature.
+* Adds 12 new music.
+* Adds new feature for space race: Spore colonization
+* Adds new space race: Mycolians, plants that have spore colonization
+* Starting galaxy settings are more beginner friendlier.
+* New long distance routing. It can avoid collisions with stars and gas giants.
+
 
 - Bugfixes -
 
 * Fix bug where loading saved game did not warn if new save game is going to overwrite old game.
+* Fixed bug where repair module was not calculated as armor.
+* Fixed AI valuation for scientific achievements to build on planet.
 
 # Open Realm of Stars 0.27.0
 

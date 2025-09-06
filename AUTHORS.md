@@ -658,6 +658,14 @@ Descent by Vitalezzz (CC0)
 
 Orbital Graveyard by Vitalezzz (CC0)
 
+The Last Stand by Vitalezzz (CC0)
+
+The Call For Unity by Vitalezzz (CC0)
+
+Space Elevator by Vitalezzz (CC0)
+
+Outworld by Vitalezzz (CC0)
+
 Wobble by
 Trevor Lentz https://open.spotify.com/artist/3AjWA7sRmeZSKqr7PoKL6k
 Licensed under CC BY SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/

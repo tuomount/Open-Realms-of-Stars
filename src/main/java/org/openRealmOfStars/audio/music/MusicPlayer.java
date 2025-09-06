@@ -353,11 +353,39 @@ public final class MusicPlayer {
       "/resources/musics/descent.ogg");
 
   /**
+   * The Last Stand By Vitalezzz CC0
+   */
+  public static final MusicFileInfo LAST_STAND = new MusicFileInfo(
+      "The Last Stand", "Vitalezzz",
+      "/resources/musics/the_last_stand.ogg");
+
+  /**
    * Orbital Graveyard By Vitalezzz CC0
    */
   public static final MusicFileInfo ORBITAL_GRAVEYARD = new MusicFileInfo(
       "Orbital Graveyard", "Vitalezzz",
       "/resources/musics/orbital_graveyard.ogg");
+
+  /**
+   * The Call for Unity By Vitalezzz CC0
+   */
+  public static final MusicFileInfo CALL_FOR_UNITY = new MusicFileInfo(
+      "The Call For Unity", "Vitalezzz",
+      "/resources/musics/the_call_for_unity.ogg");
+
+  /**
+   * Space Elevator By Vitalezzz CC0
+   */
+  public static final MusicFileInfo SPACE_ELEVATOR = new MusicFileInfo(
+      "Space Elevator", "Vitalezzz",
+      "/resources/musics/space_elevator.ogg");
+
+  /**
+   * Outworld By Vitalezzz CC0
+   */
+  public static final MusicFileInfo OUTWORLD = new MusicFileInfo(
+      "Outworld", "Vitalezzz",
+      "/resources/musics/outworld.ogg");
 
   /**
    * Wobble By Trevor Lentz CC-BY-SA3.0
@@ -373,13 +401,13 @@ public final class MusicPlayer {
       MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL,
       I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS, COSMIC_CREATURE,
       PLANETARY_ASSAULT, SOLAR_SAIL, JOINING_FORCES, FINAL_FRONTIER,
-      HYPERSPACE, DESCENT, ORBITAL_GRAVEYARD};
+      HYPERSPACE, DESCENT, ORBITAL_GRAVEYARD, LAST_STAND, CALL_FOR_UNITY};
   /**
    * List of music to played while combat
    */
   protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
       THRUST_SEQUENCE, FIGHT_THEME01, LAW_IN_THE_CITY, UNSTOPPABLE_DRIVER,
-      HUNTER_CLASS_LIFEFORM, WOBBLE};
+      HUNTER_CLASS_LIFEFORM, WOBBLE, OUTWORLD};
   /**
    * List of music to played in diplomacy
    */

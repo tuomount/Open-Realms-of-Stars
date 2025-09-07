@@ -171,9 +171,9 @@ public class StarMapGenerator {
      applied to black hole. These are here for testing generation of ascension
      veins.
      */
-    //generateAscensionPortal(ascensionPortalX, ascensionPortalY);
-    //smoothAscensionVeins();
-    //starMap.revealWholeMap(players.getCurrentPlayerInfo());
+    /*starMap.generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    starMap.smoothAscensionVeins();
+    starMap.revealWholeMap(players.getCurrentPlayerInfo());*/
     return starMap;
   }
 

@@ -2743,6 +2743,13 @@ public class StarMap {
 
 
   /**
+   * Get Ascension events for starmap.
+   * @return AscensionEvents
+   */
+  public AscensionEvents getAscensionEvents() {
+    return ascensionEvents;
+  }
+  /**
    * Generate Ascension portal to map and ascension veins.
    *
    * @param x X coordinate for portal

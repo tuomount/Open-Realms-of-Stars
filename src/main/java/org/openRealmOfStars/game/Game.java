@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  * Copyright (C) 2017 God Beom
  *
  * This program is free software; you can redistribute it and/or
@@ -2440,8 +2440,6 @@ public class Game implements ActionListener {
         TechType.Improvements, 3));
     sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL4_NAMES,
         TechType.Improvements, 4));
-    sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL7_NAMES,
-        TechType.Improvements, 7));
     sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL9_NAMES,
         TechType.Improvements, 9));
     sb.append("## Rare Propulsion technology\n\n");
@@ -2458,6 +2456,8 @@ public class Game implements ActionListener {
         TechType.Electrics, 4));
     sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL6_NAMES,
         TechType.Electrics, 6));
+    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL7_NAMES,
+        TechType.Electrics, 7));
     sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL8_NAMES,
         TechType.Electrics, 8));
     return sb.toString();

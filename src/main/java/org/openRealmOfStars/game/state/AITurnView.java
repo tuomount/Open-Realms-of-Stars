@@ -3936,10 +3936,8 @@ public class AITurnView extends BlackPanel {
               && info.getArtifactLists().getDiscoveredArtifacts().length > 0) {
             NewsData news = info.getArtifactLists().updateResearchPointByTurn(
                 game.getStarMap().getTotalProductionByPlayerPerTurn(
-                    Planet.PRODUCTION_ARTIFACT_RESEARCH, i), info,
-                game.getStarMap().getScoreVictoryTurn(), scientist,
-                game.getStarMap().isTutorialEnabled(),
-                game.getStarMap().getStarYear());
+                    Planet.PRODUCTION_ARTIFACT_RESEARCH, i), scientist,
+                game.getStarMap(), info);
             if (news != null && info.isHuman()) {
               game.getStarMap().getNewsCorpData().addNews(news);
             }

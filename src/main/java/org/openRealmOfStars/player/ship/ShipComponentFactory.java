@@ -1008,9 +1008,9 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_REPAIR_MODULE_MK3 = 203;
   /**
-   * Component Starbase Ascension portal
+   * Component Orbital Ascension portal
    */
-  public static final int COMPONENT_STARBASE_ASCENSION_PORTAL = 204;
+  public static final int COMPONENT_ORBITAL_ASCENSION_PORTAL = 204;
   /**
    * Component Ascension portal scanner Mk1
    */
@@ -1723,9 +1723,9 @@ public final class ShipComponentFactory {
     case COMPONENT_REPAIR_MODULE_MK3:
       tmp = createDefense(index);
       break; // Repair Module Mk3
-    case COMPONENT_STARBASE_ASCENSION_PORTAL:
+    case COMPONENT_ORBITAL_ASCENSION_PORTAL:
       tmp = createStarbaseModule(index);
-      break; // Starbase ascension portal
+      break; // Orbital ascension portal
     case COMPONENT_ASCENSION_PORTAL_SCANNER_MK1:
       tmp = createElectronics(index);
       break; // Ascension portal scanner Mk1
@@ -2084,8 +2084,8 @@ public final class ShipComponentFactory {
       tmp.setEnergyRequirement(2);
       tmp.setFleetCapacityBonus(2);
     }
-    if (index == COMPONENT_STARBASE_ASCENSION_PORTAL) {
-      tmp = new ShipComponent(index, "Starbase ascension portal", 40, 40,
+    if (index == COMPONENT_ORBITAL_ASCENSION_PORTAL) {
+      tmp = new ShipComponent(index, "Orbital ascension portal", 40, 40,
           ShipComponentType.STARBASE_COMPONENT);
       tmp.setEnergyRequirement(8);
     }

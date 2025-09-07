@@ -32,6 +32,8 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -311,16 +313,16 @@ public class ArtifactLists {
   /**
    * Update artifact research points by turn.
    * @param totalResearchPoints Total research points to add
-   * @param info PlayerInfo who is research.
-   * @param gameLength Game length
    * @param scientist which is make the research
-   * @param tutorialEnabled is tutorial enabled or not.
-   * @param starYear StarYear
+   * @param starMap Star Map
+   * @param info PlayerInfo who is research.
    * @return NewsData about possible study.
    */
   public NewsData updateResearchPointByTurn(final int totalResearchPoints,
-      final PlayerInfo info, final int gameLength, final Leader scientist,
-      final boolean tutorialEnabled, final int starYear) {
+      final Leader scientist, final StarMap starMap, final PlayerInfo info) {
+    int gameLength = starMap.getScoreVictoryTurn();
+    boolean tutorialEnabled = starMap.isTutorialEnabled();
+    int starYear = starMap.getStarYear();
     artifactResearchPoints = artifactResearchPoints + totalResearchPoints;
     int lvl = researchedArtifacts.size();
     int limit = ArtifactFactory.getResearchCost(lvl, gameLength);
@@ -337,6 +339,8 @@ public class ArtifactLists {
       if (artifact == null) {
         return null;
       }
+      starMap.getAscensionEvents().eventHappens(
+          AscensionEventType.RESEARCH_ARTIFACT);
       artifactResearchPoints = artifactResearchPoints - limit;
       StringBuilder sb = new StringBuilder();
       sb.append(scientist.getCallName());
@@ -391,6 +395,9 @@ public class ArtifactLists {
             ArtifactType.DEFENSE);
         if (event != null) {
           sb.append(event);
+          starMap.getAscensionEvents().eventHappens(
+              AscensionEventType.GAIN_GRAVITY_RIPPER);
+
         }
       }
       if (artifact.getArtifactType() == ArtifactType.SHIPHULL) {
@@ -461,15 +468,19 @@ public class ArtifactLists {
         String event = generateAncientTech(info, techName, 9,
             TechType.Improvements, ArtifactType.FACILITY);
         if (event != null) {
-            sb.append(event);
+          sb.append(event);
+          starMap.getAscensionEvents().eventHappens(
+                AscensionEventType.GAIN_ASCENSION_PORTAL_TECH);
         }
       }
       if (artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
-        String techName = "Starbase ascension portal";
+        String techName = "Orbital ascension portal";
         String event = generateAncientTech(info, techName, 7,
-            TechType.Improvements, ArtifactType.FACILITY);
+            TechType.Electrics, ArtifactType.ELECTRONIC);
         if (event != null) {
           sb.append(event);
+          starMap.getAscensionEvents().eventHappens(
+              AscensionEventType.GAIN_ASCENSION_PORTAL_TECH);
         }
       }
       int chance = researchedArtifacts.size() * 10;

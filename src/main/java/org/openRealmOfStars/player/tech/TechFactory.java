@@ -347,11 +347,6 @@ public final class TechFactory {
   public static final String[] IMPROVEMENT_TECH_LEVEL7_NAMES = {
       "New technology center", "VR movie center", "Advanced recycle center",
       "Starbase nano lab", "Aquatic colonization"};
-  /**
-   * Planetary Improvement rare tech names for level 7
-   */
-  public static final String[] IMPROVEMENT_RARE_TECH_LEVEL7_NAMES = {
-      "Starbase ascension portal"};
 
   /**
    * Planetary Improvement tech names for level 8
@@ -498,6 +493,11 @@ public final class TechFactory {
    */
   public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = {"Scanner Mk4",
       "Espionage module Mk4", "Deep space scanner" };
+  /**
+   * Electronics rare tech names for level 7
+   */
+  public static final String[] ELECTRONICS_RARE_TECH_LEVEL7_NAMES = {
+      "Orbital ascension portal"};
   /**
    * Electronics tech names for level 8
    */
@@ -973,8 +973,7 @@ public final class TechFactory {
       list = IMPROVEMENT_TECH_LEVEL6_NAMES;
       break;
     case 7:
-      list = TextUtilities.concanateStringArrays(IMPROVEMENT_TECH_LEVEL7_NAMES,
-          IMPROVEMENT_RARE_TECH_LEVEL7_NAMES);
+      list = IMPROVEMENT_TECH_LEVEL7_NAMES;
       break;
     case 8:
       list = IMPROVEMENT_TECH_LEVEL8_NAMES;
@@ -1005,10 +1004,10 @@ public final class TechFactory {
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
-        } else if (techName.startsWith("Starbase")) {
+        } else if (techName.startsWith("Orbital")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
-          if (techName.equals("Starbase ascension portal")) {
+          if (techName.equals("Orbital ascension portal")) {
             tech.setRareTech(true);
           }
         } else if (techName.startsWith("Deadly virus")) {
@@ -1220,7 +1219,8 @@ public final class TechFactory {
           ELECTRONICS_RARE_TECH_LEVEL6_NAMES);
       break;
     case 7:
-      list = ELECTRONICS_TECH_LEVEL7_NAMES;
+      list = TextUtilities.concanateStringArrays(ELECTRONICS_TECH_LEVEL7_NAMES,
+          ELECTRONICS_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
       list = TextUtilities.concanateStringArrays(ELECTRONICS_TECH_LEVEL8_NAMES,

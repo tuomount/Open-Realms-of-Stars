@@ -818,6 +818,39 @@ public final class TileNames {
    */
   public static final String ASCENSION_PORT_CLOSED = "ASCENSION_PORTAL_CLOSED";
   /**
+   * Rift portal 1 Artifact
+   */
+  public static final String RIFT_PORTAL1_ARTIFACT = "RIFT_PORTAL1_ARTIFACT";
+  /**
+   * Rift portal 2 Artifact
+   */
+  public static final String RIFT_PORTAL2_ARTIFACT = "RIFT_PORTAL2_ARTIFACT";
+  /**
+   * Rift portal 3 Artifact
+   */
+  public static final String RIFT_PORTAL3_ARTIFACT = "RIFT_PORTAL3_ARTIFACT";
+  /**
+   * Rift portal 4 Artifact
+   */
+  public static final String RIFT_PORTAL4_ARTIFACT = "RIFT_PORTAL4_ARTIFACT";
+  /**
+   * Rift portal 1 Devourer
+   */
+  public static final String RIFT_PORTAL1_DEVOURER = "RIFT_PORTAL1_DEVOURER";
+  /**
+   * Rift portal 2 Devourer
+   */
+  public static final String RIFT_PORTAL2_DEVOURER = "RIFT_PORTAL2_DEVOURER";
+  /**
+   * Rift portal 3 Devourer
+   */
+  public static final String RIFT_PORTAL3_DEVOURER = "RIFT_PORTAL3_DEVOURER";
+  /**
+   * Rift portal 4 Devourer
+   */
+  public static final String RIFT_PORTAL4_DEVOURER = "RIFT_PORTAL4_DEVOURER";
+
+  /**
    * List of non harmful space anomalies. This is the list used
    * when generating random space anomalies which are harmless.
    */
@@ -952,9 +985,29 @@ public final class TileNames {
    */
   public static final String ASCENSION_PORTAL_DESCRIPTION =
       "The enigmatic portal harnesses energy from a black hole at the heart "
-      + "of the galaxy. Those who venture through it are transformed into"
+      + "of the galaxy by using Graviton Conduits."
+      + " Those who venture through it are transformed into"
       + " ascended beings, possessing near-boundless power. However, a "
       + "consequence of this transcendence is their departure from our "
       + "reality, moving onto a higher plane of existence.";
+  /**
+   * Description about ascension vein
+   */
+  public static final String ASCENSION_VEIN_DESCRIPTION =
+      "When the Gravity Ripper destabilizes spacetime near a supermassive"
+      + " black hole, it activates hidden Graviton Conduits. "
+      + "Ascension Veins are the visible traces of these conduits."
+      + " They converge on rare nodal worlds where spacetime thins,"
+      + " making such planets the only places where an Ascension Portal can "
+      + "be constructed.";
+  /**
+   * Description about Rift Portal
+   */
+  public static final String RIFT_PORTAL_DESCRIPTION =
+      "The Rift Portal is a rupture forced open from an alternate dimension"
+      + " by an unknown power. Unlike stable conduits, it is volatile -"
+      + " a wound in spacetime where energies and entities cross over."
+      + " Outcomes vary wildly: some bring knowledge or resources,"
+      + " others unleash chaos and destruction.";
 
 }

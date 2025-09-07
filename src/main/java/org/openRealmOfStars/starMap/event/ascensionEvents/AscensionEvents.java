@@ -21,8 +21,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.event.GalaxyEvents;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * Ascension Events which require timers, and where events affect on timers.
@@ -95,7 +100,82 @@ public class AscensionEvents implements GalaxyEvents {
   public void handleEvents(final StarMap map) {
     chanceForArtifact = chanceForArtifact + artifactSpawnSpeed;
     chanceForDevourer = chanceForDevourer + spaceDevourerSpeed;
-    //TODO: Implement actual events
+    handleArtifactEvent(map);
+    handleDevourerEvent(map);
+  }
+
+  /**
+   * Handle Artifact event
+   * @param map StarMap
+   */
+  private void handleArtifactEvent(final StarMap map) {
+    int chance = chanceForArtifact / 10;
+    if (DiceGenerator.getRandom(1, 100) >= chance) {
+      return;
+    }
+
+    int loop = 0;
+    int maxLoops = 100;
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    int sx = 0;
+    int sy = 0;
+    boolean tileAdded = false;
+    while (loop < maxLoops) {
+      sx = DiceGenerator.getRandom(1, map.getMaxX() - 2);
+      sy = DiceGenerator.getRandom(1, map.getMaxY() - 2);
+      if (map.getTileIndex(sx, sy) == empty.getIndex()
+          && map.getPlanetByCoordinate(sx, sy) == null) {
+        String tileName = TileNames.RIFT_PORTAL1_ARTIFACT;
+        Tile anomaly = Tiles.getTileByName(tileName);
+        map.setTile(sx, sy, anomaly);
+        tileAdded = true;
+        break;
+      }
+      loop++;
+    }
+    if (tileAdded) {
+      chanceForArtifact /= 2;
+      var news = NewsFactory.makeRiftPortalNews(map.getStarYear(),
+          map.getNearesetSolarSystem(sx, sy));
+      map.getNewsCorpData().addNews(news);
+    }
+  }
+
+  /**
+   * Handle Devourer event
+   * @param map StarMap
+   */
+  private void handleDevourerEvent(final StarMap map) {
+    int chance = chanceForDevourer / 10;
+    if (DiceGenerator.getRandom(1, 100) >= chance) {
+      return;
+    }
+
+    int loop = 0;
+    int maxLoops = 100;
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    int sx = 0;
+    int sy = 0;
+    boolean tileAdded = false;
+    while (loop < maxLoops) {
+      sx = DiceGenerator.getRandom(1, map.getMaxX() - 2);
+      sy = DiceGenerator.getRandom(1, map.getMaxY() - 2);
+      if (map.getTileIndex(sx, sy) == empty.getIndex()
+          && map.getPlanetByCoordinate(sx, sy) == null) {
+        String tileName = TileNames.RIFT_PORTAL1_DEVOURER;
+        Tile anomaly = Tiles.getTileByName(tileName);
+        map.setTile(sx, sy, anomaly);
+        tileAdded = true;
+        break;
+      }
+      loop++;
+    }
+    if (tileAdded) {
+      chanceForDevourer /= 2;
+      var news = NewsFactory.makeRiftPortalNews(map.getStarYear(),
+          map.getNearesetSolarSystem(sx, sy));
+      map.getNewsCorpData().addNews(news);
+    }
   }
 
   @Override

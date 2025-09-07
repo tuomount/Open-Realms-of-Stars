@@ -29,6 +29,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.event.karmaEvents.RandomEvent;
 import org.openRealmOfStars.starMap.event.karmaEvents.RandomEventType;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
@@ -364,6 +365,90 @@ public final class NewsFactory {
     event.getRealm().appendStory(event.getText(), starYear);
     return news;
   }
+
+  /**
+   * Make Rift portal event news
+   * @param starYear when Event happens
+   * @param star Nearest star or null
+   * @return NewsData
+   */
+  public static NewsData makeRiftPortalNews(final int starYear,
+      final Sun star) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (DiceGenerator.getBoolean()) {
+      instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    }
+    if (DiceGenerator.getBoolean()) {
+      if (DiceGenerator.getBoolean()) {
+        instructions.addLogo(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+            ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+      }
+    } else {
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+    }
+    int value = DiceGenerator.getRandom(2);
+    if (value == 0) {
+      instructions.addText("RIFT PORTAL OPENED!");
+    }
+    if (value == 1) {
+      instructions.addText("RIFT PORTAL APPEARED!");
+    }
+    if (value == 2) {
+      instructions.addText("RIFT PORTAL EMERGED!");
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    if (star != null) {
+      sb.append(" in ");
+      sb.append(star.getName());
+      sb.append(" system ");
+    } else {
+      sb.append(" in deep space ");
+    }
+    sb.append("rift portal ");
+    sb.append(" has been ");
+    value = DiceGenerator.getRandom(2);
+    if (value == 0) {
+      sb.append("opened. ");
+    }
+    if (value == 1) {
+      sb.append("appeared. ");
+    }
+    if (value == 2) {
+      sb.append("emerged. ");
+    }
+    sb.append("This event requires ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("massive ");
+    } else {
+      sb.append("enormous ");
+    }
+    sb.append("amount of energy.");
+    sb.append(" It is unknown who or what opened this portal");
+    if (DiceGenerator.getBoolean()) {
+      sb.append(" and what reason was the reason for openning.");
+    } else {
+      sb.append(".");
+    }
+    sb.append(" Rift portal is only sending material or energy to"
+        + " our reality, but it is mystery what there has been sent. ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append(" It needs fleet to go investigate this event. ");
+    } else {
+      sb.append(" Someone needs to go there and study this event. ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
   /**
    * Make news about new heir
    * @param heir New heir

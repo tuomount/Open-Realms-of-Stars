@@ -1064,6 +1064,29 @@ public class StarMap {
   }
 
   /**
+   * Get nearest solar system for coordinates.
+   * This can tell which solar system target coordinate is.
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @return Sun or null if outside of solar systems.
+   */
+  public Sun getNearesetSolarSystem(final int x, final int y) {
+    Sun nearestStar = null;
+    double distance = 999.9;
+    Coordinate coord = new Coordinate(x, y);
+    for (Sun star : sunList) {
+      double dist = star.getCenterCoordinate().calculateDistance(coord);
+      if (dist < distance) {
+        distance = dist;
+        nearestStar = star;
+      }
+    }
+    if (nearestStar != null && distance > 10) {
+      nearestStar = null;
+    }
+    return nearestStar;
+  }
+  /**
    * Get starmap maximum X coordinate
    * @return Maximum X coordinate, exclusive
    */
@@ -1578,6 +1601,7 @@ public class StarMap {
   /** Process and execute events. Should be called on turn start. */
   public void handleEvents() {
     karmaEvents.handleEvents(this);
+    ascensionEvents.handleEvents(this);
   }
 
   /**

@@ -1004,12 +1004,9 @@ public final class TechFactory {
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
-        } else if (techName.startsWith("Orbital")) {
+        } else if (techName.startsWith("Starbase")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
-          if (techName.equals("Orbital ascension portal")) {
-            tech.setRareTech(true);
-          }
         } else if (techName.startsWith("Deadly virus")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEATH));
           tech.setRareTech(true);
@@ -1254,6 +1251,9 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LR_SCANNER));
         } else if (techName.startsWith("Scanner Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));
+        } else if (techName.equals("Orbital ascension portal")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
+          tech.setRareTech(true);
         } else if (techName.startsWith("Ascension portal scanner Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));
           tech.setRareTech(true);

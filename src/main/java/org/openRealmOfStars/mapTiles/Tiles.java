@@ -989,7 +989,8 @@ public final class Tiles {
         TileNames.ASCENSION_VEIN_SE2, TileNames.ASCENSION_VEIN_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1).getIndex());
     addTile(tilesImage32, tilesImage64, tilesImage16, 6, 8,
-        TileNames.ASCENSION_VEIN_NSWE1, TileNames.ASCENSION_VEIN_DESCRIPTION, -2);
+        TileNames.ASCENSION_VEIN_NSWE1, TileNames.ASCENSION_VEIN_DESCRIPTION,
+        -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 7, 8,
         TileNames.ASCENSION_VEIN_NSWE2, TileNames.ASCENSION_VEIN_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1).getIndex());
@@ -999,22 +1000,26 @@ public final class Tiles {
         TileNames.ASCENSION_VEIN_NE2, TileNames.ASCENSION_VEIN_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1).getIndex());
     addTile(tilesImage32, tilesImage64, tilesImage16, 8, 9,
-        TileNames.ASCENSION_VEIN_SWE1, TileNames.ASCENSION_VEIN_DESCRIPTION, -2);
+        TileNames.ASCENSION_VEIN_SWE1, TileNames.ASCENSION_VEIN_DESCRIPTION,
+        -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 9, 9,
         TileNames.ASCENSION_VEIN_SWE2, TileNames.ASCENSION_VEIN_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1).getIndex());
     addTile(tilesImage32, tilesImage64, tilesImage16, 10, 9,
-        TileNames.ASCENSION_VEIN_NSW1, TileNames.ASCENSION_VEIN_DESCRIPTION, -2);
+        TileNames.ASCENSION_VEIN_NSW1, TileNames.ASCENSION_VEIN_DESCRIPTION,
+        -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 11, 9,
         TileNames.ASCENSION_VEIN_NSW2, TileNames.ASCENSION_VEIN_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1).getIndex());
     addTile(tilesImage32, tilesImage64, tilesImage16, 6, 10,
-        TileNames.ASCENSION_VEIN_NWE1, TileNames.ASCENSION_VEIN_DESCRIPTION, -2);
+        TileNames.ASCENSION_VEIN_NWE1, TileNames.ASCENSION_VEIN_DESCRIPTION,
+        -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 7, 10,
         TileNames.ASCENSION_VEIN_NWE2, TileNames.ASCENSION_VEIN_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1).getIndex());
     addTile(tilesImage32, tilesImage64, tilesImage16, 8, 10,
-        TileNames.ASCENSION_VEIN_NSE1, TileNames.ASCENSION_VEIN_DESCRIPTION, -2);
+        TileNames.ASCENSION_VEIN_NSE1, TileNames.ASCENSION_VEIN_DESCRIPTION,
+        -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 9, 10,
         TileNames.ASCENSION_VEIN_NSE2, TileNames.ASCENSION_VEIN_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1).getIndex());

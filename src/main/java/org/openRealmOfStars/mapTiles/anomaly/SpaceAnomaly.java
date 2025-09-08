@@ -705,6 +705,64 @@ public class SpaceAnomaly {
           }
           break;
         }
+        case TileNames.RIFT_PORTAL1_ARTIFACT:
+        case TileNames.RIFT_PORTAL2_ARTIFACT:
+        case TileNames.RIFT_PORTAL3_ARTIFACT:
+        case TileNames.RIFT_PORTAL4_ARTIFACT: {
+          result = new SpaceAnomaly(AnomalyType.ANCIENT_ARTIFACT, 0);
+          result.setText("Found ancient capsule floating near the rift portal,"
+              + " which contained strange piece of ancient artifact. "
+              + ". This is weird, it looks kind of new,"
+              + " but same time it looks old. Just as something or someone"
+              + " wanted this to be found."
+              + " This finding requires some research time.");
+          if (DiceGenerator.getBoolean()) {
+            result.setImage(GuiStatics.IMAGE_ARTIFACT1);
+          } else {
+            result.setImage(GuiStatics.IMAGE_ARTIFACT2);
+          }
+          info.getArtifactLists().addDiscoveredArtifact(
+              ArtifactFactory.getRandomNonFacility());
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(15);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          addExp = 50;
+          break;
+        }
+        case TileNames.RIFT_PORTAL1_DEVOURER:
+        case TileNames.RIFT_PORTAL2_DEVOURER:
+        case TileNames.RIFT_PORTAL3_DEVOURER:
+        case TileNames.RIFT_PORTAL4_DEVOURER: {
+          result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_KRAKEN));
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          PlayerInfo board = map.getPlayerList().getSpaceMonsterPlayer();
+          Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
+              board, StarMap.ENEMY_MONSTER);
+          result.setText(monster.getBiggestShip().getName()
+              + " was found in the rift portal. Battle begins...");
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(36);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
+          Combat fight = new Combat(fleet, monster, info, board,
+              map.getStarYear());
+          result.setCombat(fight);
+          addExp = 40;
+          break;
+        }
 
         default: {
           break;

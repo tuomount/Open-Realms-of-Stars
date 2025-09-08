@@ -722,6 +722,7 @@ public class StarMap {
     dos.writeInt(getScorePopulation());
     dos.writeByte(getPirateDifficulty().getIndex());
     karmaEvents.save(dos);
+    ascensionEvents.save(dos);
     // Map size
     dos.writeInt(maxX);
     dos.writeInt(maxY);

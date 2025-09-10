@@ -24,8 +24,10 @@ import java.io.IOException;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.event.GalaxyEvents;
+import org.openRealmOfStars.starMap.history.event.RiftPortalEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -138,6 +140,9 @@ public class AscensionEvents implements GalaxyEvents {
       var news = NewsFactory.makeRiftPortalNews(map.getStarYear(),
           map.getNearesetSolarSystem(sx, sy));
       map.getNewsCorpData().addNews(news);
+      RiftPortalEvent event = new RiftPortalEvent(new Coordinate(sx, sy));
+      event.setText(news.getNewsText());
+      map.getHistory().addEvent(event);
     }
   }
 
@@ -175,6 +180,9 @@ public class AscensionEvents implements GalaxyEvents {
       var news = NewsFactory.makeRiftPortalNews(map.getStarYear(),
           map.getNearesetSolarSystem(sx, sy));
       map.getNewsCorpData().addNews(news);
+      RiftPortalEvent event = new RiftPortalEvent(new Coordinate(sx, sy));
+      event.setText(news.getNewsText());
+      map.getHistory().addEvent(event);
     }
   }
 

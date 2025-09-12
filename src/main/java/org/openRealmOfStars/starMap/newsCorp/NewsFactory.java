@@ -370,10 +370,11 @@ public final class NewsFactory {
    * Make Rift portal event news
    * @param starYear when Event happens
    * @param star Nearest star or null
+   * @param riftPortals Number of rift portals before this.
    * @return NewsData
    */
   public static NewsData makeRiftPortalNews(final int starYear,
-      final Sun star) {
+      final Sun star, final int riftPortals) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -393,14 +394,18 @@ public final class NewsFactory {
           ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
     }
     int value = DiceGenerator.getRandom(2);
-    if (value == 0) {
-      instructions.addText("RIFT PORTAL OPENED!");
-    }
-    if (value == 1) {
-      instructions.addText("RIFT PORTAL APPEARED!");
-    }
-    if (value == 2) {
-      instructions.addText("RIFT PORTAL EMERGED!");
+    if (riftPortals == 0) {
+      instructions.addText("MYSTERIOUS PORTAL APPEARS!");
+    } else {
+      if (value == 0) {
+        instructions.addText("RIFT PORTAL OPENED!");
+      }
+      if (value == 1) {
+        instructions.addText("RIFT PORTAL APPEARED!");
+      }
+      if (value == 2) {
+        instructions.addText("RIFT PORTAL EMERGED!");
+      }
     }
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder();
@@ -413,7 +418,15 @@ public final class NewsFactory {
     } else {
       sb.append(" in deep space ");
     }
-    sb.append("rift portal ");
+    if (riftPortals == 0) {
+      if (DiceGenerator.getBoolean()) {
+        sb.append("unknown portal ");
+      } else {
+        sb.append("mysterious portal ");
+      }
+    } else {
+      sb.append("rift portal ");
+    }
     sb.append(" has been ");
     value = DiceGenerator.getRandom(2);
     if (value == 0) {
@@ -425,7 +438,17 @@ public final class NewsFactory {
     if (value == 2) {
       sb.append("emerged. ");
     }
-    sb.append("This event requires ");
+    switch (riftPortals) {
+      case 0: break;
+      case 1: sb.append("This is the second portal opened. "); break;
+      case 2: sb.append("This is the third rift portal opened. "); break;
+      case 3: sb.append("This is the fourth rift portal opened. "); break;
+      case 4: sb.append("This is the fifth rift portal opened. "); break;
+      default:
+      case 5: sb.append("There have been numerous rift portals"
+          + " opened before this. "); break;
+    }
+    sb.append("This kind of event requires ");
     if (DiceGenerator.getBoolean()) {
       sb.append("massive ");
     } else {
@@ -438,8 +461,16 @@ public final class NewsFactory {
     } else {
       sb.append(".");
     }
-    sb.append(" Rift portal is only sending material or energy to"
-        + " our reality, but it is mystery what there has been sent. ");
+    if (riftPortals == 1) {
+      sb.append(" It is still unclear how these portal works and is travelling"
+          + " possible both directions. ");
+    } else if (riftPortals == 2) {
+      sb.append(" Seems that travelling is only possible towards this "
+          + "reality. ");
+    } else {
+      sb.append(" Rift portal is only sending material or energy to"
+          + " our reality, but it is mystery what there has been sent. ");
+    }
     if (DiceGenerator.getBoolean()) {
       sb.append(" It needs fleet to go investigate this event. ");
     } else {

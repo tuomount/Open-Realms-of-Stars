@@ -27,6 +27,7 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.event.GalaxyEvents;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.RiftPortalEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -137,8 +138,10 @@ public class AscensionEvents implements GalaxyEvents {
     }
     if (tileAdded) {
       chanceForArtifact /= 2;
+      int riftPortals = map.getHistory().countNumberOfEventTypes(
+          EventType.RIFT_PORTAL);
       var news = NewsFactory.makeRiftPortalNews(map.getStarYear(),
-          map.getNearesetSolarSystem(sx, sy));
+          map.getNearesetSolarSystem(sx, sy), riftPortals);
       map.getNewsCorpData().addNews(news);
       RiftPortalEvent event = new RiftPortalEvent(new Coordinate(sx, sy));
       event.setText(news.getNewsText());
@@ -177,8 +180,10 @@ public class AscensionEvents implements GalaxyEvents {
     }
     if (tileAdded) {
       chanceForDevourer /= 2;
+      int riftPortals = map.getHistory().countNumberOfEventTypes(
+          EventType.RIFT_PORTAL);
       var news = NewsFactory.makeRiftPortalNews(map.getStarYear(),
-          map.getNearesetSolarSystem(sx, sy));
+          map.getNearesetSolarSystem(sx, sy), riftPortals);
       map.getNewsCorpData().addNews(news);
       RiftPortalEvent event = new RiftPortalEvent(new Coordinate(sx, sy));
       event.setText(news.getNewsText());

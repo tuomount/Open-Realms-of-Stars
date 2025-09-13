@@ -70,6 +70,7 @@ import org.openRealmOfStars.starMap.event.karmaEvents.KarmaType;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
@@ -3080,18 +3081,40 @@ public class StarMap {
    * @param info PlayerInfo
    * @param sx X coordinate
    * @param sy Y coordinate
+   * @param fleet Fleet make the discovery
    */
   private void rareTechBasedOnTiles(final PlayerInfo info, final int sx,
-      final int sy) {
+      final int sy, final Fleet fleet) {
     Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
     if (tile.isBlackhole()
         && !info.getTechList().hasTech(TechType.Combat, "Tractor beam")) {
       info.getTechList().addTech(TechFactory.createCombatTech("Tractor beam",
           3));
-      Message msg = new Message(MessageType.RESEARCH,
-          "Research on Black hole reveals the tractor beam technology.",
-          Icons.getIconByName(Icons.ICON_RESEARCH));
+      StringBuilder sb = new StringBuilder();
+      sb.append(fleet.getName());
+      sb.append(" ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append("discovered ");
+      } else {
+        sb.append("encoutered ");
+      }
+      sb.append("super massive black hole. This black hole is in the"
+          + " center of the galaxy. Thorough ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append("research ");
+      } else {
+        sb.append("study ");
+      }
+      sb.append("on black hole reveals the tractor beam technology.");
+      Message msg = new Message(MessageType.FLEET,
+          sb.toString(), Icons.getIconByName(Icons.ICON_RESEARCH));
+      ImageInstruction instructions = new ImageInstruction();
+      instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+      instructions.addImage(ImageInstruction.BLUEISH_BLACK_HOLE);
+      instructions.addText("SUPER MASSIVE BLACK HOLE");
       msg.setCoordinate(new Coordinate(sx, sy));
+      msg.setImageInstructions(instructions.build());
+      msg.setRandomEventPop(true);
       info.getMsgList().addNewMessage(msg);
     }
 
@@ -3171,8 +3194,8 @@ public class StarMap {
     int detectValue = cloakDetection;
     info.setSectorVisibility(sx, sy, PlayerInfo.VISIBLE);
     tutorialBasedOnTiles(info, sx, sy);
-    rareTechBasedOnTiles(info, sx, sy);
     if (fleet != null) {
+      rareTechBasedOnTiles(info, sx, sy, fleet);
       ascensionEventsOnTiles(info, sx, sy, fleet);
     }
     if (detectValue > 0) {
@@ -3197,8 +3220,8 @@ public class StarMap {
         }
         info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
         tutorialBasedOnTiles(info, nx, ny);
-        rareTechBasedOnTiles(info, nx, ny);
         if (fleet != null) {
+          rareTechBasedOnTiles(info, nx, ny, fleet);
           ascensionEventsOnTiles(info, nx, ny, fleet);
         }
         if (detectValue > 0

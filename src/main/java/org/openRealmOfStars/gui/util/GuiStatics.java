@@ -604,6 +604,10 @@ public final class GuiStatics {
   /** Space kraken */
   public static final String IMAGE_KRAKEN = "/resources/images/kraken.png";
 
+  /** Blueish black hole */
+  public static final String IMAGE_BLUEISH_BLACKHOLE =
+      "/resources/images/blueish_blackhole.png";
+
   /** Pirate raiders */
   public static final String IMAGE_PIRATE_RAIDERS =
       "/resources/images/pirate_raiders.png";

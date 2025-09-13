@@ -2638,6 +2638,15 @@ public class Game implements ActionListener {
       popupPanel.setImageFromInstruction(imageInst);
       starMapView.setPopup(popupPanel);
     }
+    if (msg.getType() == MessageType.FLEET && msg.isRandomEventPop()
+        && msg.getImageInstruction() != null) {
+      PopupPanel popupPanel = new PopupPanel(msg.getMessage(),
+          "Fleet event");
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addInstruction(msg.getImageInstruction());
+      popupPanel.setImageFromInstruction(imageInst);
+      starMapView.setPopup(popupPanel);
+    }
 
     if (mapOnly) {
       starMapView.setCursorFocus(20);

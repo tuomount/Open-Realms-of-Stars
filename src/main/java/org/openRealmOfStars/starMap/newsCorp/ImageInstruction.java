@@ -496,6 +496,10 @@ public class ImageInstruction {
    */
   public static final String BLACK_MONOLITH = "BlackMonolith";
   /**
+   * Instructions for blueish black hole
+   */
+  public static final String BLUEISH_BLACK_HOLE = "BlueishBlackHole";
+  /**
    * Instructions for molten lava
    */
   public static final String MOLTEN_LAVA = "MoltenLava";
@@ -725,6 +729,7 @@ public class ImageInstruction {
         && !ANCIENT_TEMPLE.equals(image)
         && !ANCIENT_PALACE.equals(image)
         && !BLACK_MONOLITH.equals(image)
+        && !BLUEISH_BLACK_HOLE.equals(image)
         && !MOLTEN_LAVA.equals(image)
         && !ARID.equals(image)
         && !LUSH_VEGETATION.equals(image)
@@ -1368,6 +1373,9 @@ public class ImageInstruction {
     }
     if (BLACK_MONOLITH.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACK_MONOLITH);
+    }
+    if (BLUEISH_BLACK_HOLE.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLUEISH_BLACKHOLE);
     }
     if (BIG_ORBITAL.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_ORBITAL);

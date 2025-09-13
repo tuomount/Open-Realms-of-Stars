@@ -358,6 +358,8 @@ Gravity veins map tiles by Tuomo Untinen
 
 Black hole map tiles by Tuomo Untinen
 
+Blueish Black hole by Tuomo Untinen
+
 Animated Portal or Wormhole, several Variants by Hansjörg Malthaner
 http://opengameart.org/users/varkalandar
 Licensed under CC BY SA 4.0

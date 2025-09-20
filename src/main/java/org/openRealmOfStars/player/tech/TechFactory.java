@@ -1340,9 +1340,20 @@ public final class TechFactory {
       tech.setTradeable(false);
       tech.setComponent(techName);
     }
+    if (techName.startsWith("Arm spike")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_TENTACLE));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+    }
+    if (techName.startsWith("Plasma spit")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_PLASMA_CANNON));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+    }
     if (techName.startsWith("Space worm")
         || techName.startsWith("Kraken")
-        || techName.startsWith("Large kraken")) {
+        || techName.startsWith("Large kraken")
+        || techName.startsWith("Devourer")) {
       tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
       tech.setTradeable(false);
       tech.setHull(techName);

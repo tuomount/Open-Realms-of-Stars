@@ -546,6 +546,12 @@ public class PlayerInfo {
     tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
         "Tentacle Mk2");
     techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 3,
+        "Arm spike");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 4,
+        "Plasma spit");
+    techList.addTech(tech);
 
     tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 1, "Space worm");
     techList.addTech(tech);
@@ -553,6 +559,9 @@ public class PlayerInfo {
     techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 3,
         "Large kraken");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 4,
+        "Devourer");
     techList.addTech(tech);
 
     ShipDesign design = ShipGenerator.createSpaceWorm(this);
@@ -565,6 +574,9 @@ public class PlayerInfo {
     stat = new ShipStat(design);
     addShipStat(stat);
     design = ShipGenerator.createLargeKraken(this, true);
+    stat = new ShipStat(design);
+    addShipStat(stat);
+    design = ShipGenerator.createDevourer(this);
     stat = new ShipStat(design);
     addShipStat(stat);
   }

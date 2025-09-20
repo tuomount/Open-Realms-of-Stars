@@ -332,6 +332,10 @@ public class ImageInstruction {
    */
   public static final String RIFT_PORTAL = "rift portal";
   /**
+   * Devourer
+   */
+  public static final String DEVOURER = "devourer";
+  /**
    * Galaxy image
    */
   public static final String GALAXY = "galaxy";
@@ -862,7 +866,8 @@ public class ImageInstruction {
         && !METEOR_HIT.equals(logoType)
         && !BIG_EXPLOSION.equals(logoType)
         && !BIG_ORBITAL.equals(logoType)
-        && !RIFT_PORTAL.equals(logoType)) {
+        && !RIFT_PORTAL.equals(logoType)
+        && !DEVOURER.equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -1120,6 +1125,9 @@ public class ImageInstruction {
     }
     if (RIFT_PORTAL.equals(planetType)) {
       planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_RIFT_PORTAL);
+    }
+    if (DEVOURER.equals(planetType)) {
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_DEVOURER);
     }
     if (BIG_ORBITAL.equals(planetType)) {
       planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_ORBITAL);
@@ -1382,6 +1390,9 @@ public class ImageInstruction {
     }
     if (RIFT_PORTAL.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_RIFT_PORTAL);
+    }
+    if (DEVOURER.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DEVOURER);
     }
     if (BIG_EXPLOSION.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_EXPLOSION);

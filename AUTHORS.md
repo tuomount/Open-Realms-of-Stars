@@ -360,6 +360,10 @@ Black hole map tiles by Tuomo Untinen
 
 Blueish Black hole by Tuomo Untinen
 
+Devourer by Tuomo Untinen
+
+Devourer ship by Tuomo Untinen
+
 Animated Portal or Wormhole, several Variants by Hansjörg Malthaner
 http://opengameart.org/users/varkalandar
 Licensed under CC BY SA 4.0

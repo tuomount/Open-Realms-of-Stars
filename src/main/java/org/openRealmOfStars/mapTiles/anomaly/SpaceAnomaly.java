@@ -50,6 +50,7 @@ import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
@@ -741,11 +742,21 @@ public class SpaceAnomaly {
         case TileNames.RIFT_PORTAL3_DEVOURER:
         case TileNames.RIFT_PORTAL4_DEVOURER: {
           result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
-          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_KRAKEN));
+          ImageInstruction instructions = new ImageInstruction();
+          instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+          instructions.addLogo(ImageInstruction.POSITION_LEFT,
+              ImageInstruction.DEVOURER, ImageInstruction.SIZE_FULL);
+          instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+              ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_HALF);
+          BufferedImage image = new BufferedImage(900, 600,
+              BufferedImage.TYPE_4BYTE_ABGR);
+          image = ImageInstruction.parseImageInstructions(image,
+              instructions.build());
+          result.setImage(image);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           PlayerInfo board = map.getPlayerList().getSpaceMonsterPlayer();
           Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
-              board, StarMap.ENEMY_MONSTER);
+              board, StarMap.ENEMY_DEVOURER);
           result.setText(monster.getBiggestShip().getName()
               + " was found in the rift portal. Battle begins...");
           if (Game.getTutorial() != null  && info.isHuman()

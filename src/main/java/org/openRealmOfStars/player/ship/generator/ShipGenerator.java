@@ -849,6 +849,45 @@ public final class ShipGenerator {
   }
 
   /**
+   * Create devourer ship.
+   * @param player PlayerInfo
+   * @return Devourer ship or null.
+   */
+  public static ShipDesign createDevourer(final PlayerInfo player) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    Tech hullTech = TechList.getBestTech(hullTechs, "Devourer");
+    if (hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = new ShipDesign(hull);
+      result.setName("Devourer");
+      ShipComponent weapon = ShipComponentFactory
+          .createByName("Massive mouth with teeth Mk3");
+      result.addComponent(weapon);
+      ShipComponent armor = ShipComponentFactory
+          .createByName("Organic armor Mk3");
+      result.addComponent(armor);
+      result.addComponent(armor);
+      weapon = ShipComponentFactory
+          .createByName("Arm spike");
+      result.addComponent(weapon);
+      result.addComponent(weapon);
+      weapon = ShipComponentFactory
+          .createByName("Plasma spit");
+      result.addComponent(weapon);
+      ShipComponent power = ShipComponentFactory.createByName("Heart");
+      result.addComponent(power);
+      result.addComponent(power);
+      result.addComponent(armor);
+      ShipComponent engine = ShipComponentFactory
+          .createByName("Space fin");
+      result.addComponent(engine);
+    }
+    return result;
+  }
+
+  /**
    * Create scout ship with best possible technology. This is used
    * for human players in beginning and AI every time they design
    * new scout ship.

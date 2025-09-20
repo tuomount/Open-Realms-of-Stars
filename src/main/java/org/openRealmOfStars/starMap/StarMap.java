@@ -132,6 +132,10 @@ public class StarMap {
    */
   public static final int ENEMY_MONSTER = 2;
   /**
+   * Enemy type for Devourer
+   */
+  public static final int ENEMY_DEVOURER = 4;
+  /**
    * Enemy type for pirate colony ship.
    */
   public static final int ENEMY_PIRATE_COLONY = 3;
@@ -512,7 +516,14 @@ public class StarMap {
         }
         if (type == ENEMY_MONSTER && ship.getTheoreticalMilitaryPower() > 0
             && !ship.isStarBase()
-            && ship.getHull().getHullType() != ShipHullType.ORBITAL) {
+            && ship.getHull().getHullType() != ShipHullType.ORBITAL
+            && !ship.getHull().getName().equals("Devourer")) {
+          listStats.add(stat);
+        }
+        if (type == ENEMY_DEVOURER && ship.getTheoreticalMilitaryPower() > 0
+            && !ship.isStarBase()
+            && ship.getHull().getHullType() != ShipHullType.ORBITAL
+            && ship.getHull().getName().equals("Devourer")) {
           listStats.add(stat);
         }
       }
@@ -575,6 +586,17 @@ public class StarMap {
         }
       }
       if (type == ENEMY_MONSTER) {
+        fleet = new Fleet(ship, x, y);
+        playerInfo.getFleets().add(fleet);
+        fleet.setName(playerInfo.getFleets().generateUniqueName(
+            ship.getName()));
+        Mission mission = new Mission(MissionType.ROAM,
+            MissionPhase.TREKKING, fleet.getCoordinate());
+        mission.setFleetName(fleet.getName());
+        playerInfo.getMissions().add(mission);
+      }
+      if (type == ENEMY_DEVOURER) {
+        // TODO: Change behaviour
         fleet = new Fleet(ship, x, y);
         playerInfo.getFleets().add(fleet);
         fleet.setName(playerInfo.getFleets().generateUniqueName(

@@ -81,6 +81,10 @@ public final class SharedShipImages {
    */
   public static final int LARGE_SPACE_KRAKEN = 2;
   /**
+   * Index for large space devourer
+   */
+  public static final int DEVOURER = 3;
+  /**
    * Must be one bigger than last ship
    */
   public static final int NUMBER_OF_IMAGES = 4;
@@ -88,7 +92,7 @@ public final class SharedShipImages {
   /**
    * Number of monster images.
    */
-  private static final int NUMBER_OF_MONSTER_IMAGES = 3;
+  private static final int NUMBER_OF_MONSTER_IMAGES = 4;
 
   /**
    * Hidden constructor.
@@ -145,6 +149,11 @@ public final class SharedShipImages {
         monsterShipImages[LARGE_SPACE_KRAKEN]);
     smallMonsterShipImages[LARGE_SPACE_KRAKEN] = ShipImage.scaleTo16x16(
         monsterShipImages[LARGE_SPACE_KRAKEN]);
+    monsterShipImages[DEVOURER] = ShipImage.image64x64(image, 3, 0);
+    normalMonsterShipImages[DEVOURER] = ShipImage.scaleTo32x32(
+        monsterShipImages[DEVOURER]);
+    smallMonsterShipImages[DEVOURER] = ShipImage.scaleTo16x16(
+        monsterShipImages[DEVOURER]);
   }
 
   /**

@@ -104,7 +104,7 @@ public class RiftPortalEvent extends Event {
    * @return RiftPortalEvent parsed from buffer
    * @throws IOException if parsing fails
    */
-  protected static RiftPortalEvent createCombatEvent(final byte[] buffer)
+  protected static RiftPortalEvent createRiftPortalEvent(final byte[] buffer)
       throws IOException {
     EventType readType = Event.readTypeAndLength(buffer);
     if (readType == EventType.RIFT_PORTAL) {

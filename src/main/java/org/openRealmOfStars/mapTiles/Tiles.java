@@ -1049,28 +1049,28 @@ public final class Tiles {
       final BufferedImage tilesImage32,
       final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
     addTile(tilesImage32, tilesImage64, tilesImage16, 14, 5,
-        TileNames.RIFT_PORTAL1_ARTIFACT, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL1_ARTIFACT, TileNames.RIFT_PORTAL_DESCRIPTION,
         -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 15, 5,
-        TileNames.RIFT_PORTAL2_ARTIFACT, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL2_ARTIFACT, TileNames.RIFT_PORTAL_DESCRIPTION,
         -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 16, 5,
-        TileNames.RIFT_PORTAL3_ARTIFACT, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL3_ARTIFACT, TileNames.RIFT_PORTAL_DESCRIPTION,
         -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 17, 5,
-        TileNames.RIFT_PORTAL4_ARTIFACT, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL4_ARTIFACT, TileNames.RIFT_PORTAL_DESCRIPTION,
         Tiles.getTileByName(TileNames.RIFT_PORTAL1_ARTIFACT).getIndex());
     addTile(tilesImage32, tilesImage64, tilesImage16, 14, 5,
-        TileNames.RIFT_PORTAL1_DEVOURER, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL1_DEVOURER, TileNames.RIFT_PORTAL_DESCRIPTION,
         -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 15, 5,
-        TileNames.RIFT_PORTAL2_DEVOURER, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL2_DEVOURER, TileNames.RIFT_PORTAL_DESCRIPTION,
         -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 16, 5,
-        TileNames.RIFT_PORTAL3_DEVOURER, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL3_DEVOURER, TileNames.RIFT_PORTAL_DESCRIPTION,
         -2);
     addTile(tilesImage32, tilesImage64, tilesImage16, 17, 5,
-        TileNames.RIFT_PORTAL4_DEVOURER, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        TileNames.RIFT_PORTAL4_DEVOURER, TileNames.RIFT_PORTAL_DESCRIPTION,
         Tiles.getTileByName(TileNames.RIFT_PORTAL1_DEVOURER).getIndex());
   }
   /**

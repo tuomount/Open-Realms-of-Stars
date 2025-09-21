@@ -162,6 +162,9 @@ public abstract class Event {
       case LEADER_EVENT:  {
         result = LeaderEvent.createLeaderEvent(buffer); break;
       }
+      case RIFT_PORTAL:  {
+        result = RiftPortalEvent.createRiftPortalEvent(buffer); break;
+      }
       default: {
         throw new IOException("Unexpected event type: " + type);
       }

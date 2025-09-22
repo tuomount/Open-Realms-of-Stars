@@ -3134,6 +3134,8 @@ public class StarMap {
       instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
       instructions.addImage(ImageInstruction.BLUEISH_BLACK_HOLE);
       instructions.addText("SUPER MASSIVE BLACK HOLE");
+      getAscensionEvents().eventHappens(
+          AscensionEventType.BLACK_HOLE_DISCOVERED);
       msg.setCoordinate(new Coordinate(sx, sy));
       msg.setImageInstructions(instructions.build());
       msg.setRandomEventPop(true);

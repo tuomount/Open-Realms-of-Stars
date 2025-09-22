@@ -44,14 +44,19 @@ public class AscensionEvents implements GalaxyEvents {
    */
   public static final byte NO_ACTIVATIO = 0;
   /**
+   * Black hole has been discovered. Ascension events
+   * can now start.
+   */
+  public static final byte BLACK_HOLE_DISCOVERED = 1;
+  /**
    * Ascension vein has been activated by visiting at black hole
    * with gravity ripper.
    */
-  public static final byte ASCENSION_VEIN_ACTIVATED = 1;
+  public static final byte ASCENSION_VEIN_ACTIVATED = 2;
   /**
    * Ascension portal has been built.
    */
-  public static final byte ASCENSION_PORTAL_ACTIVATED = 2;
+  public static final byte ASCENSION_PORTAL_ACTIVATED = 3;
 
   /**
    * How fast new artifacts are being spawned.
@@ -101,10 +106,12 @@ public class AscensionEvents implements GalaxyEvents {
   }
   @Override
   public void handleEvents(final StarMap map) {
-    chanceForArtifact = chanceForArtifact + artifactSpawnSpeed;
-    chanceForDevourer = chanceForDevourer + spaceDevourerSpeed;
-    handleArtifactEvent(map);
-    handleDevourerEvent(map);
+    if (map.getStarYear() > 2439 && getAscensionActivation() > 0) {
+      chanceForArtifact = chanceForArtifact + artifactSpawnSpeed;
+      chanceForDevourer = chanceForDevourer + spaceDevourerSpeed;
+      handleArtifactEvent(map);
+      handleDevourerEvent(map);
+    }
   }
 
   /**
@@ -214,6 +221,12 @@ public class AscensionEvents implements GalaxyEvents {
         }
         if (spaceDevourerSpeed < 15) {
           spaceDevourerSpeed++;
+        }
+        break;
+      }
+      case BLACK_HOLE_DISCOVERED: {
+        if (getAscensionActivation() == 0) {
+          setAscensionActivation((byte) 1);
         }
         break;
       }

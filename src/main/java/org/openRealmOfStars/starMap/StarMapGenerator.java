@@ -18,6 +18,7 @@ package org.openRealmOfStars.starMap;
  */
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.game.Game;
@@ -158,6 +159,11 @@ public class StarMapGenerator {
       }
       ascensionPortalX = planet.getX();
       ascensionPortalY = planet.getY();
+      Optional<TimedStatus> status = StatusFactory.createTimedStatus(
+          StatusIds.ASCENSION_PORTAL, TimedStatusType.GAME_START, 1);
+      if (status.isPresent()) {
+        planet.addTimedStatus(status.get());
+      }
       if (ascensionPortalX != -1) {
         break;
       }

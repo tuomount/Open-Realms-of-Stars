@@ -66,7 +66,11 @@ public enum EventType {
   /**
    * Event for rift portal.
    */
-  RIFT_PORTAL;
+  RIFT_PORTAL,
+  /**
+   * Event for rift portal.
+   */
+  ASCENSION_PORTAL;
 
   /**
    * Get Event type index
@@ -85,6 +89,7 @@ public enum EventType {
       case ARTIFICAL_PLANET_CREATED: return 8;
       case LEADER_EVENT: return 9;
       case RIFT_PORTAL: return 10;
+      case ASCENSION_PORTAL: return 11;
       default: return 0;
     }
   }
@@ -107,6 +112,7 @@ public enum EventType {
       case 8: return EventType.ARTIFICAL_PLANET_CREATED;
       case 9: return EventType.LEADER_EVENT;
       case 10: return EventType.RIFT_PORTAL;
+      case 11: return EventType.ASCENSION_PORTAL;
       default: throw new IllegalArgumentException(
           "No event type found for index " + index);
     }
@@ -126,6 +132,7 @@ public enum EventType {
       case ARTIFICAL_PLANET_CREATED: return "Artificial planet created";
       case LEADER_EVENT: return "Leader event";
       case RIFT_PORTAL: return "Rift portal";
+      case ASCENSION_PORTAL: return "Ascension portal";
       default: return "Default";
     }
   }

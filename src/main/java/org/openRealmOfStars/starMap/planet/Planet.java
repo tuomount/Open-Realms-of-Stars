@@ -52,6 +52,7 @@ import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
@@ -4911,6 +4912,20 @@ public class Planet {
       }
       return addToRemoveList;
     }
+    if (applied.getStatusId().equals(StatusIds.ASCENSION_PORTAL)
+        && map.getAscensionEvents().getAscensionActivation()
+        == AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+      addToRemoveList = true;
+      EventOnPlanet eventOnPlanet = new EventOnPlanet(
+          EventType.ASCENSION_PORTAL, getCoordinate(), getName(), -1);
+      eventOnPlanet.setText("Graviton conduits have been turned into ascension"
+          + " veins and these reveal now the Ascension planet: " + getName()
+          + ".");
+      map.getHistory().addEvent(eventOnPlanet);
+      // TODO Make news about this
+      return addToRemoveList;
+    }
+
     if (realm == null) {
       return false;
     }

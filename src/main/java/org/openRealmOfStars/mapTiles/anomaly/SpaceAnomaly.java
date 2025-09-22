@@ -744,10 +744,10 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
           ImageInstruction instructions = new ImageInstruction();
           instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-          instructions.addLogo(ImageInstruction.POSITION_LEFT,
-              ImageInstruction.DEVOURER, ImageInstruction.SIZE_FULL);
           instructions.addLogo(ImageInstruction.POSITION_RIGHT,
-              ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_HALF);
+              ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+          instructions.addLogo(ImageInstruction.POSITION_CENTER,
+              ImageInstruction.DEVOURER, ImageInstruction.SIZE_FULL);
           BufferedImage image = new BufferedImage(900, 600,
               BufferedImage.TYPE_4BYTE_ABGR);
           image = ImageInstruction.parseImageInstructions(image,

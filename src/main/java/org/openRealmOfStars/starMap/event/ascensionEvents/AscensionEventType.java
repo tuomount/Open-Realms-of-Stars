@@ -42,5 +42,9 @@ public enum AscensionEventType {
   /**
    * Realm has built ascension portal, almost done.
    */
-  ACTIVATE_ASCENSION_PORTAL
+  ACTIVATE_ASCENSION_PORTAL,
+  /**
+   * One of the realms has discovered black hole.
+   */
+  BLACK_HOLE_DISCOVERED
 }

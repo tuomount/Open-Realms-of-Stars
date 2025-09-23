@@ -298,6 +298,7 @@ public class CombatAnimation {
       count = explosionAnim.getMaxFrames() * 2;
       break;
     }
+    case SPIKE:
     case TENTACLE: {
       count = explosionAnim.getMaxFrames();
       break;
@@ -395,6 +396,10 @@ public class CombatAnimation {
       }
       case TENTACLE: {
         initType = CombatAnimationType.TENTACLE;
+        break;
+      }
+      case ARM_SPIKE: {
+        initType = CombatAnimationType.SPIKE;
         break;
       }
       case PRIVATEERING_MODULE: {
@@ -784,7 +789,8 @@ public class CombatAnimation {
       } else {
         showAnim = false;
       }
-    } else if (type == CombatAnimationType.TENTACLE) {
+    } else if (type == CombatAnimationType.TENTACLE
+        || type == CombatAnimationType.SPIKE) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;

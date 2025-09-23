@@ -1162,6 +1162,7 @@ private int increaseHitChanceByComponent() {
       break;
     }
     case BITE:
+    case ARM_SPIKE:
     case TENTACLE: {
       damage = weapon.getDamage();
       damage = damage - this.getShield() / 3;

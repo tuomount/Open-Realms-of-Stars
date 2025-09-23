@@ -1900,6 +1900,10 @@ public class Planet {
           // No need for radiation well or dampener on small radiation planets
           tmp = null;
         }
+        if (tmp != null && tmp.getName().equals("Planetary ascension portal")
+            && !hasStatus(StatusIds.ASCENSION_PORTAL)) {
+          tmp = null;
+        }
         if (tmp != null && tmp.isOrbitalElevator() && getOrbital() == null) {
           // Orbital elevator requires orbital.
           tmp = null;

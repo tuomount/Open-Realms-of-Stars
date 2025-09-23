@@ -496,7 +496,7 @@ Scanner overload sound by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
-Bite and tentacle sounds by
+Bite, tentacle and spike sounds by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 

@@ -197,6 +197,10 @@ public final class GuiStatics {
   public static final Color TENTACLE_COLOR_1 = new Color(65, 50, 44);
   /** Second color for tentacle. */
   public static final Color TENTACLE_COLOR_2 = new Color(88, 73, 52);
+  /** Base color for arm spike. */
+  public static final Color SPIKE_COLOR_1 = new Color(161, 135, 123);
+  /** Second color for arm spike. */
+  public static final Color SPIKE_COLOR_2 = new Color(90, 87, 86);
   /** Green beam colors */
   public static final Color[] GREEN_BEAM_COLORS = {
       new Color(36, 255,  0),

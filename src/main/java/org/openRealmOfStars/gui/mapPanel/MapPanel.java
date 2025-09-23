@@ -1919,6 +1919,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.TENTACLE);
           break;
           }
+        case SPIKE: {
+          SoundPlayer.playSound(SoundPlayer.SPIKE);
+          break;
+          }
         default: {
           ErrorLogger.log("Unexpected weapon type, sound effect is missing!");
         }
@@ -1942,7 +1946,8 @@ public class MapPanel extends JPanel {
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
             null);
-      } else if (anim.getType() == CombatAnimationType.TENTACLE) {
+      } else if (anim.getType() == CombatAnimationType.TENTACLE
+          || anim.getType() == CombatAnimationType.SPIKE) {
         int tx = anim.getShooter().getX() * ShipImage.MAX_WIDTH
             + ShipImage.MAX_WIDTH / 2;
         int ty = anim.getShooter().getY() * ShipImage.MAX_HEIGHT
@@ -1950,14 +1955,22 @@ public class MapPanel extends JPanel {
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(full);
-        gr.setColor(GuiStatics.TENTACLE_COLOR_1);
+        if (anim.getType() == CombatAnimationType.TENTACLE) {
+          gr.setColor(GuiStatics.TENTACLE_COLOR_1);
+        } else {
+          gr.setColor(GuiStatics.SPIKE_COLOR_1);
+        }
         gr.drawLine(tx + viewPointOffsetX,
             ty + viewPointOffsetY, anim.getSx() + viewPointOffsetX,
             anim.getSy() + viewPointOffsetY);
         Stroke dots = new BasicStroke(3.0f, BasicStroke.CAP_ROUND,
             BasicStroke.JOIN_BEVEL, 1.0f, new float[] {2.0f, 9.0f }, 0.0f);
         gr.setStroke(dots);
-        gr.setColor(GuiStatics.TENTACLE_COLOR_2);
+        if (anim.getType() == CombatAnimationType.TENTACLE) {
+          gr.setColor(GuiStatics.TENTACLE_COLOR_2);
+        } else {
+          gr.setColor(GuiStatics.SPIKE_COLOR_2);
+        }
         gr.drawLine(tx + viewPointOffsetX,
             ty + viewPointOffsetY, anim.getSx() + viewPointOffsetX,
             anim.getSy() + viewPointOffsetY);

@@ -3011,8 +3011,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_ARMED_SPIKE) {
       tmp = new ShipComponent(index, "Arm spike", 0, 0,
-          ShipComponentType.TENTACLE);
-      //TODO: Change type
+          ShipComponentType.ARM_SPIKE);
       tmp.setDamage(6);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);
@@ -3020,7 +3019,6 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_PLASMA_SPIT) {
       tmp = new ShipComponent(index, "Plasma spit", 0, 0,
           ShipComponentType.PLASMA_CANNON);
-      //TODO: Change type
       tmp.setDamage(8);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(1);

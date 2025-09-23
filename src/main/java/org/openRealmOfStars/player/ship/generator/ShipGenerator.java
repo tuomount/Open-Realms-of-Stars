@@ -283,7 +283,8 @@ public final class ShipGenerator {
       case MULTICANNON:
       case WEAPON_RAILGUN:
       case BITE:
-      case TENTACLE: {
+      case TENTACLE:
+      case ARM_SPIKE: {
         scores[i] = scores[i] + comp.getDamage() * 5;
         break;
       }

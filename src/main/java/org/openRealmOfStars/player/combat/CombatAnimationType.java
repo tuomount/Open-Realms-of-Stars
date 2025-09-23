@@ -103,6 +103,11 @@ public enum CombatAnimationType {
   /**
    * Gravity Ripper
    */
-  GRAVITY_RIPPER;
+  GRAVITY_RIPPER,
+  /**
+   * Spike
+   */
+  SPIKE,
+
 
 }

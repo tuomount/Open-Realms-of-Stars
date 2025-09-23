@@ -191,7 +191,11 @@ public enum ShipComponentType {
   /**
    * SPORE_MODULE for spore colonization.
    */
-  SPORE_MODULE;
+  SPORE_MODULE,
+  /**
+   * Arm spike basically same as tentacle but different sound and graphics
+   */
+  ARM_SPIKE;
 
 
   /**
@@ -295,6 +299,8 @@ public enum ShipComponentType {
       return "Repair module";
     case SPORE_MODULE:
       return "Spore module";
+    case ARM_SPIKE:
+      return "Arm spike";
     default:
       return "Error - Unknown";
     }
@@ -382,6 +388,8 @@ public enum ShipComponentType {
       return Icons.ICON_GRAVITY_RIPPER;
     case REPAIR_MODULE:
       return Icons.ICON_WRENCH;
+    case ARM_SPIKE:
+      return Icons.ICON_TENTACLE;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -404,6 +412,7 @@ public enum ShipComponentType {
       case WEAPON_PHOTON_TORPEDO:
       case PLASMA_CANNON:
       case ION_CANNON:
+      case ARM_SPIKE:
       case TENTACLE:
           return 75;
       case BITE:

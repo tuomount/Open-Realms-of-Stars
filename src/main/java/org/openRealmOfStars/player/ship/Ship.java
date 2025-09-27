@@ -1122,6 +1122,7 @@ private int increaseHitChanceByComponent() {
       break;
     }
     case PLASMA_BEAM:
+    case PLASMA_SPIT:
     case PLASMA_CANNON: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();

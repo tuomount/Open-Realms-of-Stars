@@ -370,7 +370,8 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE
-          || comp.getType() == ShipComponentType.ARM_SPIKE) {
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         return true;
       }
     }
@@ -396,7 +397,8 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE
-          || comp.getType() == ShipComponentType.ARM_SPIKE) {
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         count++;
       }
     }
@@ -439,7 +441,8 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE
-          || comp.getType() == ShipComponentType.ARM_SPIKE) {
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         return true;
       }
     }
@@ -601,7 +604,8 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE
-          || comp.getType() == ShipComponentType.ARM_SPIKE) {
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         militaryShip = true;
         power = power + comp.getDamage();
       }

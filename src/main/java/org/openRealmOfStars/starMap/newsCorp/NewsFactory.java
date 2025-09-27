@@ -367,6 +367,69 @@ public final class NewsFactory {
   }
 
   /**
+   * Make news about opening ascension portal.
+   * @param starYear Star Year when it happens
+   * @param planet Planet which opened
+   * @param info PlayerInfo owning the planet
+   * @return NewsData
+   */
+  public static NewsData makeOpenAscensionPortalNews(final int starYear,
+      final Planet planet, final PlayerInfo info) {
+    NewsData news = new NewsData();
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    sb.append(" ");
+    sb.append(planet.getName());
+    sb.append(" has ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("built ");
+    } else {
+      sb.append("constructed ");
+    }
+    sb.append(" and ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("activated ");
+    } else {
+      sb.append("opened ");
+    }
+    sb.append("ascension portal. This portal is now ready to travel through. ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append(planet.getName());
+      sb.append(" belongs to ");
+      sb.append(info.getEmpireName());
+      sb.append(". ");
+    } else {
+      sb.append("This is ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" magnificent ");
+      } else {
+        sb.append(" great ");
+      }
+      sb.append(" achievement for ");
+      sb.append(info.getEmpireName());
+      sb.append(". ");
+    }
+    sb.append(info.getEmpireName());
+    sb.append(" will most certainly travel through it very soon...");
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (DiceGenerator.getBoolean()) {
+      inst.addPlanet(ImageInstruction.POSITION_LEFT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    } else {
+      inst.addPlanet(ImageInstruction.POSITION_RIGHT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    }
+    inst.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.ASCENSION_PORTAL, ImageInstruction.SIZE_FULL);
+    inst.addText("ASCENSION PORTAL ACTIVATED!");
+    news.setImageInstructions(inst.build());
+    news.setNewsText(sb.toString());
+    info.appendStory(news.getNewsText(), starYear);
+    return news;
+  }
+  /**
    * Make Rift portal event news
    * @param starYear when Event happens
    * @param star Nearest star or null
@@ -806,7 +869,7 @@ public final class NewsFactory {
     Planet firstPlanet = null;
     if (leader.getJob() == Job.RULER || leader.getJob() == Job.TOO_YOUNG) {
       for (Planet planet : map.getPlanetList()) {
-        if (planet.getPlanetPlayerInfo() == realm && firstPlanet == null) {
+        if (planet.getPlanetPlayerInfo() == realm) {
           firstPlanet = planet;
           coord = firstPlanet.getCoordinate();
           break;

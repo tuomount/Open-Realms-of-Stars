@@ -495,7 +495,8 @@ public class PlanetBombingView extends BlackPanel {
         || comp.getType() == ShipComponentType.WEAPON_RAILGUN
         || comp.getType() == ShipComponentType.MULTICANNON
         || comp.getType() == ShipComponentType.GRAVITY_RIPPER
-        || comp.getType() == ShipComponentType.PLASMA_CANNON) {
+        || comp.getType() == ShipComponentType.PLASMA_CANNON
+        || comp.getType() == ShipComponentType.PLASMA_SPIT) {
       planetTurretShoot();
       updatePanel();
       usedComponentIndex = index;
@@ -711,7 +712,8 @@ public class PlanetBombingView extends BlackPanel {
     if (compType == ShipComponentType.WEAPON_BEAM
         || compType == ShipComponentType.WEAPON_RAILGUN
         || compType == ShipComponentType.MULTICANNON
-        || compType == ShipComponentType.PLASMA_CANNON) {
+        || compType == ShipComponentType.PLASMA_CANNON
+        || compType == ShipComponentType.PLASMA_SPIT) {
       attackResult = attackConventionalWeapon(ship, comp.getDamage() * 3,
           comp.getDamage());
     }
@@ -1183,7 +1185,8 @@ public class PlanetBombingView extends BlackPanel {
               || component.getType() == ShipComponentType.MULTICANNON
               || component.getType() == ShipComponentType.GRAVITY_RIPPER
               || component.getType() == ShipComponentType.PLASMA_CANNON
-              || component.getType() == ShipComponentType.SPORE_MODULE) {
+              || component.getType() == ShipComponentType.SPORE_MODULE
+              || component.getType() == ShipComponentType.PLASMA_SPIT) {
             // Always bombing or shooting
             shipComponentUsage(aiComponentIndex);
           }

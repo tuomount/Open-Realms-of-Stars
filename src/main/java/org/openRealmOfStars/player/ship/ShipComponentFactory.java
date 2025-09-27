@@ -3018,7 +3018,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_PLASMA_SPIT) {
       tmp = new ShipComponent(index, "Plasma spit", 0, 0,
-          ShipComponentType.PLASMA_CANNON);
+          ShipComponentType.PLASMA_SPIT);
       tmp.setDamage(8);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(1);

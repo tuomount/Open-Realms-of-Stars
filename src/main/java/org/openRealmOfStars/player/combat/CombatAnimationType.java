@@ -108,6 +108,10 @@ public enum CombatAnimationType {
    * Spike
    */
   SPIKE,
+  /**
+   * Plasma spit
+   */
+  PLASMA_SPIT
 
 
 }

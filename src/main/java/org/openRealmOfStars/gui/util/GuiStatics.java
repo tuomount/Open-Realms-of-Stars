@@ -798,6 +798,9 @@ public final class GuiStatics {
   /** Rift portal. */
   public static final String IMAGE_RIFT_PORTAL =
       "/resources/images/rift_portal.png";
+  /** Ascension portal. */
+  public static final String IMAGE_ASCENSION_PORTAL =
+      "/resources/images/ascension_portal.png";
   /** Devourer */
   public static final String IMAGE_DEVOURER =
       "/resources/images/devourer.png";

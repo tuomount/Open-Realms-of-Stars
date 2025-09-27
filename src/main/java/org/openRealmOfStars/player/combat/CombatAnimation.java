@@ -285,6 +285,7 @@ public class CombatAnimation {
       count = explosionAnim.getMaxFrames();
       break;
     }
+    case PLASMA_SPIT:
     case PHOTON_TORPEDO:
     case PLASMA_CANNON: {
       count = explosionAnim.getMaxFrames();
@@ -366,6 +367,10 @@ public class CombatAnimation {
       }
       case WEAPON_HE_MISSILE: {
         initType = CombatAnimationType.HE_MISSILE;
+        break;
+      }
+      case PLASMA_SPIT: {
+        initType = CombatAnimationType.PLASMA_SPIT;
         break;
       }
       case WEAPON_PHOTON_TORPEDO: {
@@ -628,7 +633,8 @@ public class CombatAnimation {
         }
       }
     } else if (type == CombatAnimationType.PHOTON_TORPEDO
-        || type == CombatAnimationType.PLASMA_CANNON) {
+        || type == CombatAnimationType.PLASMA_CANNON
+        || type == CombatAnimationType.PLASMA_SPIT) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;
@@ -661,7 +667,8 @@ public class CombatAnimation {
           px = px + nx;
           py = py + ny;
           ParticleEffect particle = null;
-          if (type == CombatAnimationType.PHOTON_TORPEDO) {
+          if (type == CombatAnimationType.PHOTON_TORPEDO
+              || type == CombatAnimationType.PLASMA_SPIT) {
             particle = new ParticleEffect(
                 ParticleEffectType.PHOTON_TORP_PARTICILE, px, py);
           } else {

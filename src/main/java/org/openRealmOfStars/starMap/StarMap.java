@@ -2798,12 +2798,12 @@ public class StarMap {
     return ascensionEvents;
   }
   /**
-   * Generate Ascension portal to map and ascension veins.
+   * Generate Ascension veins to map.
    *
    * @param x X coordinate for portal
    * @param y Y Coordinate for portal
    */
-  public void generateAscensionPortal(final int x, final int y) {
+  public void generateAscensionVeins(final int x, final int y) {
     int cx = getMaxX() / 2;
     int cy = getMaxY() / 2;
     int[] sax = new int[4];
@@ -2859,6 +2859,55 @@ public class StarMap {
       } while (!search.isLastMove());
 /*      starMap.setTile(x, y, Tiles.getTileByName(
           TileNames.ASCENSION_PORTAL1).getIndex());*/
+    }
+  }
+
+  /**
+   * Generate Ascension portal to map.
+   *
+   */
+  public void generateAscensionPortal() {
+    int cx = ascensionPlanetCoordinate.getX();
+    int cy = ascensionPlanetCoordinate.getY();
+    int mx = cx - 1;
+    int my = cy;
+    if (isValidCoordinate(mx, my)) {
+      Tile tile = getTile(mx, my);
+      if (tile.isAscensionVein()) {
+        setTile(mx, my, Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex());
+        return;
+      }
+    }
+    mx = cx;
+    my = cy - 1;
+    if (isValidCoordinate(mx, my)) {
+      Tile tile = getTile(mx, my);
+      if (tile.isAscensionVein()) {
+        setTile(mx, my, Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex());
+        return;
+      }
+    }
+    mx = cx + 1;
+    my = cy;
+    if (isValidCoordinate(mx, my)) {
+      Tile tile = getTile(mx, my);
+      if (tile.isAscensionVein()) {
+        setTile(mx, my, Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex());
+        return;
+      }
+    }
+    mx = cx;
+    my = cy + 1;
+    if (isValidCoordinate(mx, my)) {
+      Tile tile = getTile(mx, my);
+      if (tile.isAscensionVein()) {
+        setTile(mx, my, Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex());
+        return;
+      }
     }
   }
 
@@ -3166,7 +3215,7 @@ public class StarMap {
       msg.setCoordinate(new Coordinate(sx, sy));
       info.getMsgList().addNewMessage(msg);
       ascensionEvents.eventHappens(AscensionEventType.ACTIVATE_GRAVITY_RIPPER);
-      generateAscensionPortal(getAscensionPlanetCoordinate().getX(),
+      generateAscensionVeins(getAscensionPlanetCoordinate().getX(),
           getAscensionPlanetCoordinate().getY());
       smoothAscensionVeins();
     }

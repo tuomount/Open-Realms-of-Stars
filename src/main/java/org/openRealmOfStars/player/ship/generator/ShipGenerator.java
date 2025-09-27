@@ -288,6 +288,7 @@ public final class ShipGenerator {
         scores[i] = scores[i] + comp.getDamage() * 5;
         break;
       }
+      case PLASMA_SPIT:
       case PLASMA_CANNON: // These two should get slight better value.
       case GRAVITY_RIPPER: {
         scores[i] = scores[i] + comp.getDamage() * 5 + 1;

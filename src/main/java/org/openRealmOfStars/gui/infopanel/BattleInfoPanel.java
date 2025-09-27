@@ -198,7 +198,8 @@ public class BattleInfoPanel extends InfoPanel {
             // Ion cannon also cause damage to shield
             damage = damage + 2;
           }
-          if (component.getType() == ShipComponentType.PLASMA_CANNON) {
+          if (component.getType() == ShipComponentType.PLASMA_CANNON
+              || component.getType() == ShipComponentType.PLASMA_SPIT) {
             // Nothing stops fully plasma cannon
             damage = damage + 5;
           }

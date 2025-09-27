@@ -46,6 +46,7 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -1978,6 +1979,27 @@ public class Planet {
   }
 
   /**
+   * Check if planet has ascension portal.
+   * This can be either building or in orbital.
+   * @return True if yes
+   */
+  public boolean hasAscensionPortal() {
+    for (Building building : buildings) {
+      if (building.getName().equals("Planetary ascension portal")) {
+        return true;
+      }
+    }
+    if (orbital != null) {
+      for (int i = 0; i < orbital.getNumberOfComponents(); i++) {
+        ShipComponent comp = orbital.getComponent(i);
+        if (comp.getName().equals("Orbital ascension portal")) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  /**
    * Get the total number of buildings on planet
    * @return number of buildings
    */
@@ -3164,6 +3186,23 @@ public class Planet {
     checkIfConstructionIsDone(enemyOrbiting, map);
 
     Message msg;
+    if (hasAscensionPortal()
+        && map.getAscensionEvents().getAscensionActivation()
+        == AscensionEvents.ASCENSION_VEIN_ACTIVATED
+        && planetOwnerInfo != null) {
+      map.generateAscensionPortal();
+      map.getAscensionEvents().setAscensionActivation(
+          AscensionEvents.ASCENSION_PORTAL_ACTIVATED);
+      msg = new Message(MessageType.PLANETARY,
+          getName() + " has opened ascension portal. This portal is now ready"
+              + " to travel through.",
+          Icons.getIconByName(Icons.ICON_ASCENSION_PORTAL));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      planetOwnerInfo.getMsgList().addNewMessage(msg);
+      map.getNewsCorpData().addNews(NewsFactory.makeOpenAscensionPortalNews(
+          map.getStarYear(), this, getPlanetPlayerInfo()));
+    }
     if (happinessType == HappinessBonus.KILL_POPULATION) {
       // Need to remember owner if last population is killed
       PlayerInfo oldOwner = planetOwnerInfo;

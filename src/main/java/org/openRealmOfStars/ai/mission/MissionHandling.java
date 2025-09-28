@@ -581,8 +581,7 @@ public final class MissionHandling {
 
         }
       }
-      if (mission.getPhase() == MissionPhase.TREKKING
-          && fleet.getRoute() == null) {
+      if (mission.getPhase() == MissionPhase.TREKKING) {
         // Fleet has encounter obstacle, taking a detour round it
         Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(),
             fleet.getY());
@@ -590,7 +589,8 @@ public final class MissionHandling {
           // Fleet is in correct solar system, starting explore execution mode
           mission.setPhase(MissionPhase.EXECUTING);
           fleet.setaStarSearch(null);
-        } else {
+          fleet.setRoute(null);
+        } else if (fleet.getRoute() == null) {
           makeReroute(game, fleet, info, mission);
         }
       }

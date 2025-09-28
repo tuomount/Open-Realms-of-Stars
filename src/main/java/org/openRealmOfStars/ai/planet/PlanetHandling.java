@@ -1006,7 +1006,19 @@ public final class PlanetHandling {
         if (checkIfArtistIsAssigned(info)) {
           artists = artists + div;
         } else {
-          miners = miners + div;
+          int prodProd = planet.getTotalProductionFromBuildings(
+              Planet.PRODUCTION_PRODUCTION);
+          if (prodProd < 4 && div >= 4) {
+            int left = div - 4;
+            workers = workers + 4;
+            miners = miners + left;
+          } else if (prodProd < 4 && div >= 2) {
+            int left = div - 2;
+            workers = workers + 2;
+            miners = miners + left;
+          } else {
+            miners = miners + div;
+          }
         }
         scientist = scientist + div;
       }

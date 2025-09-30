@@ -1512,6 +1512,24 @@ public boolean launchIntercept(final int distance,
       } else {
         sb.append("Loser's fleet was totally destroyed!");
       }
+      if (winnerPlayer.getRace().isMonster()
+          && winnerFleet.getNumberOfShip() < 10) {
+        for (Ship ship : winnerFleet.getShips()) {
+          if (ship.getHull().getName().equals("Devourer")) {
+            int chance = DiceGenerator.getRandom(99);
+            if (chance < 25) {
+              Ship newShip = winnerPlayer.createNewDevourerShip();
+              if (newShip != null) {
+                winnerFleet.addShip(newShip);
+                sb.append(" Devourer ship ate destroyed ships and"
+                    + " it reproduce another devourer.");
+              }
+            }
+            break;
+          }
+        }
+      }
+
       combatEvent.setText(sb.toString());
       if (isWinnerAttacker) {
         Coordinate loserPos = looserFleet.getCoordinate();

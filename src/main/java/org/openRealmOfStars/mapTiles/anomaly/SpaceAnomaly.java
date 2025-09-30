@@ -771,7 +771,7 @@ public class SpaceAnomaly {
           Combat fight = new Combat(fleet, monster, info, board,
               map.getStarYear());
           result.setCombat(fight);
-          addExp = 40;
+          addExp = 80;
           break;
         }
 

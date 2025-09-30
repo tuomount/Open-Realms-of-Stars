@@ -368,6 +368,9 @@ public class AITurnView extends BlackPanel {
       case ROAM:
         MissionHandling.handleRoaming(mission, fleet, info, game);
         break;
+      case DEVOURER_ROAM:
+        MissionHandling.handleDevourer(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }

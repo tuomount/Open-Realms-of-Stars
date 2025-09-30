@@ -2503,4 +2503,27 @@ public class PlayerInfo {
     this.startingScenario = startingScenario;
   }
 
+  /**
+   * Get new devourer ship. This ship is ready for next fleet.
+   * Stats are increased already if ship has returned.
+   * @return Ship or null
+   */
+  public Ship createNewDevourerShip() {
+    ShipStat[] stats = getShipStatList();
+    ArrayList<ShipStat> listStats = new ArrayList<>();
+    for (ShipStat stat : stats) {
+      Ship ship = new Ship(stat.getDesign());
+      if (ship.getHull().getName().equals("Devourer")) {
+        listStats.add(stat);
+      }
+    }
+    ShipStat stat = DiceGenerator.pickRandom(listStats);
+    if (stat != null) {
+      Ship ship = new Ship(stat.getDesign());
+      stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+      stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+      return ship;
+    }
+    return null;
+  }
 }

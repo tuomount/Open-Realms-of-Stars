@@ -101,7 +101,12 @@ public enum MissionType {
   /**
    * Spore colony, colonize or conquer planet via spores.
    */
-  SPORE_COLONY;
+  SPORE_COLONY,
+  /**
+   * Space monster devourer roam. These will target both
+   * fleets and planets.
+   */
+  DEVOURER_ROAM;
 
   /**
    * Get Mission type with index
@@ -145,6 +150,8 @@ public enum MissionType {
       return 16;
     case SPORE_COLONY:
       return 17;
+    case DEVOURER_ROAM:
+      return 18;
     default:
       return 0;
     }
@@ -189,6 +196,8 @@ public enum MissionType {
       return "Roam";
     case SPORE_COLONY:
       return "Spore colony";
+    case DEVOURER_ROAM:
+      return "Devourer roam";
     default:
       return "Unknown";
     }

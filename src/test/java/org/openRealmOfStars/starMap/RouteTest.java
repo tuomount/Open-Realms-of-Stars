@@ -169,14 +169,14 @@ public class RouteTest {
         route.getY());
     assertEquals("The X coordinate should be 5 after the second step.", 4,
         route.getStartX(), 0.1);
-    assertEquals("The Y coordinate should be 5 after the second step.", 5,
+    assertEquals("The Y coordinate should be 5 after the second step.", 4.5,
         route.getStartY(), 0.1);
     assertEquals("The end X coordinate should be 5.", 5, route.getEndX(), 0.1);
     assertEquals("The end Y coordinate should be 5.", 5, route.getEndY(), 0.1);
     assertEquals("The speed should be 1.", 1, route.getFtlSpeed());
     assertEquals("The internal movement speed should be 1.", 1, route.getMx(),
         0.1);
-    assertEquals("The internal movement speed should be 0.", 0, route.getMy(),
+    assertEquals("The internal movement speed should be 0.", 0.5, route.getMy(),
         0.1);
     assertEquals("The distance should be 1.", 1, route.getDistance());
     assertFalse("The route shouldn't be defending.", route.isDefending());

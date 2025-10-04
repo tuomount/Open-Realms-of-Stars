@@ -1902,7 +1902,7 @@ public class Planet {
           tmp = null;
         }
         if (tmp != null && tmp.getName().equals("Planetary ascension portal")
-            && !hasStatus(StatusIds.ASCENSION_PORTAL)) {
+            && !hasStatus(StatusIds.NODAL_WORLD)) {
           tmp = null;
         }
         if (tmp != null && tmp.isOrbitalElevator() && getOrbital() == null) {
@@ -4955,7 +4955,7 @@ public class Planet {
       }
       return addToRemoveList;
     }
-    if (applied.getStatusId().equals(StatusIds.ASCENSION_PORTAL)
+    if (applied.getStatusId().equals(StatusIds.NODAL_WORLD)
         && map.getAscensionEvents().getAscensionActivation()
         == AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
       addToRemoveList = true;
@@ -5217,6 +5217,21 @@ public class Planet {
       if (status.getTimedStatus() == TimedStatusType.GAME_START
           && turnNumber > 0) {
         status.decrease();
+      }
+      if (status.getTimedStatus() == TimedStatusType.SPECIAL_EVENT) {
+        if (status.getStatus().getId().equals(StatusIds.NODAL_WORLD)) {
+         if (map.getAscensionEvents().getAscensionActivation()
+             == AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+           boolean addToRemoveList = activateTimedStatus(map, status, null,
+               null);
+           if (addToRemoveList) {
+             removeList.add(status);
+           }
+         }
+        } else {
+          ErrorLogger.debug("Unexpected timedstatus with special event: "
+              + status.getStatus().getId());
+        }
       }
       if (status.isActive()) {
         boolean addToRemoveList = activateTimedStatus(map, status, null, null);

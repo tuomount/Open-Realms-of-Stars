@@ -160,7 +160,7 @@ public class StarMapGenerator {
       ascensionPortalX = planet.getX();
       ascensionPortalY = planet.getY();
       Optional<TimedStatus> status = StatusFactory.createTimedStatus(
-          StatusIds.ASCENSION_PORTAL, TimedStatusType.GAME_START, 1);
+          StatusIds.NODAL_WORLD, TimedStatusType.SPECIAL_EVENT, 1);
       if (status.isPresent()) {
         planet.addTimedStatus(status.get());
       }

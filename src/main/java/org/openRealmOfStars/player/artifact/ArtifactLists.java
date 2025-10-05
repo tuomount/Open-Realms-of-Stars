@@ -262,51 +262,83 @@ public class ArtifactLists {
       final String techName, final int techLevel, final TechType techType,
       final ArtifactType artifactType) {
     String result = null;
-    int currentTechLevel = info.getTechList().getTechLevel(TechType.Combat);
-    if (currentTechLevel >= techLevel) {
-      int chance = getTypesResearched(artifactType) * 10;
-      if (DiceGenerator.getRandom(100) < chance
-          && !info.getTechList().hasTech(techName)) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(info.getEmpireName());
-        sb.append(" has learned ");
-        sb.append(techName);
-        sb.append(" while studying artifacts.");
-        switch (techType) {
-          default:
-          case Combat: {
-            info.getTechList().addTech(TechFactory.createCombatTech(
-                techName, techLevel));
-            break;
-          }
-          case Defense: {
-            info.getTechList().addTech(TechFactory.createDefenseTech(
-                techName, techLevel));
-            break;
-          }
-          case Hulls: {
-            info.getTechList().addTech(TechFactory.createHullTech(
-                techName, techLevel));
-            break;
-          }
-          case Improvements: {
-            info.getTechList().addTech(TechFactory.createImprovementTech(
-                techName, techLevel));
-            break;
-          }
-          case Propulsion: {
-            info.getTechList().addTech(TechFactory.createPropulsionTech(
-                techName, techLevel));
-            break;
-          }
-          case Electrics: {
-            info.getTechList().addTech(TechFactory.createElectronicsTech(
-                techName, techLevel));
-            break;
-          }
+    int currentTechLevel = info.getTechList().getTechLevel(techType);
+    if (currentTechLevel + 3 < techLevel) {
+      return null;
+    }
+    int chance = getTypesResearched(artifactType) * 8;
+    if (techType == TechType.Combat) {
+      chance = chance + getTypesResearched(ArtifactType.DEFENSE) * 3;
+    }
+    if (techType == TechType.Defense) {
+      chance = chance + getTypesResearched(ArtifactType.MILITARY) * 3;
+    }
+    if (techType == TechType.Hulls) {
+      chance = chance + getTypesResearched(ArtifactType.FACILITY) * 3;
+    }
+    if (techType == TechType.Improvements) {
+      chance = chance + getTypesResearched(ArtifactType.SHIPHULL) * 3;
+    }
+    if (techType == TechType.Propulsion) {
+      chance = chance + getTypesResearched(ArtifactType.ELECTRONIC) * 3;
+    }
+    if (techType == TechType.Electrics) {
+      chance = chance + getTypesResearched(ArtifactType.ENERGY) * 3;
+    }
+    chance = chance + researchedArtifacts.size() * 2;
+    if (currentTechLevel > techLevel) {
+      chance = chance * 2;
+    }
+    if (currentTechLevel + 1 == techLevel) {
+      chance = chance / 2;
+    }
+    if (currentTechLevel + 2 == techLevel) {
+      chance = chance / 5;
+    }
+    if (currentTechLevel + 3 == techLevel) {
+      chance = chance / 10;
+    }
+    if (DiceGenerator.getRandom(100) < chance
+        && !info.getTechList().hasTech(techName)) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(info.getEmpireName());
+      sb.append(" has learned ");
+      sb.append(techName);
+      sb.append(" while studying artifacts.");
+      switch (techType) {
+        default:
+        case Combat: {
+          info.getTechList().addTech(TechFactory.createCombatTech(
+              techName, techLevel));
+          break;
         }
-        result = sb.toString();
+        case Defense: {
+          info.getTechList().addTech(TechFactory.createDefenseTech(
+              techName, techLevel));
+          break;
+        }
+        case Hulls: {
+          info.getTechList().addTech(TechFactory.createHullTech(
+              techName, techLevel));
+          break;
+        }
+        case Improvements: {
+          info.getTechList().addTech(TechFactory.createImprovementTech(
+              techName, techLevel));
+          break;
+        }
+        case Propulsion: {
+          info.getTechList().addTech(TechFactory.createPropulsionTech(
+              techName, techLevel));
+          break;
+        }
+        case Electrics: {
+          info.getTechList().addTech(TechFactory.createElectronicsTech(
+              techName, techLevel));
+          break;
+        }
       }
+      result = sb.toString();
     }
     return result;
   }
@@ -387,6 +419,8 @@ public class ArtifactLists {
             TechType.Combat, ArtifactType.MILITARY);
         if (event != null) {
           sb.append(event);
+          starMap.getAscensionEvents().eventHappens(
+              AscensionEventType.GAIN_GRAVITY_RIPPER);
         }
       }
       if (artifact.getArtifactType() == ArtifactType.DEFENSE) {
@@ -395,9 +429,6 @@ public class ArtifactLists {
             ArtifactType.DEFENSE);
         if (event != null) {
           sb.append(event);
-          starMap.getAscensionEvents().eventHappens(
-              AscensionEventType.GAIN_GRAVITY_RIPPER);
-
         }
       }
       if (artifact.getArtifactType() == ArtifactType.SHIPHULL) {

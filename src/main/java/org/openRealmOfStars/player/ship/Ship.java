@@ -684,6 +684,7 @@ private int getRemainingEnergy(final int index) {
    */
   public int getSpeed() {
     int speed = 0;
+    int thrusters = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
@@ -694,7 +695,11 @@ private int getRemainingEnergy(final int index) {
           && hasComponentEnergy(i) && comp.getSpeed() > speed) {
         speed = comp.getSpeed();
       }
+      if (comp.getType() == ShipComponentType.THRUSTERS) {
+        thrusters = comp.getSpeed();
+      }
     }
+    speed = speed + thrusters;
     if (hull.getHullType() == ShipHullType.PROBE) {
       String str = hull.getName();
       if (str.equals("Probe Mk2") || str.equals("Probe Mk3")) {

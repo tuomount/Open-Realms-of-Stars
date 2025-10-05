@@ -254,6 +254,13 @@ public class ShipDesign {
         thrusters = comp.getSpeed();
       }
     }
+    if (hull.getHullType() == ShipHullType.PROBE) {
+      String str = hull.getName();
+      if (str.equals("Probe Mk2") || str.equals("Probe Mk3")) {
+        // Probes Mk2 and Mk3 have faster regular speed
+          speed = speed + 1;
+      }
+    }
     speed = speed + thrusters;
     return speed;
   }

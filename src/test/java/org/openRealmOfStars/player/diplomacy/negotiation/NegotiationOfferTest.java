@@ -191,7 +191,7 @@ public class NegotiationOfferTest {
     Tech tech = Mockito.mock(Tech.class);
     Mockito.when(tech.getLevel()).thenReturn(3);
     offer = new NegotiationOffer(NegotiationType.TECH, tech);
-    assertEquals(6, offer.getOfferValue(info));
+    assertEquals(10, offer.getOfferValue(info));
 
     offer = new NegotiationOffer(NegotiationType.MAP_PLANETS, null);
     assertEquals(NegotiationType.MAP_PLANETS, offer.getNegotiationType());

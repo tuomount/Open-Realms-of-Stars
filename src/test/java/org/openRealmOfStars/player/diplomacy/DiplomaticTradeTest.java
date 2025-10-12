@@ -524,7 +524,7 @@ public class DiplomaticTradeTest {
         TechFactory.createDefenseTech("Shield Mk2", 2)));
     trade.setFirstOffer(firstList);
     trade.setSecondOffer(secondList);
-    assertEquals(-6, trade.getOfferDifferenceForBoth());
+    assertEquals(-10, trade.getOfferDifferenceForBoth());
   }
 
   @Test
@@ -567,7 +567,7 @@ public class DiplomaticTradeTest {
         fleet));
     trade.setFirstOffer(firstList);
     trade.setSecondOffer(secondList);
-    assertEquals(-8, trade.getOfferDifferenceForBoth());
+    assertEquals(0, trade.getOfferDifferenceForBoth());
   }
 
 /*

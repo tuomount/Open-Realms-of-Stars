@@ -99,6 +99,37 @@ public final class PlanetHandling {
   }
 
   /**
+   * Is Realm's researcha enough for that current state of the game?
+   * @param map StarMap
+   * @param index Realm index
+   * @return True if it is enough, otherwise false
+   */
+  public static boolean isAdequateReserch(final StarMap map, final int index) {
+    int totalResearch = map.getTotalProductionByPlayerPerTurn(
+        Planet.PRODUCTION_RESEARCH, index);
+    if (map.getGameLengthState() == GameLengthState.START_GAME
+        && totalResearch < 6) {
+      return false;
+    }
+    if (map.getGameLengthState() == GameLengthState.EARLY_GAME
+        && totalResearch < 12) {
+      return false;
+    }
+    if (map.getGameLengthState() == GameLengthState.MIDDLE_GAME
+        && totalResearch < 20) {
+      return false;
+    }
+    if (map.getGameLengthState() == GameLengthState.LATE_GAME
+        && totalResearch < 30) {
+      return false;
+    }
+    if (map.getGameLengthState() == GameLengthState.END_GAME
+        && totalResearch < 40) {
+      return false;
+    }
+    return true;
+  }
+  /**
    * Choose next construction for planet.
    * @param map StarMap
    * @param planet Planet which will choose next construction
@@ -141,7 +172,8 @@ public final class PlanetHandling {
         constructionSelected = true;
       }
     }
-    if (gotLabs == -1 && !constructionSelected) {
+    if (gotLabs == -1 && !constructionSelected
+        && !isAdequateReserch(map, index)) {
       // No labs at all
       int i = getConstruction("College of history", constructions);
       if (i != -1) {

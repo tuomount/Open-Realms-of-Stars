@@ -745,6 +745,33 @@ public class Diplomacy {
       // There is no diplomacy for privateer fleets
       type = DiplomacyView.AI_REGULAR;
     }
+    if ((info.getAiAttitude() == Attitude.AGGRESSIVE
+        || info.getAiAttitude() == Attitude.MILITARISTIC
+        || info.getAiAttitude() == Attitude.BACKSTABBING)
+        && type == DiplomacyView.AI_BORDER_CROSS
+        && fleet.getNumberOfShip() == 1
+        && fleet.getMilitaryValue() < 19 && info.getTotalCredits() > 39) {
+      // AI has credits, so it could actually buy something from another realm
+      type = DiplomacyView.AI_REGULAR;
+    }
+    if ((info.getAiAttitude() == Attitude.DIPLOMATIC
+        || info.getAiAttitude() == Attitude.PEACEFUL
+        || info.getAiAttitude() == Attitude.MERCHANTICAL)
+        && type == DiplomacyView.AI_BORDER_CROSS
+        && fleet.getNumberOfShip() == 1
+        && fleet.getMilitaryValue() < 31 && info.getTotalCredits() > 15) {
+      // AI has credits, so it could actually buy something from another realm
+      type = DiplomacyView.AI_REGULAR;
+    }
+    if ((info.getAiAttitude() == Attitude.EXPANSIONIST
+        || info.getAiAttitude() == Attitude.SCIENTIFIC
+        || info.getAiAttitude() == Attitude.LOGICAL)
+        && type == DiplomacyView.AI_BORDER_CROSS
+        && fleet.getNumberOfShip() == 1
+        && fleet.getMilitaryValue() < 25 && info.getTotalCredits() > 25) {
+      // AI has credits, so it could actually buy something from another realm
+      type = DiplomacyView.AI_REGULAR;
+    }
     if (info.isHuman()) {
       if (type == DiplomacyView.AI_REGULAR) {
         type = DiplomacyView.HUMAN_REGULAR;

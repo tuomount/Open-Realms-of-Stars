@@ -1524,7 +1524,7 @@ public class DiplomaticTradeTest {
         .getNegotiationType();
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
-    if (type1 == type2
+    if ((type1 == type2 || type2 == NegotiationType.CREDIT)
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
         || type1 == NegotiationType.MAP_PLANETS)) {
       return;

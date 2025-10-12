@@ -1144,6 +1144,25 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Compare credits between two realms
+   * @param info PlayerInfo who is making the comparison
+   * @param info2 PlayerInfo where to compare
+   * @return -1 You have less, 0 equal, 1 you have more
+   */
+  private int creditCompare(final PlayerInfo info, final PlayerInfo info2) {
+    int difference = info.getTotalCredits() - info2.getTotalCredits();
+    if (Math.abs(difference) <= 10) {
+      // About same amount of credits
+      return 0;
+    }
+    if (difference <= -10) {
+      // You have less credits
+      return -1;
+    }
+    // You have mores credits
+    return 1;
+  }
+  /**
    * Check if trade embargo is about to be possible
    * @return Realm index with embargo is possible, -1 if not.
    */
@@ -1565,10 +1584,20 @@ public class DiplomaticTrade {
       }
     } else if (value < 50) {
       generateProtectionOffer();
-    } else if (value < 70) {
-      generateTechTrade(BUY);
-    } else if (value < 80) {
-      generateTechTrade(SELL);
+    } else if  (value < 80) {
+      int techListInfo1 = techListForFirst.size();
+      int techListInfo2 = techListForFirst.size();
+      int credit = info.getTotalCredits();
+      if (credit > 9 && creditCompare(info, agree) > -1 && techListInfo2 > 1) {
+        generateTechTrade(BUY);
+      } else if (agree.getTotalCredits() > 9 && creditCompare(info, agree) < 1
+          && techListInfo1 > 1) {
+        generateTechTrade(SELL);
+      } else if (techListInfo1 > 1 && techListInfo2 > 1) {
+        generateTechTrade(TRADE);
+      } else {
+        generateTechTrade(SELL);
+      }
     } else {
       if (DiceGenerator.getBoolean()) {
         generateMapTrade(TRADE, MAP_FULLMAP);
@@ -1652,7 +1681,20 @@ public class DiplomaticTrade {
     int embargoIndex = getPossibleTradeEmbargo();
     if (value < 40) {
       if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-        generateTechTrade(TRADE);
+        int techListInfo1 = techListForFirst.size();
+        int techListInfo2 = techListForFirst.size();
+        int credit = info.getTotalCredits();
+        if (credit > 9 && creditCompare(info, agree) > -1
+            && techListInfo2 > 1) {
+          generateTechTrade(BUY);
+        } else if (agree.getTotalCredits() > 9 && creditCompare(info, agree) < 1
+            && techListInfo1 > 1) {
+          generateTechTrade(SELL);
+        } else if (techListInfo1 > 1 && techListInfo2 > 1) {
+          generateTechTrade(TRADE);
+        } else {
+          generateTechTrade(TRADE);
+        }
       }
     } else if (value < 80) {
       generateTechTrade(BUY);
@@ -1745,54 +1787,54 @@ public class DiplomaticTrade {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
-    int value = DiceGenerator.getRandom(6);
-    int embargoIndex = getPossibleTradeEmbargo();
-    switch (value) {
-      case 0:
-      default: {
-        if (info.getDiplomacy().isDefensivePact(second)
-            || info.getDiplomacy().isAlliance(second)) {
-          if (info.hasMutualEnemy(agree)) {
-            generateMapTrade(TRADE, MAP_ENEMYPLANETS_ONLY);
+    int techListInfo1 = techListForFirst.size();
+    int techListInfo2 = techListForFirst.size();
+    int credit = info.getTotalCredits();
+    if (credit > 9 && creditCompare(info, agree) > -1 && techListInfo2 > 1) {
+      generateTechTrade(BUY);
+    } else if (agree.getTotalCredits() > 9 && creditCompare(info, agree) < 1
+        && techListInfo1 > 1) {
+      generateTechTrade(SELL);
+    } else if (techListInfo1 > 1 && techListInfo2 > 1) {
+      generateTechTrade(TRADE);
+    } else {
+      int value = DiceGenerator.getRandom(3);
+      int embargoIndex = getPossibleTradeEmbargo();
+      switch (value) {
+        case 0:
+        default: {
+          if (info.getDiplomacy().isDefensivePact(second)
+              || info.getDiplomacy().isAlliance(second)) {
+            if (info.hasMutualEnemy(agree)) {
+              generateMapTrade(TRADE, MAP_ENEMYPLANETS_ONLY);
+            } else {
+              generateMapTrade(TRADE, MAP_FULLMAP);
+            }
           } else {
-            generateMapTrade(TRADE, MAP_FULLMAP);
+            generateMapTrade(TRADE, MAP_ONLYPLANETS);
           }
-        } else {
-          generateMapTrade(TRADE, MAP_ONLYPLANETS);
+          break;
         }
-        break;
-      }
-      case 1: {
-        generateMapTrade(BUY, MAP_FULLMAP); break;
-      }
-      case 2: {
-        if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-          generateMapTrade(SELL, MAP_FULLMAP);
+        case 1: {
+          generateMapTrade(BUY, MAP_FULLMAP); break;
         }
-        break;
-      }
-      case 3: {
-        generateTechTrade(TRADE); break;
-      }
-      case 4: {
-        generateTechTrade(BUY); break;
-      }
-      case 5: {
-        if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-          generateTechTrade(SELL);
-        }
-        break;
-      }
-      case 6: {
-        if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
-          PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
-          generateTradeEmbargoOffer(embagoed);
-        } else {
+        case 2: {
           if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-            generateTechTrade(SELL);
+            generateMapTrade(SELL, MAP_FULLMAP);
           }
+          break;
         }
-        break;
+        case 3: {
+          if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+            PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+            generateTradeEmbargoOffer(embagoed);
+          } else {
+            if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+              generateTechTrade(SELL);
+            }
+          }
+          break;
+        }
       }
     }
   }
@@ -1888,7 +1930,20 @@ public class DiplomaticTrade {
       }
     } else if (value < 67) {
       if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-        generateTechTrade(TRADE);
+        int techListInfo1 = techListForFirst.size();
+        int techListInfo2 = techListForFirst.size();
+        int credit = info.getTotalCredits();
+        if (credit > 9 && creditCompare(info, agree) > -1
+            && techListInfo2 > 1) {
+          generateTechTrade(BUY);
+        } else if (agree.getTotalCredits() > 9
+            && creditCompare(info, agree) < 1 && techListInfo1 > 1) {
+          generateTechTrade(SELL);
+        } else if (techListInfo1 > 1 && techListInfo2 > 1) {
+          generateTechTrade(TRADE);
+        } else {
+          generateTechTrade(TRADE);
+        }
       }
     } else {
       if (!info.getDiplomacy().getDiplomaticRelation(second)
@@ -1986,7 +2041,20 @@ public class DiplomaticTrade {
         generateTradeEmbargoOffer(embagoed);
       } else {
         if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-          generateTechTrade(TRADE);
+          int techListInfo1 = techListForFirst.size();
+          int techListInfo2 = techListForFirst.size();
+          int credit = info.getTotalCredits();
+          if (credit > 9 && creditCompare(info, agree) > -1
+              && techListInfo2 > 1) {
+            generateTechTrade(BUY);
+          } else if (agree.getTotalCredits() > 9
+              && creditCompare(info, agree) < 1 && techListInfo1 > 1) {
+            generateTechTrade(SELL);
+          } else if (techListInfo1 > 1 && techListInfo2 > 1) {
+            generateTechTrade(TRADE);
+          } else {
+            generateTechTrade(TRADE);
+          }
         }
       }
     }
@@ -2081,7 +2149,20 @@ public class DiplomaticTrade {
         generateTradeEmbargoOffer(embagoed);
       } else {
         if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-          generateTechTrade(TRADE);
+          int techListInfo1 = techListForFirst.size();
+          int techListInfo2 = techListForFirst.size();
+          int credit = info.getTotalCredits();
+          if (credit > 9 && creditCompare(info, agree) > -1
+              && techListInfo2 > 1) {
+            generateTechTrade(BUY);
+          } else if (agree.getTotalCredits() > 9
+              && creditCompare(info, agree) < 1 && techListInfo1 > 1) {
+            generateTechTrade(SELL);
+          } else if (techListInfo1 > 1 && techListInfo2 > 1) {
+            generateTechTrade(TRADE);
+          } else {
+            generateTechTrade(TRADE);
+          }
         }
       }
     }

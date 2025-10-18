@@ -554,9 +554,6 @@ public class BigImagePanel extends JPanel {
           }
       }
       animation.doAnimation();
-      if (animation.isAnimationFinished()) {
-        animation = null;
-      }
     }
     if (shipImages != null) {
       for (int i = 0; i < shipImages.length; i++) {

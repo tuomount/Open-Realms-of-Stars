@@ -3220,6 +3220,9 @@ public class StarMap {
       generateAscensionVeins(getAscensionPlanetCoordinate().getX(),
           getAscensionPlanetCoordinate().getY());
       smoothAscensionVeins();
+      NewsData news = NewsFactory.makeActivateGravityRipperNews(getStarYear(),
+          info, fleet);
+      getNewsCorpData().addNews(news);
     }
     if (tile.isAscensionPortal()
         && fleet.getCoordinate().calculateDistance(

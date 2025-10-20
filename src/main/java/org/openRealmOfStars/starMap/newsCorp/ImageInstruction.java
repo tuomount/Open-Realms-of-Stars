@@ -508,6 +508,10 @@ public class ImageInstruction {
    */
   public static final String BLUEISH_BLACK_HOLE = "BlueishBlackHole";
   /**
+   * Instructions for blueish black hole transparent
+   */
+  public static final String BLACK_HOLE_TRANSPARENT = "BlackHoleTransparent";
+  /**
    * Instructions for molten lava
    */
   public static final String MOLTEN_LAVA = "MoltenLava";
@@ -872,7 +876,8 @@ public class ImageInstruction {
         && !BIG_ORBITAL.equals(logoType)
         && !RIFT_PORTAL.equals(logoType)
         && !ASCENSION_PORTAL.equals(logoType)
-        && !DEVOURER.equals(logoType)) {
+        && !DEVOURER.equals(logoType)
+        && !BLACK_HOLE_TRANSPARENT.equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -910,7 +915,8 @@ public class ImageInstruction {
         + position);
     }
     if (!TRADER1.equals(trader) && !TRADER2.equals(trader)
-        && !CLOAKED_SHIP.equals(trader) && !SHUTTLE2.equals(trader)) {
+        && !CLOAKED_SHIP.equals(trader) && !SHUTTLE2.equals(trader)
+        && !CRUISER.equals(trader) && !CORVETTE.equals(trader)) {
       throw new IllegalArgumentException("Illegal trader type: " + trader);
     }
     if (!SIZE_FULL.equals(size)
@@ -1137,6 +1143,9 @@ public class ImageInstruction {
     if (DEVOURER.equals(planetType)) {
       planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_DEVOURER);
     }
+    if (BLACK_HOLE_TRANSPARENT.equals(planetType)) {
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACKHOLE_TRANSPARENT);
+    }
     if (BIG_ORBITAL.equals(planetType)) {
       planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_ORBITAL);
     }
@@ -1192,6 +1201,12 @@ public class ImageInstruction {
     }
     if (SHUTTLE2.equals(traderType)) {
       traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHUTTLE2);
+    }
+    if (CORVETTE.equals(traderType)) {
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_CORVETTE);
+    }
+    if (CRUISER.equals(traderType)) {
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_CRUISER);
     }
     if (SIZE_HALF.equals(size)) {
       traderImg = GuiStatics.scaleToHalf(traderImg);
@@ -1404,6 +1419,9 @@ public class ImageInstruction {
     }
     if (DEVOURER.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DEVOURER);
+    }
+    if (BLACK_HOLE_TRANSPARENT.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACKHOLE_TRANSPARENT);
     }
     if (BIG_EXPLOSION.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_EXPLOSION);

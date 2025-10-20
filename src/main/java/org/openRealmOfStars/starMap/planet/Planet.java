@@ -4965,7 +4965,6 @@ public class Planet {
           + " veins and these reveal now the Ascension planet: " + getName()
           + ".");
       map.getHistory().addEvent(eventOnPlanet);
-      // TODO Make news about this
       return addToRemoveList;
     }
 

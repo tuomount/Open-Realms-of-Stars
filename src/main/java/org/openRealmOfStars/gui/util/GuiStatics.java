@@ -804,6 +804,9 @@ public final class GuiStatics {
   /** Devourer */
   public static final String IMAGE_DEVOURER =
       "/resources/images/devourer.png";
+  /** Blackhole transparent */
+  public static final String IMAGE_BLACKHOLE_TRANSPARENT =
+      "/resources/images/blueish_blackhole_transparent.png";
   /** Big Explosion */
   public static final String IMAGE_BIG_EXPLOSION =
       "/resources/images/bigexplosion.png";

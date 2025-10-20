@@ -429,6 +429,72 @@ public final class NewsFactory {
     info.appendStory(news.getNewsText(), starYear);
     return news;
   }
+
+  /**
+   * Make Gravity Ripper event news
+   * @param starYear when Event happens
+   * @param info PlayerInfo who did the discovery
+   * @param fleet Fleet which did the discovery
+   * @return NewsData
+   */
+  public static NewsData makeActivateGravityRipperNews(final int starYear,
+      final PlayerInfo info, final Fleet fleet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    instructions.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.BLACK_HOLE_TRANSPARENT, ImageInstruction.SIZE_FULL);
+    if (DiceGenerator.getBoolean()) {
+      if (DiceGenerator.getBoolean()) {
+        instructions.addTrader(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.CORVETTE, ImageInstruction.SIZE_HALF);
+      } else {
+        instructions.addTrader(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.TRADER2, ImageInstruction.SIZE_HALF);
+      }
+    } else {
+      instructions.addTrader(ImageInstruction.POSITION_LEFT,
+          ImageInstruction.CRUISER, ImageInstruction.SIZE_HALF);
+    }
+    int value = DiceGenerator.getRandom(2);
+    if (value == 0) {
+      instructions.addText("GRAVITY RIPPER ACTIVATED!");
+    }
+    if (value == 1) {
+      instructions.addText("ASCENSION VEINS REVEALED!");
+    }
+    if (value == 2) {
+      instructions.addText("NODAL WORLD REVEALED!");
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    sb.append(" near the massive black hole in center of galaxy ");
+    sb.append(info.getEmpireName());
+    sb.append(" fleet called ");
+    sb.append(fleet.getName());
+    sb.append(" activated gravity ripper. ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append(" Gravity ripper destabilizes spacetime near the black hole");
+      sb.append(" and this activates hidden graviton conduits. ");
+      sb.append("When these are activated they are visible and called"
+          + " ascension veins. These veins converge on rare nodal world. ");
+      sb.append("There space time is so thin that Ascension portal can"
+          + " be constructed.");
+    } else {
+      sb.append(" Gravity ripper disrupts spacetime around the black hole,"
+          + " triggering dormant graviton conduits. Once activated,"
+          + " these pathways become visible, known as Ascension veins."
+          + " These veins converge at rare nodal world, where spacetime"
+          + " is so fragile that an Ascension portal can be created.");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
   /**
    * Make Rift portal event news
    * @param starYear when Event happens

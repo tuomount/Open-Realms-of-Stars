@@ -62,7 +62,8 @@ public class EventOnPlanet extends Event {
     if (type == EventType.PLANET_COLONIZED
         || type == EventType.PLANET_CONQUERED
         || type == EventType.PLANET_BUILDING
-        || type == EventType.ARTIFICAL_PLANET_CREATED) {
+        || type == EventType.ARTIFICAL_PLANET_CREATED
+        || type == EventType.ASCENSION_PORTAL) {
       setType(type);
     } else {
       throw new IllegalArgumentException("Type is not planetary event!");

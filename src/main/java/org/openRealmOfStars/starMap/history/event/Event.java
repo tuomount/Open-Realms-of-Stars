@@ -150,7 +150,8 @@ public abstract class Event {
       case PLANET_CONQUERED:
       case PLANET_BUILDING:
       case ARTIFICAL_PLANET_CREATED:
-      case PLANET_COLONIZED: {
+      case PLANET_COLONIZED:
+      case ASCENSION_PORTAL: {
         result = EventOnPlanet.createEventOnPlanet(buffer); break;
       }
       case GALACTIC_NEWS: {

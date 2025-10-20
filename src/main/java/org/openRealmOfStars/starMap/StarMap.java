@@ -3205,7 +3205,9 @@ public class StarMap {
     Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
     if (tile.isBlackhole()
         && fleet.getCoordinate().calculateDistance(new Coordinate(sx, sy)) == 1
-        && fleet.hasGravityRipper()) {
+        && fleet.hasGravityRipper()
+        && ascensionEvents.getAscensionActivation()
+        == AscensionEvents.BLACK_HOLE_DISCOVERED) {
       Message msg = new Message(MessageType.RESEARCH,
           "Gravity ripper activated near the galaxy's black hole. This massive"
           + " weapon rips open ascension vein which now points to planet where"

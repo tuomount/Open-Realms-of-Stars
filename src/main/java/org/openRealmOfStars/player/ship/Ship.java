@@ -1468,7 +1468,7 @@ private int increaseHitChanceByComponent() {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
           && comp.getType() == ShipComponentType.GRAVITY_RIPPER
-          && hasComponentEnergy(i) && getColonist() > 0) {
+          && hasComponentEnergy(i)) {
         return true;
       }
     }

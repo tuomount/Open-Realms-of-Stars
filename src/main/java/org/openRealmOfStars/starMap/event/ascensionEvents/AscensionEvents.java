@@ -226,7 +226,7 @@ public class AscensionEvents implements GalaxyEvents {
       }
       case BLACK_HOLE_DISCOVERED: {
         if (getAscensionActivation() == 0) {
-          setAscensionActivation((byte) 1);
+          setAscensionActivation(BLACK_HOLE_DISCOVERED);
         }
         break;
       }
@@ -249,6 +249,7 @@ public class AscensionEvents implements GalaxyEvents {
       break;
     }
     case ACTIVATE_GRAVITY_RIPPER: {
+      setAscensionActivation(ASCENSION_VEIN_ACTIVATED);
       if (artifactSpawnSpeed < 30) {
         artifactSpawnSpeed = artifactSpawnSpeed + 2;
       }
@@ -258,6 +259,7 @@ public class AscensionEvents implements GalaxyEvents {
       break;
     }
     case ACTIVATE_ASCENSION_PORTAL: {
+      setAscensionActivation(ASCENSION_PORTAL_ACTIVATED);
       if (artifactSpawnSpeed < 30) {
         artifactSpawnSpeed = artifactSpawnSpeed + 2;
       }

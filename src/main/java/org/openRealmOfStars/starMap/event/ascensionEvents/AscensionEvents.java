@@ -123,7 +123,11 @@ public class AscensionEvents implements GalaxyEvents {
     if (DiceGenerator.getRandom(1, 100) >= chance) {
       return;
     }
-
+    int count = map.countRiftPortals();
+    if (count > 10) {
+      chanceForArtifact /= 2;
+      return;
+    }
     int loop = 0;
     int maxLoops = 100;
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
@@ -165,7 +169,11 @@ public class AscensionEvents implements GalaxyEvents {
     if (DiceGenerator.getRandom(1, 100) >= chance) {
       return;
     }
-
+    int count = map.countRiftPortals();
+    if (count > 10) {
+      chanceForArtifact /= 2;
+      return;
+    }
     int loop = 0;
     int maxLoops = 100;
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);

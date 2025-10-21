@@ -4573,6 +4573,32 @@ public class StarMap {
     this.ascensionPlanetCoordinate = coord;
   }
   /**
+   * Count Rift portals in starmap
+   * @return Number of rift portals in starmap.
+   */
+  public int countRiftPortals() {
+    int count = 0;
+    for (int y = 0; y < getMaxY(); y++) {
+      for (int x = 0; x < getMaxX(); x++) {
+        Tile tile = getTile(x, y);
+        if (tile == null) {
+          continue;
+        }
+        if (tile.getName().equals(TileNames.RIFT_PORTAL1_ARTIFACT)
+            || tile.getName().equals(TileNames.RIFT_PORTAL2_ARTIFACT)
+            || tile.getName().equals(TileNames.RIFT_PORTAL3_ARTIFACT)
+            || tile.getName().equals(TileNames.RIFT_PORTAL4_ARTIFACT)
+            || tile.getName().equals(TileNames.RIFT_PORTAL1_DEVOURER)
+            || tile.getName().equals(TileNames.RIFT_PORTAL2_DEVOURER)
+            || tile.getName().equals(TileNames.RIFT_PORTAL3_DEVOURER)
+            || tile.getName().equals(TileNames.RIFT_PORTAL4_DEVOURER)) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+  /**
    * Find closest sector from certain coordinate for certain realm.
    * This sector must be visible for searcher.
    * @param coord Coordinate where to start looking.

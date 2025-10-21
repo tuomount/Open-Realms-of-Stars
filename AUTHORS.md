@@ -178,6 +178,9 @@ https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
+Spanner rotation by Tuomo Untinen Licensed Under CC-BY-SA 3.0
+http://creativecommons.org/licenses/by-sa/3.0/
+
 Pulsating shield animation from Sci-fi effects by Skorpio
 https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0

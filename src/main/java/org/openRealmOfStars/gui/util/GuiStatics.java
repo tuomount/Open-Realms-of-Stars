@@ -323,6 +323,9 @@ public final class GuiStatics {
   /** Shield animation */
   public static final AnimatedImage SHIELD1 = new AnimatedImage(64, 64,
       "/resources/images/shield.png");
+  /** Spanner animation */
+  public static final AnimatedImage SPANNER = new AnimatedImage(64, 64,
+      "/resources/images/spanner.png");
 
   /** Scanner animation */
   public static final AnimatedImage SCANNER = new AnimatedImage(64, 64,

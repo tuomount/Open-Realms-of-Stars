@@ -240,6 +240,8 @@ public class CombatAnimation {
       explosionSfx = SoundPlayer.EXPLOSION;
     } else if (animType == CombatAnimationType.SHIELD) {
       explosionAnim = GuiStatics.SHIELD1;
+    } else if (animType == CombatAnimationType.SPANNER) {
+      explosionAnim = GuiStatics.SPANNER;
     } else {
       if (end.getShip().getShield() > 0) {
         shieldAnim = GuiStatics.SHIELD1;
@@ -731,6 +733,17 @@ public class CombatAnimation {
         showAnim = true;
         if (animFrame == 0 && hit) {
           SoundPlayer.playShieldSound();
+        }
+        animFrame++;
+      } else {
+        showAnim = false;
+      }
+    } else if (type == CombatAnimationType.SPANNER) {
+      count--;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        if (animFrame == 0) {
+          SoundPlayer.playSound(SoundPlayer.REPAIR);
         }
         animFrame++;
       } else {

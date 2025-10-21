@@ -1904,6 +1904,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playShieldSound();
           break;
           }
+        case SPANNER: {
+          SoundPlayer.playSound(SoundPlayer.REPAIR);
+          break;
+          }
         case EXPLOSION: {
           SoundPlayer.playSound(SoundPlayer.EXPLOSION);
           break;

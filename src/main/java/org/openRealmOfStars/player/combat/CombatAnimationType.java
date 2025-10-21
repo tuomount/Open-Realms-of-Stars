@@ -111,7 +111,11 @@ public enum CombatAnimationType {
   /**
    * Plasma spit
    */
-  PLASMA_SPIT
+  PLASMA_SPIT,
+  /**
+   * Rotate spanner
+   */
+  SPANNER
 
 
 }

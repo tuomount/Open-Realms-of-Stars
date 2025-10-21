@@ -1052,8 +1052,9 @@ private int increaseHitChanceByComponent() {
   /**
    * Fix ship either one hull point or full repair
    * @param fullFix True to fully repair the ship
+   * @param initShield Initialize shield and armor if true
    */
-  public void fixShip(final boolean fullFix) {
+  public void fixShip(final boolean fullFix, final boolean initShield) {
     int maxHPperSlot = getHull().getSlotHull();
     if (fullFix) {
       for (int i = 0; i < hullPoints.length; i++) {
@@ -1068,7 +1069,17 @@ private int increaseHitChanceByComponent() {
         }
       }
     }
-    initializeShieldAndArmor();
+    if (initShield) {
+      initializeShieldAndArmor();
+    }
+  }
+
+  /**
+   * Fix ship either one hull point or full repair
+   * @param fullFix True to fully repair the ship
+   */
+  public void fixShip(final boolean fullFix) {
+    fixShip(fullFix, true);
   }
 
   /**
@@ -1158,7 +1169,7 @@ private int increaseHitChanceByComponent() {
       }
       damage = weapon.getDamage() - this.getShield();
       this.setShield(this.getShield() - 2);
-      if (damage <= this.getArmor()) {
+      if (damage <= this.getArmor() && damage > 0) {
         this.setArmor(this.getArmor() - damage);
         return new ShipDamage(ShipDamage.NO_DAMAGE,
             "Attack damaged armor by " + damage + "!");

@@ -3684,11 +3684,28 @@ public final class NewsFactory {
       sb.append("journeyed ");
     }
     sb.append("through the Ascension Portal.");
-    sb.append("This portal allows ");
-    sb.append(info.getRace().getName());
-    sb.append(" to ascend into higher beings.");
-    sb.append(" they are no longer bound by this reality and has practically");
-    sb.append(" unlimited power.");
+    int value = DiceGenerator.getRandom(2);
+    if (value == 0) {
+      sb.append("This portal allows ");
+      sb.append(info.getRace().getName());
+      sb.append(" to ascend into higher beings.");
+      sb.append(" They are no longer bound by this reality and has"
+          + " practically unlimited power.");
+    }
+    if (value == 1) {
+      sb.append("The portal enables ");
+      sb.append(info.getRace().getName());
+      sb.append(" to evolve into higher entities - no longer");
+      sb.append(" restricted by the fabric of this");
+      sb.append(" reality, and capable of wielding boundless energy.");
+    }
+    if (value == 2) {
+      sb.append("The portal allows ");
+      sb.append(info.getRace().getName());
+      sb.append(" to transcend their physical forms, freeing them");
+      sb.append(" from the limitations of reality and granting them ");
+      sb.append(" near-unlimited power as they ascend to higher beings.");
+    }
     ImageInstruction inst = new ImageInstruction();
     inst.addBackground(ImageInstruction.BACKGROUND_STARS);
     if (DiceGenerator.getBoolean()) {

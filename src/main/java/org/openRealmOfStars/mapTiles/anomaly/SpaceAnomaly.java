@@ -291,14 +291,7 @@ public class SpaceAnomaly {
     if (tile != null) {
       switch (tile.getName()) {
         case TileNames.SPACE_ANOMALY_CREDITS: {
-          result = new SpaceAnomaly(AnomalyType.CREDIT,
-              DiceGenerator.getRandom(10, 30));
-          result.setText("There was hidden cache of credits hidden in"
-              + " asteroids. Cache contained " + result.getValue()
-              + " credits.");
-          result.setImage(GuiStatics.IMAGE_ASTEROIDS);
-          info.setTotalCredits(info.getTotalCredits() + result.value);
-          map.setTile(fleet.getX(), fleet.getY(), empty);
+          result = createCredits(map, info, fleet);
           addExp = 30;
           break;
         }
@@ -759,7 +752,9 @@ public class SpaceAnomaly {
           Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
               board, StarMap.ENEMY_DEVOURER);
           result.setText(monster.getBiggestShip().getName()
-              + " was found in the rift portal. Battle begins...");
+              + " was found in the rift portal. "
+              + "Why this monster has arrived via Rift portal is mystery. "
+              + "Aggressive creature attack and battle begins...");
           if (Game.getTutorial() != null  && info.isHuman()
               && map.isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(36);
@@ -784,6 +779,28 @@ public class SpaceAnomaly {
         fleet.getCommander().addExperience(addExp);
       }
     }
+    return result;
+  }
+
+  /**
+   * Create credits anomaly.
+   * @param map StarMap
+   * @param info PlayerInfo
+   * @param fleet Fleet making the discovery.
+   * @return SpaceAnomaly.
+   */
+  private static SpaceAnomaly createCredits(final StarMap map,
+     final PlayerInfo info, final Fleet fleet) {
+    SpaceAnomaly result = null;
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    result = new SpaceAnomaly(AnomalyType.CREDIT,
+        DiceGenerator.getRandom(10, 30));
+    result.setText("There was hidden cache of credits hidden in"
+        + " asteroids. Cache contained " + result.getValue()
+        + " credits.");
+    result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+    info.setTotalCredits(info.getTotalCredits() + result.value);
+    map.setTile(fleet.getX(), fleet.getY(), empty);
     return result;
   }
 }

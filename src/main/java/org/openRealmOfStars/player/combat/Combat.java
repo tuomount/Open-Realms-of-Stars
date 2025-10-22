@@ -2453,7 +2453,6 @@ public boolean launchIntercept(final int distance,
             ship.setArmor(ship.getArmor() + 1);
           }
           ship.fixShip(false, false);
-          //TODO: Change animation
           CombatAnimation shieldAnim = new CombatAnimation(
               getCurrentShip(), getCurrentShip(), CombatAnimationType.SPANNER,
               1);

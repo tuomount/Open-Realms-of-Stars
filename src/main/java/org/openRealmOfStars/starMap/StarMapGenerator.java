@@ -172,14 +172,6 @@ public class StarMapGenerator {
       ascensionPortalY));
     generateDeepSpaceAnchors(config);
     generateSpaceAnomalies(config);
-    /* TODO This is for ascension victory
-     This should be called after gravity ripper has been
-     applied to black hole. These are here for testing generation of ascension
-     veins.
-     */
-    /*starMap.generateAscensionPortal(ascensionPortalX, ascensionPortalY);
-    starMap.smoothAscensionVeins();
-    starMap.revealWholeMap(players.getCurrentPlayerInfo());*/
     return starMap;
   }
 
@@ -207,6 +199,9 @@ public class StarMapGenerator {
       return false;
     }
     if (planet.getWaterLevel() == WaterLevelType.BARREN) {
+      return false;
+    }
+    if (planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
       return false;
     }
     if (planet.getRadiationLevel() == RadiationType.VERY_HIGH_RAD) {

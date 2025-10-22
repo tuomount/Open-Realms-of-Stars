@@ -55,6 +55,7 @@ public final class ChallengingScoring {
     int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
     int credit = planet.getTotalProduction(Planet.PRODUCTION_CREDITS);
     int culture = planet.getTotalProduction(Planet.PRODUCTION_CULTURE);
+    boolean scientificAchievement = false;
 
     final int playerIndex = map.getPlayerList().getIndex(info);
     final var realmResearch = map.getTotalProductionByPlayerPerTurn(
@@ -67,6 +68,7 @@ public final class ChallengingScoring {
 
       if (constructions[i] instanceof Building) {
         Building building = (Building) constructions[i];
+        scientificAchievement = building.getScientificAchievement();
         scores[i] = DefaultScoring.scoreBuilding(building, planet, info,
             attitude,
             nearFleetLimit);
@@ -363,7 +365,9 @@ public final class ChallengingScoring {
           scores[i] = scores[i] / 2;
         }
       }
-      if (time > 25) {
+      if (scientificAchievement && time >= 30) {
+        scores[i] = -1;
+      } else if (time > 25) {
         scores[i] = -1;
       }
 

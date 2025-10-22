@@ -178,6 +178,9 @@ https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
+Spanner rotation by Tuomo Untinen Licensed Under CC-BY-SA 3.0
+http://creativecommons.org/licenses/by-sa/3.0/
+
 Pulsating shield animation from Sci-fi effects by Skorpio
 https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0
@@ -358,6 +361,12 @@ Gravity veins map tiles by Tuomo Untinen
 
 Black hole map tiles by Tuomo Untinen
 
+Blueish Black hole by Tuomo Untinen
+
+Devourer by Tuomo Untinen
+
+Devourer ship by Tuomo Untinen
+
 Animated Portal or Wormhole, several Variants by Hansjörg Malthaner
 http://opengameart.org/users/varkalandar
 Licensed under CC BY SA 4.0
@@ -490,7 +499,7 @@ Scanner overload sound by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
-Bite and tentacle sounds by
+Bite, tentacle and spike sounds by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 

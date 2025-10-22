@@ -103,6 +103,19 @@ public enum CombatAnimationType {
   /**
    * Gravity Ripper
    */
-  GRAVITY_RIPPER;
+  GRAVITY_RIPPER,
+  /**
+   * Spike
+   */
+  SPIKE,
+  /**
+   * Plasma spit
+   */
+  PLASMA_SPIT,
+  /**
+   * Rotate spanner
+   */
+  SPANNER
+
 
 }

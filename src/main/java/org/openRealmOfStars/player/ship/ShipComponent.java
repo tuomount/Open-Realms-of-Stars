@@ -184,7 +184,9 @@ public class ShipComponent {
         || type == ShipComponentType.PLASMA_CANNON
         || type == ShipComponentType.ION_CANNON
         || type == ShipComponentType.BITE
-        || type == ShipComponentType.TENTACLE) {
+        || type == ShipComponentType.TENTACLE
+        || type == ShipComponentType.ARM_SPIKE
+        || type == ShipComponentType.PLASMA_SPIT) {
       return true;
     }
     return false;
@@ -704,6 +706,7 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case ARM_SPIKE:
     case TENTACLE: {
       sb.append("Damage: ");
       sb.append(getDamage());
@@ -730,6 +733,7 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case PLASMA_SPIT:
     case PLASMA_CANNON: {
       sb.append("Damage: ");
       sb.append(getDamage());

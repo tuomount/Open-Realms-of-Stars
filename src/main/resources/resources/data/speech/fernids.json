@@ -20,7 +20,7 @@
       "TRADE_EMBARGO_REALM_CHOICE": [],
       "ACKNOWLEDGE_WAR": ["Very well, prepare to be stomped!"],
       "NOTHING_TO_TRADE": ["Sorry, you got nothing to trade with me, bhum."],
-      "NEUTRAL_GREET": ["Bhum, let drink water together, %1$s."],
+      "NEUTRAL_GREET": ["Bhum, let's drink water together, %1$s."],
       "DECLINE_ANGER": ["Bham, Take back your offer!"],
       "FRIENDS_GREET": ["Bhum, My friend let's drink water together!"],
       "OFFER_REJECTED": ["So maybe next time then..."],

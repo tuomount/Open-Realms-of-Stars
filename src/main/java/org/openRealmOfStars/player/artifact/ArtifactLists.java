@@ -32,6 +32,8 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -260,67 +262,99 @@ public class ArtifactLists {
       final String techName, final int techLevel, final TechType techType,
       final ArtifactType artifactType) {
     String result = null;
-    int currentTechLevel = info.getTechList().getTechLevel(TechType.Combat);
-    if (currentTechLevel >= techLevel) {
-      int chance = getTypesResearched(artifactType) * 10;
-      if (DiceGenerator.getRandom(100) < chance
-          && !info.getTechList().hasTech(techName)) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(info.getEmpireName());
-        sb.append(" has learned ");
-        sb.append(techName);
-        sb.append(" while studying artifacts.");
-        switch (techType) {
-          default:
-          case Combat: {
-            info.getTechList().addTech(TechFactory.createCombatTech(
-                techName, techLevel));
-            break;
-          }
-          case Defense: {
-            info.getTechList().addTech(TechFactory.createDefenseTech(
-                techName, techLevel));
-            break;
-          }
-          case Hulls: {
-            info.getTechList().addTech(TechFactory.createHullTech(
-                techName, techLevel));
-            break;
-          }
-          case Improvements: {
-            info.getTechList().addTech(TechFactory.createImprovementTech(
-                techName, techLevel));
-            break;
-          }
-          case Propulsion: {
-            info.getTechList().addTech(TechFactory.createPropulsionTech(
-                techName, techLevel));
-            break;
-          }
-          case Electrics: {
-            info.getTechList().addTech(TechFactory.createElectronicsTech(
-                techName, techLevel));
-            break;
-          }
+    int currentTechLevel = info.getTechList().getTechLevel(techType);
+    if (currentTechLevel + 3 < techLevel) {
+      return null;
+    }
+    int chance = getTypesResearched(artifactType) * 8;
+    if (techType == TechType.Combat) {
+      chance = chance + getTypesResearched(ArtifactType.DEFENSE) * 3;
+    }
+    if (techType == TechType.Defense) {
+      chance = chance + getTypesResearched(ArtifactType.MILITARY) * 3;
+    }
+    if (techType == TechType.Hulls) {
+      chance = chance + getTypesResearched(ArtifactType.FACILITY) * 3;
+    }
+    if (techType == TechType.Improvements) {
+      chance = chance + getTypesResearched(ArtifactType.SHIPHULL) * 3;
+    }
+    if (techType == TechType.Propulsion) {
+      chance = chance + getTypesResearched(ArtifactType.ELECTRONIC) * 3;
+    }
+    if (techType == TechType.Electrics) {
+      chance = chance + getTypesResearched(ArtifactType.ENERGY) * 3;
+    }
+    chance = chance + researchedArtifacts.size() * 2;
+    if (currentTechLevel > techLevel) {
+      chance = chance * 2;
+    }
+    if (currentTechLevel + 1 == techLevel) {
+      chance = chance / 2;
+    }
+    if (currentTechLevel + 2 == techLevel) {
+      chance = chance / 5;
+    }
+    if (currentTechLevel + 3 == techLevel) {
+      chance = chance / 10;
+    }
+    if (DiceGenerator.getRandom(100) < chance
+        && !info.getTechList().hasTech(techName)) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(info.getEmpireName());
+      sb.append(" has learned ");
+      sb.append(techName);
+      sb.append(" while studying artifacts.");
+      switch (techType) {
+        default:
+        case Combat: {
+          info.getTechList().addTech(TechFactory.createCombatTech(
+              techName, techLevel));
+          break;
         }
-        result = sb.toString();
+        case Defense: {
+          info.getTechList().addTech(TechFactory.createDefenseTech(
+              techName, techLevel));
+          break;
+        }
+        case Hulls: {
+          info.getTechList().addTech(TechFactory.createHullTech(
+              techName, techLevel));
+          break;
+        }
+        case Improvements: {
+          info.getTechList().addTech(TechFactory.createImprovementTech(
+              techName, techLevel));
+          break;
+        }
+        case Propulsion: {
+          info.getTechList().addTech(TechFactory.createPropulsionTech(
+              techName, techLevel));
+          break;
+        }
+        case Electrics: {
+          info.getTechList().addTech(TechFactory.createElectronicsTech(
+              techName, techLevel));
+          break;
+        }
       }
+      result = sb.toString();
     }
     return result;
   }
   /**
    * Update artifact research points by turn.
    * @param totalResearchPoints Total research points to add
-   * @param info PlayerInfo who is research.
-   * @param gameLength Game length
    * @param scientist which is make the research
-   * @param tutorialEnabled is tutorial enabled or not.
-   * @param starYear StarYear
+   * @param starMap Star Map
+   * @param info PlayerInfo who is research.
    * @return NewsData about possible study.
    */
   public NewsData updateResearchPointByTurn(final int totalResearchPoints,
-      final PlayerInfo info, final int gameLength, final Leader scientist,
-      final boolean tutorialEnabled, final int starYear) {
+      final Leader scientist, final StarMap starMap, final PlayerInfo info) {
+    int gameLength = starMap.getScoreVictoryTurn();
+    boolean tutorialEnabled = starMap.isTutorialEnabled();
+    int starYear = starMap.getStarYear();
     artifactResearchPoints = artifactResearchPoints + totalResearchPoints;
     int lvl = researchedArtifacts.size();
     int limit = ArtifactFactory.getResearchCost(lvl, gameLength);
@@ -337,6 +371,8 @@ public class ArtifactLists {
       if (artifact == null) {
         return null;
       }
+      starMap.getAscensionEvents().eventHappens(
+          AscensionEventType.RESEARCH_ARTIFACT);
       artifactResearchPoints = artifactResearchPoints - limit;
       StringBuilder sb = new StringBuilder();
       sb.append(scientist.getCallName());
@@ -383,6 +419,8 @@ public class ArtifactLists {
             TechType.Combat, ArtifactType.MILITARY);
         if (event != null) {
           sb.append(event);
+          starMap.getAscensionEvents().eventHappens(
+              AscensionEventType.GAIN_GRAVITY_RIPPER);
         }
       }
       if (artifact.getArtifactType() == ArtifactType.DEFENSE) {
@@ -461,15 +499,19 @@ public class ArtifactLists {
         String event = generateAncientTech(info, techName, 9,
             TechType.Improvements, ArtifactType.FACILITY);
         if (event != null) {
-            sb.append(event);
+          sb.append(event);
+          starMap.getAscensionEvents().eventHappens(
+                AscensionEventType.GAIN_ASCENSION_PORTAL_TECH);
         }
       }
       if (artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
-        String techName = "Starbase ascension portal";
+        String techName = "Orbital ascension portal";
         String event = generateAncientTech(info, techName, 7,
-            TechType.Improvements, ArtifactType.FACILITY);
+            TechType.Electrics, ArtifactType.ELECTRONIC);
         if (event != null) {
           sb.append(event);
+          starMap.getAscensionEvents().eventHappens(
+              AscensionEventType.GAIN_ASCENSION_PORTAL_TECH);
         }
       }
       int chance = researchedArtifacts.size() * 10;

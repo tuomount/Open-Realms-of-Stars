@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -1030,6 +1030,19 @@ public class Fleet {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Check if fleet has gravity ripper.
+   * @return True if fleet has at least single ship with working gravity ripper.
+   */
+  public boolean hasGravityRipper() {
+    for (Ship ship : ships) {
+      if (ship.hasGravityRipper()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

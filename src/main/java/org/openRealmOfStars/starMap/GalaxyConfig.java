@@ -26,7 +26,7 @@ import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
-import org.openRealmOfStars.starMap.event.KarmaType;
+import org.openRealmOfStars.starMap.event.karmaEvents.KarmaType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

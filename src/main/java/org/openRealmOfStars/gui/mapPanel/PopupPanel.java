@@ -27,7 +27,7 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.combat.Combat;
-import org.openRealmOfStars.starMap.event.RandomEvent;
+import org.openRealmOfStars.starMap.event.karmaEvents.RandomEvent;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 
 

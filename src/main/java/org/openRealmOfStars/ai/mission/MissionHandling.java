@@ -155,7 +155,7 @@ public final class MissionHandling {
             center.getY() + y) == PlayerInfo.UNCHARTED) {
           tile = null;
         }
-        if (tile != null && tile.isSpaceAnomaly()) {
+        if (tile != null && (tile.isSpaceAnomaly() || tile.isRiftPortal())) {
           if (targetCoord == null) {
             targetCoord = new Coordinate(center.getX() + x, center.getY() + y);
           } else {
@@ -249,6 +249,114 @@ public final class MissionHandling {
     return result;
   }
 
+  /**
+   * Handle devourer mission.
+   * @param mission Roaming mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleDevourer(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.DEVOURER_ROAM) {
+      Fleet targetFleet = getNearByFleet(info, game, fleet,
+          fleet.getMovesLeft());
+      Coordinate coordinate = getNearByPlanet(info, game, fleet,
+          fleet.getMovesLeft());
+      if (targetFleet != null) {
+        mission.setPhase(MissionPhase.EXECUTING);
+        fleet.setRoute(null);
+        AStarSearch search = new AStarSearch(game.getStarMap(),
+            fleet.getX(), fleet.getY(), targetFleet.getX(), targetFleet.getY(),
+            false);
+        search.doSearch();
+        search.doRoute();
+        fleet.setaStarSearch(search);
+        makeRegularMoves(game, fleet, info);
+      } else if (coordinate != null) {
+        mission.setPhase(MissionPhase.EXECUTING);
+        fleet.setRoute(null);
+        AStarSearch search = new AStarSearch(game.getStarMap(),
+            fleet.getX(), fleet.getY(), coordinate.getX(), coordinate.getY(),
+            false);
+        search.doSearch();
+        search.doRoute();
+        fleet.setaStarSearch(search);
+        makeRegularMoves(game, fleet, info);
+      } else {
+        if (mission.getPhase() == MissionPhase.TREKKING) {
+          if (fleet.getaStarSearch() == null) {
+            fleet.setRoute(null);
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
+                false);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRegularMoves(game, fleet, info);
+          } else {
+            makeRegularMoves(game, fleet, info);
+          }
+          if (fleet.getX() == mission.getX()
+              && fleet.getY() == mission.getY()) {
+            mission.setPhase(MissionPhase.EXECUTING);
+            fleet.setRoute(null);
+            fleet.setaStarSearch(null);
+          }
+        } else if (mission.getPhase() == MissionPhase.EXECUTING) {
+          if (fleet.getaStarSearch() == null) {
+            Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+            double bestDist = 0;
+            Coordinate bestCoord = null;
+            for (int x = -1; x < 2; x++) {
+              for (int y = -1; y < 2; y++) {
+                Coordinate targetCoord = new Coordinate(fleet.getX() + x,
+                    fleet.getY() + y);
+                double dist = coord.calculateDistance(targetCoord);
+                if (dist > bestDist) {
+                  bestDist = dist;
+                  bestCoord = targetCoord;
+                } else if (dist == bestDist
+                    && DiceGenerator.getRandom(100) < 33) {
+                  bestDist = dist;
+                  bestCoord = targetCoord;
+                }
+              }
+            }
+            if (bestCoord != null) {
+              fleet.setRoute(null);
+              AStarSearch search = new AStarSearch(game.getStarMap(),
+                  fleet.getX(), fleet.getY(), bestCoord.getX(),
+                  bestCoord.getY(), false);
+              search.doSearch();
+              search.doRoute();
+              fleet.setaStarSearch(search);
+              makeRegularMoves(game, fleet, info);
+            }
+          }
+          if (fleet.getaStarSearch() != null) {
+            makeRegularMoves(game, fleet, info);
+            Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+            double dist = fleet.getCoordinate().calculateDistance(coord);
+            // Max roaming distance
+            if (dist > 5) {
+              mission.setPhase(MissionPhase.TREKKING);
+              fleet.setRoute(null);
+              fleet.setaStarSearch(null);
+            }
+          } else {
+            mission.setPhase(MissionPhase.TREKKING);
+            fleet.setRoute(null);
+            fleet.setaStarSearch(null);
+          }
+        } else {
+          mission.setPhase(MissionPhase.TREKKING);
+          fleet.setRoute(null);
+          fleet.setaStarSearch(null);
+        }
+      }
+    }
+  }
   /**
    * Handle roaming mission.
    * @param mission Roaming mission, does nothing if type is wrong
@@ -581,8 +689,7 @@ public final class MissionHandling {
 
         }
       }
-      if (mission.getPhase() == MissionPhase.TREKKING
-          && fleet.getRoute() == null) {
+      if (mission.getPhase() == MissionPhase.TREKKING) {
         // Fleet has encounter obstacle, taking a detour round it
         Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(),
             fleet.getY());
@@ -590,7 +697,8 @@ public final class MissionHandling {
           // Fleet is in correct solar system, starting explore execution mode
           mission.setPhase(MissionPhase.EXECUTING);
           fleet.setaStarSearch(null);
-        } else {
+          fleet.setRoute(null);
+        } else if (fleet.getRoute() == null) {
           makeReroute(game, fleet, info, mission);
         }
       }
@@ -2736,7 +2844,7 @@ public final class MissionHandling {
       game.fleetMakeMove(info, fleet, point.getX(), point.getY());
       search.nextMove();
     } else {
-      fleet.setMovesLeft(0);
+      fleet.decMovesLeft();
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         int index = map.getPlayerList().getIndex(infoAtTarget);

@@ -240,6 +240,8 @@ public class CombatAnimation {
       explosionSfx = SoundPlayer.EXPLOSION;
     } else if (animType == CombatAnimationType.SHIELD) {
       explosionAnim = GuiStatics.SHIELD1;
+    } else if (animType == CombatAnimationType.SPANNER) {
+      explosionAnim = GuiStatics.SPANNER;
     } else {
       if (end.getShip().getShield() > 0) {
         shieldAnim = GuiStatics.SHIELD1;
@@ -285,6 +287,7 @@ public class CombatAnimation {
       count = explosionAnim.getMaxFrames();
       break;
     }
+    case PLASMA_SPIT:
     case PHOTON_TORPEDO:
     case PLASMA_CANNON: {
       count = explosionAnim.getMaxFrames();
@@ -298,6 +301,7 @@ public class CombatAnimation {
       count = explosionAnim.getMaxFrames() * 2;
       break;
     }
+    case SPIKE:
     case TENTACLE: {
       count = explosionAnim.getMaxFrames();
       break;
@@ -367,6 +371,10 @@ public class CombatAnimation {
         initType = CombatAnimationType.HE_MISSILE;
         break;
       }
+      case PLASMA_SPIT: {
+        initType = CombatAnimationType.PLASMA_SPIT;
+        break;
+      }
       case WEAPON_PHOTON_TORPEDO: {
         initType = CombatAnimationType.PHOTON_TORPEDO;
         break;
@@ -395,6 +403,10 @@ public class CombatAnimation {
       }
       case TENTACLE: {
         initType = CombatAnimationType.TENTACLE;
+        break;
+      }
+      case ARM_SPIKE: {
+        initType = CombatAnimationType.SPIKE;
         break;
       }
       case PRIVATEERING_MODULE: {
@@ -623,7 +635,8 @@ public class CombatAnimation {
         }
       }
     } else if (type == CombatAnimationType.PHOTON_TORPEDO
-        || type == CombatAnimationType.PLASMA_CANNON) {
+        || type == CombatAnimationType.PLASMA_CANNON
+        || type == CombatAnimationType.PLASMA_SPIT) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;
@@ -656,7 +669,8 @@ public class CombatAnimation {
           px = px + nx;
           py = py + ny;
           ParticleEffect particle = null;
-          if (type == CombatAnimationType.PHOTON_TORPEDO) {
+          if (type == CombatAnimationType.PHOTON_TORPEDO
+              || type == CombatAnimationType.PLASMA_SPIT) {
             particle = new ParticleEffect(
                 ParticleEffectType.PHOTON_TORP_PARTICILE, px, py);
           } else {
@@ -724,6 +738,17 @@ public class CombatAnimation {
       } else {
         showAnim = false;
       }
+    } else if (type == CombatAnimationType.SPANNER) {
+      count--;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        if (animFrame == 0) {
+          SoundPlayer.playSound(SoundPlayer.REPAIR);
+        }
+        animFrame++;
+      } else {
+        showAnim = false;
+      }
     } else if (type == CombatAnimationType.EXPLOSION) {
       count--;
       doAnimationHit(13);
@@ -784,7 +809,8 @@ public class CombatAnimation {
       } else {
         showAnim = false;
       }
-    } else if (type == CombatAnimationType.TENTACLE) {
+    } else if (type == CombatAnimationType.TENTACLE
+        || type == CombatAnimationType.SPIKE) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;

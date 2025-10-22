@@ -62,7 +62,8 @@ public class EventOnPlanet extends Event {
     if (type == EventType.PLANET_COLONIZED
         || type == EventType.PLANET_CONQUERED
         || type == EventType.PLANET_BUILDING
-        || type == EventType.ARTIFICAL_PLANET_CREATED) {
+        || type == EventType.ARTIFICAL_PLANET_CREATED
+        || type == EventType.ASCENSION_PORTAL) {
       setType(type);
     } else {
       throw new IllegalArgumentException("Type is not planetary event!");
@@ -145,7 +146,8 @@ public class EventOnPlanet extends Event {
     if (readType == EventType.PLANET_COLONIZED
         || readType == EventType.PLANET_CONQUERED
         || readType == EventType.PLANET_BUILDING
-        || readType == EventType.ARTIFICAL_PLANET_CREATED) {
+        || readType == EventType.ARTIFICAL_PLANET_CREATED
+        || readType == EventType.ASCENSION_PORTAL) {
       try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
         long skipped = is.skip(3);
         if (skipped != 3) {
@@ -167,7 +169,7 @@ public class EventOnPlanet extends Event {
     }
     throw new IOException("Event is not Planet Colonized"
         + " or Planet Conquered or Planet building"
-        + " or Artificialplanet created as expected!");
+        + " or Artificialplanet created or Ascension portal as expected!");
   }
 
 

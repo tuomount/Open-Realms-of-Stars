@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -684,6 +684,7 @@ private int getRemainingEnergy(final int index) {
    */
   public int getSpeed() {
     int speed = 0;
+    int thrusters = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
@@ -694,7 +695,11 @@ private int getRemainingEnergy(final int index) {
           && hasComponentEnergy(i) && comp.getSpeed() > speed) {
         speed = comp.getSpeed();
       }
+      if (comp.getType() == ShipComponentType.THRUSTERS) {
+        thrusters = comp.getSpeed();
+      }
     }
+    speed = speed + thrusters;
     if (hull.getHullType() == ShipHullType.PROBE) {
       String str = hull.getName();
       if (str.equals("Probe Mk2") || str.equals("Probe Mk3")) {
@@ -1047,8 +1052,9 @@ private int increaseHitChanceByComponent() {
   /**
    * Fix ship either one hull point or full repair
    * @param fullFix True to fully repair the ship
+   * @param initShield Initialize shield and armor if true
    */
-  public void fixShip(final boolean fullFix) {
+  public void fixShip(final boolean fullFix, final boolean initShield) {
     int maxHPperSlot = getHull().getSlotHull();
     if (fullFix) {
       for (int i = 0; i < hullPoints.length; i++) {
@@ -1063,7 +1069,17 @@ private int increaseHitChanceByComponent() {
         }
       }
     }
-    initializeShieldAndArmor();
+    if (initShield) {
+      initializeShieldAndArmor();
+    }
+  }
+
+  /**
+   * Fix ship either one hull point or full repair
+   * @param fullFix True to fully repair the ship
+   */
+  public void fixShip(final boolean fullFix) {
+    fixShip(fullFix, true);
   }
 
   /**
@@ -1122,6 +1138,7 @@ private int increaseHitChanceByComponent() {
       break;
     }
     case PLASMA_BEAM:
+    case PLASMA_SPIT:
     case PLASMA_CANNON: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
@@ -1152,7 +1169,7 @@ private int increaseHitChanceByComponent() {
       }
       damage = weapon.getDamage() - this.getShield();
       this.setShield(this.getShield() - 2);
-      if (damage <= this.getArmor()) {
+      if (damage <= this.getArmor() && damage > 0) {
         this.setArmor(this.getArmor() - damage);
         return new ShipDamage(ShipDamage.NO_DAMAGE,
             "Attack damaged armor by " + damage + "!");
@@ -1162,6 +1179,7 @@ private int increaseHitChanceByComponent() {
       break;
     }
     case BITE:
+    case ARM_SPIKE:
     case TENTACLE: {
       damage = weapon.getDamage();
       damage = damage - this.getShield() / 3;
@@ -1452,6 +1470,21 @@ private int increaseHitChanceByComponent() {
     return false;
   }
 
+  /**
+   * Check if ship has gravity ripper.
+   * @return True, if it has.
+   */
+  public boolean hasGravityRipper() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.GRAVITY_RIPPER
+          && hasComponentEnergy(i)) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Get Troop power
    * @return Get Total troop power where improvements are taken to count

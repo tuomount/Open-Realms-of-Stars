@@ -29,8 +29,9 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
-import org.openRealmOfStars.starMap.event.RandomEventType;
-import org.openRealmOfStars.starMap.event.RandomEvent;
+import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.karmaEvents.RandomEvent;
+import org.openRealmOfStars.starMap.event.karmaEvents.RandomEventType;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.history.event.LeaderEvent;
@@ -364,6 +365,250 @@ public final class NewsFactory {
     event.getRealm().appendStory(event.getText(), starYear);
     return news;
   }
+
+  /**
+   * Make news about opening ascension portal.
+   * @param starYear Star Year when it happens
+   * @param planet Planet which opened
+   * @param info PlayerInfo owning the planet
+   * @return NewsData
+   */
+  public static NewsData makeOpenAscensionPortalNews(final int starYear,
+      final Planet planet, final PlayerInfo info) {
+    NewsData news = new NewsData();
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    sb.append(" ");
+    sb.append(planet.getName());
+    sb.append(" has ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("built ");
+    } else {
+      sb.append("constructed ");
+    }
+    sb.append(" and ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("activated ");
+    } else {
+      sb.append("opened ");
+    }
+    sb.append("ascension portal. This portal is now ready to travel through. ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append(planet.getName());
+      sb.append(" belongs to ");
+      sb.append(info.getEmpireName());
+      sb.append(". ");
+    } else {
+      sb.append("This is ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" magnificent ");
+      } else {
+        sb.append(" great ");
+      }
+      sb.append(" achievement for ");
+      sb.append(info.getEmpireName());
+      sb.append(". ");
+    }
+    sb.append(info.getEmpireName());
+    sb.append(" will most certainly travel through it very soon...");
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (DiceGenerator.getBoolean()) {
+      inst.addPlanet(ImageInstruction.POSITION_LEFT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    } else {
+      inst.addPlanet(ImageInstruction.POSITION_RIGHT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    }
+    inst.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.ASCENSION_PORTAL, ImageInstruction.SIZE_FULL);
+    inst.addText("ASCENSION PORTAL ACTIVATED!");
+    news.setImageInstructions(inst.build());
+    news.setNewsText(sb.toString());
+    info.appendStory(news.getNewsText(), starYear);
+    return news;
+  }
+
+  /**
+   * Make Gravity Ripper event news
+   * @param starYear when Event happens
+   * @param info PlayerInfo who did the discovery
+   * @param fleet Fleet which did the discovery
+   * @return NewsData
+   */
+  public static NewsData makeActivateGravityRipperNews(final int starYear,
+      final PlayerInfo info, final Fleet fleet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    instructions.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.BLACK_HOLE_TRANSPARENT, ImageInstruction.SIZE_FULL);
+    if (DiceGenerator.getBoolean()) {
+      if (DiceGenerator.getBoolean()) {
+        instructions.addTrader(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.CORVETTE, ImageInstruction.SIZE_HALF);
+      } else {
+        instructions.addTrader(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.TRADER2, ImageInstruction.SIZE_HALF);
+      }
+    } else {
+      instructions.addTrader(ImageInstruction.POSITION_LEFT,
+          ImageInstruction.CRUISER, ImageInstruction.SIZE_HALF);
+    }
+    int value = DiceGenerator.getRandom(2);
+    if (value == 0) {
+      instructions.addText("GRAVITY RIPPER ACTIVATED!");
+    }
+    if (value == 1) {
+      instructions.addText("ASCENSION VEINS REVEALED!");
+    }
+    if (value == 2) {
+      instructions.addText("NODAL WORLD REVEALED!");
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    sb.append(" near the massive black hole in center of galaxy ");
+    sb.append(info.getEmpireName());
+    sb.append(" fleet called ");
+    sb.append(fleet.getName());
+    sb.append(" activated gravity ripper. ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append(" Gravity ripper destabilizes spacetime near the black hole");
+      sb.append(" and this activates hidden graviton conduits. ");
+      sb.append("When these are activated they are visible and called"
+          + " ascension veins. These veins converge on rare nodal world. ");
+      sb.append("There space time is so thin that Ascension portal can"
+          + " be constructed.");
+    } else {
+      sb.append(" Gravity ripper disrupts spacetime around the black hole,"
+          + " triggering dormant graviton conduits. Once activated,"
+          + " these pathways become visible, known as Ascension veins."
+          + " These veins converge at rare nodal world, where spacetime"
+          + " is so fragile that an Ascension portal can be created.");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make Rift portal event news
+   * @param starYear when Event happens
+   * @param star Nearest star or null
+   * @param riftPortals Number of rift portals before this.
+   * @return NewsData
+   */
+  public static NewsData makeRiftPortalNews(final int starYear,
+      final Sun star, final int riftPortals) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (DiceGenerator.getBoolean()) {
+      instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    }
+    if (DiceGenerator.getBoolean()) {
+      if (DiceGenerator.getBoolean()) {
+        instructions.addLogo(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+            ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+      }
+    } else {
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+    }
+    int value = DiceGenerator.getRandom(2);
+    if (riftPortals == 0) {
+      instructions.addText("MYSTERIOUS PORTAL APPEARS!");
+    } else {
+      if (value == 0) {
+        instructions.addText("RIFT PORTAL OPENED!");
+      }
+      if (value == 1) {
+        instructions.addText("RIFT PORTAL APPEARED!");
+      }
+      if (value == 2) {
+        instructions.addText("RIFT PORTAL EMERGED!");
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    if (star != null) {
+      sb.append(" in ");
+      sb.append(star.getName());
+      sb.append(" system ");
+    } else {
+      sb.append(" in deep space ");
+    }
+    if (riftPortals == 0) {
+      if (DiceGenerator.getBoolean()) {
+        sb.append("unknown portal ");
+      } else {
+        sb.append("mysterious portal ");
+      }
+    } else {
+      sb.append("rift portal ");
+    }
+    sb.append(" has been ");
+    value = DiceGenerator.getRandom(2);
+    if (value == 0) {
+      sb.append("opened. ");
+    }
+    if (value == 1) {
+      sb.append("appeared. ");
+    }
+    if (value == 2) {
+      sb.append("emerged. ");
+    }
+    switch (riftPortals) {
+      case 0: break;
+      case 1: sb.append("This is the second portal opened. "); break;
+      case 2: sb.append("This is the third rift portal opened. "); break;
+      case 3: sb.append("This is the fourth rift portal opened. "); break;
+      case 4: sb.append("This is the fifth rift portal opened. "); break;
+      default:
+      case 5: sb.append("There have been numerous rift portals"
+          + " opened before this. "); break;
+    }
+    sb.append("This kind of event requires ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("massive ");
+    } else {
+      sb.append("enormous ");
+    }
+    sb.append("amount of energy.");
+    sb.append(" It is unknown who or what opened this portal");
+    if (DiceGenerator.getBoolean()) {
+      sb.append(" and what reason was the reason for openning.");
+    } else {
+      sb.append(".");
+    }
+    if (riftPortals == 1) {
+      sb.append(" It is still unclear how these portal works and is travelling"
+          + " possible both directions. ");
+    } else if (riftPortals == 2) {
+      sb.append(" Seems that travelling is only possible towards this "
+          + "reality. ");
+    } else {
+      sb.append(" Rift portal is only sending material or energy to"
+          + " our reality, but it is mystery what there has been sent. ");
+    }
+    if (DiceGenerator.getBoolean()) {
+      sb.append(" It needs fleet to go investigate this event. ");
+    } else {
+      sb.append(" Someone needs to go there and study this event. ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
   /**
    * Make news about new heir
    * @param heir New heir
@@ -690,7 +935,7 @@ public final class NewsFactory {
     Planet firstPlanet = null;
     if (leader.getJob() == Job.RULER || leader.getJob() == Job.TOO_YOUNG) {
       for (Planet planet : map.getPlanetList()) {
-        if (planet.getPlanetPlayerInfo() == realm && firstPlanet == null) {
+        if (planet.getPlanetPlayerInfo() == realm) {
           firstPlanet = planet;
           coord = firstPlanet.getCoordinate();
           break;
@@ -3412,6 +3657,72 @@ public final class NewsFactory {
         winner2.appendStory(sb.toString(), map.getStarYear());
       }
     }
+    return news;
+  }
+
+  /**
+   * Make news about ascension victory.
+   * @param starYear Star Year when it happens
+   * @param map StarMap
+   * @param info PlayerInfo ascending
+   * @return NewsData
+   */
+  public static NewsData makeAscensionVictoryNews(final int starYear,
+      final StarMap map, final PlayerInfo info) {
+    NewsData news = new NewsData();
+    Coordinate coord = map.getAscensionPlanetCoordinate();
+    Planet planet = map.getPlanetByCoordinate(coord.getX(), coord.getY());
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    sb.append(" ");
+    sb.append(info.getEmpireName());
+    sb.append(" has ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("travelled ");
+    } else {
+      sb.append("journeyed ");
+    }
+    sb.append("through the Ascension Portal.");
+    int value = DiceGenerator.getRandom(2);
+    if (value == 0) {
+      sb.append("This portal allows ");
+      sb.append(info.getRace().getName());
+      sb.append(" to ascend into higher beings.");
+      sb.append(" They are no longer bound by this reality and has"
+          + " practically unlimited power.");
+    }
+    if (value == 1) {
+      sb.append("The portal enables ");
+      sb.append(info.getRace().getName());
+      sb.append(" to evolve into higher entities - no longer");
+      sb.append(" restricted by the fabric of this");
+      sb.append(" reality, and capable of wielding boundless energy.");
+    }
+    if (value == 2) {
+      sb.append("The portal allows ");
+      sb.append(info.getRace().getName());
+      sb.append(" to transcend their physical forms, freeing them");
+      sb.append(" from the limitations of reality and granting them ");
+      sb.append(" near-unlimited power as they ascend to higher beings.");
+    }
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (DiceGenerator.getBoolean()) {
+      inst.addPlanet(ImageInstruction.POSITION_LEFT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    } else {
+      inst.addPlanet(ImageInstruction.POSITION_RIGHT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    }
+    inst.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.ASCENSION_PORTAL, ImageInstruction.SIZE_FULL);
+    inst.addLogo(ImageInstruction.POSITION_CENTER,
+        info.getRace().getNameSingle(), ImageInstruction.SIZE_FULL);
+    inst.addText("ASCENSION VICTORY!");
+    news.setImageInstructions(inst.build());
+    news.setNewsText(sb.toString());
+    info.appendStory(news.getNewsText(), starYear);
     return news;
   }
 

@@ -254,6 +254,13 @@ public class ShipDesign {
         thrusters = comp.getSpeed();
       }
     }
+    if (hull.getHullType() == ShipHullType.PROBE) {
+      String str = hull.getName();
+      if (str.equals("Probe Mk2") || str.equals("Probe Mk3")) {
+        // Probes Mk2 and Mk3 have faster regular speed
+          speed = speed + 1;
+      }
+    }
     speed = speed + thrusters;
     return speed;
   }
@@ -369,7 +376,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
-          || comp.getType() == ShipComponentType.TENTACLE) {
+          || comp.getType() == ShipComponentType.TENTACLE
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         return true;
       }
     }
@@ -394,7 +403,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
-          || comp.getType() == ShipComponentType.TENTACLE) {
+          || comp.getType() == ShipComponentType.TENTACLE
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         count++;
       }
     }
@@ -436,7 +447,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.BITE
-          || comp.getType() == ShipComponentType.TENTACLE) {
+          || comp.getType() == ShipComponentType.TENTACLE
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         return true;
       }
     }
@@ -597,7 +610,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.BITE
-          || comp.getType() == ShipComponentType.TENTACLE) {
+          || comp.getType() == ShipComponentType.TENTACLE
+          || comp.getType() == ShipComponentType.ARM_SPIKE
+          || comp.getType() == ShipComponentType.PLASMA_SPIT) {
         militaryShip = true;
         power = power + comp.getDamage();
       }

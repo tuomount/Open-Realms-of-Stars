@@ -1008,19 +1008,17 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_REPAIR_MODULE_MK3 = 203;
   /**
-   * Component Starbase Ascension portal
+   * Component Orbital Ascension portal
    */
-  public static final int COMPONENT_STARBASE_ASCENSION_PORTAL = 204;
+  public static final int COMPONENT_ORBITAL_ASCENSION_PORTAL = 204;
   /**
-   * Component Ascension portal scanner Mk1
+   * Component Armed spike
    */
-  // TODO: Change these something else
-  public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK1 = 205;
+  public static final int COMPONENT_ARMED_SPIKE = 205;
   /**
-   * Component Ascension portal scanner Mk2
+   * Component Plasma spit
    */
-  // TODO: Change these something else
-  public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK2 = 206;
+  public static final int COMPONENT_PLASMA_SPIT = 206;
   /**
    * Component Ascension portal scanner Mk3
    */
@@ -1723,14 +1721,14 @@ public final class ShipComponentFactory {
     case COMPONENT_REPAIR_MODULE_MK3:
       tmp = createDefense(index);
       break; // Repair Module Mk3
-    case COMPONENT_STARBASE_ASCENSION_PORTAL:
+    case COMPONENT_ORBITAL_ASCENSION_PORTAL:
       tmp = createStarbaseModule(index);
-      break; // Starbase ascension portal
-    case COMPONENT_ASCENSION_PORTAL_SCANNER_MK1:
-      tmp = createElectronics(index);
+      break; // Orbital ascension portal
+    case COMPONENT_ARMED_SPIKE:
+      tmp = createWeapon2(index);
       break; // Ascension portal scanner Mk1
-    case COMPONENT_ASCENSION_PORTAL_SCANNER_MK2:
-      tmp = createElectronics(index);
+    case COMPONENT_PLASMA_SPIT:
+      tmp = createWeapon2(index);
       break; // Ascension portal scanner Mk2
     case COMPONENT_ASCENSION_PORTAL_SCANNER_MK3:
       tmp = createElectronics(index);
@@ -2084,8 +2082,8 @@ public final class ShipComponentFactory {
       tmp.setEnergyRequirement(2);
       tmp.setFleetCapacityBonus(2);
     }
-    if (index == COMPONENT_STARBASE_ASCENSION_PORTAL) {
-      tmp = new ShipComponent(index, "Starbase ascension portal", 40, 40,
+    if (index == COMPONENT_ORBITAL_ASCENSION_PORTAL) {
+      tmp = new ShipComponent(index, "Orbital ascension portal", 40, 40,
           ShipComponentType.STARBASE_COMPONENT);
       tmp.setEnergyRequirement(8);
     }
@@ -2450,20 +2448,6 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Zero-point source Mk3", 24, 4,
           ShipComponentType.POWERSOURCE);
       tmp.setEnergyResource(17);
-    }
-    if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK1) {
-      tmp = new ShipComponent(index, "Ascension portal scanner Mk1", 3, 2,
-          ShipComponentType.SCANNER);
-      tmp.setScannerRange(4);
-      tmp.setCloakDetection(20);
-      tmp.setEnergyRequirement(1);
-    }
-    if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK2) {
-      tmp = new ShipComponent(index, "Ascension portal scanner Mk2", 3, 2,
-          ShipComponentType.SCANNER);
-      tmp.setScannerRange(5);
-      tmp.setCloakDetection(40);
-      tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK3) {
       tmp = new ShipComponent(index, "Ascension portal scanner Mk3", 3, 2,
@@ -3024,6 +3008,20 @@ public final class ShipComponentFactory {
       tmp.setDamage(10);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(5);
+    }
+    if (index == COMPONENT_ARMED_SPIKE) {
+      tmp = new ShipComponent(index, "Arm spike", 0, 0,
+          ShipComponentType.ARM_SPIKE);
+      tmp.setDamage(6);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_PLASMA_SPIT) {
+      tmp = new ShipComponent(index, "Plasma spit", 0, 0,
+          ShipComponentType.PLASMA_SPIT);
+      tmp.setDamage(8);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
   }

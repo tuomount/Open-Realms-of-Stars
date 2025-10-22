@@ -283,10 +283,12 @@ public final class ShipGenerator {
       case MULTICANNON:
       case WEAPON_RAILGUN:
       case BITE:
-      case TENTACLE: {
+      case TENTACLE:
+      case ARM_SPIKE: {
         scores[i] = scores[i] + comp.getDamage() * 5;
         break;
       }
+      case PLASMA_SPIT:
       case PLASMA_CANNON: // These two should get slight better value.
       case GRAVITY_RIPPER: {
         scores[i] = scores[i] + comp.getDamage() * 5 + 1;
@@ -841,6 +843,45 @@ public final class ShipGenerator {
         result.addComponent(weapon);
         result.addComponent(weapon);
       }
+      ShipComponent engine = ShipComponentFactory
+          .createByName("Space fin");
+      result.addComponent(engine);
+    }
+    return result;
+  }
+
+  /**
+   * Create devourer ship.
+   * @param player PlayerInfo
+   * @return Devourer ship or null.
+   */
+  public static ShipDesign createDevourer(final PlayerInfo player) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    Tech hullTech = TechList.getBestTech(hullTechs, "Devourer");
+    if (hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = new ShipDesign(hull);
+      result.setName("Devourer");
+      ShipComponent weapon = ShipComponentFactory
+          .createByName("Massive mouth with teeth Mk3");
+      result.addComponent(weapon);
+      ShipComponent armor = ShipComponentFactory
+          .createByName("Organic armor Mk3");
+      result.addComponent(armor);
+      result.addComponent(armor);
+      weapon = ShipComponentFactory
+          .createByName("Arm spike");
+      result.addComponent(weapon);
+      result.addComponent(weapon);
+      weapon = ShipComponentFactory
+          .createByName("Plasma spit");
+      result.addComponent(weapon);
+      ShipComponent power = ShipComponentFactory.createByName("Heart");
+      result.addComponent(power);
+      result.addComponent(power);
+      result.addComponent(armor);
       ShipComponent engine = ShipComponentFactory
           .createByName("Space fin");
       result.addComponent(engine);

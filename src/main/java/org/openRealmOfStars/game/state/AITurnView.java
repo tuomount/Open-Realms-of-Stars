@@ -89,6 +89,7 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
@@ -368,6 +369,9 @@ public class AITurnView extends BlackPanel {
       case ROAM:
         MissionHandling.handleRoaming(mission, fleet, info, game);
         break;
+      case DEVOURER_ROAM:
+        MissionHandling.handleDevourer(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }
@@ -407,8 +411,12 @@ public class AITurnView extends BlackPanel {
           == GameLengthState.START_GAME
           && game.getStarMap().getTurn() < 2) {
         // Colony fleet should go to explore
-        Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+        Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(),
+            fleet.getY());
+        if (sun == null) {
+          sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
             fleet.getY(), info, null);
+        }
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
         mission = new Mission(MissionType.COLONY_EXPLORE,
@@ -3766,6 +3774,11 @@ public class AITurnView extends BlackPanel {
       game.getStarMap().getHistory().addEvent(event);
     }
     if (game.getStarMap().getTurn() > 0) {
+      if (game.getStarMap().getAscensionEvents().getAscensionActivation()
+          == AscensionEvents.TRAVEL_THROUGH_ASCENSION_PORTAL) {
+        // Just double check if game is actually already ended.
+        game.getStarMap().setGameEnded(true);
+      }
       if (game.getStarMap().getTurn() == game.getStarMap()
           .getScoreVictoryTurn() / 2) {
         // Game is in halfway
@@ -3936,10 +3949,8 @@ public class AITurnView extends BlackPanel {
               && info.getArtifactLists().getDiscoveredArtifacts().length > 0) {
             NewsData news = info.getArtifactLists().updateResearchPointByTurn(
                 game.getStarMap().getTotalProductionByPlayerPerTurn(
-                    Planet.PRODUCTION_ARTIFACT_RESEARCH, i), info,
-                game.getStarMap().getScoreVictoryTurn(), scientist,
-                game.getStarMap().isTutorialEnabled(),
-                game.getStarMap().getStarYear());
+                    Planet.PRODUCTION_ARTIFACT_RESEARCH, i), scientist,
+                game.getStarMap(), info);
             if (news != null && info.isHuman()) {
               game.getStarMap().getNewsCorpData().addNews(news);
             }

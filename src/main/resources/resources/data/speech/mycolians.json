@@ -1,0 +1,39 @@
+[
+  {
+    "id": "MYCOLIANS",
+    "data": {
+      "TRADE": ["Here is our offer, how do thou respond?"],
+      "MOVE_FLEET": ["We call back our spore!"],
+      "LIKE_GREET": ["We greet you with our caps bowed!"],
+      "DEFESIVE_PACT": ["We should defend together against other parasites?"],
+      "BORDER_WARS": ["Thou %1$s shall be molded into nutrients!"],
+      "ASK_PROTECTION": ["We shall pay if they leave my spore alone for 5 star years!"],
+      "ASK_MOVE_FLEET": ["Thou spore called %1$s is in our root sectors!"],
+      "OFFER_SPY_TRADE": ["We shall trade intelligence for 20 star years?"],
+      "MAKE_WAR": ["Thou shall be molded and rotten!%1$s"],
+      "OFFER_ACCEPTED": [
+        "This is fungural trade!",
+        "Our acceptance for trader!"
+      ],
+      "TRADE_EMBARGO": ["We and thou, let's do trade embargo for 20 star years for %1$s?"],
+      "DECLINE_WAR": ["Thou prepare to be molded and rotten!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Thou shall be molded and rotten!"],
+      "NOTHING_TO_TRADE": ["Sorry, thou has nothing to trade with us."],
+      "NEUTRAL_GREET": ["We and thou shall meet, %1$s."],
+      "DECLINE_ANGER": ["Thou tries to boil us!"],
+      "FRIENDS_GREET": ["We and thou are in symbiosis!"],
+      "OFFER_REJECTED": ["Maybe next timem then..."],
+      "ALLIANCE": ["We and thou should form a symbiosis, what thou answers?"],
+      "DECLINE": ["We cannot accept thou's offer."],
+      "TRADE_ALLIANCE": ["We and thou should start trading!"],
+      "DISLIKE_GREET": ["We meet with parasite!"],
+      "DEMAND": ["We demand tribute for us from thou!"],
+      "HATE_GREET": ["Molded parasite, we listen only for short time."],
+      "AGREE": ["We and thou agree."],
+      "PEACE_OFFER": ["We and thou should make peace?"],
+      "INSULT_RESPOND": ["Thou are mold!"],
+      "ASK_MOVE_SPY": ["Thou spy spore called %1$s is in our root sector!"]
+    }
+  }
+]

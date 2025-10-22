@@ -444,6 +444,24 @@ public class Tile {
   }
 
   /**
+   * Is tile rift portal
+   * @return True if rift portal
+   */
+  public boolean isRiftPortal() {
+    if (name.equals(TileNames.RIFT_PORTAL1_ARTIFACT)
+        || name.equals(TileNames.RIFT_PORTAL1_DEVOURER)
+        || name.equals(TileNames.RIFT_PORTAL2_ARTIFACT)
+        || name.equals(TileNames.RIFT_PORTAL2_DEVOURER)
+        || name.equals(TileNames.RIFT_PORTAL3_ARTIFACT)
+        || name.equals(TileNames.RIFT_PORTAL3_DEVOURER)
+        || name.equals(TileNames.RIFT_PORTAL4_ARTIFACT)
+        || name.equals(TileNames.RIFT_PORTAL4_DEVOURER)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Is tile Ascension Vein
    * @return True if ascension tile
    */

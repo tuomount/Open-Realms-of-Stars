@@ -376,6 +376,8 @@ public final class DefaultScoring {
     }
     int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
     int prodProd = planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
+    int reseProd = planet.getTotalProduction(Planet.PRODUCTION_RESEARCH);
+    int cultProd = planet.getTotalProduction(Planet.PRODUCTION_CULTURE);
     if (metalProd < 4 && building.getName().equals("Basic mine")) {
       score = score + 40;
     }
@@ -451,25 +453,31 @@ public final class DefaultScoring {
     score += building.getReseBonus() * 60;
     score += building.getCultBonus() * 40;
     if (building.getReseBonus() > 0
-        && info.getRace().getResearchSpeed() < 100) {
+        && info.getRace().getResearchSpeed() < 100
+        && reseProd < 2) {
       score = score + building.getReseBonus() * 40;
     }
     if (building.getCultBonus() > 0
-        && info.getRace().getCultureSpeed() < 100) {
+        && info.getRace().getCultureSpeed() < 100
+        && cultProd < 2) {
       score = score + building.getCultBonus() * 20;
     }
     if (building.getFactBonus() > 0
-        && info.getRace().getProductionSpeed(planet.getGravityType()) < 100) {
+        && info.getRace().getProductionSpeed(planet.getGravityType()) < 100
+        && prodProd < 5) {
       score = score + building.getFactBonus() * 50;
     }
     if (building.getMineBonus() > 0
-        && info.getRace().getMiningSpeed(planet.getGravityType()) < 100) {
+        && info.getRace().getMiningSpeed(planet.getGravityType()) < 100
+        && metalProd < 5 && planet.getMetal() < 50) {
       score = score + building.getMineBonus() * 50;
     }
     if (building.getFarmBonus() > 0 && info.getRace().isEatingFood()
         && info.getRace().getFoodSpeed(planet.getGravityType()) < 100
-        && planet.getTotalPopulation() < planet.getPopulationLimit()) {
-      score = score + building.getFarmBonus() * 50;
+        && planet.getTotalPopulation() < planet.getPopulationLimit()
+        && !info.getRace().hasTrait(TraitIds.FIXED_GROWTH)
+        && !info.getRace().hasTrait(TraitIds.LIMITED_GROWTH)) {
+      score = score + building.getFarmBonus() * 25;
     }
     if (building.getReseBonus() > 0
         && planet.getEffectiveGovernorGuide() == Planet.RESEARCH_PLANET) {
@@ -582,7 +590,9 @@ public final class DefaultScoring {
     if (time > 15) {
       score = score / 2;
     }
-    if (time > 25) {
+    if (building.getScientificAchievement() && time >= 30) {
+      score = -1;
+    } else if (time > 25) {
       score = -1;
     }
     if (info.getStrategy() == WinningStrategy.CULTURAL) {

@@ -91,11 +91,12 @@
     "name": "College of history"
   },
   {
-    "description": "Creates ascension portal near planet.",
+    "description": "Creates ascension portal near planet. Can be only built on ascension planet.",
     "type": "RESEARCH",
     "metalCost": 160,
     "prodCost": 120,
     "happiness": 2,
+    "singleAllowed": true,
     "iconId": "IconAirLockOpen",
     "name": "Planetary ascension portal"
   },

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  * Copyright (C) 2024 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -59,7 +59,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
-import org.openRealmOfStars.starMap.event.RandomEvent;
+import org.openRealmOfStars.starMap.event.karmaEvents.RandomEvent;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;
@@ -546,6 +546,12 @@ public class PlayerInfo {
     tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
         "Tentacle Mk2");
     techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 3,
+        "Arm spike");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 4,
+        "Plasma spit");
+    techList.addTech(tech);
 
     tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 1, "Space worm");
     techList.addTech(tech);
@@ -553,6 +559,9 @@ public class PlayerInfo {
     techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 3,
         "Large kraken");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 4,
+        "Devourer");
     techList.addTech(tech);
 
     ShipDesign design = ShipGenerator.createSpaceWorm(this);
@@ -565,6 +574,9 @@ public class PlayerInfo {
     stat = new ShipStat(design);
     addShipStat(stat);
     design = ShipGenerator.createLargeKraken(this, true);
+    stat = new ShipStat(design);
+    addShipStat(stat);
+    design = ShipGenerator.createDevourer(this);
     stat = new ShipStat(design);
     addShipStat(stat);
   }
@@ -2491,4 +2503,27 @@ public class PlayerInfo {
     this.startingScenario = startingScenario;
   }
 
+  /**
+   * Get new devourer ship. This ship is ready for next fleet.
+   * Stats are increased already if ship has returned.
+   * @return Ship or null
+   */
+  public Ship createNewDevourerShip() {
+    ShipStat[] stats = getShipStatList();
+    ArrayList<ShipStat> listStats = new ArrayList<>();
+    for (ShipStat stat : stats) {
+      Ship ship = new Ship(stat.getDesign());
+      if (ship.getHull().getName().equals("Devourer")) {
+        listStats.add(stat);
+      }
+    }
+    ShipStat stat = DiceGenerator.pickRandom(listStats);
+    if (stat != null) {
+      Ship ship = new Ship(stat.getDesign());
+      stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+      stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+      return ship;
+    }
+    return null;
+  }
 }

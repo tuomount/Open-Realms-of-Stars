@@ -150,7 +150,8 @@ public abstract class Event {
       case PLANET_CONQUERED:
       case PLANET_BUILDING:
       case ARTIFICAL_PLANET_CREATED:
-      case PLANET_COLONIZED: {
+      case PLANET_COLONIZED:
+      case ASCENSION_PORTAL: {
         result = EventOnPlanet.createEventOnPlanet(buffer); break;
       }
       case GALACTIC_NEWS: {
@@ -161,6 +162,12 @@ public abstract class Event {
       }
       case LEADER_EVENT:  {
         result = LeaderEvent.createLeaderEvent(buffer); break;
+      }
+      case RIFT_PORTAL:  {
+        result = RiftPortalEvent.createRiftPortalEvent(buffer); break;
+      }
+      case ASCENDED:  {
+        result = AscendedEvent.createAscendedlEvent(buffer); break;
       }
       default: {
         throw new IOException("Unexpected event type: " + type);

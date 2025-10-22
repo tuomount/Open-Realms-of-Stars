@@ -24,7 +24,10 @@ import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesignConsts;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.player.tech.TechList;
+import org.openRealmOfStars.player.tech.TechType;
 
 import junit.framework.TestCase;
 
@@ -311,6 +314,75 @@ public class ShipDesignTest extends TestCase {
     }
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testDevourer() {
+    PlayerInfo monster = new PlayerInfo(
+        SpaceRaceFactory.createOne(SpaceRaceFactory.SPACE_MONSTER));
+    /*
+     * Space monsters get space monster tech.
+     * Space monsters get all their tech.
+     */
+    Tech tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 1,
+        "Massive mouth with teeth Mk1");
+    TechList techList = monster.getTechList();
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
+        "Massive mouth with teeth Mk2");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 3,
+        "Massive mouth with teeth Mk3");
+    techList.addTech(tech);
+
+    tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 1,
+        "Organic armor Mk1");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 2,
+        "Organic armor Mk2");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 3,
+        "Organic armor Mk3");
+    techList.addTech(tech);
+
+    tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 1,
+        "Space fin");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 1,
+        "Heart");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 2,
+        "Large heart");
+    techList.addTech(tech);
+
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 1,
+        "Tentacle Mk1");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
+        "Tentacle Mk2");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 3,
+        "Arm spike");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 4,
+        "Plasma spit");
+    techList.addTech(tech);
+
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 1, "Space worm");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 2, "Kraken");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 3,
+        "Large kraken");
+    techList.addTech(tech);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 4,
+        "Devourer");
+    techList.addTech(tech);
+
+    ShipDesign design = ShipGenerator.createDevourer(monster);
+    ShipStat stat = new ShipStat(design);
+    assertEquals("Devourer", stat.getDesign().getName());
+    stat.getDesign().getCost();
+  }
 
 
 }

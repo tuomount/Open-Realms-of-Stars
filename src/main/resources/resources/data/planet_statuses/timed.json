@@ -17,11 +17,16 @@
     "description": "Climate suddenly cool downs, this could be catastorphic for life on planet.",
     "hidden": true
   },
-    {
+  {
     "id": "CLIMATE_HEATUP",
     "name": "Climate heat up",
     "description": "Climate suddenly heats ups, this could be catastorphic for life on planet.",
     "hidden": true
+  },
+  {
+    "id": "NODAL_WORLD",
+    "name": "Nodal world",
+    "description": "Planet is nodal world where ascension portal can be built.",
+    "hidden": true
   }
-  
 ]

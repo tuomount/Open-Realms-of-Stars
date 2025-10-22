@@ -231,13 +231,16 @@ public class Route {
   public boolean makeNextMove(final StarMap starMap, final int speed) {
     for (int i = 0; i < speed; i++) {
       if (getDistance() > 0) {
+        double dx = startX + getMx();
+        double dy = startY + getMy();
+        int sx = (int) Math.round(dx);
+        int sy = (int) Math.round(dy);
         if (starMap == null) {
-          startX = startX + getMx();
-          startY = startY + getMy();
-        } else if (!starMap.isBlocked((int) Math.round(startX + getMx()),
-            (int) Math.round(startY + getMy()))) {
-          startX = startX + getMx();
-          startY = startY + getMy();
+          startX = dx;
+          startY = dy;
+        } else if (!starMap.isBlocked(sx, sy)) {
+          startX = dx;
+          startY = dy;
         } else {
           return false;
         }
@@ -349,10 +352,8 @@ public class Route {
             }
           }
         }
-        startX = startX + getMx();
-        startY = startY + getMy();
-        tmpX = startX;
-        tmpY = startY;
+        tmpX = startX + getMx();
+        tmpY = startY + getMy();
         startX = originalStartX;
         startY = originalStartY;
       }

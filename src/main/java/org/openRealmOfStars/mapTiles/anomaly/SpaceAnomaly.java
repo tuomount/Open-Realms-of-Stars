@@ -50,6 +50,7 @@ import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
@@ -290,14 +291,7 @@ public class SpaceAnomaly {
     if (tile != null) {
       switch (tile.getName()) {
         case TileNames.SPACE_ANOMALY_CREDITS: {
-          result = new SpaceAnomaly(AnomalyType.CREDIT,
-              DiceGenerator.getRandom(10, 30));
-          result.setText("There was hidden cache of credits hidden in"
-              + " asteroids. Cache contained " + result.getValue()
-              + " credits.");
-          result.setImage(GuiStatics.IMAGE_ASTEROIDS);
-          info.setTotalCredits(info.getTotalCredits() + result.value);
-          map.setTile(fleet.getX(), fleet.getY(), empty);
+          result = createCredits(map, info, fleet);
           addExp = 30;
           break;
         }
@@ -471,7 +465,7 @@ public class SpaceAnomaly {
           final var leaderRace = SpaceRaceFactory.getRandomRoboticRace();
           if (leaderRace == null) {
             ErrorLogger.debug("Could not get any robotic race for anomaly!");
-            result = null;
+            // Result is already here null.
             break;
           }
 
@@ -705,6 +699,77 @@ public class SpaceAnomaly {
           }
           break;
         }
+        case TileNames.RIFT_PORTAL1_ARTIFACT:
+        case TileNames.RIFT_PORTAL2_ARTIFACT:
+        case TileNames.RIFT_PORTAL3_ARTIFACT:
+        case TileNames.RIFT_PORTAL4_ARTIFACT: {
+          result = new SpaceAnomaly(AnomalyType.ANCIENT_ARTIFACT, 0);
+          result.setText("Found ancient capsule floating near the rift portal,"
+              + " which contained strange piece of ancient artifact. "
+              + ". This is weird, it looks kind of new,"
+              + " but same time it looks old. Just as something or someone"
+              + " wanted this to be found."
+              + " This finding requires some research time.");
+          if (DiceGenerator.getBoolean()) {
+            result.setImage(GuiStatics.IMAGE_ARTIFACT1);
+          } else {
+            result.setImage(GuiStatics.IMAGE_ARTIFACT2);
+          }
+          info.getArtifactLists().addDiscoveredArtifact(
+              ArtifactFactory.getRandomArtifactFromRiftPortal(
+                  map.getAscensionEvents().getAscensionActivation()));
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(15);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          addExp = 50;
+          break;
+        }
+        case TileNames.RIFT_PORTAL1_DEVOURER:
+        case TileNames.RIFT_PORTAL2_DEVOURER:
+        case TileNames.RIFT_PORTAL3_DEVOURER:
+        case TileNames.RIFT_PORTAL4_DEVOURER: {
+          result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
+          ImageInstruction instructions = new ImageInstruction();
+          instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+          instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+              ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
+          instructions.addLogo(ImageInstruction.POSITION_CENTER,
+              ImageInstruction.DEVOURER, ImageInstruction.SIZE_FULL);
+          BufferedImage image = new BufferedImage(900, 600,
+              BufferedImage.TYPE_4BYTE_ABGR);
+          image = ImageInstruction.parseImageInstructions(image,
+              instructions.build());
+          result.setImage(image);
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          PlayerInfo board = map.getPlayerList().getSpaceMonsterPlayer();
+          Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
+              board, StarMap.ENEMY_DEVOURER);
+          result.setText(monster.getBiggestShip().getName()
+              + " was found in the rift portal. "
+              + "Why this monster has arrived via Rift portal is mystery. "
+              + "Aggressive creature attack and battle begins...");
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(36);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
+          Combat fight = new Combat(fleet, monster, info, board,
+              map.getStarYear());
+          result.setCombat(fight);
+          addExp = 80;
+          break;
+        }
 
         default: {
           break;
@@ -714,6 +779,28 @@ public class SpaceAnomaly {
         fleet.getCommander().addExperience(addExp);
       }
     }
+    return result;
+  }
+
+  /**
+   * Create credits anomaly.
+   * @param map StarMap
+   * @param info PlayerInfo
+   * @param fleet Fleet making the discovery.
+   * @return SpaceAnomaly.
+   */
+  private static SpaceAnomaly createCredits(final StarMap map,
+     final PlayerInfo info, final Fleet fleet) {
+    SpaceAnomaly result = null;
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    result = new SpaceAnomaly(AnomalyType.CREDIT,
+        DiceGenerator.getRandom(10, 30));
+    result.setText("There was hidden cache of credits hidden in"
+        + " asteroids. Cache contained " + result.getValue()
+        + " credits.");
+    result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+    info.setTotalCredits(info.getTotalCredits() + result.value);
+    map.setTile(fleet.getX(), fleet.getY(), empty);
     return result;
   }
 }

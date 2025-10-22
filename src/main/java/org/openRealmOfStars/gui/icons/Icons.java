@@ -499,6 +499,18 @@ public final class Icons {
    * Snowman icon
    */
   public static final String ICON_SNOWMAN = "IconSnowman";
+  /**
+   * Ascension portal icon
+   */
+  public static final String ICON_ASCENSION_PORTAL = "IconAscensionPortal";
+  /**
+   * Arm spike icon
+   */
+  public static final String ICON_ARM_SPIKE = "IconArmSpike";
+  /**
+   * Plasma spit icon
+   */
+  public static final String ICON_PLASMA_SPIT = "IconPlasmaSpit";
 
   /**
    * List of Icon
@@ -857,6 +869,12 @@ public final class Icons {
     icon = new Icon16x16(image, 7, 5, ICON_MOVES_DONE);
     addIcon(icon);
     icon = new Icon16x16(image, 0, 6, ICON_SNOWMAN);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 6, ICON_ASCENSION_PORTAL);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 6, ICON_ARM_SPIKE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 6, ICON_PLASMA_SPIT);
     addIcon(icon);
   }
 

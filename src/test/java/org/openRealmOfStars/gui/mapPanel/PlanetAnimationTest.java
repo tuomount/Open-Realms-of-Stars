@@ -75,11 +75,12 @@ public class PlanetAnimationTest {
     PlanetAnimation planetAnimation = new PlanetAnimation(
         PlanetAnimation.ANIMATION_TYPE_TURRET, 100, 120, 50, 60);
     assertEquals(false, planetAnimation.isAnimationFinished());
-    assertEquals(null, planetAnimation.getAnimFrame());
+    assertEquals(false, planetAnimation.isAnimationPlaying());
     while(!planetAnimation.isAnimationFinished()) {
       planetAnimation.doAnimation();
     }
-    assertEquals(null, planetAnimation.getAnimFrame());
+    assertEquals(true, planetAnimation.isAnimationPlaying());
+
   }
 
   @Test
@@ -88,11 +89,11 @@ public class PlanetAnimationTest {
     PlanetAnimation planetAnimation = new PlanetAnimation(
         PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 100, 120, 50, 60);
     assertEquals(false, planetAnimation.isAnimationFinished());
-    assertEquals(null, planetAnimation.getAnimFrame());
+    assertEquals(false, planetAnimation.isAnimationPlaying());
     while(!planetAnimation.isAnimationFinished()) {
       planetAnimation.doAnimation();
     }
-    assertEquals(null, planetAnimation.getAnimFrame());
+    assertEquals(true, planetAnimation.isAnimationPlaying());
   }
 
   @Test
@@ -101,12 +102,12 @@ public class PlanetAnimationTest {
     PlanetAnimation planetAnimation = new PlanetAnimation(
         PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 100, 120, 50, 60);
     assertEquals(false, planetAnimation.isAnimationFinished());
-    assertEquals(null, planetAnimation.getAnimFrame());
+    assertEquals(false, planetAnimation.isAnimationPlaying());
     planetAnimation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_BOMBING);
     while(!planetAnimation.isAnimationFinished()) {
       planetAnimation.doAnimation();
     }
-    assertEquals(null, planetAnimation.getAnimFrame());
+    assertEquals(true, planetAnimation.isAnimationPlaying());
   }
 
   @Test

@@ -328,6 +328,18 @@ public class ImageInstruction {
    */
   public static final String BIG_EXPLOSION = "big explosion";
   /**
+   * Rift portal
+   */
+  public static final String RIFT_PORTAL = "rift portal";
+  /**
+   * Ascension portal
+   */
+  public static final String ASCENSION_PORTAL = "ascension portal";
+  /**
+   * Devourer
+   */
+  public static final String DEVOURER = "devourer";
+  /**
    * Galaxy image
    */
   public static final String GALAXY = "galaxy";
@@ -491,6 +503,14 @@ public class ImageInstruction {
    * Instructions for black monolith
    */
   public static final String BLACK_MONOLITH = "BlackMonolith";
+  /**
+   * Instructions for blueish black hole
+   */
+  public static final String BLUEISH_BLACK_HOLE = "BlueishBlackHole";
+  /**
+   * Instructions for blueish black hole transparent
+   */
+  public static final String BLACK_HOLE_TRANSPARENT = "BlackHoleTransparent";
   /**
    * Instructions for molten lava
    */
@@ -721,6 +741,7 @@ public class ImageInstruction {
         && !ANCIENT_TEMPLE.equals(image)
         && !ANCIENT_PALACE.equals(image)
         && !BLACK_MONOLITH.equals(image)
+        && !BLUEISH_BLACK_HOLE.equals(image)
         && !MOLTEN_LAVA.equals(image)
         && !ARID.equals(image)
         && !LUSH_VEGETATION.equals(image)
@@ -852,7 +873,11 @@ public class ImageInstruction {
         && !METEOR.equals(logoType)
         && !METEOR_HIT.equals(logoType)
         && !BIG_EXPLOSION.equals(logoType)
-        && !BIG_ORBITAL.equals(logoType)) {
+        && !BIG_ORBITAL.equals(logoType)
+        && !RIFT_PORTAL.equals(logoType)
+        && !ASCENSION_PORTAL.equals(logoType)
+        && !DEVOURER.equals(logoType)
+        && !BLACK_HOLE_TRANSPARENT.equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -890,7 +915,8 @@ public class ImageInstruction {
         + position);
     }
     if (!TRADER1.equals(trader) && !TRADER2.equals(trader)
-        && !CLOAKED_SHIP.equals(trader) && !SHUTTLE2.equals(trader)) {
+        && !CLOAKED_SHIP.equals(trader) && !SHUTTLE2.equals(trader)
+        && !CRUISER.equals(trader) && !CORVETTE.equals(trader)) {
       throw new IllegalArgumentException("Illegal trader type: " + trader);
     }
     if (!SIZE_FULL.equals(size)
@@ -1108,6 +1134,18 @@ public class ImageInstruction {
     if (BIG_EXPLOSION.equals(planetType)) {
       planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_EXPLOSION);
     }
+    if (RIFT_PORTAL.equals(planetType)) {
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_RIFT_PORTAL);
+    }
+    if (ASCENSION_PORTAL.equals(planetType)) {
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_ASCENSION_PORTAL);
+    }
+    if (DEVOURER.equals(planetType)) {
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_DEVOURER);
+    }
+    if (BLACK_HOLE_TRANSPARENT.equals(planetType)) {
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACKHOLE_TRANSPARENT);
+    }
     if (BIG_ORBITAL.equals(planetType)) {
       planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_ORBITAL);
     }
@@ -1163,6 +1201,12 @@ public class ImageInstruction {
     }
     if (SHUTTLE2.equals(traderType)) {
       traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHUTTLE2);
+    }
+    if (CORVETTE.equals(traderType)) {
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_CORVETTE);
+    }
+    if (CRUISER.equals(traderType)) {
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_CRUISER);
     }
     if (SIZE_HALF.equals(size)) {
       traderImg = GuiStatics.scaleToHalf(traderImg);
@@ -1361,8 +1405,23 @@ public class ImageInstruction {
     if (BLACK_MONOLITH.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACK_MONOLITH);
     }
+    if (BLUEISH_BLACK_HOLE.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLUEISH_BLACKHOLE);
+    }
     if (BIG_ORBITAL.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_ORBITAL);
+    }
+    if (RIFT_PORTAL.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_RIFT_PORTAL);
+    }
+    if (ASCENSION_PORTAL.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ASCENSION_PORTAL);
+    }
+    if (DEVOURER.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DEVOURER);
+    }
+    if (BLACK_HOLE_TRANSPARENT.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACKHOLE_TRANSPARENT);
     }
     if (BIG_EXPLOSION.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_EXPLOSION);

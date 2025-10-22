@@ -244,12 +244,22 @@ public class PlanetAnimation {
    * @return True if animation has finished
    */
   public boolean isAnimationFinished() {
-    if (count == 0) {
+    if (count <= 1) {
       return true;
     }
     return false;
   }
 
+  /**
+   * Is Animation showing?
+   * @return True or false
+   */
+  public boolean isAnimationPlaying() {
+    if (showAnim) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Do animation update
    */

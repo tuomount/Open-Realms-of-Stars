@@ -288,4 +288,22 @@ public class History {
     }
     return events;
   }
+
+  /**
+   * Count number of certain event types in history.
+   * @param type EventType
+   * @return Number of event types.
+   */
+  public int countNumberOfEventTypes(final EventType type) {
+    int result = 0;
+    for (HistoryTurn turn : listOfTurns) {
+      for (int i = 0; i < turn.getNumberOfEvents(); i++) {
+        Event event = turn.getEvent(i);
+        if (event.getType() == type) {
+          result++;
+        }
+      }
+    }
+    return result;
+  }
 }

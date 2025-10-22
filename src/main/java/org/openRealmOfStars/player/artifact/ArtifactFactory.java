@@ -20,6 +20,7 @@ package org.openRealmOfStars.player.artifact;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -240,6 +241,43 @@ public final class ArtifactFactory {
       if (artifact.getArtifactType() != ArtifactType.FACILITY
           && !artifact.isUnique()) {
         choices.add(artifact);
+      }
+    }
+    int index = DiceGenerator.getRandom(choices.size() - 1);
+    return choices.get(index);
+  }
+
+  /**
+   * Get random artifact from rift portal and which are not unique.
+   * @param activation Activation state for Ascension.
+   * @return Random artifact
+   */
+  public static Artifact getRandomArtifactFromRiftPortal(
+      final byte activation) {
+    ArrayList<Artifact> choices = new ArrayList<>();
+    for (int i = 0; i < MAX_ARTIFACT; i++) {
+      Artifact artifact = createArtifact(i);
+      if (artifact.isUnique()) {
+        continue;
+      }
+      if (activation == AscensionEvents.BLACK_HOLE_DISCOVERED) {
+        if (artifact.getArtifactType() == ArtifactType.FACILITY
+            || artifact.getArtifactType() == ArtifactType.MILITARY
+            || artifact.getArtifactType() == ArtifactType.DEFENSE
+            || artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
+          choices.add(artifact);
+        }
+      } else if (activation == AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+        if (artifact.getArtifactType() == ArtifactType.FACILITY
+            || artifact.getArtifactType() == ArtifactType.MILITARY
+            || artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
+          choices.add(artifact);
+        }
+      } else {
+        if (artifact.getArtifactType() == ArtifactType.MILITARY
+          || artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
+          choices.add(artifact);
+        }
       }
     }
     int index = DiceGenerator.getRandom(choices.size() - 1);

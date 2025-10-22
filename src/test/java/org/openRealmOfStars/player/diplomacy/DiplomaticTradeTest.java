@@ -524,7 +524,7 @@ public class DiplomaticTradeTest {
         TechFactory.createDefenseTech("Shield Mk2", 2)));
     trade.setFirstOffer(firstList);
     trade.setSecondOffer(secondList);
-    assertEquals(-6, trade.getOfferDifferenceForBoth());
+    assertEquals(-10, trade.getOfferDifferenceForBoth());
   }
 
   @Test
@@ -567,7 +567,7 @@ public class DiplomaticTradeTest {
         fleet));
     trade.setFirstOffer(firstList);
     trade.setSecondOffer(secondList);
-    assertEquals(-8, trade.getOfferDifferenceForBoth());
+    assertEquals(0, trade.getOfferDifferenceForBoth());
   }
 
 /*
@@ -1524,7 +1524,7 @@ public class DiplomaticTradeTest {
         .getNegotiationType();
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
-    if (type1 == type2
+    if ((type1 == type2 || type2 == NegotiationType.CREDIT)
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
         || type1 == NegotiationType.MAP_PLANETS)) {
       return;

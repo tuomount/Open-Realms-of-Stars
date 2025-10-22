@@ -283,7 +283,7 @@ public class ShipTest {
     assertEquals(10,ship.getArmor());
     assertEquals(10,ship.getShield());
     assertEquals(7,ship.getFtlSpeed());
-    assertEquals(3,ship.getSpeed());
+    assertEquals(4,ship.getSpeed());
     assertEquals(3,ship.getTacticSpeed());
     assertEquals(0,ship.getColonist());
     assertEquals(0,ship.getMetal());

@@ -197,6 +197,10 @@ public final class GuiStatics {
   public static final Color TENTACLE_COLOR_1 = new Color(65, 50, 44);
   /** Second color for tentacle. */
   public static final Color TENTACLE_COLOR_2 = new Color(88, 73, 52);
+  /** Base color for arm spike. */
+  public static final Color SPIKE_COLOR_1 = new Color(161, 135, 123);
+  /** Second color for arm spike. */
+  public static final Color SPIKE_COLOR_2 = new Color(90, 87, 86);
   /** Green beam colors */
   public static final Color[] GREEN_BEAM_COLORS = {
       new Color(36, 255,  0),
@@ -319,6 +323,9 @@ public final class GuiStatics {
   /** Shield animation */
   public static final AnimatedImage SHIELD1 = new AnimatedImage(64, 64,
       "/resources/images/shield.png");
+  /** Spanner animation */
+  public static final AnimatedImage SPANNER = new AnimatedImage(64, 64,
+      "/resources/images/spanner.png");
 
   /** Scanner animation */
   public static final AnimatedImage SCANNER = new AnimatedImage(64, 64,
@@ -604,6 +611,10 @@ public final class GuiStatics {
   /** Space kraken */
   public static final String IMAGE_KRAKEN = "/resources/images/kraken.png";
 
+  /** Blueish black hole */
+  public static final String IMAGE_BLUEISH_BLACKHOLE =
+      "/resources/images/blueish_blackhole.png";
+
   /** Pirate raiders */
   public static final String IMAGE_PIRATE_RAIDERS =
       "/resources/images/pirate_raiders.png";
@@ -787,6 +798,18 @@ public final class GuiStatics {
   /** Big Orbital. */
   public static final String IMAGE_BIG_ORBITAL =
       "/resources/images/bigorbital.png";
+  /** Rift portal. */
+  public static final String IMAGE_RIFT_PORTAL =
+      "/resources/images/rift_portal.png";
+  /** Ascension portal. */
+  public static final String IMAGE_ASCENSION_PORTAL =
+      "/resources/images/ascension_portal.png";
+  /** Devourer */
+  public static final String IMAGE_DEVOURER =
+      "/resources/images/devourer.png";
+  /** Blackhole transparent */
+  public static final String IMAGE_BLACKHOLE_TRANSPARENT =
+      "/resources/images/blueish_blackhole_transparent.png";
   /** Big Explosion */
   public static final String IMAGE_BIG_EXPLOSION =
       "/resources/images/bigexplosion.png";

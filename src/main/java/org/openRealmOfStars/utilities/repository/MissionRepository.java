@@ -109,6 +109,8 @@ public class MissionRepository {
       return MissionType.ROAM;
     case 17:
       return MissionType.SPORE_COLONY;
+    case 18:
+      return MissionType.DEVOURER_ROAM;
     default:
       ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

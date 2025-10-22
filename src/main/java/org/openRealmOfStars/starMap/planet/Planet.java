@@ -46,12 +46,14 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
@@ -1899,6 +1901,10 @@ public class Planet {
           // No need for radiation well or dampener on small radiation planets
           tmp = null;
         }
+        if (tmp != null && tmp.getName().equals("Planetary ascension portal")
+            && !hasStatus(StatusIds.NODAL_WORLD)) {
+          tmp = null;
+        }
         if (tmp != null && tmp.isOrbitalElevator() && getOrbital() == null) {
           // Orbital elevator requires orbital.
           tmp = null;
@@ -1972,6 +1978,27 @@ public class Planet {
     return buildings.toArray(new Building[buildings.size()]);
   }
 
+  /**
+   * Check if planet has ascension portal.
+   * This can be either building or in orbital.
+   * @return True if yes
+   */
+  public boolean hasAscensionPortal() {
+    for (Building building : buildings) {
+      if (building.getName().equals("Planetary ascension portal")) {
+        return true;
+      }
+    }
+    if (orbital != null) {
+      for (int i = 0; i < orbital.getNumberOfComponents(); i++) {
+        ShipComponent comp = orbital.getComponent(i);
+        if (comp.getName().equals("Orbital ascension portal")) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
   /**
    * Get the total number of buildings on planet
    * @return number of buildings
@@ -3159,6 +3186,23 @@ public class Planet {
     checkIfConstructionIsDone(enemyOrbiting, map);
 
     Message msg;
+    if (hasAscensionPortal()
+        && map.getAscensionEvents().getAscensionActivation()
+        == AscensionEvents.ASCENSION_VEIN_ACTIVATED
+        && planetOwnerInfo != null) {
+      map.generateAscensionPortal();
+      map.getAscensionEvents().setAscensionActivation(
+          AscensionEvents.ASCENSION_PORTAL_ACTIVATED);
+      msg = new Message(MessageType.PLANETARY,
+          getName() + " has opened ascension portal. This portal is now ready"
+              + " to travel through.",
+          Icons.getIconByName(Icons.ICON_ASCENSION_PORTAL));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      planetOwnerInfo.getMsgList().addNewMessage(msg);
+      map.getNewsCorpData().addNews(NewsFactory.makeOpenAscensionPortalNews(
+          map.getStarYear(), this, getPlanetPlayerInfo()));
+    }
     if (happinessType == HappinessBonus.KILL_POPULATION) {
       // Need to remember owner if last population is killed
       PlayerInfo oldOwner = planetOwnerInfo;
@@ -4911,6 +4955,19 @@ public class Planet {
       }
       return addToRemoveList;
     }
+    if (applied.getStatusId().equals(StatusIds.NODAL_WORLD)
+        && map.getAscensionEvents().getAscensionActivation()
+        == AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+      addToRemoveList = true;
+      EventOnPlanet eventOnPlanet = new EventOnPlanet(
+          EventType.ASCENSION_PORTAL, getCoordinate(), getName(), -1);
+      eventOnPlanet.setText("Graviton conduits have been turned into ascension"
+          + " veins and these reveal now the Ascension planet: " + getName()
+          + ".");
+      map.getHistory().addEvent(eventOnPlanet);
+      return addToRemoveList;
+    }
+
     if (realm == null) {
       return false;
     }
@@ -5159,6 +5216,21 @@ public class Planet {
       if (status.getTimedStatus() == TimedStatusType.GAME_START
           && turnNumber > 0) {
         status.decrease();
+      }
+      if (status.getTimedStatus() == TimedStatusType.SPECIAL_EVENT) {
+        if (status.getStatus().getId().equals(StatusIds.NODAL_WORLD)) {
+         if (map.getAscensionEvents().getAscensionActivation()
+             == AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+           boolean addToRemoveList = activateTimedStatus(map, status, null,
+               null);
+           if (addToRemoveList) {
+             removeList.add(status);
+           }
+         }
+        } else {
+          ErrorLogger.debug("Unexpected timedstatus with special event: "
+              + status.getStatus().getId());
+        }
       }
       if (status.isActive()) {
         boolean addToRemoveList = activateTimedStatus(map, status, null, null);

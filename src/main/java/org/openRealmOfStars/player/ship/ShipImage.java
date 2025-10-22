@@ -154,9 +154,13 @@ public class ShipImage {
    */
   public static final int SPORE = 23;
   /**
+   * Index for devourer
+   */
+  public static final int DEVOURER = 24;
+  /**
    * Must be one bigger than last ship
    */
-  public static final int NUMBER_OF_IMAGES = 24;
+  public static final int NUMBER_OF_IMAGES = 25;
 
 
   /**
@@ -204,6 +208,7 @@ public class ShipImage {
       case 21: return "Space kraken";
       case 22: return "Large space kraken";
       case 23: return "Spore";
+      case 24: return "Devourer";
     }
   }
   /**
@@ -328,6 +333,12 @@ public class ShipImage {
         SharedShipImages.SPORE);
     smallShipImages[SPORE] = SharedShipImages.getSmallShipImage(
         SharedShipImages.SPORE);
+    shipImages[DEVOURER] = SharedShipImages.getMonsterShipImage(
+        SharedShipImages.DEVOURER);
+    normalShipImages[DEVOURER] = SharedShipImages.getNormalMonsterShipImage(
+        SharedShipImages.DEVOURER);
+    smallShipImages[DEVOURER] = SharedShipImages.getSmallMonsterShipImage(
+        SharedShipImages.DEVOURER);
   }
   /**
    * Capture 64x64 image from bigger one

@@ -143,9 +143,9 @@ public class NegotiationOffer {
       if (scienticAchievement) {
         offerValue = getTech().getLevel() * 8;
       } else if (getTech().isRareTech()) {
-        offerValue = getTech().getLevel() * 4;
+        offerValue = getTech().getLevel() * 4 + 6;
       } else {
-        offerValue = getTech().getLevel() * 2;
+        offerValue = getTech().getLevel() * 2 + 4;
       }
       if (!race.isEatingFood() && farmingBuilding) {
         offerValue = 0;
@@ -174,7 +174,7 @@ public class NegotiationOffer {
       offerValue = getPromiseValue();
       break;
     case DISCOVERED_ARTIFACT:
-      offerValue = getDiscoveredArtifacts() * 5;
+      offerValue = getDiscoveredArtifacts() * 10;
       break;
     case ASK_PROTECTION:
       offerValue = 20;

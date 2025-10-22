@@ -160,6 +160,8 @@ public class PlanetBombingView extends BlackPanel {
   private boolean aiExitLoop = false;
   /** AI has troops in the fleet */
   private boolean aiTroops = false;
+  /** AI delay for humans to "prepare" for conquest */
+  private int aiDelays = 0;
 
   /** AI index which component it is checking */
   private int aiComponentIndex = 0;
@@ -311,9 +313,11 @@ public class PlanetBombingView extends BlackPanel {
       endButton.setEnabled(false);
       infoPanel.setBtnEnabled(false);
       aiControlled = true;
+      aiDelays = 30;
       if (planet.getPlanetPlayerInfo() != null
           && !planet.getPlanetPlayerInfo().isHuman()) {
         allAi = true;
+        aiDelays = 0;
       }
     }
     if (!allAi) {
@@ -495,7 +499,8 @@ public class PlanetBombingView extends BlackPanel {
         || comp.getType() == ShipComponentType.WEAPON_RAILGUN
         || comp.getType() == ShipComponentType.MULTICANNON
         || comp.getType() == ShipComponentType.GRAVITY_RIPPER
-        || comp.getType() == ShipComponentType.PLASMA_CANNON) {
+        || comp.getType() == ShipComponentType.PLASMA_CANNON
+        || comp.getType() == ShipComponentType.PLASMA_SPIT) {
       planetTurretShoot();
       updatePanel();
       usedComponentIndex = index;
@@ -509,6 +514,9 @@ public class PlanetBombingView extends BlackPanel {
         || comp.getType() == ShipComponentType.SPORE_MODULE) {
       planetTurretShoot();
       updatePanel();
+      if (bombers.size() == 0) {
+        return;
+      }
       usedComponentIndex = index;
       if (!actionSpent) {
         bombers.get(shipIndex).setActions(
@@ -580,7 +588,6 @@ public class PlanetBombingView extends BlackPanel {
         }
       }
     }
-
     infoPanel.updateShip();
   }
 
@@ -711,7 +718,8 @@ public class PlanetBombingView extends BlackPanel {
     if (compType == ShipComponentType.WEAPON_BEAM
         || compType == ShipComponentType.WEAPON_RAILGUN
         || compType == ShipComponentType.MULTICANNON
-        || compType == ShipComponentType.PLASMA_CANNON) {
+        || compType == ShipComponentType.PLASMA_CANNON
+        || compType == ShipComponentType.PLASMA_SPIT) {
       attackResult = attackConventionalWeapon(ship, comp.getDamage() * 3,
           comp.getDamage());
     }
@@ -1151,9 +1159,17 @@ public class PlanetBombingView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (aiDelays > 0) {
+        aiDelays--;
+        return;
+      }
       if (imgBase.getAnimation() != null) {
         PlanetAnimation anim = imgBase.getAnimation();
+        if (anim.isAnimationPlaying()) {
+          removeDestroyedShip();
+        }
         if (anim.isAnimationFinished()) {
+          imgBase.setAnimation(null);
           removeDestroyedShip();
           nextShip();
         } else {
@@ -1183,7 +1199,8 @@ public class PlanetBombingView extends BlackPanel {
               || component.getType() == ShipComponentType.MULTICANNON
               || component.getType() == ShipComponentType.GRAVITY_RIPPER
               || component.getType() == ShipComponentType.PLASMA_CANNON
-              || component.getType() == ShipComponentType.SPORE_MODULE) {
+              || component.getType() == ShipComponentType.SPORE_MODULE
+              || component.getType() == ShipComponentType.PLASMA_SPIT) {
             // Always bombing or shooting
             shipComponentUsage(aiComponentIndex);
           }
@@ -1237,6 +1254,7 @@ public class PlanetBombingView extends BlackPanel {
             aiExitLoop = true;
           }
           endButton.setEnabled(true);
+          endButton.repaint();
         }
       }
     }

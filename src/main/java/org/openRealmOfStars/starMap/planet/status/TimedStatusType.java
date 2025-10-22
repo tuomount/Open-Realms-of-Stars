@@ -31,7 +31,9 @@ public enum TimedStatusType {
   /** Timed from after colonization. */
   AFTER_COLONIZATION,
   /** Timed from after colonization or immediately after away team visit */
-  AFTER_COLONIZATION_OR_AWAY_TEAM;
+  AFTER_COLONIZATION_OR_AWAY_TEAM,
+  /** Timed after some special event has activated. */
+  SPECIAL_EVENT;
 
   /**
    * Get index for TimedStatusType
@@ -43,6 +45,7 @@ public enum TimedStatusType {
     case GAME_START: return 0;
     case AFTER_COLONIZATION: return 1;
     case AFTER_COLONIZATION_OR_AWAY_TEAM: return 2;
+    case SPECIAL_EVENT: return 3;
     }
   }
 
@@ -57,6 +60,7 @@ public enum TimedStatusType {
     case 0: return GAME_START;
     case 1: return AFTER_COLONIZATION;
     case 2: return AFTER_COLONIZATION_OR_AWAY_TEAM;
+    case 3: return SPECIAL_EVENT;
     }
   }
 }

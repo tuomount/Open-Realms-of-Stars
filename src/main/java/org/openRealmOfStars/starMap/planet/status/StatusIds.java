@@ -78,6 +78,9 @@ public final class StatusIds {
   /** Planet has climate heat up. */
   public static final String CLIMATE_HEATUP = "CLIMATE_HEATUP";
 
+  /** Ascension portal can be built here. */
+  public static final String NODAL_WORLD = "NODAL_WORLD";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

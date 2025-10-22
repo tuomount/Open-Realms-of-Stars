@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap.event;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2024 BottledByte
+ * Copyright (C) 2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,9 @@ package org.openRealmOfStars.starMap.event;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import org.openRealmOfStars.starMap.StarMap;
 
 /** Interface for StarMap-wide event system. */
@@ -27,5 +31,13 @@ public interface GalaxyEvents {
    * @param map StarMap
    */
   void handleEvents(StarMap map);
+
+  /**
+   * Save galaxy events to data output stream.
+   * Remember to implment also constructor which reads from DataInputStream.
+   * @param dos DataOutputStream
+   * @throws IOException If writing fails.
+   */
+  void save(final DataOutputStream dos) throws IOException;
 
 }

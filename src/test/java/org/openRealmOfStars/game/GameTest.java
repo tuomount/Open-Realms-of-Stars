@@ -35,7 +35,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
-import org.openRealmOfStars.starMap.event.KarmaType;
+import org.openRealmOfStars.starMap.event.karmaEvents.KarmaType;
 import org.openRealmOfStars.starMap.history.HistoryTurn;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
 import org.openRealmOfStars.starMap.history.event.Event;

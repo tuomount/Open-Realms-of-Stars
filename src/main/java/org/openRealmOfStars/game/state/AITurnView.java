@@ -89,6 +89,7 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
@@ -3773,6 +3774,11 @@ public class AITurnView extends BlackPanel {
       game.getStarMap().getHistory().addEvent(event);
     }
     if (game.getStarMap().getTurn() > 0) {
+      if (game.getStarMap().getAscensionEvents().getAscensionActivation()
+          == AscensionEvents.TRAVEL_THROUGH_ASCENSION_PORTAL) {
+        // Just double check if game is actually already ended.
+        game.getStarMap().setGameEnded(true);
+      }
       if (game.getStarMap().getTurn() == game.getStarMap()
           .getScoreVictoryTurn() / 2) {
         // Game is in halfway

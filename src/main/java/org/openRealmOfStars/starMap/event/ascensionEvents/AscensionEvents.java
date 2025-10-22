@@ -57,6 +57,10 @@ public class AscensionEvents implements GalaxyEvents {
    * Ascension portal has been built.
    */
   public static final byte ASCENSION_PORTAL_ACTIVATED = 3;
+  /**
+   * Travel through ascension portal.
+   */
+  public static final byte TRAVEL_THROUGH_ASCENSION_PORTAL = 4;
 
   /**
    * How fast new artifacts are being spawned.
@@ -235,6 +239,12 @@ public class AscensionEvents implements GalaxyEvents {
       case BLACK_HOLE_DISCOVERED: {
         if (getAscensionActivation() == 0) {
           setAscensionActivation(BLACK_HOLE_DISCOVERED);
+        }
+        break;
+      }
+    case TRAVEL_THROUGH_PORTAL: {
+        if (getAscensionActivation() == ASCENSION_PORTAL_ACTIVATED) {
+          setAscensionActivation(TRAVEL_THROUGH_ASCENSION_PORTAL);
         }
         break;
       }

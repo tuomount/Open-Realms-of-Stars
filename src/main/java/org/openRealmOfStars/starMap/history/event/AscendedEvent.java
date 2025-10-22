@@ -27,34 +27,34 @@ import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
 *
-* Rift Portal Event
+* Ascended Event
 *
 */
-public class RiftPortalEvent extends Event {
+public class AscendedEvent extends Event {
 
   /**
-   * Coordinate where rift portal appeared
+   * Coordinate where ascended happened.
    */
   private Coordinate coordinate;
 
 
   /**
-   * Text for rift portal
+   * Text for ascension portal
    */
   private String text;
 
   /**
-   * Rift portal event on space
-   * @param coord Coordinate where rift portal opened
+   * Ascended event on space
+   * @param coord Coordinate where ascension happened
    */
-  public RiftPortalEvent(final Coordinate coord) {
-    setType(EventType.RIFT_PORTAL);
+  public AscendedEvent(final Coordinate coord) {
+    setType(EventType.ASCENDED);
     this.coordinate = coord;
     setText("");
   }
 
   /**
-   * Get coordinate where rift portal opened.
+   * Get coordinate where ascension happened.
    * @return Coordinate
    */
   public Coordinate getCoordinate() {
@@ -70,7 +70,7 @@ public class RiftPortalEvent extends Event {
   }
 
   /**
-   * Set historical text for rift portal
+   * Set historical text for ascension.
    * @param historicalText to set
    */
   public void setText(final String historicalText) {
@@ -98,16 +98,17 @@ public class RiftPortalEvent extends Event {
   }
 
   /**
-   * Tries to parse rift portal event from byte buffer.
+   * Tries to parse ascended event from byte buffer.
    * Buffer should contain type byte, 16 bit length and full data.
    * @param buffer Where to parse
    * @return RiftPortalEvent parsed from buffer
    * @throws IOException if parsing fails
    */
-  protected static RiftPortalEvent createRiftPortalEvent(final byte[] buffer)
+  protected static AscendedEvent createAscendedlEvent(
+      final byte[] buffer)
       throws IOException {
     EventType readType = Event.readTypeAndLength(buffer);
-    if (readType == EventType.RIFT_PORTAL) {
+    if (readType == EventType.ASCENDED) {
       try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
         long skipped = is.skip(3);
         if (skipped != 3) {
@@ -116,13 +117,13 @@ public class RiftPortalEvent extends Event {
         int x = IOUtilities.read16BitsToInt(is);
         int y = IOUtilities.read16BitsToInt(is);
         Coordinate coord = new Coordinate(x, y);
-        RiftPortalEvent event = new RiftPortalEvent(coord);
+        AscendedEvent event = new AscendedEvent(coord);
         String str = IOUtilities.readUTF8String(is);
         event.setText(str);
         return event;
       }
     }
-    throw new IOException("Event is not Rift portal as expected!");
+    throw new IOException("Event is not Ascended as expected!");
   }
 
 

@@ -166,6 +166,9 @@ public abstract class Event {
       case RIFT_PORTAL:  {
         result = RiftPortalEvent.createRiftPortalEvent(buffer); break;
       }
+      case ASCENDED:  {
+        result = AscendedEvent.createAscendedlEvent(buffer); break;
+      }
       default: {
         throw new IOException("Unexpected event type: " + type);
       }

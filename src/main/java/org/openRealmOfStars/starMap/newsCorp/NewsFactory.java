@@ -3661,6 +3661,55 @@ public final class NewsFactory {
   }
 
   /**
+   * Make news about ascension victory.
+   * @param starYear Star Year when it happens
+   * @param map StarMap
+   * @param info PlayerInfo ascending
+   * @return NewsData
+   */
+  public static NewsData makeAscensionVictoryNews(final int starYear,
+      final StarMap map, final PlayerInfo info) {
+    NewsData news = new NewsData();
+    Coordinate coord = map.getAscensionPlanetCoordinate();
+    Planet planet = map.getPlanetByCoordinate(coord.getX(), coord.getY());
+    StringBuilder sb = new StringBuilder();
+    sb.append("At ");
+    sb.append(starYear);
+    sb.append(" ");
+    sb.append(info.getEmpireName());
+    sb.append(" has ");
+    if (DiceGenerator.getBoolean()) {
+      sb.append("travelled ");
+    } else {
+      sb.append("journeyed ");
+    }
+    sb.append("through the Ascension Portal.");
+    sb.append("This portal allows ");
+    sb.append(info.getRace().getName());
+    sb.append(" to ascend into higher beings.");
+    sb.append(" they are no longer bound by this reality and has practically");
+    sb.append(" unlimited power.");
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (DiceGenerator.getBoolean()) {
+      inst.addPlanet(ImageInstruction.POSITION_LEFT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    } else {
+      inst.addPlanet(ImageInstruction.POSITION_RIGHT,
+          planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+    }
+    inst.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.ASCENSION_PORTAL, ImageInstruction.SIZE_FULL);
+    inst.addLogo(ImageInstruction.POSITION_CENTER,
+        info.getRace().getNameSingle(), ImageInstruction.SIZE_FULL);
+    inst.addText("ASCENSION VICTORY!");
+    news.setImageInstructions(inst.build());
+    news.setNewsText(sb.toString());
+    info.appendStory(news.getNewsText(), starYear);
+    return news;
+  }
+
+  /**
    * Make News when more space pirates appear
    * @param map StarMap contains NewsCorpData and playerlist
    * @return NewsData

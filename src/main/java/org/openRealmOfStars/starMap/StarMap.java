@@ -30,6 +30,7 @@ import org.openRealmOfStars.ai.pathfinding.AStarSearch;
 import org.openRealmOfStars.ai.pathfinding.PathPoint;
 import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.ai.research.Research;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -68,6 +69,7 @@ import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.event.karmaEvents.KarmaEvents;
 import org.openRealmOfStars.starMap.event.karmaEvents.KarmaType;
 import org.openRealmOfStars.starMap.history.History;
+import org.openRealmOfStars.starMap.history.event.AscendedEvent;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
@@ -3226,14 +3228,30 @@ public class StarMap {
     }
     if (tile.isAscensionPortal()
         && fleet.getCoordinate().calculateDistance(
-            new Coordinate(sx, sy)) == 0) {
-      Message msg = new Message(MessageType.RESEARCH,
+            new Coordinate(sx, sy)) == 0
+        && ascensionEvents.getAscensionActivation()
+        == AscensionEvents.ASCENSION_PORTAL_ACTIVATED) {
+      NewsData news = NewsFactory.makeAscensionVictoryNews(getStarYear(), this,
+          info);
+      getNewsCorpData().addNews(news);
+      Message msg = new Message(MessageType.PLANETARY,
           "Fleet passes through the ascension portal. First fleet is the"
-          + " pioneer and rest of the fleets follow soon it.",
+          + " pioneer and rest of the fleets follow soon it. "
+              + info.getEmpireName() + " have ascended into higher beings!",
           Icons.getIconByName(Icons.ICON_RESEARCH));
+      AscendedEvent event = new AscendedEvent(
+          fleet.getCoordinate());
+      event.setPlayerIndex(getPlayerList().getIndex(info));
+      event.setText(msg.getMessage());
+      history.addEvent(event);
+      ascensionEvents.eventHappens(AscensionEventType.TRAVEL_THROUGH_PORTAL);
+      SoundPlayer.playSound(SoundPlayer.TELEPORT);
       msg.setCoordinate(new Coordinate(sx, sy));
+      msg.setImageInstructions(news.getImageInstructions());
+      msg.setRandomEventPop(false);
+      info.getFleets().removeFleet(fleet);
       info.getMsgList().addNewMessage(msg);
-      //TODO End game here.
+      setGameEnded(true);
     }
   }
   /**

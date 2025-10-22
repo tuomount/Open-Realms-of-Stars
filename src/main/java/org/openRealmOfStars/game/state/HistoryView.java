@@ -42,6 +42,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.HistoryTurn;
+import org.openRealmOfStars.starMap.history.event.AscendedEvent;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
@@ -50,7 +51,9 @@ import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 import org.openRealmOfStars.starMap.history.event.LeaderEvent;
 import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
+import org.openRealmOfStars.starMap.history.event.RiftPortalEvent;
 import org.openRealmOfStars.utilities.TextUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  *
@@ -261,11 +264,22 @@ public class HistoryView extends BlackPanel {
     if (event.getType() == EventType.PLANET_COLONIZED
         || event.getType() == EventType.PLANET_CONQUERED
         || event.getType() == EventType.ARTIFICAL_PLANET_CREATED
-        || event.getType() == EventType.PLANET_BUILDING) {
+        || event.getType() == EventType.PLANET_BUILDING
+        || event.getType() == EventType.ASCENSION_PORTAL) {
       EventOnPlanet planetary = (EventOnPlanet) event;
       textArea.setText("Event on planet called " + planetary.getName() + ": "
           + planetary.getText());
       targetCoordinate = planetary.getCoordinate();
+    }
+    if (event.getType() == EventType.ASCENDED) {
+      AscendedEvent portal = (AscendedEvent) event;
+      textArea.setText(portal.getText());
+      targetCoordinate = portal.getCoordinate();
+    }
+    if (event.getType() == EventType.RIFT_PORTAL) {
+      RiftPortalEvent portal = (RiftPortalEvent) event;
+      textArea.setText(portal.getText());
+      targetCoordinate = portal.getCoordinate();
     }
     if (event.getType() == EventType.LEADER_EVENT) {
       LeaderEvent leaderEvent = (LeaderEvent) event;
@@ -317,6 +331,16 @@ public class HistoryView extends BlackPanel {
         mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
         mapPanel.setRightSpaceImage(null);
       }
+    } else if (event.getType() == EventType.RIFT_PORTAL) {
+      mapPanel.setLeftSpaceImage(IOUtilities.loadImage(
+          GuiStatics.IMAGE_RIFT_PORTAL));
+      mapPanel.setRightSpaceImage(null);
+    } else if (event.getType() == EventType.ASCENSION_PORTAL
+        || event.getType() == EventType.ASCENDED) {
+      mapPanel.setLeftSpaceImage(IOUtilities.loadImage(
+          GuiStatics.IMAGE_ASCENSION_PORTAL));
+      mapPanel.setRightSpaceImage(GuiStatics.getRaceImg(infos[0].getRace()));
+
     } else {
       if (infos.length >= 1) {
         mapPanel.setLeftSpaceImage(GuiStatics.getRaceImg(infos[0].getRace()));

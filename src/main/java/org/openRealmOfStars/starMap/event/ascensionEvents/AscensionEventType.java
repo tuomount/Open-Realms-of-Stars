@@ -46,5 +46,10 @@ public enum AscensionEventType {
   /**
    * One of the realms has discovered black hole.
    */
-  BLACK_HOLE_DISCOVERED
+  BLACK_HOLE_DISCOVERED,
+  /**
+   * Realm has travelled through the portal.
+   */
+  TRAVEL_THROUGH_PORTAL
+
 }

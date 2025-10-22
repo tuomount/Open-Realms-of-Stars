@@ -68,9 +68,13 @@ public enum EventType {
    */
   RIFT_PORTAL,
   /**
-   * Event for rift portal.
+   * Event for ascension portal.
    */
-  ASCENSION_PORTAL;
+  ASCENSION_PORTAL,
+  /**
+   * Event for travelling through ascension portal.
+   */
+  ASCENDED;
 
   /**
    * Get Event type index
@@ -90,6 +94,7 @@ public enum EventType {
       case LEADER_EVENT: return 9;
       case RIFT_PORTAL: return 10;
       case ASCENSION_PORTAL: return 11;
+      case ASCENDED: return 12;
       default: return 0;
     }
   }
@@ -113,6 +118,7 @@ public enum EventType {
       case 9: return EventType.LEADER_EVENT;
       case 10: return EventType.RIFT_PORTAL;
       case 11: return EventType.ASCENSION_PORTAL;
+      case 12: return EventType.ASCENDED;
       default: throw new IllegalArgumentException(
           "No event type found for index " + index);
     }
@@ -133,6 +139,7 @@ public enum EventType {
       case LEADER_EVENT: return "Leader event";
       case RIFT_PORTAL: return "Rift portal";
       case ASCENSION_PORTAL: return "Ascension portal";
+      case ASCENDED: return "Ascended";
       default: return "Default";
     }
   }

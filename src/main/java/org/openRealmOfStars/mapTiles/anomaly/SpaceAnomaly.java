@@ -472,7 +472,7 @@ public class SpaceAnomaly {
           final var leaderRace = SpaceRaceFactory.getRandomRoboticRace();
           if (leaderRace == null) {
             ErrorLogger.debug("Could not get any robotic race for anomaly!");
-            result = null;
+            // Result is already here null.
             break;
           }
 
@@ -723,7 +723,8 @@ public class SpaceAnomaly {
             result.setImage(GuiStatics.IMAGE_ARTIFACT2);
           }
           info.getArtifactLists().addDiscoveredArtifact(
-              ArtifactFactory.getRandomNonFacility());
+              ArtifactFactory.getRandomArtifactFromRiftPortal(
+                  map.getAscensionEvents().getAscensionActivation()));
           if (Game.getTutorial() != null  && info.isHuman()
               && map.isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(15);

@@ -337,8 +337,6 @@ Ancient Temple by Tuomo Untinen with Stable Diffusion
 
 Ancient Palace by Tuomo Untinen with Stable Diffusion
 
-Ancient Research by Tuomo Untinen with Stable Diffusion
-
 Gems by Tuomo Untinen with Stable Diffusion
 
 Destroyed Planet by Tuomo Untinen with Stable Diffusion
@@ -356,6 +354,8 @@ Artifact on Planet by Tuomo Untinen with Stable Diffusion
 Destroyed planet map tile by Tuomo Untinen with Stable Diffusion
 
 City fire by Tuomo Untinen with Stable Diffusion
+
+Ancient Research by Tuomo Untinen
 
 Gravity veins map tiles by Tuomo Untinen
 

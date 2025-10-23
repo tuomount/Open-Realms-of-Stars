@@ -954,14 +954,34 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       }
       int x = fleet.getCoordinate().getX();
       int y = fleet.getCoordinate().getY();
+      Tile northTile = starMap.getTile(x, y - 1);
+      Tile southTile = starMap.getTile(x, y + 1);
+      Tile westTile = starMap.getTile(x - 1, y);
+      Tile eastTile = starMap.getTile(x + 1, y);
       northPlanet = starMap.getPlanetByCoordinate(x, y - 1);
       southPlanet = starMap.getPlanetByCoordinate(x, y + 1);
       westPlanet = starMap.getPlanetByCoordinate(x - 1, y);
       eastPlanet = starMap.getPlanetByCoordinate(x + 1, y);
-      imgBase.setNorthPlanet(northPlanet);
-      imgBase.setSouthPlanet(southPlanet);
-      imgBase.setWestPlanet(westPlanet);
-      imgBase.setEastPlanet(eastPlanet);
+      if (northPlanet == null) {
+        imgBase.setNorthPlanet(northTile);
+      } else {
+        imgBase.setNorthPlanet(northPlanet);
+      }
+      if (southPlanet == null) {
+        imgBase.setSouthPlanet(southTile);
+      } else {
+        imgBase.setSouthPlanet(southPlanet);
+      }
+      if (westPlanet == null) {
+        imgBase.setWestPlanet(westTile);
+      } else {
+        imgBase.setWestPlanet(westPlanet);
+      }
+      if (eastPlanet == null) {
+        imgBase.setEastPlanet(eastTile);
+      } else {
+        imgBase.setEastPlanet(eastPlanet);
+      }
       if (getEspionagePlanet() == null) {
         espionageMissonBtn.setEnabled(false);
       }

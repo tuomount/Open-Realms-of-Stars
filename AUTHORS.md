@@ -355,7 +355,7 @@ Destroyed planet map tile by Tuomo Untinen with Stable Diffusion
 
 City fire by Tuomo Untinen with Stable Diffusion
 
-Ancient Research by Tuomo Untinen
+Ancient artifact research by Tuomo Untinen
 
 Gravity veins map tiles by Tuomo Untinen
 

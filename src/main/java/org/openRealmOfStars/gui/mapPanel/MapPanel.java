@@ -589,9 +589,21 @@ public class MapPanel extends JPanel {
           && info.getSectorVisibility(planetOrbital.getCoordinate())
           >= PlayerInfo.VISIBLE) {
         // Draw orbital
-        BufferedImage img = ShipImageFactor.create(fleetMap[i + cx][j + cy]
-            .getRace().getSpaceShipId())
-            .getNormalShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+        BufferedImage img = null;
+        if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+          img = ShipImageFactor.create(fleetMap[i + cx][j + cy]
+              .getRace().getSpaceShipId())
+              .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+        } else if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+          img = ShipImageFactor.create(fleetMap[i + cx][j + cy]
+              .getRace().getSpaceShipId())
+              .getShipZoomedImage(fleetMap[i + cx][j + cy].getImageIndex(),
+                  Tile.ZOOM_IN);
+        } else  {
+          img = ShipImageFactor.create(fleetMap[i + cx][j + cy]
+              .getRace().getSpaceShipId())
+              .getNormalShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+        }
         gr.drawImage(img, pixelX, pixelY, null);
       }
     }

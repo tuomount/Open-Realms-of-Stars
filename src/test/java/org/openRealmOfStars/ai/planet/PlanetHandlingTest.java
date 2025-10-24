@@ -1180,6 +1180,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(ship.getProdCost()).thenReturn(22);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getGroundSize()).thenReturn(12);
+    Mockito.when(planet.getTotalPopulation()).thenReturn(4);
     Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
     Mockito.when(planet.getRadiationLevel()).thenReturn(
@@ -1204,22 +1205,22 @@ public class PlanetHandlingTest extends TestCase {
         Mockito.anyInt())).thenReturn(planet);
     int score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(60, score);
+    assertEquals(75, score);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.MERCHANTICAL, planet);
-    assertEquals(40, score);
+    assertEquals(65, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.START_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(90, score);
+    assertEquals(105, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.EARLY_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(80, score);
+    assertEquals(95, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.MIDDLE_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(70, score);
+    assertEquals(85, score);
     missionList.remove(mission);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.AGGRESSIVE, planet);

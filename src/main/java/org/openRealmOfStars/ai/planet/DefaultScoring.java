@@ -820,7 +820,14 @@ public final class DefaultScoring {
         score = score + info.getPlanetSuitabilityValue(colonPlanet);
         score = score + colonyScore;
         if (attitude == Attitude.EXPANSIONIST) {
+          score = score + 30;
+        }
+        if (attitude == Attitude.MERCHANTICAL
+            || attitude == Attitude.AGGRESSIVE) {
           score = score + 20;
+        }
+        if (attitude == Attitude.LOGICAL || attitude == Attitude.MILITARISTIC) {
+          score = score + 10;
         }
         if (map.getGameLengthState() == GameLengthState.START_GAME) {
           score = score + 30;
@@ -835,6 +842,26 @@ public final class DefaultScoring {
             MissionType.COLONIZE, MissionPhase.PLANNING) * 5;
         score = score + info.getMissions().getNumberOfMissionTypes(
             MissionType.SPORE_COLONY, MissionPhase.PLANNING) * 5;
+        if (!ship.isSporeShip()) {
+          if (planet.getTotalPopulation() > 2) {
+            score = score + 5;
+          }
+          if (planet.getTotalPopulation() > 4) {
+            score = score + 5;
+          }
+          if (planet.getTotalPopulation() > 6) {
+            score = score + 10;
+          }
+          if (planet.getTotalPopulation() > 8) {
+            score = score + 20;
+          }
+          if (planet.getTotalPopulation() > 10) {
+            score = score + 25;
+          }
+          if (planet.getTotalPopulation() <= 2) {
+            score = 0;
+          }
+        }
         if (ship.isSporeShip()) {
           score = score + 10;
         }

@@ -965,15 +965,15 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
     int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
         planet);
-    assertEquals(109, score);
+    assertEquals(119, score);
     score = DefaultScoring.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
-    assertEquals(109, score);
+    assertEquals(119, score);
     score = DefaultScoring.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
-    assertEquals(125, score);
+    assertEquals(135, score);
     score = DefaultScoring.scoreShip(ship, GameLengthState.LATE_GAME, planet);
-    assertEquals(141, score);
+    assertEquals(151, score);
     score = DefaultScoring.scoreShip(ship, GameLengthState.END_GAME, planet);
-    assertEquals(157, score);
+    assertEquals(167, score);
   }
 
   @Test

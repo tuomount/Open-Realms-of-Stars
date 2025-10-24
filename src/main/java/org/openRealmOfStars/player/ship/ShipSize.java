@@ -22,6 +22,10 @@ package org.openRealmOfStars.player.ship;
  */
 public enum ShipSize {
   /**
+   * Smallest orbitals
+   */
+  MINOR,
+  /**
    * Smallest and fastest ships in combat
    */
   SMALL,
@@ -57,14 +61,16 @@ public enum ShipSize {
    */
   public int getMass() {
     switch (this) {
+    case MINOR:
+        return 1;
     case SMALL:
-      return 1;
-    case MEDIUM:
       return 2;
-    case LARGE:
+    case MEDIUM:
       return 4;
-    case HUGE:
+    case LARGE:
       return 8;
+    case HUGE:
+      return 16;
     default:
       return 1;
     }
@@ -72,7 +78,7 @@ public enum ShipSize {
 
   /**
    * Return ShipSize by index
-   * @param index This must be between 0-3
+   * @param index This must be between 0-4
    * @return Ship size
    */
   public static ShipSize getTypeByIndex(final int index) {
@@ -85,6 +91,8 @@ public enum ShipSize {
   @Override
   public String toString() {
     switch (this) {
+    case MINOR:
+        return "Minor";
     case SMALL:
       return "Small";
     case MEDIUM:

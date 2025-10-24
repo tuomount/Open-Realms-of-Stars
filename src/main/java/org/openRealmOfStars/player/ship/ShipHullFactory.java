@@ -524,7 +524,7 @@ public final class ShipHullFactory {
     }
     if (index == HULL_MINOR_ORBITAL) {
       tmp = new ShipHull(index, "Minor orbital", 3, 1,
-          ShipHullType.ORBITAL, ShipSize.SMALL, 3, 3, race);
+          ShipHullType.ORBITAL, ShipSize.MINOR, 3, 3, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.SMALL_STARBASE);
       return tmp;

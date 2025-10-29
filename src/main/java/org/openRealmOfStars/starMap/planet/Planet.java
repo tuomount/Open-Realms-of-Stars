@@ -3349,12 +3349,11 @@ public class Planet {
       if (orbital == null) {
         return result;
       }
+      if (orbital.getHull().getSize() == ShipSize.MINOR) {
+        result = result + 4;
+      }
       if (orbital.getHull().getSize() == ShipSize.SMALL) {
-        if (orbital.getHull().getName().equals("Minor orbital")) {
-          result = result + 4;
-        } else {
-          result = result + 6;
-        }
+        result = result + 6;
       }
       if (orbital.getHull().getSize() == ShipSize.MEDIUM) {
         result = result + 8;

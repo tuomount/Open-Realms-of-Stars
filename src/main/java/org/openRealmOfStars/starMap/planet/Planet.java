@@ -1961,7 +1961,9 @@ public class Planet {
               && orbital.getName().equals(stat.getDesign().getName())) {
             addStat = false;
           }
-          if (orbital != null) {
+          if (orbital != null
+              && stat.getDesign().getHull().getHullType()
+              == ShipHullType.ORBITAL) {
             int oldMass = orbital.getHull().getSize().getMass();
             int newMass = stat.getDesign().getHull().getSize().getMass();
             if (newMass < oldMass) {

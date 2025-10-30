@@ -2203,6 +2203,7 @@ public class AITurnView extends BlackPanel {
           } else {
             news = NewsFactory.makeVotingNews(vote, null, null);
           }
+          game.getStarMap().getVotes().addNewVote(vote);
           game.getStarMap().getNewsCorpData().addNews(news);
           GalacticEvent event = new GalacticEvent(news.getNewsText());
           game.getStarMap().getHistory().addEvent(event);
@@ -2270,6 +2271,7 @@ public class AITurnView extends BlackPanel {
           } else {
             news = NewsFactory.makeVotingNews(vote, null, null);
           }
+          game.getStarMap().getVotes().addNewVote(vote);
           game.getStarMap().getNewsCorpData().addNews(news);
         } else {
           ErrorLogger.log("First vote was null!");

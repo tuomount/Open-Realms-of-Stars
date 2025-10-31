@@ -2414,9 +2414,11 @@ public class AITurnView extends BlackPanel {
             NewsData newsData = null;
             if (planet.howManyBuildings("Galactic sports center") == 0) {
               newsData = NewsFactory.makeNoGalacticSportsNews(planet, true);
+              vote.setTurnsToVote(0);
             }
             if (planet.getTotalPopulation() == 0) {
               newsData = NewsFactory.makeNoGalacticSportsNews(planet, false);
+              vote.setTurnsToVote(0);
             }
             if (newsData != null) {
               map.getNewsCorpData().addNews(newsData);

@@ -28,9 +28,15 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
@@ -41,7 +47,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.ArtifactListRenderer;
-import org.openRealmOfStars.gui.list.TechListRenderer;
+import org.openRealmOfStars.gui.list.TechTreeCellRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
@@ -55,13 +61,15 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  *
  * Research view for handling researching technology for player
  *
  */
-public class ResearchView extends BlackPanel implements ListSelectionListener {
+public class ResearchView extends BlackPanel implements TreeSelectionListener,
+  ListSelectionListener {
 
   private static final long serialVersionUID = 1L;
 
@@ -103,7 +111,8 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
   /**
    * Techs which have been researched
    */
-  private JList<Tech> techList;
+  //private JList<Tech> techList;
+  private JTree techList;
 
   /**
    * Artifacts which have been researched.
@@ -313,13 +322,28 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     SpaceGreyPanel greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.X_AXIS));
     Tech[] techs = player.getTechList().getList();
-    techList = new JList<>(techs);
-    techList.setCellRenderer(new TechListRenderer());
-    techList.addListSelectionListener(this);
+    techList = new JTree(makeTechTree(techs));
+    techList.setCellRenderer(new TechTreeCellRenderer());
+    techList.addTreeSelectionListener(this);
     scroll = new JScrollPane(techList);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     techList.setBackground(Color.BLACK);
-    techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    techList.getSelectionModel().setSelectionMode(
+        TreeSelectionModel.SINGLE_TREE_SELECTION);
+    DefaultMutableTreeNode currentNode =
+        (DefaultMutableTreeNode) techList.getModel().getRoot();
+    do {
+        if (currentNode.getLevel() == 2) {
+          techList.expandPath(new TreePath(currentNode.getPath()));
+        }
+        if (currentNode.getUserObject() instanceof Tech) {
+          Tech tech = (Tech) currentNode.getUserObject();
+          if (tech.getName().equals(focusTech)) {
+            techList.setSelectionPath(new TreePath(currentNode.getPath()));
+          }
+        }
+        currentNode = currentNode.getNextNode();
+    } while (currentNode != null);
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
@@ -332,14 +356,6 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     scroll.setBackground(Color.BLACK);
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    if (focusTech != null) {
-      for (int i = 0; i < techs.length; i++) {
-        if (techs[i].getName().equals(focusTech)) {
-          techList.setSelectedIndex(i);
-          break;
-        }
-      }
-    }
 
     base.add(greyPanel, BorderLayout.CENTER);
 
@@ -362,6 +378,75 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
 
   }
 
+  /**
+   * Make Tech Tree
+   * @param techs List of Techs
+   * @return Tech Tree
+   */
+  private static DefaultMutableTreeNode makeTechTree(final Tech[] techs) {
+    DefaultMutableTreeNode root = new DefaultMutableTreeNode(
+        "Research Technology");
+    DefaultMutableTreeNode combat = new DefaultMutableTreeNode(
+        "Combat");
+    DefaultMutableTreeNode defense = new DefaultMutableTreeNode(
+        "Defense");
+    DefaultMutableTreeNode hull = new DefaultMutableTreeNode(
+        "Hulls");
+    DefaultMutableTreeNode improvements = new DefaultMutableTreeNode(
+        "Planetary improvements");
+    DefaultMutableTreeNode propulsion = new DefaultMutableTreeNode(
+        "Propulsion");
+    DefaultMutableTreeNode electronics = new DefaultMutableTreeNode(
+        "Electronics");
+    root.add(combat);
+    root.add(defense);
+    root.add(hull);
+    root.add(improvements);
+    root.add(propulsion);
+    root.add(electronics);
+    TechType type = TechType.Combat;
+    int level = 1;
+    boolean levelAdded = false;
+    DefaultMutableTreeNode levelNode = null;
+    for (Tech tech : techs) {
+      if (!levelAdded) {
+        level = tech.getLevel();
+        type = tech.getType();
+        levelAdded = true;
+        levelNode = new DefaultMutableTreeNode("Level " + level);
+        switch (type) {
+          case Combat: combat.add(levelNode); break;
+          case Defense: defense.add(levelNode); break;
+          case Hulls: hull.add(levelNode); break;
+          case Improvements: improvements.add(levelNode); break;
+          case Propulsion: propulsion.add(levelNode); break;
+          case Electrics: electronics.add(levelNode); break;
+          default:
+            ErrorLogger.debug("Unknown tech type.");
+            break;
+        }
+      } else if (tech.getLevel() != level || tech.getType() != type) {
+        level = tech.getLevel();
+        type = tech.getType();
+        levelAdded = true;
+        levelNode = new DefaultMutableTreeNode("Level " + level);
+        switch (type) {
+          case Combat: combat.add(levelNode); break;
+          case Defense: defense.add(levelNode); break;
+          case Hulls: hull.add(levelNode); break;
+          case Improvements: improvements.add(levelNode); break;
+          case Propulsion: propulsion.add(levelNode); break;
+          case Electrics: electronics.add(levelNode); break;
+          default:
+            ErrorLogger.debug("Unknown tech type.");
+            break;
+        }
+      }
+      DefaultMutableTreeNode techNode = new DefaultMutableTreeNode(tech);
+      levelNode.add(techNode);
+    }
+    return root;
+  }
   /**
    * Handle actions for Research view.
    * @param arg0 ActionEvent command what player did
@@ -617,15 +702,6 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
 
   @Override
   public void valueChanged(final ListSelectionEvent e) {
-    if (e.getSource() == techList && techList.getSelectedIndex() != -1) {
-      Tech tech = techList.getSelectedValue();
-      String strTmp = tech.getTechInfo(player.getRace());
-      if (!strTmp.equals(infoText.getText())) {
-        infoText.setLineWrap(false);
-        infoText.setText(strTmp);
-        infoText.repaint();
-      }
-    }
     if (e.getSource() == artifactList
         && artifactList.getSelectedIndex() != -1) {
       Artifact artifact = artifactList.getSelectedValue();
@@ -634,6 +710,51 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
         infoText.setLineWrap(true);
         infoText.setText(strTmp);
         infoText.repaint();
+      }
+    }
+  }
+
+  @Override
+  public void valueChanged(final TreeSelectionEvent e) {
+    if (e.getSource() == techList
+        && techList.getLastSelectedPathComponent() != null
+        && techList.getLastSelectedPathComponent()
+        instanceof DefaultMutableTreeNode) {
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode) techList
+          .getLastSelectedPathComponent();
+      if (node.getUserObject() instanceof String) {
+        String str = (String) node.getUserObject();
+        if (str.startsWith("Combat")) {
+          updateTechInfo(TechType.Combat);
+        }
+        if (str.startsWith("Defense")) {
+          updateTechInfo(TechType.Defense);
+        }
+        if (str.startsWith("Hull")) {
+          updateTechInfo(TechType.Hulls);
+        }
+        if (str.startsWith("Planetary")) {
+          updateTechInfo(TechType.Improvements);
+        }
+        if (str.startsWith("Propulsion")) {
+          updateTechInfo(TechType.Propulsion);
+        }
+        if (str.startsWith("Electronic")) {
+          updateTechInfo(TechType.Combat);
+        }
+
+        infoText.setLineWrap(false);
+        infoText.setText(str);
+        infoText.repaint();
+      }
+      if (node.getUserObject() instanceof Tech) {
+        Tech tech = (Tech) node.getUserObject();
+        String strTmp = tech.getTechInfo(player.getRace());
+        if (!strTmp.equals(infoText.getText())) {
+          infoText.setLineWrap(false);
+          infoText.setText(strTmp);
+          infoText.repaint();
+        }
       }
     }
   }

@@ -300,12 +300,22 @@ public class StatisticPanel extends JPanel {
       amount = biggestY;
     } else {
       mult = Math.round(GRID_DENSITY / scaleY);
-      amount = (int) Math.ceil((double) drawHeigth / GRID_DENSITY);
-      if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
-        amount++;
-      }
-      if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
-        amount++;
+      if (scaleY > 5) {
+        amount = (int) Math.ceil((double) drawHeigth / scaleY);
+        if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+          amount++;
+        }
+      } else {
+        amount = (int) Math.ceil((double) drawHeigth / GRID_DENSITY);
+        if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+          amount++;
+        }
+        if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+          amount++;
+        }
+        if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+          amount++;
+        }
       }
     }
     for (int i = 0; i <= amount; i++) {

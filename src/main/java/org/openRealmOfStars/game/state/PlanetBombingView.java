@@ -1313,7 +1313,7 @@ public class PlanetBombingView extends BlackPanel {
       if (!fleet.isPrivateerFleet() || whatHappened == CONQUERED) {
         attackerHasReveal = true;
       }
-      if (attackerHasReveal) {
+      if (attackerHasReveal && !defender.isBoard()) {
         // No war between these two players, trying to conquer another
         // player's planet is act of war.
         DiplomaticTrade trade = new DiplomaticTrade(starMap,

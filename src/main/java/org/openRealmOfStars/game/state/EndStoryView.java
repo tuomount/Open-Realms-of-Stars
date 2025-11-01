@@ -47,6 +47,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
 *
@@ -166,7 +167,8 @@ public class EndStoryView extends BlackPanel {
     textArea.setEditable(false);
     textArea.setFont(GuiFonts.getFontSquarion());
     JScrollPane scroll = new JScrollPane(textArea);
-    textArea.setText(realm.getBackgroundStory());
+    textArea.setText(TextUtilities.removeDuplicateLines(
+        realm.getBackgroundStory()));
     textArea.setCaretPosition(0);
     centerPanel.add(scroll);
     EmptyInfoPanel panel = new EmptyInfoPanel();
@@ -262,7 +264,8 @@ public class EndStoryView extends BlackPanel {
         instructions.build());
     imagePanel.setImage(image);
     centerPanel.setTitle(this.realm.getEmpireName());
-    textArea.setText(realm.getBackgroundStory());
+    textArea.setText(TextUtilities.removeDuplicateLines(
+        realm.getBackgroundStory()));
     textArea.setCaretPosition(0);
     this.repaint();
   }

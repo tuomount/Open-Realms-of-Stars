@@ -206,4 +206,23 @@ public final class TextUtilities {
     System.arraycopy(array2, 0, result, array1.length, array2.length);
     return result;
   }
+
+  /**
+   * Remove duplicate lines that are following each others.
+   * @param input String input
+   * @return String without duplicate lines.
+   */
+  public static String removeDuplicateLines(final String input) {
+    String[] strings = input.split("\n\n");
+    String previusLine = "";
+    StringBuilder sb = new StringBuilder(input.length() - input.length() / 10);
+    for (String str : strings) {
+      if (!str.equals(previusLine)) {
+        previusLine = str;
+        sb.append(str);
+        sb.append("\n\n");
+      }
+    }
+    return sb.toString();
+  }
 }

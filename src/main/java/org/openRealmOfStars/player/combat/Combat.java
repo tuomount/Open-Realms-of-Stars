@@ -915,7 +915,8 @@ public boolean launchIntercept(final int distance,
         }
       }
       defenderInfo.getFleets().recalculateList();
-    } else if (starbaseFleet.isShipInFleet(ship.getShip())) {
+    } else if (starbaseFleet != null
+        && starbaseFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, starbaseFleet);
       if (starbaseFleet.getNumberOfShip() == 0
           && starbaseFleet.getCommander() != null) {
@@ -1570,7 +1571,7 @@ public boolean launchIntercept(final int distance,
       if (first == null) {
         first = ship.getPlayer();
       }
-      if (first != ship.getPlayer()) {
+      if (first != ship.getPlayer() && ship.getShip().getHullPoints() > 0) {
         moreThanOnePlayer = true;
       }
       if (ship.getShip().getTotalMilitaryPower() > 0) {

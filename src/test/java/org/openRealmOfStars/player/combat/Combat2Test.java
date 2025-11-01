@@ -103,9 +103,11 @@ public class Combat2Test {
     when(attackerShip.getName()).thenReturn("attacker");
     when(attackerShip.getInitiative()).thenReturn(3);
     when(attackerShip.getTotalMilitaryPower()).thenReturn(10);
+    when(attackerShip.getHullPoints()).thenReturn(6);
     when(defenderShip.getName()).thenReturn("depender");
     when(defenderShip.getName()).thenReturn("depender");
     when(defenderShip.getInitiative()).thenReturn(3);
+    when(defenderShip.getHullPoints()).thenReturn(6);
     when(defenderShip.getTotalMilitaryPower()).thenReturn(10);
     when(interruptShip.getName()).thenReturn("interrupt");
     when(attackerInfo.getShipStatByName(eq("attacker"))).thenReturn(attackerShipStat);

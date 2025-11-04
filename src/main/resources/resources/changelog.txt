@@ -2,6 +2,7 @@
 
 * Adds more spacing to UI.
 * Redesign ship design view.
+* Redesign research view.
 * New font colors for check boxes
 * Adds delete saved game feature.
 * Adds 12 new music.
@@ -9,13 +10,37 @@
 * Adds new space race: Mycolians, plants that have spore colonization
 * Starting galaxy settings are more beginner friendlier.
 * New long distance routing. It can avoid collisions with stars and gas giants.
+* Ascension victory, currently only human players can win this.
+* Fleet view now shows near by star or blackhole
 
 
 - Bugfixes -
 
 * Fix bug where loading saved game did not warn if new save game is going to overwrite old game.
 * Fixed bug where repair module was not calculated as armor.
-* Fixed AI valuation for scientific achievements to build on planet.
+* Probe Mk2 had wrong speed in design.
+* Combat thrusters did not actually increased regular speed.
+* AI Improvements/bug fixes:
+    * AI does not always built "lab" on each planet
+    * Fixed AI valuation for scientific achievements to build on planet.
+    * If AI has extra credit it might start diplomatic trade instead of border crossing.
+    * If AI now checks if it is more useful to buy/trade/sell tech instead of random.
+    * Improve AI's valuation of tech in diplomatic trades.
+    * AI should value more on colony ships
+    * Improve valuation of scientific achievements
+    * Lower the scoring for building when there are enough of production type, which space race workes do less 100% efficiency.
+    * Raise the limit of scientific achievement project for 30 star years instead of 24.
+    * Increase number of workers, even workers do work efficiently but production is low.
+* Fix issue where Graviton Ripper increases opponent armor.
+* Adds missing repair effect in combat
+* Orbitals was shown wrong size on starmap if zoomed out or in
+* Smaller orbital cannot be built if bigger one exists.
+* Fix issue where AI could not win by Diplomacy.
+* Fix issue where Galactic Olympic cancelation is in news until that voting is over.
+* Fix issue where human player declares war against pirates when bombing their planet.
+* Fix stats view missing sometimes few lines from top of the grid.
+* Fixes possible very rare NPE from combat.
+* Remove duplicate lines from end story texts.
 
 # Open Realm of Stars 0.27.0
 

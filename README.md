@@ -52,7 +52,7 @@ See more [screenshots](ArtModification/screenshots)
 ### Features
 
  * Randomized galaxy with three different starting placements
- * 15 different space races to play
+ * 17 different space races to play
  * 22 different government types to play
  * 17 different starting scenarios to play
  * Any realm can start as an elder realm even human player
@@ -67,7 +67,6 @@ See more [screenshots](ArtModification/screenshots)
  * AI remembers how it has been treated and will treat others accordingly
  * Galactic Olympics to influence to other realms
  * Technology can be traded in diplomatic trades
- * If two realms are in alliance they win the game together.
  * Possibility to fake military power in the galactic news (Can be lower or higher)
  * Espionage ships and espionage missions with leaders
  * Leaders acting as rulers, governors and commanders
@@ -76,6 +75,15 @@ See more [screenshots](ArtModification/screenshots)
  * All ships are designed based on currently available technology
  * AI does not cheat and each AI is trying to make their own realm as strong as possible
  * 3 Difficulty levels to choose for each AI realm.
+ * If two realms are in alliance they win the game together.
+ * Multiple ways to win the game:
+    * Military victory, Conquer over half of home worlds
+    * Diplomatic victory, Win diplomatic voting for Secretary of Galaxy
+    * Cultural victory, gain most culture and spread it over the galaxy
+    * Science victory, build planet with highest technological achievements
+    * Population victory, At least half of the whole galaxy population is yours
+    * Ascension victory, Find your way to ascend your space race into higher being
+    * Score victory, Have most of the score at end of the game
  * Turn based space combat
  * Planets can conquered with troops and bombs
  * Mod support for custom governments, space races, speeches, space ship images and space ship bridges

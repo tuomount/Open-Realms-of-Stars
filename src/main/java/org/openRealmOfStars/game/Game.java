@@ -113,6 +113,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.government.GovernmentFactory;
+import org.openRealmOfStars.player.government.trait.GovTrait;
+import org.openRealmOfStars.player.government.trait.GovTraitFactory;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.stats.StatType;
@@ -123,6 +125,8 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.race.trait.RaceTrait;
+import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -2452,14 +2456,8 @@ public class Game implements ActionListener {
     sb.append("## Rare Electronics technology\n\n");
     sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL3_NAMES,
         TechType.Electrics, 3));
-    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL4_NAMES,
-        TechType.Electrics, 4));
-    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL6_NAMES,
-        TechType.Electrics, 6));
     sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL7_NAMES,
         TechType.Electrics, 7));
-    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL8_NAMES,
-        TechType.Electrics, 8));
     return sb.toString();
   }
 
@@ -2477,6 +2475,32 @@ public class Game implements ActionListener {
     for (SpaceRace race : SpaceRaceFactory.getValuesNoPseudo()) {
       sb.append("\n");
       sb.append(race.getFullDescription(true, true));
+    }
+    return sb.toString();
+  }
+  /**
+   * Print whole race trait page contain all information about space race traits
+   * @return Race trait wiki page as a String
+   */
+  public static String printRaceTraitWiki() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("# Space Race Traits");
+    for (RaceTrait trait : TraitFactory.getAll()) {
+      sb.append("\n");
+      sb.append(trait.toString());
+    }
+    return sb.toString();
+  }
+  /**
+   * Print whole gov trait page contain all information about government traits
+   * @return Gov trait wiki page as a String
+   */
+  public static String printGovTraitWiki() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("# Government Traits");
+    for (GovTrait trait : GovTraitFactory.getAll()) {
+      sb.append("\n");
+      sb.append(trait.toString());
     }
     return sb.toString();
   }
@@ -2523,6 +2547,10 @@ public class Game implements ActionListener {
       System.out.println(printRareTechWiki());
     } else if (args.length > 0 && args[0].equals("--wiki-race")) {
       System.out.println(printRaceWiki());
+    } else if (args.length > 0 && args[0].equals("--wiki-race-trait")) {
+      System.out.println(printRaceTraitWiki());
+    } else if (args.length > 0 && args[0].equals("--wiki-gov-trait")) {
+      System.out.println(printGovTraitWiki());
     } else if (args.length > 0 && args[0].equals("--save-update")) {
       saveGameUpdate();
     } else if (args.length > 1 && args[0].equals("--text")) {

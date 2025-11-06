@@ -469,11 +469,6 @@ public final class TechFactory {
       "Cloaking device Mk3", "Targeting computer Mk2", "LR scanner Mk1",
       "Broadcasting antenna"};
   /**
-   * Rare electronics tech names for level 4.
-   */
-  public static final String[] ELECTRONICS_RARE_TECH_LEVEL4_NAMES = {
-      "Ascension portal scanner Mk1"};
-  /**
    * Electronics tech names for level 5
    */
   public static final String[] ELECTRONICS_TECH_LEVEL5_NAMES = {"Scanner Mk3",
@@ -483,11 +478,6 @@ public final class TechFactory {
    */
   public static final String[] ELECTRONICS_TECH_LEVEL6_NAMES = {
       "Cloaking device Mk4", "Targeting computer Mk3", "LR scanner Mk2" };
-  /**
-   * Rare electronics tech names for level 6.
-   */
-  public static final String[] ELECTRONICS_RARE_TECH_LEVEL6_NAMES = {
-      "Ascension portal scanner Mk2"};
   /**
    * Electronics tech names for level 7
    */
@@ -503,11 +493,7 @@ public final class TechFactory {
    */
   public static final String[] ELECTRONICS_TECH_LEVEL8_NAMES = {
       "Cloaking device Mk5", "Planetary scanner Mk4", "LR scanner Mk3" };
-  /**
-   * Rare electronics tech names for level 8.
-   */
-  public static final String[] ELECTRONICS_RARE_TECH_LEVEL8_NAMES = {
-      "Ascension portal scanner Mk3"};
+
   /**
    * Electronics tech names for level 9
    */
@@ -1205,23 +1191,20 @@ public final class TechFactory {
           ELECTRONICS_RARE_TECH_LEVEL3_NAMES);
       break;
     case 4:
-      list = TextUtilities.concanateStringArrays(ELECTRONICS_TECH_LEVEL4_NAMES,
-          ELECTRONICS_RARE_TECH_LEVEL4_NAMES);
+      list = ELECTRONICS_TECH_LEVEL4_NAMES;
       break;
     case 5:
       list = ELECTRONICS_TECH_LEVEL5_NAMES;
       break;
     case 6:
-      list = TextUtilities.concanateStringArrays(ELECTRONICS_TECH_LEVEL6_NAMES,
-          ELECTRONICS_RARE_TECH_LEVEL6_NAMES);
+      list = ELECTRONICS_TECH_LEVEL6_NAMES;
       break;
     case 7:
       list = TextUtilities.concanateStringArrays(ELECTRONICS_TECH_LEVEL7_NAMES,
           ELECTRONICS_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
-      list = TextUtilities.concanateStringArrays(ELECTRONICS_TECH_LEVEL8_NAMES,
-          ELECTRONICS_RARE_TECH_LEVEL8_NAMES);
+      list = ELECTRONICS_TECH_LEVEL8_NAMES;
       break;
     case 9:
       list = ELECTRONICS_TECH_LEVEL9_NAMES;
@@ -1253,9 +1236,6 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));
         } else if (techName.equals("Orbital ascension portal")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
-          tech.setRareTech(true);
-        } else if (techName.startsWith("Ascension portal scanner Mk")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));
           tech.setRareTech(true);
         } else if (techName.startsWith("Broadcasting ")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ANTENNA));

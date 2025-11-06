@@ -1726,10 +1726,10 @@ public final class ShipComponentFactory {
       break; // Orbital ascension portal
     case COMPONENT_ARMED_SPIKE:
       tmp = createWeapon2(index);
-      break; // Ascension portal scanner Mk1
+      break; // Armed Spike
     case COMPONENT_PLASMA_SPIT:
       tmp = createWeapon2(index);
-      break; // Ascension portal scanner Mk2
+      break; // Plasma Spit
     case COMPONENT_ASCENSION_PORTAL_SCANNER_MK3:
       tmp = createElectronics(index);
       break; // Ascension portal scanner Mk3

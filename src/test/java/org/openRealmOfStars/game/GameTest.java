@@ -43,6 +43,9 @@ import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.Folders;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
 *
@@ -413,6 +416,63 @@ public class GameTest {
     printEndGameResults("Full game with 8 realms + pirate, medium 400 turns",
         game);
   }
+
+/*  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunPartialAndSaveItGameMediumWith8RealmsAndDifficulty() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(8);
+    config.setSize(128, 2);
+    config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setSpacePiratesDifficulty(PirateDifficultLevel.HARD);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    game.getPlayers().getPlayerInfoByIndex(0).setAiDifficulty(
+        AiDifficulty.CHALLENGING);
+    game.getPlayers().getPlayerInfoByIndex(1).setAiDifficulty(
+        AiDifficulty.CHALLENGING);
+    game.getPlayers().getPlayerInfoByIndex(2).setAiDifficulty(
+        AiDifficulty.NORMAL);
+    game.getPlayers().getPlayerInfoByIndex(3).setAiDifficulty(
+        AiDifficulty.NORMAL);
+    game.getPlayers().getPlayerInfoByIndex(4).setAiDifficulty(
+        AiDifficulty.WEAK);
+    game.getPlayers().getPlayerInfoByIndex(5).setAiDifficulty(
+        AiDifficulty.WEAK);
+    game.getPlayers().getPlayerInfoByIndex(6).setAiDifficulty(
+        AiDifficulty.WEAK);
+    game.getPlayers().getPlayerInfoByIndex(7).setAiDifficulty(
+        AiDifficulty.WEAK);
+    int turn = 0;
+    int maxTurns = 400;
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+       singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      if (turn != game.getStarMap().getTurn()) {
+        turn = game.getStarMap().getTurn();
+        if (turn % 50 == 0) {
+          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        }
+      }
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (turn <= 50);
+    game.getStarMap().getPlayerByIndex(0).setHuman(true);
+    try {
+      Game.readTutorial(null);
+      new GameRepository().saveGame(Folders.getSavegamePath(),
+          "ai-played.save", game.getStarMap());
+    } catch (IOException e) {
+      ErrorLogger.log(e);
+    }
+  }*/
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)

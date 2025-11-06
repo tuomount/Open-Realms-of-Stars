@@ -162,4 +162,36 @@ public final class RaceTrait {
     }
     return false;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("### ");
+    sb.append(traitName);
+    sb.append(" (");
+    sb.append(traitId);
+    sb.append(") - ");
+    sb.append("Cost: ");
+    if (traitPoints > 0) {
+      sb.append("+");
+    }
+    sb.append(traitPoints);
+    sb.append("\n");
+    sb.append(" * Group: ");
+    sb.append(group);
+    sb.append("\n");
+    sb.append(" * Description: ");
+    sb.append(description);
+    sb.append("\n");
+    if (conflictsWithIds.size() > 0) {
+      sb.append(" * Conflicts with following:\n");
+      for (String str : conflictsWithIds) {
+        sb.append("    * ");
+        sb.append(str);
+        sb.append("\n");
+      }
+    }
+    return sb.toString();
+  }
+
 }

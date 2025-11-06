@@ -330,6 +330,19 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
     techList.setBackground(Color.BLACK);
     techList.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
+    greyPanel.add(scroll);
+    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
+    infoText = new InfoTextArea(20, 35);
+    infoText.setEditable(false);
+    infoText.setFont(GuiFonts.getFontCubellanSmaller());
+    infoText.setCharacterWidth(8);
+    scroll = new JScrollPane(infoText);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    scroll.setBackground(Color.BLACK);
+    greyPanel.add(scroll);
+    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     DefaultMutableTreeNode currentNode =
         (DefaultMutableTreeNode) techList.getModel().getRoot();
     do {
@@ -344,18 +357,6 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         }
         currentNode = currentNode.getNextNode();
     } while (currentNode != null);
-    greyPanel.add(scroll);
-    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-
-    infoText = new InfoTextArea(20, 35);
-    infoText.setEditable(false);
-    infoText.setFont(GuiFonts.getFontCubellanSmaller());
-    infoText.setCharacterWidth(8);
-    scroll = new JScrollPane(infoText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
-    scroll.setBackground(Color.BLACK);
-    greyPanel.add(scroll);
-    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
     base.add(greyPanel, BorderLayout.CENTER);
 

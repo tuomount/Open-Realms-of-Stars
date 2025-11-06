@@ -43,9 +43,6 @@ import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.FileIo.Folders;
-import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
 *

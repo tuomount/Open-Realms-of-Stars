@@ -17,6 +17,8 @@ package org.openRealmOfStars.starMap;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.government.Government;
@@ -287,9 +289,15 @@ public class GalaxyConfig {
     setEnableTutorial(true);
     setAiOnly(false);
     setAllNews(false);
+    ArrayList<PlayerColor> availableColors = new ArrayList<>();
+    for (PlayerColor color : PlayerColor.values()) {
+      availableColors.add(color);
+    }
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       setRace(i, SpaceRaceFactory.getRandomRace());
-      setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
+      PlayerColor color = DiceGenerator.pickRandom(availableColors);
+      availableColors.remove(color);
+      setPlayerColor(i, color);
       setStartingScenario(i, StartingScenarioFactory.createRandomOnlyRegular());
       while (true) {
         Government gov = GovernmentFactory.getRandomGovernment();

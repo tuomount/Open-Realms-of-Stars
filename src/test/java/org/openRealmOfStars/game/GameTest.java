@@ -199,7 +199,9 @@ public class GameTest {
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
     System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
+    if (newsData != null && newsData.length > 0) {
+      System.out.println(newsData[newsData.length - 1].getNewsText());
+    }
     System.out.println("---- End of " + testGameName + " ----");
 
   }
@@ -426,6 +428,7 @@ public class GameTest {
     config.setAiOnly(true);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setSpacePiratesDifficulty(PirateDifficultLevel.HARD);
+    config.setPlayerElderRealm(0, true);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
@@ -447,28 +450,38 @@ public class GameTest {
         AiDifficulty.WEAK);
     int turn = 0;
     int maxTurns = 400;
+    int saveCount = 1;
+    int maxCount = 15;
+    boolean keepRunning = true;
     do {
-      game.setAITurnView(new AITurnView(game));
-      boolean singleTurnEnd = false;
       do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
-      } while (!singleTurnEnd);
-      if (turn != game.getStarMap().getTurn()) {
-        turn = game.getStarMap().getTurn();
-        if (turn % 50 == 0) {
-          System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+        game.setAITurnView(new AITurnView(game));
+        boolean singleTurnEnd = false;
+        do {
+         singleTurnEnd = game.getAITurnView().handleAiTurn();
+        } while (!singleTurnEnd);
+        if (turn != game.getStarMap().getTurn()) {
+          turn = game.getStarMap().getTurn();
+          if (turn % 50 == 0) {
+            System.err.println("Game progressing, turn: " + turn + "/" + maxTurns);
+          }
         }
+        assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+      } while (turn <= saveCount * 20 && !game.getStarMap().isGameEnded());
+      if (saveCount == maxCount || game.getStarMap().isGameEnded()) {
+        keepRunning = false;
+        game.getStarMap().getPlayerByIndex(0).setHuman(true);
+        printEndGameResults("Not finished game", game);
       }
-      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
-    } while (turn <= 50);
-    game.getStarMap().getPlayerByIndex(0).setHuman(true);
-    try {
-      Game.readTutorial(null);
-      new GameRepository().saveGame(Folders.getSavegamePath(),
-          "ai-played.save", game.getStarMap());
-    } catch (IOException e) {
-      ErrorLogger.log(e);
-    }
+      try {
+        Game.readTutorial(null);
+        new GameRepository().saveGame(Folders.getSavegamePath(),
+            "ai-played" + saveCount +".save", game.getStarMap());
+        saveCount++;
+      } catch (IOException e) {
+        ErrorLogger.log(e);
+      }
+    } while (keepRunning);
   }*/
 
   @Test

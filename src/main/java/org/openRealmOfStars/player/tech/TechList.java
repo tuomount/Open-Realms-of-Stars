@@ -909,9 +909,10 @@ public class TechList {
         techLevels[index] += 1;
       }
     }
-    addTech(tech);
-
-    showResearchComplete(tech, info);
+    if (tech != null) {
+      addTech(tech);
+      showResearchComplete(tech, info);
+    }
 
     return tech;
   }

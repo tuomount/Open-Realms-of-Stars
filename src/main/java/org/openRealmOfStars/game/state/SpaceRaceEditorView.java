@@ -886,10 +886,16 @@ public class SpaceRaceEditorView extends BlackPanel {
     if (returnValue == JFileChooser.APPROVE_OPTION) {
       File file = loadFileChooser.getSelectedFile();
       if (file.exists()) {
+        System.out.println("File: " + file.getAbsolutePath());
+        System.out.println("Folder: " + Folders.getCustomSpaceRaceImage());
         if (file.getAbsolutePath().contains(
             Folders.getCustomSpaceRaceImage())) {
           String str = file.getAbsolutePath();
-          int index = str.lastIndexOf('/');
+          int index = str.lastIndexOf("/");
+          String osName = System.getProperty("os.name").toLowerCase();
+          if (osName.contains("windows")) {
+            index = str.lastIndexOf("\\");
+          }
           str = str.substring(index + 1);
           raceImages[customImageIndex] = str;
         } else {

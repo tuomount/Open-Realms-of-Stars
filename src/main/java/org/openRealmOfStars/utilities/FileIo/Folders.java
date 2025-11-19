@@ -27,6 +27,8 @@ public final class Folders {
 
   /** User folder */
   private static String userFolder;
+  /** Boolean for Windows OS. */
+  private static boolean windowsOs;
   /** Custom government folder */
   private static final String CUSTOM_GOV_FOLDER = "/custom/government";
   /** Custom space race folder */
@@ -53,7 +55,6 @@ public final class Folders {
   private static final String SCREENSHOT_FOLDER = "/screenshots";
   /** Save game folder */
   private static final String SAVEGAME_FOLDER = "/saves";
-
   /**
    * Hiding constructor.
    */
@@ -69,6 +70,11 @@ public final class Folders {
   public static String initFolders() {
     userFolder = System.getProperty("user.home");
     userFolder = userFolder + "/.oros";
+    String osName = System.getProperty("os.name").toLowerCase();
+    windowsOs = false;
+    if (osName.contains("windows")) {
+        windowsOs = true;
+    }
     try {
       File path = new File(userFolder);
       if (!path.exists() && !path.mkdirs()) {
@@ -128,7 +134,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_GOV_FOLDER;
+    return userFolder + handleSeparator(CUSTOM_GOV_FOLDER);
   }
 
   /**
@@ -139,7 +145,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_RACE_FOLDER;
+    return userFolder + handleSeparator(CUSTOM_RACE_FOLDER);
   }
 
   /**
@@ -150,7 +156,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_RACE_IMAGE_FOLDER;
+    return handleSeparator(userFolder + CUSTOM_RACE_IMAGE_FOLDER);
   }
 
   /**
@@ -161,7 +167,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_SHIP_IMAGE_FOLDER;
+    return handleSeparator(userFolder + CUSTOM_SHIP_IMAGE_FOLDER);
   }
 
   /**
@@ -172,7 +178,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_SHIP_GRAPHSET_FOLDER;
+    return handleSeparator(userFolder + CUSTOM_SHIP_GRAPHSET_FOLDER);
   }
 
   /**
@@ -183,7 +189,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_BRIDGE_IMAGE_FOLDER;
+    return handleSeparator(userFolder + CUSTOM_BRIDGE_IMAGE_FOLDER);
   }
 
   /**
@@ -194,7 +200,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_BRIDGE_GRAPHSET_FOLDER;
+    return handleSeparator(userFolder + CUSTOM_BRIDGE_GRAPHSET_FOLDER);
   }
 
   /**
@@ -205,7 +211,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + CUSTOM_SPEECHES_FOLDER;
+    return handleSeparator(userFolder + CUSTOM_SPEECHES_FOLDER);
   }
 
   /**
@@ -227,7 +233,7 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + SCREENSHOT_FOLDER;
+    return handleSeparator(userFolder + SCREENSHOT_FOLDER);
   }
 
   /**
@@ -238,7 +244,18 @@ public final class Folders {
     if (userFolder == null) {
       initFolders();
     }
-    return userFolder + SAVEGAME_FOLDER;
+    return handleSeparator(userFolder + SAVEGAME_FOLDER);
   }
 
+  /**
+   * Handle file and folder separator.
+   * @param input String input
+   * @return String input with correct separator.
+   */
+  public static String handleSeparator(final String input) {
+    if (windowsOs) {
+      return input.replace('/', '\\');
+    }
+    return input;
+  }
 }

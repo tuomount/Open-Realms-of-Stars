@@ -1837,13 +1837,29 @@ public class Planet {
           && getTotalPopulation() < getPopulationLimit()) {
         var popProjectId = planetRace.getNameSingle() + " citizen";
         var popProject = ConstructionFactory.createByName(popProjectId);
-        if (popProject != null) {
-          if (!exceedRadiation()) {
-            result.add(popProject);
+        if (popProject == null) {
+          popProject = new Construction(popProjectId,
+              Icons.ICON_PEOPLE);
+          if (planetOwnerInfo.getRace().isRoboticRace()) {
+            popProject.setProdCost(20);
+            popProject.setMetalCost(20);
+          } else if (planetOwnerInfo.getRace().isEatingFood()) {
+            popProject.setProdCost(30);
+            popProject.setMetalCost(2);
+          } else if (planetOwnerInfo.getRace().isLithovorian()) {
+            popProject.setProdCost(25);
+            popProject.setMetalCost(10);
+          } else if (planetOwnerInfo.getRace().isPhotosynthetic()) {
+            popProject.setProdCost(28);
+            popProject.setMetalCost(5);
+          } else {
+            popProject.setProdCost(30);
+            popProject.setMetalCost(5);
           }
-        } else {
-          ErrorLogger.log("Could not find population construction project"
-              + " for race: " + planetRace.getName());
+          popProject.setDescription("Build new " + popProjectId);
+        }
+        if (!exceedRadiation()) {
+          result.add(popProject);
         }
       }
       // Population is eating food, add basic farms

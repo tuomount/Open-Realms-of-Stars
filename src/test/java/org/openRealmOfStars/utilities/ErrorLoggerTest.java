@@ -17,11 +17,15 @@ package org.openRealmOfStars.utilities;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mockito;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test for ErrorLogger
@@ -30,35 +34,43 @@ import java.io.PrintStream;
 
 public class ErrorLoggerTest {
 
+    private PrintStream originalErr;
+    private ByteArrayOutputStream capturedOutput;
+
+    @Before
+    public void setUp() {
+        originalErr = System.err;
+        capturedOutput = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(capturedOutput));
+    }
+
+    @After
+    public void tearDown() {
+        System.setErr(originalErr);
+    }
+
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testErrorLoggerShouldWriteToDefaultErrorOutput() {
         String errorMessage = "Error message";
-        PrintStream err =  System.err;
-        System.setErr(Mockito.mock(System.err.getClass()));
-
         ErrorLogger.log(errorMessage);
-
-        Mockito.verify(System.err, Mockito.times(1)).println(errorMessage);
-        System.setErr(err);
+        String output = capturedOutput.toString();
+        assertTrue("Expected error message to be logged", output.contains(errorMessage));
     }
 
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testErrorLoggerWhenLogGetException() {
         Exception exception = new Exception("Message");
-        PrintStream err =  System.err;
-        System.setErr(Mockito.mock(System.err.getClass()));
-
         ErrorLogger.log(exception);
+        String output = capturedOutput.toString();
         StackTraceElement stackTraceElement = exception.getStackTrace()[0];
-        Mockito.verify(System.err, Mockito.times(1))
-                .println(stackTraceElement.getClassName()
-                    + " - "
-                    + "Line " + stackTraceElement.getLineNumber()
-                    + " - "
-                    +  exception.getMessage());
-        System.setErr(err);
+        String expectedOutput = stackTraceElement.getClassName()
+                + " - "
+                + "Line " + stackTraceElement.getLineNumber()
+                + " - "
+                + exception.getMessage();
+        assertTrue("Expected exception information to be logged", output.contains(expectedOutput));
     }
 
 }

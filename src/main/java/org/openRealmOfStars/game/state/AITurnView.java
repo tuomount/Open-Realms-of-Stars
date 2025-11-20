@@ -41,10 +41,9 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -141,7 +140,7 @@ public class AITurnView extends BlackPanel {
   /**
    * Text for showing human player
    */
-  private TransparentLabel label;
+  private SpaceLabel label;
 
   /**
    * Reference to the game
@@ -204,20 +203,18 @@ public class AITurnView extends BlackPanel {
       title = "Snowman mode";
     }
     BigImagePanel imgBase = new BigImagePanel(planet, true, title);
+    imgBase.setLayout(new BoxLayout(imgBase, BoxLayout.Y_AXIS));
     if (orbital != null) {
       imgBase.setCustomOrbital(orbital);
     }
     this.setLayout(new BorderLayout());
 
-    InvisiblePanel invisible = new InvisiblePanel(imgBase);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    invisible.add(Box.createRigidArea(new Dimension(500, 500)));
+    imgBase.add(Box.createRigidArea(new Dimension(500, 500)));
 
-    label = new TransparentLabel(invisible, "Please wait.....");
+    label = new SpaceLabel("Please wait.....");
     label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
-    invisible.add(label);
-    imgBase.add(invisible);
+    imgBase.add(label);
     this.add(imgBase, BorderLayout.CENTER);
     textAnim = 0;
     aiThread = new AiThread(this);

@@ -1,7 +1,7 @@
 package org.openRealmOfStars;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2024 Tuomo Untinen
+ * Copyright (C) 2025 Richard Smit
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,11 +19,11 @@ package org.openRealmOfStars;
 
 /**
  * Marker interface for full game acceptance tests.
- *
+ * <br/>
  * These are integration tests that simulate complete games with multiple
  * AI players over hundreds of turns. They are computationally intensive
  * and slow, so they are excluded from default builds.
- *
+ * <br/>
  * Run with: mvn verify -P fullGameAcceptanceTests
  */
 public interface FullGameAcceptanceTest {

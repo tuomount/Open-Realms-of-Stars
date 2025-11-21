@@ -2,6 +2,7 @@ package org.openRealmOfStars.game;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2025 Richard Smit
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -206,7 +207,7 @@ public class GameTest {
 
   }
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameLong() {
     System.gc();
     Game game = new Game(false);
@@ -246,7 +247,7 @@ public class GameTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameShort() {
     System.gc();
     Game game = new Game(false);
@@ -286,7 +287,7 @@ public class GameTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameMedium() {
     System.gc();
     Game game = new Game(false);
@@ -322,7 +323,7 @@ public class GameTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameMediumWith8Realms() {
     System.gc();
     Game game = new Game(false);
@@ -366,7 +367,7 @@ public class GameTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameMediumWith8RealmsAndDifficulty() {
     System.gc();
     Game game = new Game(false);
@@ -418,6 +419,7 @@ public class GameTest {
 
 /*  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunPartialAndSaveItGameMediumWith8RealmsAndDifficulty() {
     System.gc();
     Game game = new Game(false);
@@ -485,7 +487,7 @@ public class GameTest {
   }*/
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameMediumWith3RealmsAndDifficulty() {
     System.gc();
     Game game = new Game(false);
@@ -536,7 +538,7 @@ public class GameTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameLongWith12Realms() {
     System.gc();
     Game game = new Game(false);
@@ -584,7 +586,7 @@ public class GameTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGames() {
     Game game;
     for (int i = 0; i < 2; i++) {
@@ -625,7 +627,7 @@ public class GameTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.FullGameAcceptanceTest.class)
   public void testRunFullGameWithElder() {
     Game game;
     GalaxyConfig config = new GalaxyConfig();

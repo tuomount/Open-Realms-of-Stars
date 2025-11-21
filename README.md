@@ -160,6 +160,50 @@ Please check to see if your issue has been posted before making new issue.
 If you want to contribute code, fork the project and make the change. Be sure to add any unit tests where needed.
 Run the code through JUnits and checkstyle before making a pull request. This can be done using ``mvn verify``.
 
+#### Testing
+
+The project uses JUnit test categories to organize tests. Test categories:
+- **UnitTest**: Fast unit tests
+- **BehaviourTest**: Integration/behaviour tests
+- **FullGameAcceptanceTest**: Full game simulations with multiple AI players
+
+**Default Build (Unit + Behaviour Tests)**
+```
+mvn verify
+```
+Runs unit tests and behaviour tests (~1100 tests). This is the fast development build that provides good coverage without the computationally intensive full game simulations.
+
+**Full Test Suite (Including Acceptance Tests)**
+```
+mvn verify -Dgroups="org.openRealmOfStars.UnitTest,org.openRealmOfStars.BehaviourTest,org.openRealmOfStars.FullGameAcceptanceTest"
+```
+Runs all tests including full game acceptance tests (~1205 tests). These tests can take 30+ minutes to complete. Recommended for:
+- Pre-release validation
+- Comprehensive system verification
+- Before merging large changes
+
+**Unit Tests Only**
+```
+mvn test -Dgroups="org.openRealmOfStars.UnitTest"
+```
+Runs only unit tests (~920 tests) for quick feedback during development.
+
+**Full Game Acceptance Tests Only**
+```
+mvn test -Dgroups="org.openRealmOfStars.FullGameAcceptanceTest"
+```
+Runs only the 10 full game acceptance tests that simulate complete games:
+- `testRunFullGameLong()` - 8 AI players, 800 turns
+- `testRunFullGameShort()` - Shorter game simulation
+- `testRunFullGameMedium()` - Medium game simulation
+- `testRunFullGameMediumWith8Realms()` - 8 realms variant
+- `testRunFullGameMediumWith8RealmsAndDifficulty()` - With difficulty settings
+- `testRunPartialAndSaveItGameMediumWith8RealmsAndDifficulty()` - Save/load test
+- `testRunFullGameMediumWith3RealmsAndDifficulty()` - 3 realms variant
+- `testRunFullGames()` - General full game test
+- `testRunFullGameWithElder()` - Elder realm variant
+- `testRunFullGameLongWith12Realms()` - 12 realms variant, 600 turns
+
 ### Guide lines for making pull requests
 
  * Pull request should contain single logical change.

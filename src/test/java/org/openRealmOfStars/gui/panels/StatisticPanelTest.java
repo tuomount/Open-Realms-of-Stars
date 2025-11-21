@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.panels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -21,15 +22,23 @@ import static org.junit.Assert.*;
 
 import java.awt.Color;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
  * Test for StatisticPanel class
  *
  */
 public class StatisticPanelTest {
+
+  @Before
+  public void setUp() {
+    // Initialize UIScale at base resolution for consistent test results
+    UIScale.initialize(1024, 768);
+  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

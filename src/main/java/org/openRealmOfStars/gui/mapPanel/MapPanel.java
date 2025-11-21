@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.mapPanel;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -38,6 +39,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -80,18 +82,43 @@ public class MapPanel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Map drawing area size width
+   * Base map drawing area size width (at 768p resolution)
    */
-  private static final int DEFAULT_WIDTH = 864;
+  private static final int DEFAULT_WIDTH_BASE = 864;
   /**
-   * Map drawing area size height
+   * Base map drawing area size height (at 768p resolution)
    */
-  private static final int DEFAULT_HEIGHT = 608;
+  private static final int DEFAULT_HEIGHT_BASE = 608;
 
   /**
-   * Battle Map view size. This size is both width and height
+   * Base battle Map view size (at 768p resolution). This size is both
+   * width and height
    */
-  private static final int BATTLE_VIEW_SIZE = 576;
+  private static final int BATTLE_VIEW_SIZE_BASE = 576;
+
+  /**
+   * Get scaled default width for map panel.
+   * @return Scaled width in pixels
+   */
+  public static int getDefaultWidth() {
+    return UIScale.scale(DEFAULT_WIDTH_BASE);
+  }
+
+  /**
+   * Get scaled default height for map panel.
+   * @return Scaled height in pixels
+   */
+  public static int getDefaultHeight() {
+    return UIScale.scale(DEFAULT_HEIGHT_BASE);
+  }
+
+  /**
+   * Get scaled battle view size.
+   * @return Scaled battle view size in pixels
+   */
+  public static int getBattleViewSize() {
+    return UIScale.scale(BATTLE_VIEW_SIZE_BASE);
+  }
 
   /**
    * Delay for animation update.
@@ -321,8 +348,8 @@ public class MapPanel extends JPanel {
   private void initMapPanel(final Game game, final boolean battleMode) {
     cursorFocus = 0;
     battle = battleMode;
-    int width = DEFAULT_WIDTH;
-    int height = DEFAULT_HEIGHT;
+    int width = getDefaultWidth();
+    int height = getDefaultHeight();
     historyCultures = null;
     historyCoordInitialized = false;
     setShowMiniMap(false);
@@ -336,16 +363,16 @@ public class MapPanel extends JPanel {
       highContrastGrid = game.isHighContrastGrid();
     }
     if (battle && game == null) {
-      width = BATTLE_VIEW_SIZE;
-      height = BATTLE_VIEW_SIZE;
+      width = getBattleViewSize();
+      height = getBattleViewSize();
     } else if (battle && game != null) {
-      width = game.getWidth() - 470;
-      height = game.getHeight() - 210;
-      if (width < BATTLE_VIEW_SIZE) {
-        width = BATTLE_VIEW_SIZE;
+      width = game.getWidth() - UIScale.scale(470);
+      height = game.getHeight() - UIScale.scale(210);
+      if (width < getBattleViewSize()) {
+        width = getBattleViewSize();
       }
-      if (height < BATTLE_VIEW_SIZE) {
-        height = BATTLE_VIEW_SIZE;
+      if (height < getBattleViewSize()) {
+        height = getBattleViewSize();
       }
     }
     panelType = MapPanelType.STARMAP;

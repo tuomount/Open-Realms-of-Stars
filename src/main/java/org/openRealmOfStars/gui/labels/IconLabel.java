@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -29,6 +30,7 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
  *
@@ -85,15 +87,15 @@ public class IconLabel extends JLabel {
     Dimension size = this.getPreferredSize();
     if (icon != null) {
       size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
-          + this.icon.getIcon().getWidth() + 10;
+          + this.icon.getIcon().getWidth() + UIScale.scale(10);
       size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           text);
-      if (size.height < this.icon.getIcon().getHeight() + 2) {
-        size.height = this.icon.getIcon().getHeight() + 2;
+      if (size.height < this.icon.getIcon().getHeight() + UIScale.scale(2)) {
+        size.height = this.icon.getIcon().getHeight() + UIScale.scale(2);
       }
     } else {
       size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
-          + 10;
+          + UIScale.scale(10);
       size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           text);
     }
@@ -134,9 +136,10 @@ public class IconLabel extends JLabel {
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
     if (icon != null) {
-      g.drawString(this.getText(), x + icon.getIcon().getWidth() + 5, y + 10);
+      g.drawString(this.getText(), x + icon.getIcon().getWidth()
+          + UIScale.scale(5), y + UIScale.scale(10));
     } else {
-      g.drawString(this.getText(), x + 5, y + 10);
+      g.drawString(this.getText(), x + UIScale.scale(5), y + UIScale.scale(10));
     }
   }
 

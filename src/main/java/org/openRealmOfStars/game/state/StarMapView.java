@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -38,6 +39,7 @@ import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -193,7 +195,7 @@ public class StarMapView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setTitle(players.getCurrentPlayerInfo().getEmpireName());
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-    bottomPanel.add(Box.createRigidArea(new Dimension(15, 25)));
+    bottomPanel.add(UIScale.scaledRigidArea(15, 25));
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     credProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_CREDIT),
@@ -240,13 +242,13 @@ public class StarMapView extends BlackPanel {
           * Tile.getMaxHeight(Tile.ZOOM_NORMAL)
           + Tile.getMaxHeight(Tile.ZOOM_NORMAL));
     }
-    bottomPanel.add(Box.createRigidArea(new Dimension(10,
+    bottomPanel.add(Box.createRigidArea(new Dimension(UIScale.scale(10),
         panelHeight)));
 
     SpaceGreyPanel bottomBtnPanel = new SpaceGreyPanel();
     bottomBtnPanel.setLayout(new GridLayout(3, 2));
 
-    bottomPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    bottomPanel.add(UIScale.scaledRigidArea(10, 5));
 
     viewResearchButton = new SpaceButton("Research",
         GameCommands.COMMAND_VIEW_RESEARCH);
@@ -340,7 +342,7 @@ public class StarMapView extends BlackPanel {
         players.getCurrentPlayerInfo().getMsgList().getMaxMsg(), game);
     bottomPanel.add(msgPanel);
 
-    bottomPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    bottomPanel.add(UIScale.scaledRigidArea(10, 5));
 
     endTurnButton = new SpaceButton(
         "\t\n\t\nEnd\nstar year\n" + this.map.getStarYear() + "\t\n\t\n\t\n",

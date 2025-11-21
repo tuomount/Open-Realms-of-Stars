@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -29,6 +30,7 @@ import javax.swing.border.EtchedBorder;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
  *
@@ -173,7 +175,8 @@ public class TransparentLabel extends JLabel {
         g.drawString(texts[i], x, y + i * textHeight);
       }
     } else {
-      g.drawString(this.getText(), x + 5, y + 10);
+      g.drawString(this.getText(), x + UIScale.scale(5),
+          y + UIScale.scale(10));
     }
   }
 

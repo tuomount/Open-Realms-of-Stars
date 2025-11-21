@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -25,6 +26,7 @@ import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
 *
@@ -48,9 +50,9 @@ public class SpaceLabel extends JLabel {
    this.setFont(GuiFonts.getFontCubellan());
    Dimension size = this.getPreferredSize();
    size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
-       + 10;
+       + UIScale.scale(10);
    size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(), text)
-       + 4;
+       + UIScale.scale(4);
    this.setMinimumSize(size);
    this.setPreferredSize(size);
    this.setMaximumSize(size);

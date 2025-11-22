@@ -19,6 +19,7 @@ package org.openRealmOfStars.gui.list;
  */
 
 import java.awt.Component;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import javax.swing.Icon;
@@ -49,7 +50,6 @@ public class ProductionListRenderer implements ListCellRenderer<Construction> {
       // Fill background first (since we're opaque)
       g.setColor(getBackground());
       g.fillRect(0, 0, getWidth(), getHeight());
-
       // Draw icon if present
       int textX = 5;
       Icon icon = getIcon();
@@ -58,11 +58,12 @@ public class ProductionListRenderer implements ListCellRenderer<Construction> {
         icon.paintIcon(this, g, 5, iconY);
         textX = 5 + icon.getIconWidth() + 5;
       }
-
       // Draw text
       g.setFont(getFont());
       g.setColor(getForeground());
-      g.drawString(getText(), textX, getHeight() / 2 + 5);
+      FontMetrics metrics = g.getFontMetrics(getFont());
+      int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
+      g.drawString(getText(), textX, y);
     }
   }
 

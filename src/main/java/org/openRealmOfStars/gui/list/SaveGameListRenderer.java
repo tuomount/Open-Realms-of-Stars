@@ -21,6 +21,7 @@ package org.openRealmOfStars.gui.list;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.FontMetrics;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -48,11 +49,13 @@ public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
       // Fill background first (since we're opaque)
       g.setColor(getBackground());
       g.fillRect(0, 0, getWidth(), getHeight());
-
       // Draw text
+      int x = 5;
       g.setFont(getFont());
       g.setColor(getForeground());
-      g.drawString(getText(), 5, getHeight() / 2 + 5);
+      FontMetrics metrics = g.getFontMetrics(getFont());
+      int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
+      g.drawString(getText(), x, y);
     }
   }
 

@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -19,8 +20,8 @@ package org.openRealmOfStars.gui.list;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -37,33 +38,50 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
 
   /**
-   * Default list cell renderer
+   * Custom JLabel for list cell rendering that properly handles painting
    */
-  private DefaultListCellRenderer defaultRenderer
-      = new DefaultListCellRenderer();
+  private static class SaveGameLabel extends JLabel {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void paintComponent(final Graphics g) {
+      // Fill background first (since we're opaque)
+      g.setColor(getBackground());
+      g.fillRect(0, 0, getWidth(), getHeight());
+
+      // Draw text
+      g.setFont(getFont());
+      g.setColor(getForeground());
+      g.drawString(getText(), 5, getHeight() / 2 + 5);
+    }
+  }
+
+  /**
+   * Reusable label for rendering
+   */
+  private SaveGameLabel label = new SaveGameLabel();
 
   @Override
   public Component getListCellRendererComponent(
       final JList<? extends SavedGame> list, final SavedGame value,
       final int index, final boolean isSelected, final boolean cellHasFocus) {
-    JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
-        list, value, index, isSelected, cellHasFocus);
-    renderer.setFont(GuiFonts.getFontCubellan());
+    label.setFont(GuiFonts.getFontCubellan());
     if (value != null) {
       String text = value.getFilename() + " - " + value.getTime()
           + " Star year: " + value.getStarYear() + " - "
           + value.getEmpireName() + " Realms: "
           + value.getRealms() + " - "
           + value.getGalaxySize();
-      renderer.setText(text);
+      label.setText(text);
     }
+    label.setOpaque(true);
     if (isSelected) {
-      renderer.setForeground(GuiStatics.getCoolSpaceColor());
-      renderer.setBackground(Color.BLACK);
+      label.setForeground(GuiStatics.getCoolSpaceColor());
+      label.setBackground(Color.BLACK);
     } else {
-      renderer.setForeground(GuiStatics.COLOR_GREY_TEXT);
-      renderer.setBackground(Color.BLACK);
+      label.setForeground(GuiStatics.COLOR_GREY_TEXT);
+      label.setBackground(Color.BLACK);
     }
-    return renderer;
+    return label;
   }
 }

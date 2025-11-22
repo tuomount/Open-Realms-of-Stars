@@ -468,7 +468,7 @@ public class BigSpherePanel extends JPanel {
 
   }
   @Override
-  public void paint(final Graphics g) {
+  protected void paintComponent(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     int sx = 0;
     int sy = 0;
@@ -705,7 +705,7 @@ public class BigSpherePanel extends JPanel {
     }
 
     drawTextArea(g);
-    this.paintChildren(g2d);
+    // Children are painted automatically by Swing's paint() method
   }
 
   /**

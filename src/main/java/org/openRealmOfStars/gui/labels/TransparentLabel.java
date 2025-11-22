@@ -27,7 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JToolTip;
 import javax.swing.border.EtchedBorder;
 
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.gui.util.UIScale;
@@ -45,27 +44,20 @@ public class TransparentLabel extends JLabel {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Parent component
-   */
-  private Component parent;
-
-  /**
-   * Add border
-   */
-  private boolean border;
-  /**
    * Wrap text from white spaces
    */
   private boolean wrap;
 
   /**
    * Create label with transparency without borders or auto wrap.
-   * @param parent Parent component, if null then parent isn't redraw
+   * @param parent Parent component (kept for API compatibility)
    * @param text Text to show
    */
+  @SuppressWarnings("PMD.UnusedFormalParameter")
   public TransparentLabel(final Component parent, final String text) {
     super(text);
-    this.parent = parent;
+    // Mark as non-opaque so Swing handles parent repainting automatically
+    setOpaque(false);
     this.setForeground(GuiStatics.getCoolSpaceColor());
     this.setFont(GuiFonts.getFontCubellan());
     Dimension size = this.getPreferredSize();
@@ -79,15 +71,17 @@ public class TransparentLabel extends JLabel {
 
   /**
    * Create label with transparency
-   * @param parent Parent component, if null then parent isn't redraw
+   * @param parent Parent component (kept for API compatibility)
    * @param text Text to show
    * @param border Add border
    * @param autoWrap Wrap words from space
    */
+  @SuppressWarnings("PMD.UnusedFormalParameter")
   public TransparentLabel(final Component parent, final String text,
       final boolean border, final boolean autoWrap) {
     super(text);
-    this.parent = parent;
+    // Mark as non-opaque so Swing handles parent repainting automatically
+    setOpaque(false);
     this.setForeground(GuiStatics.getCoolSpaceColor());
     this.setFont(GuiFonts.getFontCubellan());
     Dimension size = this.getPreferredSize();
@@ -97,8 +91,11 @@ public class TransparentLabel extends JLabel {
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
-    this.border = border;
     this.wrap = autoWrap;
+    if (border) {
+      this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
+    }
   }
 
   @Override
@@ -112,25 +109,11 @@ public class TransparentLabel extends JLabel {
   }
 
   @Override
-  public void setText(final String text) {
-    super.setText(text);
-    if (parent != null && parent instanceof InvisiblePanel) {
-      InvisiblePanel invis = (InvisiblePanel) parent;
-      invis.setDirty();
-    }
-  }
-
-  @Override
   protected void paintComponent(final Graphics g) {
-    if (parent != null) {
-      parent.repaint();
-    }
+    // Non-opaque component - Swing handles parent repainting automatically
     int x = 0;
     int y = 0;
-    if (border) {
-      this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
-          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
-    }
+    // Border is set in constructor, not here (setBorder triggers repaint loop)
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
     StringBuilder sb = new StringBuilder(this.getText().length() + 10);

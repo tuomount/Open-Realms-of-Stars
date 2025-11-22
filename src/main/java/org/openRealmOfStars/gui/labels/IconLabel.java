@@ -27,7 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.gui.util.UIScale;
@@ -48,7 +47,7 @@ public class IconLabel extends JLabel {
   /**
    * Parent component
    */
-  private Component parent;
+  //private Component parent;
 
   /**
    * Icon to draw
@@ -77,10 +76,11 @@ public class IconLabel extends JLabel {
    * @param icon Icon to draw, if null then not draw
    * @param text Text to show
    */
+  @SuppressWarnings("PMD.UnusedFormalParameter")
   public IconLabel(final Component parent, final Icon16x16 icon,
       final String text) {
     super(text);
-    this.parent = parent;
+    //this.parent = parent;
     this.icon = icon;
     this.setForeground(GuiStatics.getCoolSpaceColor());
     this.setFont(GuiFonts.getFontCubellan());
@@ -115,19 +115,8 @@ public class IconLabel extends JLabel {
   }
 
   @Override
-  public void setText(final String text) {
-    super.setText(text);
-    if (parent != null && parent instanceof InvisiblePanel) {
-      InvisiblePanel invis = (InvisiblePanel) parent;
-      invis.setDirty();
-    }
-  }
-
-  @Override
   protected void paintComponent(final Graphics g) {
-    if (parent != null) {
-      parent.repaint();
-    }
+    // Don't call parent.repaint() - causes infinite repaint loop
     int x = 0;
     int y = 0;
     if (icon != null) {

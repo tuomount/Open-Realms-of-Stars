@@ -280,11 +280,12 @@ public class InfoTextArea extends JTextArea {
     }
   }
 
-  @Override
-  public void paintImmediately(final int x, final int y, final int w,
-      final int h) {
-    super.paintImmediately(0, 0, getWidth(), getHeight());
-  }
+  // Commented out to prevent forcing full repaint on partial updates
+  // @Override
+  // public void paintImmediately(final int x, final int y, final int w,
+  //     final int h) {
+  //   super.paintImmediately(0, 0, getWidth(), getHeight());
+  // }
 
   /**
    * Draw string with specific graphics.
@@ -352,6 +353,7 @@ public class InfoTextArea extends JTextArea {
   }
   @Override
   protected void paintComponent(final Graphics g) {
+    super.paintComponent(g);
     this.setCaretPosition(this.getDocument().getLength());
     g.setColor(getBackground());
     Insets inset = this.getBorder().getBorderInsets(this);

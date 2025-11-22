@@ -429,7 +429,7 @@ public class BigImagePanel extends JPanel {
 
   }
   @Override
-  public void paint(final Graphics g) {
+  protected void paintComponent(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     int sx = 0;
     int sy = 0;
@@ -707,7 +707,7 @@ public class BigImagePanel extends JPanel {
     }
 
     drawTextArea(g);
-    this.paintChildren(g2d);
+    // Swing automatically calls paintChildren() after paintComponent()
   }
 
   /**

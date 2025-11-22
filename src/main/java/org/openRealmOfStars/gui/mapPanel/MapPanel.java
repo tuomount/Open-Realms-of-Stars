@@ -801,10 +801,14 @@ public class MapPanel extends JPanel {
             pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3);
         gr.setColor(Color.BLACK);
         gr.setFont(font);
+        // Center text vertically using font metrics
+        java.awt.FontMetrics fm = gr.getFontMetrics();
+        int textY = pixelY + (Tile.getMaxHeight(starMap.getZoomLevel())
+            - fm.getHeight()) / 2 + fm.getAscent();
         gr.drawString(sun.getName(),
             pixelX - Tile.getMaxWidth(starMap.getZoomLevel()) / 2
             - textWidth / 2,
-            pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
+            textY);
       }
     }
 
@@ -842,9 +846,12 @@ public class MapPanel extends JPanel {
           pixelY - 3);
       gr.setColor(Color.BLACK);
       gr.setFont(font);
+      // Center text vertically using font metrics
+      java.awt.FontMetrics fm = gr.getFontMetrics();
+      int textY = pixelY - fm.getHeight() / 2 + fm.getAscent() - 3;
       gr.drawString(
           RandomSystemNameGenerator.numberToRoman(
-              planet.getOrderNumber()), pixelX - textWidth / 2, pixelY);
+              planet.getOrderNumber()), pixelX - textWidth / 2, textY);
     }
 
     // Draw planet text
@@ -869,11 +876,15 @@ public class MapPanel extends JPanel {
           pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3);
       gr.setColor(Color.BLACK);
       gr.setFont(font);
+      // Center text vertically using font metrics
+      java.awt.FontMetrics fm = gr.getFontMetrics();
+      int textY = pixelY + (Tile.getMaxHeight(starMap.getZoomLevel())
+          - fm.getHeight()) / 2 + fm.getAscent();
       gr.drawString(
           RandomSystemNameGenerator.numberToRoman(
               planet.getOrderNumber()),
           pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2 - textWidth / 2,
-          pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
+          textY);
     }
   }
   /**
@@ -1558,9 +1569,13 @@ public class MapPanel extends JPanel {
                 pixelY + tileHeight / 2 - 3);
             gr.setColor(Color.BLACK);
             gr.setFont(GuiFonts.getFontCubellanSC());
+            // Center text vertically using font metrics
+            java.awt.FontMetrics fm = gr.getFontMetrics();
+            int textY = pixelY + (tileHeight - fm.getHeight()) / 2
+                + fm.getAscent();
             gr.drawString(sun.getName(),
                 pixelX - tileWidth / 2 - textWidth / 2,
-                pixelY + tileHeight / 2);
+                textY);
           }
         }
 

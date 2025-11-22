@@ -21,6 +21,7 @@ package org.openRealmOfStars.gui.labels;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.FontMetrics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -45,17 +46,13 @@ public class IconLabel extends JLabel {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Parent component
-   */
-  //private Component parent;
-
-  /**
    * Icon to draw
    */
   private Icon16x16 icon;
 
   /**
    * Get left side icon
+   *
    * @return Icon
    */
   public Icon16x16 getLeftIcon() {
@@ -64,6 +61,7 @@ public class IconLabel extends JLabel {
 
   /**
    * Set icon on left side of Label
+   *
    * @param leftIcon Icon to draw
    */
   public void setLeftIcon(final Icon16x16 leftIcon) {
@@ -72,15 +70,15 @@ public class IconLabel extends JLabel {
 
   /**
    * Create Icon label with transparency
+   *
    * @param parent Parent component can be null
-   * @param icon Icon to draw, if null then not draw
-   * @param text Text to show
+   * @param icon   Icon to draw, if null then not draw
+   * @param text   Text to show
    */
   @SuppressWarnings("PMD.UnusedFormalParameter")
   public IconLabel(final Component parent, final Icon16x16 icon,
       final String text) {
     super(text);
-    //this.parent = parent;
     this.icon = icon;
     this.setForeground(GuiStatics.getCoolSpaceColor());
     this.setFont(GuiFonts.getFontCubellan());
@@ -117,19 +115,29 @@ public class IconLabel extends JLabel {
   @Override
   protected void paintComponent(final Graphics g) {
     // Don't call parent.repaint() - causes infinite repaint loop
-    int x = 0;
-    int y = 0;
+    // Draw icon if present
     if (icon != null) {
-      g.drawImage(icon.getIcon(), x, y, null);
+      int iconHeight = icon.getIcon().getHeight();
+      int iconY = (this.getHeight() - iconHeight) / 2;
+      g.drawImage(icon.getIcon(), 0, iconY, null);
     }
+    // Early exit if no text to draw
+    String text = this.getText();
+    if (text == null || text.isEmpty()) {
+      return;
+    }
+    // Calculate text position and draw
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
+    FontMetrics metrics = g.getFontMetrics(this.getFont());
+    int textY = (this.getHeight() - metrics.getHeight()) / 2
+        + metrics.getAscent();
+    int textX;
     if (icon != null) {
-      g.drawString(this.getText(), x + icon.getIcon().getWidth()
-          + UIScale.scale(5), y + UIScale.scale(10));
+      textX = icon.getIcon().getWidth() + UIScale.scale(5);
     } else {
-      g.drawString(this.getText(), x + UIScale.scale(5), y + UIScale.scale(10));
+      textX = UIScale.scale(5);
     }
+    g.drawString(text, textX, textY);
   }
-
 }

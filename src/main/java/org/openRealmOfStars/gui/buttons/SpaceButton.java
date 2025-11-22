@@ -161,7 +161,14 @@ public class SpaceButton extends JButton {
     } else {
       g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
     }
-    String[] texts = getText().split("\n");
+
+    // Early exit if no text to draw
+    String text = getText();
+    if (text == null || text.isEmpty()) {
+      return;
+    }
+
+    String[] texts = text.split("\n");
     g.setFont(GuiFonts.getFontCubellan());
     int longest = 0;
     for (int i = 0; i < texts.length; i++) {

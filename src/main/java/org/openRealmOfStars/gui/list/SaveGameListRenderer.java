@@ -49,13 +49,20 @@ public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
       // Fill background first (since we're opaque)
       g.setColor(getBackground());
       g.fillRect(0, 0, getWidth(), getHeight());
+
+      // Early exit if no text to draw
+      String text = getText();
+      if (text == null || text.isEmpty()) {
+        return;
+      }
+
       // Draw text
       int x = 5;
       g.setFont(getFont());
       g.setColor(getForeground());
       FontMetrics metrics = g.getFontMetrics(getFont());
       int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
-      g.drawString(getText(), x, y);
+      g.drawString(text, x, y);
     }
   }
 

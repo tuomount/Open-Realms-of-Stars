@@ -58,12 +58,19 @@ public class ProductionListRenderer implements ListCellRenderer<Construction> {
         icon.paintIcon(this, g, 5, iconY);
         textX = 5 + icon.getIconWidth() + 5;
       }
+
+      // Early exit if no text to draw
+      String text = getText();
+      if (text == null || text.isEmpty()) {
+        return;
+      }
+
       // Draw text
       g.setFont(getFont());
       g.setColor(getForeground());
       FontMetrics metrics = g.getFontMetrics(getFont());
       int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
-      g.drawString(getText(), textX, y);
+      g.drawString(text, textX, y);
     }
   }
 

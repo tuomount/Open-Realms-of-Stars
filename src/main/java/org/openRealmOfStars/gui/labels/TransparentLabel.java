@@ -111,14 +111,21 @@ public class TransparentLabel extends JLabel {
   @Override
   protected void paintComponent(final Graphics g) {
     // Non-opaque component - Swing handles parent repainting automatically
+
+    // Early exit if no text to draw
+    String text = this.getText();
+    if (text == null || text.isEmpty()) {
+      return;
+    }
+
     int x = 0;
     int y = 0;
     // Border is set in constructor, not here (setBorder triggers repaint loop)
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
-    StringBuilder sb = new StringBuilder(this.getText().length() + 10);
+    StringBuilder sb = new StringBuilder(text.length() + 10);
     if (wrap) {
-      String[] texts = this.getText().split(" ");
+      String[] texts = text.split(" ");
       int totalHeight = 0;
       int totalLineLen = 0;
       int spaceLen = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
@@ -158,7 +165,7 @@ public class TransparentLabel extends JLabel {
         g.drawString(texts[i], x, y + i * textHeight);
       }
     } else {
-      g.drawString(this.getText(), x + UIScale.scale(5),
+      g.drawString(text, x + UIScale.scale(5),
           y + UIScale.scale(10));
     }
   }

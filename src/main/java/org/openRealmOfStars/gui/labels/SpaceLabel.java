@@ -20,6 +20,7 @@ package org.openRealmOfStars.gui.labels;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.FontMetrics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -74,13 +75,20 @@ public class SpaceLabel extends JLabel {
  protected void paintComponent(final Graphics g) {
    // Non-opaque component - manually paint text without calling super
    // to avoid default JLabel rendering issues with transparent backgrounds
+
+   // Early exit if no text to draw
+   String text = this.getText();
+   if (text == null || text.isEmpty()) {
+     return;
+   }
+
    int x = UIScale.scale(5);
    g.setFont(this.getFont());
    // Center text vertically using font metrics for proper baseline positioning
-   java.awt.FontMetrics fm = g.getFontMetrics();
+   FontMetrics fm = g.getFontMetrics();
    int y = (this.getHeight() - fm.getHeight()) / 2 + fm.getAscent();
    g.setColor(this.getForeground());
-   g.drawString(this.getText(), x, y);
+   g.drawString(text, x, y);
  }
 
 }

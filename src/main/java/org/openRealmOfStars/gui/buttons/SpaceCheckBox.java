@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.buttons;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2017-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -141,7 +142,14 @@ public class SpaceCheckBox extends JCheckBox {
     } else {
       g2d.setColor(GuiStatics.getCheckBoxDisabledColor());
     }
-    String[] texts = getText().split("\n");
+
+    // Early exit if no text to draw
+    String text = getText();
+    if (text == null || text.isEmpty()) {
+      return;
+    }
+
+    String[] texts = text.split("\n");
     g.setFont(GuiFonts.getFontCubellan());
     int longest = 0;
     for (int i = 0; i < texts.length; i++) {

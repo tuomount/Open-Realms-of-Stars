@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.panels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -32,6 +33,7 @@ import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -347,15 +349,19 @@ public class BigSpherePanel extends JPanel {
       title = "In Deep Space...";
     }
     g.setFont(GuiFonts.getFontCubellanBoldBig());
-    int offsetX = 50;
-    int offsetY = 75;
+    int offsetX = UIScale.scale(50);
+    int offsetY = UIScale.scale(75);
     if (backgroundImg != null) {
       offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2 - GuiStatics
           .getTextWidth(GuiFonts.getFontCubellanBoldBig(), title) / 2
           + backgroundImg.getWidth() / 2;
+      // Ensure title doesn't go off the left edge
+      if (offsetX < UIScale.scale(10)) {
+        offsetX = UIScale.scale(10);
+      }
       offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
-      if (offsetY < 75) {
-        offsetY = 75;
+      if (offsetY < UIScale.scale(75)) {
+        offsetY = UIScale.scale(75);
       }
       if (textInMiddle) {
         offsetY = (this.getHeight() - backgroundImg.getHeight()) / 2
@@ -377,11 +383,14 @@ public class BigSpherePanel extends JPanel {
           offsetX = value;
         }
       }
+      int lineHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
+          "Ag");
       for (int i = 0; i < texts.length; i++) {
         drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
             GuiStatics.getCoolSpaceColorTransparent(),
-            this.getWidth() - offsetX - 20,
-            this.getHeight() - (texts.length + 2) * 15 + i * 15, texts[i]);
+            this.getWidth() - offsetX - UIScale.scale(20),
+            this.getHeight() - (texts.length + 2) * lineHeight
+                + i * lineHeight, texts[i]);
       }
     }
   }
@@ -459,7 +468,7 @@ public class BigSpherePanel extends JPanel {
 
   }
   @Override
-  public void paint(final Graphics g) {
+  protected void paintComponent(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     int sx = 0;
     int sy = 0;
@@ -696,7 +705,7 @@ public class BigSpherePanel extends JPanel {
     }
 
     drawTextArea(g);
-    this.paintChildren(g2d);
+    // Children are painted automatically by Swing's paint() method
   }
 
   /**

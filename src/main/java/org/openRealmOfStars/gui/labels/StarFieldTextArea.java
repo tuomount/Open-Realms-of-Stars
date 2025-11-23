@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -30,6 +31,7 @@ import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
  *
@@ -44,9 +46,17 @@ public class StarFieldTextArea extends JTextArea {
    */
   private static final long serialVersionUID = 1L;
   /**
-  * Y axel offset where to draw text
+  * Base Y axel offset where to draw text (at 768p resolution).
   */
-  private static final int Y_OFFSET = 18;
+  private static final int Y_OFFSET_BASE = 18;
+
+  /**
+   * Get scaled Y offset for text drawing.
+   * @return Scaled Y offset
+   */
+  private static int getYOffset() {
+    return UIScale.scale(Y_OFFSET_BASE);
+  }
   /**
    * Does text have auto scroll on
    */
@@ -282,12 +292,13 @@ public class StarFieldTextArea extends JTextArea {
         boolean bigFont = false;
 
         if (!smoothScroll) {
-          g.drawString(texts[i], sx + 3, sy + i * Y_OFFSET + Y_OFFSET);
-          g.drawString(texts[i], sx + 1, sy + i * Y_OFFSET + Y_OFFSET);
-          g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET - 1 + Y_OFFSET);
-          g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET + 1 + Y_OFFSET);
+          int yPos = sy + i * getYOffset() + getYOffset();
+          g.drawString(texts[i], sx + 3, yPos);
+          g.drawString(texts[i], sx + 1, yPos);
+          g.drawString(texts[i], sx + 2, yPos - 1);
+          g.drawString(texts[i], sx + 2, yPos + 1);
           g.setColor(GuiStatics.getInfoTextColor());
-          g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET + Y_OFFSET);
+          g.drawString(texts[i], sx + 2, yPos);
         } else {
           String line = texts[i];
           if (line.startsWith("# ")) {
@@ -303,26 +314,26 @@ public class StarFieldTextArea extends JTextArea {
             g.setColor(GuiStatics.COLOR_SPACE_YELLOW_DARK);
           }
           g.drawString(line, w + 3,
-              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);
+              sy + i * getYOffset() + getYOffset() - smoothScrollY);
           g.drawString(line, w + 1,
-              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);
+              sy + i * getYOffset() + getYOffset() - smoothScrollY);
           g.drawString(line, w + 2,
-              sy + i * Y_OFFSET - 1 + Y_OFFSET - smoothScrollY);
+              sy + i * getYOffset() - 1 + getYOffset() - smoothScrollY);
           g.drawString(line, w + 2,
-              sy + i * Y_OFFSET + 1 + Y_OFFSET - smoothScrollY);
+              sy + i * getYOffset() + 1 + getYOffset() - smoothScrollY);
           if (bigFont) {
             g.setColor(GuiStatics.COLOR_SPACE_YELLOW);
           } else {
             g.setColor(GuiStatics.getCoolSpaceColorTransparent());
           }
           g.drawString(line, w + 2,
-              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);
+              sy + i * getYOffset() + getYOffset() - smoothScrollY);
         }
 
       }
     }
     smoothScrollY++;
-    if (smoothScrollY == Y_OFFSET) {
+    if (smoothScrollY == getYOffset()) {
       smoothScrollY = 0;
       smoothScrollNextRow = true;
     }

@@ -1,7 +1,8 @@
 package org.openRealmOfStars.gui.util;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2023-2024 BottledByte
+ * Copyright (C) 2025 Richard Smit
+ * Copyright (C) 2023-2025 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -89,7 +90,8 @@ public final class GuiFonts {
    */
   public static Font getFontCubellanVerySmall() {
     // Don't auto-scale this font
-    return getFontFromCache(CUBELLAN_FONT_URL, 9, 1).orElse(FONT_SMALL);
+    return getFontFromCache(CUBELLAN_FONT_URL, 9, 1)
+        .orElse(getScaledFallback(FONT_SMALL));
   }
 
   /**
@@ -97,7 +99,8 @@ public final class GuiFonts {
    * @return Cubellan font
    */
   public static Font getFontCubellan() {
-    return getFontFromCache(CUBELLAN_FONT_URL, 16).orElse(FONT_NORMAL);
+    return getFontFromCache(CUBELLAN_FONT_URL, 16)
+        .orElse(getScaledFallback(FONT_NORMAL));
   }
 
   /**
@@ -105,7 +108,8 @@ public final class GuiFonts {
    * @return Cubellan font
    */
   public static Font getFontCubellanSmaller() {
-    return getFontFromCache(CUBELLAN_FONT_URL, 13).orElse(FONT_SMALL);
+    return getFontFromCache(CUBELLAN_FONT_URL, 13)
+        .orElse(getScaledFallback(FONT_SMALL));
   }
 
   /**
@@ -113,7 +117,8 @@ public final class GuiFonts {
    * @return Cubellan font
    */
   public static Font getFontCubellanBold() {
-    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 24).orElse(FONT_NORMAL);
+    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 24)
+        .orElse(getScaledFallback(FONT_NORMAL));
   }
 
   /**
@@ -121,7 +126,8 @@ public final class GuiFonts {
    * @return Cubellan font
    */
   public static Font getFontCubellanBoldBig() {
-    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 35).orElse(FONT_NORMAL);
+    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 35)
+        .orElse(getScaledFallback(FONT_NORMAL));
   }
 
   /**
@@ -129,7 +135,8 @@ public final class GuiFonts {
    * @return Cubellan font
    */
   public static Font getFontCubellanSC() {
-    return getFontFromCache(CUBELLAN_SC_FONT_URL, 13).orElse(FONT_NORMAL);
+    return getFontFromCache(CUBELLAN_SC_FONT_URL, 13)
+        .orElse(getScaledFallback(FONT_NORMAL));
   }
 
   /**
@@ -137,7 +144,8 @@ public final class GuiFonts {
    * @return Generale Station font
    */
   public static Font getFontSquarion() {
-    return getFontFromCache(SQUARION_HINTED_FONT_URL, 14).orElse(FONT_NORMAL);
+    return getFontFromCache(SQUARION_HINTED_FONT_URL, 14)
+        .orElse(getScaledFallback(FONT_NORMAL));
   }
 
   /**
@@ -157,7 +165,7 @@ public final class GuiFonts {
     // This will cache the "base" font, but it will be discarded
     var fontOpt = getFontFromCache(SQUARION_HINTED_FONT_URL, 18);
     if (fontOpt.isEmpty()) {
-      return FONT_NORMAL;
+      return getScaledFallback(FONT_NORMAL);
     }
 
     final var processedFont = fontOpt.get().deriveFont(Font.BOLD);
@@ -216,13 +224,17 @@ public final class GuiFonts {
     if (fontUrl == null) {
       return Optional.empty();
     }
-    final var fontId = buildFontId(fontUrl.toExternalForm(), baseSize);
+    // Combine user preference scaling with resolution-based scaling
+    float resolutionScale = (float) UIScale.getScaleFactor();
+    float combinedScale = scalingFactor * resolutionScale;
+    final var fontId = buildFontId(fontUrl.toExternalForm(), baseSize)
+        + "RES:" + UIScale.getScreenHeight();
     Font result = fontCache.get(fontId);
     if (result != null) {
       return Optional.of(result);
     }
     final var fontOpt = loadTrueTypeFont(fontUrl);
-    final var fontSize = baseSize * scalingFactor;
+    final var fontSize = baseSize * combinedScale;
 
     if (fontOpt.isPresent()) {
       final var tmpFont = fontOpt.get().deriveFont(fontSize);
@@ -230,6 +242,26 @@ public final class GuiFonts {
       return Optional.of(tmpFont);
     }
     return Optional.empty();
+  }
+
+  /**
+   * Invalidate font cache. Should be called when resolution changes.
+   */
+  public static void invalidateCache() {
+    fontCache.clear();
+  }
+
+  /**
+   * Scale fallback font according to current resolution scale.
+   * @param base Base fallback font
+   * @return scaled font (or original if scale == 1)
+   */
+  private static Font getScaledFallback(final Font base) {
+    float scale = (float) UIScale.getScaleFactor();
+    if (scale == 1.0f) {
+      return base;
+    }
+    return base.deriveFont(base.getSize2D() * scale);
   }
 
   /** Hidden constructor */

@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2018-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -198,8 +199,26 @@ public class OptionsView extends BlackPanel {
     SpaceLabel label = new SpaceLabel("Screen resolution");
     xPanel.add(label);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    String[] resolutions = {"1024x768", "1280x768", "1280x960", "1280x1024",
-        "1440x960", "1680x1050", "1920x1080",
+    // Resolutions sorted by total pixels (smallest to largest)
+    String[] resolutions = {
+        "1024x768",    // XGA (4:3)
+        "1280x720",    // HD 720p (16:9)
+        "1280x768",    // WXGA (5:3)
+        "1280x800",    // WXGA (16:10)
+        "1280x960",    // SXGA- (4:3)
+        "1280x1024",   // SXGA (5:4)
+        "1366x768",    // HD (16:9) - common laptop
+        "1440x900",    // WXGA+ (16:10)
+        "1440x960",    // (3:2)
+        "1600x900",    // HD+ (16:9)
+        "1680x1050",   // WSXGA+ (16:10)
+        "1920x1080",   // FHD 1080p (16:9)
+        "1920x1200",   // WUXGA (16:10)
+        "2560x1080",   // UW-FHD (21:9) ultrawide
+        "2560x1440",   // QHD 1440p (16:9)
+        "2560x1600",   // WQXGA (16:10)
+        "3440x1440",   // UW-QHD (21:9) ultrawide
+        "3840x2160",   // 4K UHD (16:9)
         "Custom (" + game.getCurrentResolution() + ")"};
     resolutionSelection = new JComboBox<>(resolutions);
     resolutionSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());

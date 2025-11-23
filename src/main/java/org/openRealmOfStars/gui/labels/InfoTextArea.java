@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -26,6 +27,7 @@ import javax.swing.JTextArea;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
  *
@@ -40,9 +42,17 @@ public class InfoTextArea extends JTextArea {
    */
   private static final long serialVersionUID = 1L;
   /**
-  * Y axel offset where to draw text
+  * Base Y axel offset where to draw text (at 768p resolution).
   */
-  private static final int Y_OFFSET = 10;
+  private static final int Y_OFFSET_BASE = 10;
+
+  /**
+   * Get scaled Y offset for text drawing.
+   * @return Scaled Y offset
+   */
+  private static int getYOffset() {
+    return UIScale.scale(Y_OFFSET_BASE);
+  }
   /**
    * Is cursor blinking
    */
@@ -262,18 +272,20 @@ public class InfoTextArea extends JTextArea {
     if (width < 1) {
       customCharWidth = -1;
     } else {
-      customCharWidth = width;
+      // Scale the character width based on resolution
+      customCharWidth = UIScale.scale(width);
       if (GuiFonts.isLargerFonts()) {
-        customCharWidth = customCharWidth + 2;
+        customCharWidth = customCharWidth + UIScale.scale(2);
       }
     }
   }
 
-  @Override
-  public void paintImmediately(final int x, final int y, final int w,
-      final int h) {
-    super.paintImmediately(0, 0, getWidth(), getHeight());
-  }
+  // Commented out to prevent forcing full repaint on partial updates
+  // @Override
+  // public void paintImmediately(final int x, final int y, final int w,
+  //     final int h) {
+  //   super.paintImmediately(0, 0, getWidth(), getHeight());
+  // }
 
   /**
    * Draw string with specific graphics.
@@ -341,6 +353,7 @@ public class InfoTextArea extends JTextArea {
   }
   @Override
   protected void paintComponent(final Graphics g) {
+    super.paintComponent(g);
     this.setCaretPosition(this.getDocument().getLength());
     g.setColor(getBackground());
     Insets inset = this.getBorder().getBorderInsets(this);
@@ -364,7 +377,12 @@ public class InfoTextArea extends JTextArea {
       if (this.getLineWrap()) {
         int lastSpace = -1;
         int rowLen = 0;
-        int maxRowLen = width / 6;
+        // Use actual font metrics to determine character width
+        int defaultCharWidth = GuiStatics.getTextWidth(getFont(), "M");
+        if (defaultCharWidth < 1) {
+          defaultCharWidth = UIScale.scale(6);
+        }
+        int maxRowLen = width / defaultCharWidth;
         if (customCharWidth > 0) {
           maxRowLen = width / customCharWidth;
         }
@@ -433,14 +451,15 @@ public class InfoTextArea extends JTextArea {
               highlightLocation);
         } else {
           drawString(g, texts[i], sx,
-              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY,
+              sy + i * getYOffset() + getYOffset() - smoothScrollY,
               highlightLocation);
         }
 
       }
     }
     smoothScrollY++;
-    if (smoothScrollY == 18) {
+    // Scale the smooth scroll threshold (18 at base resolution)
+    if (smoothScrollY == UIScale.scale(18)) {
       smoothScrollY = 0;
       smoothScrollNextRow = true;
     }

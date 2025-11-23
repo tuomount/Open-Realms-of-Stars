@@ -719,23 +719,8 @@ public class PlanetView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
-      Building building = buildingList.getSelectedValue();
-      boolean fullRepaint = false;
-      if (building != null) {
-        SpaceRace race = null;
-        if (planet.getPlanetPlayerInfo() != null) {
-          race = planet.getPlanetPlayerInfo().getRace();
-        }
-        String tmp = building.getFullDescription(race);
-        if (!tmp.equals(buildingInfo.getText())) {
-          buildingInfo.setText(tmp);
-          this.repaint();
-          fullRepaint = true;
-        }
-      }
-      if (!fullRepaint) {
-        imgBase.repaint();
-      }
+      // Only repaint imgBase for planet animation, don't touch building text
+      imgBase.repaint();
       return;
     }
     if (arg0.getActionCommand()

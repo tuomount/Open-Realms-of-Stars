@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.panels;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -32,6 +33,7 @@ import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -287,27 +289,40 @@ public class BigImagePanel extends JPanel {
       if (planet.isGasGiant()) {
         offsetY = offsetY + 200;
       }
-      if (offsetY < 75) {
-        offsetY = 75;
+      if (offsetY < UIScale.scale(75)) {
+        offsetY = UIScale.scale(75);
       }
       g.setFont(GuiFonts.getFontCubellanBold());
       drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
           GuiStatics.getCoolSpaceColorTransparent(), offsetX, offsetY,
           texts[0]);
       if (planet.getPlanetPlayerInfo() != null) {
+        String empireName = planet.getPlanetPlayerInfo().getEmpireName();
+        int empireOffset = GuiStatics.getTextHeight(
+            GuiFonts.getFontCubellanBold(), texts[0]);
+
         offsetX = (PLANET_X_OFFSET - backgroundImg.getWidth()) / 2
             - GuiStatics.getTextWidth(GuiFonts.getFontCubellanBold(),
-                planet.getPlanetPlayerInfo().getEmpireName()) / 2
+                empireName) / 2
             + backgroundImg.getWidth() / 2;
+
+        // Ensure empire name doesn't go off the left edge of the screen
+        int minOffsetX = UIScale.scale(5);
+        if (offsetX < minOffsetX) {
+          offsetX = minOffsetX;
+        }
+
         drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
-            GuiStatics.getCoolSpaceColorTransparent(), offsetX, offsetY + 25,
-            planet.getPlanetPlayerInfo().getEmpireName());
+            GuiStatics.getCoolSpaceColorTransparent(), offsetX,
+            offsetY + empireOffset, empireName);
       }
       g.setFont(GuiFonts.getFontCubellan());
+      int lineHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
+          "Ag");
       for (int i = 1; i < texts.length; i++) {
         drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
-            GuiStatics.getCoolSpaceColorTransparent(), 25,
-            this.getHeight() / 2 + i * 15, texts[i]);
+            GuiStatics.getCoolSpaceColorTransparent(), UIScale.scale(25),
+            this.getHeight() / 2 + i * lineHeight, texts[i]);
       }
       if (planet.getOrbital() != null) {
         texts = planet.getOrbital().getDescription().split("\n");
@@ -333,24 +348,30 @@ public class BigImagePanel extends JPanel {
         title = "In Deep Space...";
       }
       g.setFont(GuiFonts.getFontCubellanBoldBig());
-      int offsetX = 50;
-      int offsetY = 75;
+      int offsetX = UIScale.scale(50);
+      int offsetY = UIScale.scale(75);
       if (backgroundImg != null) {
-        offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2 - GuiStatics
-            .getTextWidth(GuiFonts.getFontCubellanBoldBig(), title) / 2
+        offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2
+            - GuiStatics.getTextWidth(GuiFonts.getFontCubellanBoldBig(),
+                title) / 2
             + backgroundImg.getWidth() / 2;
         offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
-          offsetY = offsetY + 100;
+          offsetY = offsetY + UIScale.scale(100);
         }
-        if (offsetY < 75) {
-          offsetY = 75;
+        if (offsetY < UIScale.scale(75)) {
+          offsetY = UIScale.scale(75);
         }
         if (textInMiddle) {
           offsetY = (this.getHeight() - backgroundImg.getHeight()) / 2
               - GuiStatics.getTextHeight(GuiFonts.getFontCubellanBoldBig(),
                   title) / 2;
         }
+      }
+      // Ensure title doesn't go off the left edge of the screen
+      int minOffsetX = UIScale.scale(5);
+      if (offsetX < minOffsetX) {
+        offsetX = minOffsetX;
       }
       drawBoldText(g, GuiStatics.getCoolSpaceColorDark(),
           GuiStatics.getCoolSpaceColor(), offsetX, offsetY, title);
@@ -408,7 +429,7 @@ public class BigImagePanel extends JPanel {
 
   }
   @Override
-  public void paint(final Graphics g) {
+  protected void paintComponent(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     int sx = 0;
     int sy = 0;
@@ -686,7 +707,7 @@ public class BigImagePanel extends JPanel {
     }
 
     drawTextArea(g);
-    this.paintChildren(g2d);
+    // Swing automatically calls paintChildren() after paintComponent()
   }
 
   /**

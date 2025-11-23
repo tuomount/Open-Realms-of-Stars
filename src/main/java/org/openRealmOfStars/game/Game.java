@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen, Richard Smit
  * Copyright (C) 2017 God Beom
  *
  * This program is free software; you can redistribute it and/or
@@ -96,6 +96,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -503,6 +504,8 @@ public class Game implements ActionListener {
     int resolutionWidth = configFile.getResolutionWidth();
     int resolutionHeight = configFile.getResolutionHeight();
     screenWidth = resolutionWidth;
+    // Initialize UI scaling system for high-DPI support
+    UIScale.initialize(resolutionWidth, resolutionHeight);
     if (visible) {
       if (configFile.isHardwareAcceleration()) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -1058,6 +1061,10 @@ public class Game implements ActionListener {
     if (resolutionWidth != gameFrame.getWidth()
         || resolutionHeight != gameFrame.getHeight()) {
       screenWidth = resolutionWidth;
+      // Update UI scaling system for new resolution
+      UIScale.initialize(resolutionWidth, resolutionHeight);
+      // Invalidate font cache so fonts are re-created with new scale
+      GuiFonts.invalidateCache();
       gameFrame.setVisible(false);
       gameFrame.setSize(resolutionWidth, resolutionHeight);
       gameFrame.setLocationRelativeTo(null);

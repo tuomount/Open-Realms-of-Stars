@@ -1,3 +1,11 @@
+- Bugfixes -
+
+* Fixes weird graphical glitch on Windows when waiting for AI to take turn.
+* Fixes wrong path for custom race image when playing on Windows.
+* Fixes that custom constructed population race wasn't able to build new population.
+
+# Open Realm of Stars 0.27.0
+
 - New features and updates -
 
 * Adds more spacing to UI.

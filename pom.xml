@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>0.28.0</revision>
+        <revision>0.28.1</revision>
         <changelist>-SNAPSHOT</changelist>
         <sha1/>
     </properties>
@@ -137,12 +137,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>onlyUnitTests</id>
+            <id>defaultTests</id>
+            <activation>
+                <property>
+                    <name>!groups</name>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -150,32 +160,13 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.22.2</version>
                         <configuration>
-                            <groups>org.openRealmOfStars.UnitTest</groups>
-                            <parallel>methods</parallel>
-                            <threadCountMethods>8</threadCountMethods>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>allTests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.2</version>
-                        <configuration>
-                          <parallel>methods</parallel>
-                          <threadCountMethods>8</threadCountMethods>
+                            <groups>org.openRealmOfStars.UnitTest,org.openRealmOfStars.BehaviourTest</groups>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-
 
     <reporting>
         <plugins>

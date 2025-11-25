@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.borders;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -26,9 +27,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.border.AbstractBorder;
 
-import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
@@ -178,48 +179,24 @@ public class ScifiBorder extends AbstractBorder {
    * @return Scifi border adjust on sides.
    */
   private static int getSideAdjust() {
-    int screenWidth = Game.getScreenWidth();
-    if (screenWidth < 1280) {
-      return 0;
-    } else if (screenWidth < 1440) {
-      return 2;
-    } else if (screenWidth < 1680) {
-      return 4;
-    } else {
-      return 6;
-    }
+    // Scale adjustment based on resolution (base 0 at 768p)
+    return UIScale.scale(4) - 4;
   }
   /**
    * Scifi border adjust on top based on resolution.
    * @return Scifi border adjust on top.
    */
   private static int getTopAdjust() {
-    int screenWidth = Game.getScreenWidth();
-    if (screenWidth < 1280) {
-      return 2;
-    } else if (screenWidth < 1440) {
-      return 4;
-    } else if (screenWidth < 1680) {
-      return 6;
-    } else {
-      return 8;
-    }
+    // Scale adjustment based on resolution (base 2 at 768p)
+    return UIScale.scale(6) - 4;
   }
   /**
    * Scifi border adjust on bottom based on resolution.
    * @return Scifi border adjust on bottom.
    */
   private static int getBottomAdjust() {
-    int screenWidth = Game.getScreenWidth();
-    if (screenWidth < 1280) {
-      return 0;
-    } else if (screenWidth < 1440) {
-      return 2;
-    } else if (screenWidth < 1680) {
-      return 4;
-    } else {
-      return 4;
-    }
+    // Scale adjustment based on resolution (base 0 at 768p)
+    return UIScale.scale(3) - 3;
   }
   @Override
   public void paintBorder(final Component c, final Graphics g, final int x,
@@ -331,11 +308,10 @@ public class ScifiBorder extends AbstractBorder {
 
       g2d.setColor(GuiStatics.getScifiBorderTextColor());
       g2d.setFont(GuiFonts.getFontCubellanSC());
-      int offsetY = 0;
-      if (hires) {
-        offsetY = 6;
-      }
-      g2d.drawString(text, x + width / 2 - textWidth / 2, y + 15 + offsetY);
+      int textOffsetY = centerImage.getHeight() / 2
+          + GuiStatics.getTextHeight(g2d.getFont(), text) / 3;
+      g2d.drawString(text, x + width / 2 - textWidth / 2,
+          y + textOffsetY);
 
     }
   }

@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.mapPanel;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -38,6 +39,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -80,18 +82,43 @@ public class MapPanel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Map drawing area size width
+   * Base map drawing area size width (at 768p resolution)
    */
-  private static final int DEFAULT_WIDTH = 864;
+  private static final int DEFAULT_WIDTH_BASE = 864;
   /**
-   * Map drawing area size height
+   * Base map drawing area size height (at 768p resolution)
    */
-  private static final int DEFAULT_HEIGHT = 608;
+  private static final int DEFAULT_HEIGHT_BASE = 608;
 
   /**
-   * Battle Map view size. This size is both width and height
+   * Base battle Map view size (at 768p resolution). This size is both
+   * width and height
    */
-  private static final int BATTLE_VIEW_SIZE = 576;
+  private static final int BATTLE_VIEW_SIZE_BASE = 576;
+
+  /**
+   * Get scaled default width for map panel.
+   * @return Scaled width in pixels
+   */
+  public static int getDefaultWidth() {
+    return UIScale.scale(DEFAULT_WIDTH_BASE);
+  }
+
+  /**
+   * Get scaled default height for map panel.
+   * @return Scaled height in pixels
+   */
+  public static int getDefaultHeight() {
+    return UIScale.scale(DEFAULT_HEIGHT_BASE);
+  }
+
+  /**
+   * Get scaled battle view size.
+   * @return Scaled battle view size in pixels
+   */
+  public static int getBattleViewSize() {
+    return UIScale.scale(BATTLE_VIEW_SIZE_BASE);
+  }
 
   /**
    * Delay for animation update.
@@ -321,8 +348,8 @@ public class MapPanel extends JPanel {
   private void initMapPanel(final Game game, final boolean battleMode) {
     cursorFocus = 0;
     battle = battleMode;
-    int width = DEFAULT_WIDTH;
-    int height = DEFAULT_HEIGHT;
+    int width = getDefaultWidth();
+    int height = getDefaultHeight();
     historyCultures = null;
     historyCoordInitialized = false;
     setShowMiniMap(false);
@@ -336,16 +363,16 @@ public class MapPanel extends JPanel {
       highContrastGrid = game.isHighContrastGrid();
     }
     if (battle && game == null) {
-      width = BATTLE_VIEW_SIZE;
-      height = BATTLE_VIEW_SIZE;
+      width = getBattleViewSize();
+      height = getBattleViewSize();
     } else if (battle && game != null) {
-      width = game.getWidth() - 470;
-      height = game.getHeight() - 210;
-      if (width < BATTLE_VIEW_SIZE) {
-        width = BATTLE_VIEW_SIZE;
+      width = game.getWidth() - UIScale.scale(470);
+      height = game.getHeight() - UIScale.scale(210);
+      if (width < getBattleViewSize()) {
+        width = getBattleViewSize();
       }
-      if (height < BATTLE_VIEW_SIZE) {
-        height = BATTLE_VIEW_SIZE;
+      if (height < getBattleViewSize()) {
+        height = getBattleViewSize();
       }
     }
     panelType = MapPanelType.STARMAP;
@@ -475,6 +502,38 @@ public class MapPanel extends JPanel {
    */
   private static final int FLICKER_UPPER_LIMIT = 384;
 
+
+  /**
+   * Draw text with a colored horizontal bar background.
+   * This utility method draws a thick horizontal bar behind text labels for
+   * celestial objects (suns, planets, gas giants) to improve readability.
+   * @param gr Graphics2D context
+   * @param text Text to draw
+   * @param font Font to use for the text
+   * @param barColor Color for the background bar
+   * @param textX X position for text center
+   * @param textY Base Y position for the text
+   * @param barStartX Bar start X coordinate
+   * @param barEndX Bar end X coordinate
+   * @param tileHeight Height of the tile for centering calculations
+   */
+  private void drawTextWithColoredBar(final Graphics2D gr,
+      final String text, final Font font, final Color barColor,
+      final int textX, final int textY,
+      final int barStartX, final int barEndX, final int tileHeight) {
+    int lineY = textY + tileHeight / 2 - UIScale.scale(3);
+    gr.setStroke(GuiStatics.TEXT_LINE);
+    gr.setColor(barColor);
+    for (int y = -3; y <= 3; y++) {
+      gr.drawLine(barStartX, lineY + y, barEndX, lineY + y);
+    }
+    gr.setColor(Color.BLACK);
+    gr.setFont(font);
+    java.awt.FontMetrics fm = gr.getFontMetrics();
+    int finalTextY = textY + (tileHeight - fm.getHeight()) / 2
+        + fm.getAscent() - UIScale.scale(3);
+    gr.drawString(text, textX, finalTextY);
+  }
 
   /**
    * Draw Fleet into map panel screen.
@@ -757,27 +816,20 @@ public class MapPanel extends JPanel {
         int textWidth = (int) font.getStringBounds(sun.getName(),
             gr.getFontRenderContext()).getWidth();
         int offset = Tile.getMaxWidth(starMap.getZoomLevel()) / 2
-            + textWidth / 2 - 2;
-        gr.setStroke(GuiStatics.TEXT_LINE);
-        if (tile.getName().equals(TileNames.SUN_E)) {
-          gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
-        }
+            + textWidth / 2 - UIScale.scale(1);
+        Color lineColor = GuiStatics.COLOR_GOLD_TRANS;
         if (tile.getName().equals(TileNames.STAR_E)) {
-          gr.setColor(GuiStatics.COLOR_SPACE_YELLOW);
+          lineColor = GuiStatics.COLOR_SPACE_YELLOW;
         }
         if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
-          gr.setColor(GuiStatics.getCoolSpaceColor());
+          lineColor = GuiStatics.getCoolSpaceColor();
         }
-        gr.drawLine(pixelX - offset,
-            pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3,
-            pixelX - Tile.getMaxWidth(starMap.getZoomLevel()) + offset,
-            pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3);
-        gr.setColor(Color.BLACK);
-        gr.setFont(font);
-        gr.drawString(sun.getName(),
+        drawTextWithColoredBar(gr, sun.getName(), font, lineColor,
             pixelX - Tile.getMaxWidth(starMap.getZoomLevel()) / 2
-            - textWidth / 2,
-            pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
+            - textWidth / 2, pixelY,
+            pixelX - offset,
+            pixelX - Tile.getMaxWidth(starMap.getZoomLevel()) + offset,
+            Tile.getMaxHeight(starMap.getZoomLevel()));
       }
     }
 
@@ -804,20 +856,19 @@ public class MapPanel extends JPanel {
       if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
         font = GuiFonts.getFontCubellanVerySmall();
       }
-      int textWidth = (int) font.getStringBounds(
-          RandomSystemNameGenerator.numberToRoman(
-              planet.getOrderNumber()), gr.getFontRenderContext())
-          .getWidth();
-      int offset = textWidth / 2 - 2;
-      gr.setStroke(GuiStatics.TEXT_LINE);
-      gr.setColor(GuiStatics.COLOR_GREYBLUE_NO_OPAGUE);
-      gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset,
-          pixelY - 3);
-      gr.setColor(Color.BLACK);
-      gr.setFont(font);
-      gr.drawString(
-          RandomSystemNameGenerator.numberToRoman(
-              planet.getOrderNumber()), pixelX - textWidth / 2, pixelY);
+      String text = RandomSystemNameGenerator.numberToRoman(
+          planet.getOrderNumber());
+      int textWidth = (int) font.getStringBounds(text,
+          gr.getFontRenderContext()).getWidth();
+      int offset = textWidth / 2 - UIScale.scale(1);
+      // Gas giants use negative vertical offset for top positioning
+      int adjustedPixelY = pixelY - Tile.getMaxHeight(starMap.getZoomLevel())
+          / 2 - UIScale.scale(3);
+      drawTextWithColoredBar(gr, text, font,
+          GuiStatics.COLOR_GREYBLUE_NO_OPAGUE,
+          pixelX - textWidth / 2, adjustedPixelY,
+          pixelX - offset, pixelX + offset,
+          Tile.getMaxHeight(starMap.getZoomLevel()));
     }
 
     // Draw planet text
@@ -829,24 +880,19 @@ public class MapPanel extends JPanel {
       if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
         font = GuiFonts.getFontCubellanVerySmall();
       }
-      int textWidth = (int) font.getStringBounds(
-          RandomSystemNameGenerator.numberToRoman(
-              planet.getOrderNumber()), gr.getFontRenderContext()).getWidth();
+      String text = RandomSystemNameGenerator.numberToRoman(
+          planet.getOrderNumber());
+      int textWidth = (int) font.getStringBounds(text,
+          gr.getFontRenderContext()).getWidth();
       int offset = Tile.getMaxWidth(starMap.getZoomLevel()) / 2
-          - textWidth / 2 - 2;
-      gr.setStroke(GuiStatics.TEXT_LINE);
-      gr.setColor(GuiStatics.COLOR_GREYBLUE);
-      gr.drawLine(pixelX + offset,
-          pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3,
+          - textWidth / 2 - UIScale.scale(1);
+      drawTextWithColoredBar(gr, text, font,
+          new Color(70, 160, 70, 140),
+          pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2
+              - textWidth / 2, pixelY,
+          pixelX + offset,
           pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) - offset,
-          pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3);
-      gr.setColor(Color.BLACK);
-      gr.setFont(font);
-      gr.drawString(
-          RandomSystemNameGenerator.numberToRoman(
-              planet.getOrderNumber()),
-          pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2 - textWidth / 2,
-          pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
+          Tile.getMaxHeight(starMap.getZoomLevel()));
     }
   }
   /**
@@ -1076,9 +1122,9 @@ public class MapPanel extends JPanel {
           }
           if (i != viewPointX) {
             // Right line
-            gr.drawLine(pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) - 1,
-                pixelY,
-                pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) - 1,
+            int tileRightEdge = pixelX
+                + Tile.getMaxWidth(starMap.getZoomLevel()) - 1;
+            gr.drawLine(tileRightEdge, pixelY, tileRightEdge,
                 pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) - 1);
           }
           if (j != viewPointY) {
@@ -1307,18 +1353,19 @@ public class MapPanel extends JPanel {
           cursorPixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2,
           cursorPixelX, cursorPixelY
           + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
+      int tileWidth = Tile.getMaxWidth(starMap.getZoomLevel());
+      int tileHeight = Tile.getMaxHeight(starMap.getZoomLevel());
       gr.drawLine(
-          cursorPixelX + Tile.getMaxWidth(starMap.getZoomLevel()), cursorPixelY
-          + Tile.getMaxHeight(starMap.getZoomLevel()) / 2,
+          cursorPixelX + tileWidth, cursorPixelY + tileHeight / 2,
           screen.getWidth() - viewPointOffsetX,
-          cursorPixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
-      gr.drawLine(cursorPixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2,
+          cursorPixelY + tileHeight / 2);
+      gr.drawLine(cursorPixelX + tileWidth / 2,
           viewPointOffsetY,
-          cursorPixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2,
+          cursorPixelX + tileWidth / 2,
           cursorPixelY);
-      gr.drawLine(cursorPixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2,
-          cursorPixelY + Tile.getMaxHeight(starMap.getZoomLevel()),
-          cursorPixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2,
+      gr.drawLine(cursorPixelX + tileWidth / 2,
+          cursorPixelY + tileHeight,
+          cursorPixelX + tileWidth / 2,
           screen.getHeight() - viewPointOffsetY);
     }
     updateAnimation = false;
@@ -1520,20 +1567,14 @@ public class MapPanel extends JPanel {
             && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
           if (sun != null) {
-            int textWidth = (int) GuiFonts.getFontCubellanSC()
-                .getStringBounds(sun.getName(), gr.getFontRenderContext())
-                .getWidth();
-            int offset = tileWidth / 2 + textWidth / 2 - 2;
-            gr.setStroke(GuiStatics.TEXT_LINE);
-            gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
-            gr.drawLine(pixelX - offset, pixelY + tileHeight / 2 - 3,
-                pixelX - tileWidth + offset,
-                pixelY + tileHeight / 2 - 3);
-            gr.setColor(Color.BLACK);
-            gr.setFont(GuiFonts.getFontCubellanSC());
-            gr.drawString(sun.getName(),
-                pixelX - tileWidth / 2 - textWidth / 2,
-                pixelY + tileHeight / 2);
+            Font font = GuiFonts.getFontCubellanSC();
+            int textWidth = (int) font.getStringBounds(sun.getName(),
+                gr.getFontRenderContext()).getWidth();
+            int offset = tileWidth / 2 + textWidth / 2 - UIScale.scale(1);
+            drawTextWithColoredBar(gr, sun.getName(), font,
+                GuiStatics.COLOR_GOLD_TRANS,
+                pixelX - tileWidth / 2 - textWidth / 2, pixelY,
+                pixelX - offset, pixelX - tileWidth + offset, tileHeight);
           }
         }
 
@@ -1552,40 +1593,33 @@ public class MapPanel extends JPanel {
             || tile.getName().equals(TileNames.ICEGIANT2_SE)
                 && i > -viewPointX)
             && planet != null) {
-          int textWidth = (int) GuiFonts.getFontCubellanSC()
-              .getStringBounds(RandomSystemNameGenerator.numberToRoman(
-                  planet.getOrderNumber()), gr.getFontRenderContext())
-              .getWidth();
-          int offset = textWidth / 2 - 2;
-          gr.setStroke(GuiStatics.TEXT_LINE);
-          gr.setColor(GuiStatics.COLOR_GREYBLUE_NO_OPAGUE);
-          gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset, pixelY - 3);
-          gr.setColor(Color.BLACK);
-          gr.setFont(GuiFonts.getFontCubellanSC());
-          gr.drawString(
-              RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
-              pixelX - textWidth / 2, pixelY);
+          Font font = GuiFonts.getFontCubellanSC();
+          String text = RandomSystemNameGenerator.numberToRoman(
+              planet.getOrderNumber());
+          int textWidth = (int) font.getStringBounds(text,
+              gr.getFontRenderContext()).getWidth();
+          int offset = textWidth / 2 - UIScale.scale(1);
+          // Gas giants use negative vertical offset for top positioning
+          int adjustedPixelY = pixelY - tileHeight / 2 - UIScale.scale(3);
+          drawTextWithColoredBar(gr, text, font,
+              GuiStatics.COLOR_GREYBLUE_NO_OPAGUE,
+              pixelX - textWidth / 2, adjustedPixelY,
+              pixelX - offset, pixelX + offset, tileHeight);
         }
 
         // Draw planet text
         if (planet != null && !planet.isGasGiant()
             && planet.getOrderNumber() != 0) {
-          int textWidth = (int) GuiFonts.getFontCubellanSC()
-              .getStringBounds(RandomSystemNameGenerator.numberToRoman(
-                  planet.getOrderNumber()), gr.getFontRenderContext())
-              .getWidth();
-          int offset = tileWidth / 2 - textWidth / 2 - 2;
-          gr.setStroke(GuiStatics.TEXT_LINE);
-          gr.setColor(GuiStatics.COLOR_GREYBLUE);
-          gr.drawLine(pixelX + offset, pixelY + tileHeight / 2 - 3,
-              pixelX + tileWidth - offset,
-              pixelY + tileHeight / 2 - 3);
-          gr.setColor(Color.BLACK);
-          gr.setFont(GuiFonts.getFontCubellanSC());
-          gr.drawString(
-              RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
-              pixelX + tileWidth / 2 - textWidth / 2,
-              pixelY + tileHeight / 2);
+          Font font = GuiFonts.getFontCubellanSC();
+          String text = RandomSystemNameGenerator.numberToRoman(
+              planet.getOrderNumber());
+          int textWidth = (int) font.getStringBounds(text,
+              gr.getFontRenderContext()).getWidth();
+          int offset = tileWidth / 2 - textWidth / 2 - UIScale.scale(1);
+          drawTextWithColoredBar(gr, text, font,
+              new Color(70, 160, 70, 140),
+              pixelX + tileWidth / 2 - textWidth / 2, pixelY,
+              pixelX + offset, pixelX + tileWidth - offset, tileHeight);
         }
         pixelX = pixelX + tileWidth;
       }

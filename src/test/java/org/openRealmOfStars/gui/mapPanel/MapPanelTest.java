@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.mapPanel;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2018-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -21,10 +22,12 @@ import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.Game;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.starMap.Route;
 
 /**
@@ -32,6 +35,12 @@ import org.openRealmOfStars.starMap.Route;
 *
 */
 public class MapPanelTest {
+
+  @Before
+  public void setUp() {
+    // Initialize UIScale at base resolution for consistent test results
+    UIScale.initialize(1024, 768);
+  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

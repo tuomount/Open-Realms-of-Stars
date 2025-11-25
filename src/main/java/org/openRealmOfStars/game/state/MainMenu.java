@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -19,12 +20,10 @@ package org.openRealmOfStars.game.state;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
@@ -32,6 +31,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -88,7 +88,7 @@ public class MainMenu extends BlackPanel {
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    invisible.add(Box.createRigidArea(new Dimension(500, 250)));
+    invisible.add(UIScale.scaledRigidArea(500, 250));
 
     SpaceButton btn = new SpaceButton("Continue game",
         GameCommands.COMMAND_CONTINUE_GAME);

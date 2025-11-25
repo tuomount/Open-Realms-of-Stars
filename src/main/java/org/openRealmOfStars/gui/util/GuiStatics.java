@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.util;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
@@ -64,8 +65,18 @@ public final class GuiStatics {
   /** Scheme selection for UI. */
   private static BaseScheme schemeType = CLASSIC_SCHEME;
 
-  /** Text field height in pixels. */
+  /** Base text field height in pixels (at 768p resolution). */
+  private static final int TEXT_FIELD_HEIGHT_BASE = 30;
+  /** Text field height in pixels. Deprecated: use getTextFieldHeight() */
   public static final int TEXT_FIELD_HEIGHT = 30;
+
+  /**
+   * Get scaled text field height based on current resolution.
+   * @return Scaled text field height in pixels
+   */
+  public static int getTextFieldHeight() {
+    return UIScale.scale(TEXT_FIELD_HEIGHT_BASE);
+  }
 
   /** Line type for text background */
   public static final Stroke TEXT_LINE = new BasicStroke(12,

@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -18,8 +19,10 @@ package org.openRealmOfStars.gui.list;
  */
 
 import java.awt.Component;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 
-import javax.swing.DefaultListCellRenderer;
+import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -37,26 +40,60 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 public class ProductionListRenderer implements ListCellRenderer<Construction> {
 
   /**
-   * Default list cell renderer
+   * Custom JLabel for list cell rendering that properly handles painting
    */
-  private DefaultListCellRenderer defaultRenderer
-      = new DefaultListCellRenderer();
+  private static class ProductionLabel extends JLabel {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void paintComponent(final Graphics g) {
+      // Fill background first (since we're opaque)
+      g.setColor(getBackground());
+      g.fillRect(0, 0, getWidth(), getHeight());
+      // Draw icon if present
+      int textX = 5;
+      Icon icon = getIcon();
+      if (icon != null) {
+        int iconY = (getHeight() - icon.getIconHeight()) / 2;
+        icon.paintIcon(this, g, 5, iconY);
+        textX = 5 + icon.getIconWidth() + 5;
+      }
+
+      // Early exit if no text to draw
+      String text = getText();
+      if (text == null || text.isEmpty()) {
+        return;
+      }
+
+      // Draw text
+      g.setFont(getFont());
+      g.setColor(getForeground());
+      FontMetrics metrics = g.getFontMetrics(getFont());
+      int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
+      g.drawString(text, textX, y);
+    }
+  }
+
+  /**
+   * Reusable label for rendering
+   */
+  private ProductionLabel label = new ProductionLabel();
 
   @Override
   public Component getListCellRendererComponent(
       final JList<? extends Construction> list, final Construction value,
       final int index, final boolean isSelected, final boolean cellHasFocus) {
-    JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
-        list, value, index, isSelected, cellHasFocus);
-    renderer.setFont(GuiFonts.getFontCubellan());
-    renderer.setIcon(Icons.getIconByName(value.getIconId()).getAsIcon());
+    label.setFont(GuiFonts.getFontCubellan());
+    label.setText(value.getName());
+    label.setIcon(Icons.getIconByName(value.getIconId()).getAsIcon());
+    label.setOpaque(true);
     if (isSelected) {
-      renderer.setForeground(GuiStatics.getCoolSpaceColor());
-      renderer.setBackground(GuiStatics.getDeepSpaceColor());
+      label.setForeground(GuiStatics.getCoolSpaceColor());
+      label.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
-      renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
-      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
+      label.setForeground(GuiStatics.getCoolSpaceColorDark());
+      label.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
-    return renderer;
+    return label;
   }
 }

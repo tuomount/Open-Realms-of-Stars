@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.buttons;
 /*
  * Open Realm of Stars game project
+ * Copyright (C) 2025 Richard Smit
  * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
@@ -33,6 +34,7 @@ import javax.swing.border.EtchedBorder;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
  *
@@ -71,9 +73,9 @@ public class SpaceButton extends JButton {
     }
     Dimension size = this.getPreferredSize();
     size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
-        texts[longest]) + 20;
+        texts[longest]) + UIScale.scale(20);
     size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
-        texts[longest]) * texts.length + 10;
+        texts[longest]) * texts.length + UIScale.scale(10);
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
@@ -99,14 +101,14 @@ public class SpaceButton extends JButton {
     Dimension size = this.getPreferredSize();
     if (this.icon != null) {
       size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
-          getText()) + 20 + 16;
+          getText()) + UIScale.scale(20) + UIScale.scale(16);
       size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
-          getText()) + 10;
+          getText()) + UIScale.scale(10);
     } else {
       size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
-          getText()) + 20;
+          getText()) + UIScale.scale(20);
       size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
-          getText()) + 10;
+          getText()) + UIScale.scale(10);
     }
     this.setMinimumSize(size);
     this.setPreferredSize(size);
@@ -159,7 +161,14 @@ public class SpaceButton extends JButton {
     } else {
       g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
     }
-    String[] texts = getText().split("\n");
+
+    // Early exit if no text to draw
+    String text = getText();
+    if (text == null || text.isEmpty()) {
+      return;
+    }
+
+    String[] texts = text.split("\n");
     g.setFont(GuiFonts.getFontCubellan());
     int longest = 0;
     for (int i = 0; i < texts.length; i++) {

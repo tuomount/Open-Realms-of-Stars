@@ -2594,8 +2594,32 @@ public class Planet {
   private void checkIfSpecialProjectsAreDone(final StarMap map,
       final int requiredMetalCost, final int requiredProdCost) {
     Message msg;
+    boolean pureRobots = false;
+    boolean robotsThatEat = false;
+    boolean robotThatEatMetal = false;
+    boolean robotPlants = false;
     if (underConstruction.getName()
         .equals(ConstructionFactory.MECHION_CITIZEN)) {
+      pureRobots = true;
+    }
+    if (planetOwnerInfo.getRace().hasTrait(TraitIds.CONSTRUCTED_POP)
+        && underConstruction.getName().endsWith(" citizen")) {
+      if (planetOwnerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+        pureRobots = true;
+      } else if (planetOwnerInfo.getRace().hasTrait(TraitIds.LITHOVORIC)) {
+        robotThatEatMetal = true;
+      } else if (planetOwnerInfo.getRace().hasTrait(TraitIds.PHOTOSYNTHESIS)) {
+        robotPlants = true;
+      } else {
+        robotsThatEat = true;
+      }
+    }
+    if (underConstruction.getName()
+        .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
+      robotsThatEat = true;
+    }
+
+    if (pureRobots || robotPlants) {
       if (governor != null) {
         governor.getStats().addOne(StatType.POPULATION_GROWTH);
       }
@@ -2624,8 +2648,42 @@ public class Planet {
       planetOwnerInfo.getMsgList().addNewMessage(msg);
       return;
     }
-    if (underConstruction.getName()
-        .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
+    if (robotThatEatMetal) {
+      if (governor != null) {
+        governor.getStats().addOne(StatType.POPULATION_GROWTH);
+      }
+      metal = metal - requiredMetalCost;
+      prodResource = prodResource - requiredProdCost;
+      int require = getTotalPopulation() / 2;
+      int available = getMetal();
+      if (available > require) {
+        workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+      } else {
+        workers[METAL_MINERS] = workers[METAL_MINERS] + 1;
+      }
+      String nextBuilding = "";
+      String finishedBuilding = underConstruction.getName();
+      if (governor != null
+          && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
+        int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+        Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+        PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+        nextBuilding = governor.getCallName() + " selected new "
+            + "construction process where "
+            + getUnderConstruction().getName()
+            + " will be built. Estimated building time is "
+            + getProductionTimeAsString(underConstruction) + ".";
+      }
+      msg = new Message(MessageType.CONSTRUCTION,
+          getName() + " built " + finishedBuilding
+              + ". " + nextBuilding,
+          Icons.getIconByName(Icons.ICON_PEOPLE));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      planetOwnerInfo.getMsgList().addNewMessage(msg);
+      return;
+    }
+    if (robotsThatEat) {
       if (governor != null) {
         governor.getStats().addOne(StatType.POPULATION_GROWTH);
       }

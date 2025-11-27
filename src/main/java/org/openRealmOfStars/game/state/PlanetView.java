@@ -30,6 +30,8 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
@@ -64,7 +66,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
  * Planet view for handling single planet production and space dock.
  *
  */
-public class PlanetView extends BlackPanel {
+public class PlanetView extends BlackPanel implements ListSelectionListener {
 
   /**
    *
@@ -514,6 +516,7 @@ public class PlanetView extends BlackPanel {
     buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
     buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     buildingList.setBackground(Color.BLACK);
+    buildingList.addListSelectionListener(this);
     scroll = new JScrollPane(buildingList);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     scroll.setBackground(Color.BLACK);
@@ -865,6 +868,27 @@ public class PlanetView extends BlackPanel {
           (Construction) constructionSelect.getSelectedItem());
       SoundPlayer.playMenuSound();
       updatePanel();
+    }
+  }
+
+  @Override
+  public void valueChanged(final ListSelectionEvent arg0) {
+    boolean fullRepaint = false;
+    Building building = buildingList.getSelectedValue();
+    if (building != null) {
+      SpaceRace race = null;
+      if (planet.getPlanetPlayerInfo() != null) {
+        race = planet.getPlanetPlayerInfo().getRace();
+      }
+      String tmp = building.getFullDescription(race);
+      if (!tmp.equals(buildingInfo.getText())) {
+        buildingInfo.setText(tmp);
+        this.repaint();
+        fullRepaint = true;
+      }
+    }
+    if (!fullRepaint) {
+      imgBase.repaint();
     }
   }
 }

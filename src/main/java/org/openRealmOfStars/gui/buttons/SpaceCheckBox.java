@@ -32,6 +32,7 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 
 /**
 *
@@ -161,9 +162,7 @@ public class SpaceCheckBox extends JCheckBox {
         texts[longest]);
     int textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
         texts[longest]);
-    int offsetX = width / 2 - textWidth / 2 + sx;
     if (icon != null) {
-      offsetX = offsetX + 16;
       if (this.isSelected()) {
         if (type == CHECKBOX_TYPE_NORMAL) {
           icon = Icons.getIconByName(Icons.ICON_CHECKBOX_TICK);
@@ -179,16 +178,17 @@ public class SpaceCheckBox extends JCheckBox {
           icon = Icons.getIconByName(Icons.ICON_ELDER_BOX);
         }
       }
-      icon.draw(g2d, sx, sy);
+      int offsetY = (textHeight / 2 - Icon16x16.MAX_HEIGHT / 2);
+      if (offsetY < 0) {
+        offsetY = 0;
+      }
+      icon.draw(g2d, sx, sy + offsetY);
     }
 
-    if (offsetX < 0) {
-      offsetX = sx;
-    }
     for (int i = 0; i < texts.length; i++) {
       textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           texts[i]);
-      offsetX = width / 2 - textWidth / 2 + sx;
+      int offsetX = width / 2 - textWidth / 2 + sx + UIScale.scale(1);
       g2d.drawString(texts[i], offsetX, textHeight * (i + 1) + sy);
     }
 

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +19,6 @@ package org.openRealmOfStars.game.state;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -38,6 +37,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -211,14 +211,7 @@ public class GalaxyCreationView extends BlackPanel {
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    int extraBoxHeight = 150;
-    if (listener instanceof Game) {
-      Game game = (Game) listener;
-      if (game.getHeight() < 960) {
-        extraBoxHeight = 100;
-      }
-    }
-    invisible.add(Box.createRigidArea(new Dimension(500, extraBoxHeight)));
+    invisible.add(Box.createRigidArea(UIScale.scaledDimension(500, 100)));
 
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
@@ -231,14 +224,13 @@ public class GalaxyCreationView extends BlackPanel {
         extraBoxWidth = 200;
       }
     }
-    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
+    xinvis.add(Box.createRigidArea(UIScale.scaledDimension(extraBoxWidth, 5)));
     xinvis.add(createGalaxyCreationPanel(listener));
-    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
+    xinvis.add(Box.createRigidArea(UIScale.scaledDimension(extraBoxWidth, 5)));
 
     xinvis.add(createRealmSetupPanel(listener));
-    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
+    xinvis.add(Box.createRigidArea(UIScale.scaledDimension(extraBoxWidth, 5)));
     invisible.add(xinvis);
-    invisible.add(Box.createRigidArea(new Dimension(200, extraBoxHeight * 2)));
 
     imgBase.add(invisible, BorderLayout.CENTER);
 
@@ -268,7 +260,7 @@ public class GalaxyCreationView extends BlackPanel {
     SpaceLabel label = new SpaceLabel("Galaxy size");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] galaxySizes = new String[6];
     galaxySizes[0] = "Tiny 50x50";
     galaxySizes[1] = "Small 75x75";
@@ -286,11 +278,11 @@ public class GalaxyCreationView extends BlackPanel {
         + " United Galaxy Towers to build to start diplomatic victory path."
         + "</html>");
     info.add(comboGalaxySize);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("Sun density");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] sunDensity = new String[4];
     sunDensity[0] = "Sparse";
     sunDensity[1] = "Medium";
@@ -302,11 +294,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.addActionListener(listener);
     estimateGalaxySizeToolTip();
     info.add(comboSunDensity);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("Planetary events");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] events = new String[5];
     events[0] = "No events (0%)";
     events[1] = "Very rare (10%)";
@@ -327,11 +319,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlanetaryEvent.setToolTipText("<html>How many of planets have"
         + " special event when colonizing the planet.</html>");
     info.add(comboPlanetaryEvent);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("Rogue planets");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] roguePlanets = new String[5];
     roguePlanets[0] = "None";
     roguePlanets[1] = "Very few";
@@ -357,12 +349,12 @@ public class GalaxyCreationView extends BlackPanel {
     comboRoguePlanets.setToolTipText("Rogue planets are rare planet are"
         + " outside of solar systems.");
     info.add(comboRoguePlanets);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
 
     label = new SpaceLabel("Space pirates");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] spacePirates = new String[7];
     spacePirates[0] = "Disabled pirates";
     spacePirates[1] = "Very rare 10%";
@@ -381,12 +373,12 @@ public class GalaxyCreationView extends BlackPanel {
         + " space anomalies either.<html>");
 
     info.add(comboSpacePirates);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
 
     label = new SpaceLabel("Space pirate difficulty");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] spacePirateDifficulties = new String[5];
     spacePirateDifficulties[0] = PirateDifficultLevel.VERY_EASY.toString();
     spacePirateDifficulties[1] = PirateDifficultLevel.EASY.toString();
@@ -409,12 +401,12 @@ public class GalaxyCreationView extends BlackPanel {
         + " <li> Very hard - Unfairly fast technological advance"
         + "<html>");
     info.add(comboSpacePirateDifficulty);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
 
     label = new SpaceLabel("Space anomalies");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] spaceAnomalies = new String[3];
     spaceAnomalies[0] = "Disabled";
     spaceAnomalies[1] = "Non-harmful";
@@ -427,12 +419,12 @@ public class GalaxyCreationView extends BlackPanel {
         + " If disable there are no space anomalies.<br> Space anomalies can"
         + " contain small bonus or even harmful events.<html>");
     info.add(comboSpaceAnomalies);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
 
     label = new SpaceLabel("Random events");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] karmaTypes = new String[7];
     karmaTypes[0] = "Disabled";
     karmaTypes[1] = "First and last";
@@ -451,11 +443,11 @@ public class GalaxyCreationView extends BlackPanel {
         + " and bad events happen on realms which are the first in"
         + " scoring.<html>");
     info.add(comboKarmaType);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("Random event speed");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] karmaSpeed = new String[3];
     karmaSpeed[0] = "Slow";
     karmaSpeed[1] = "Normal";
@@ -468,7 +460,7 @@ public class GalaxyCreationView extends BlackPanel {
         + " If random events are disable this setting does not do"
         + " anything.<html>");
     info.add(comboKarmaSpeed);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     allNewsSubscribed = new SpaceCheckBox("All news enabled");
     allNewsSubscribed.setSelected(this.config.isAllNews());
     allNewsSubscribed.addActionListener(listener);
@@ -480,7 +472,7 @@ public class GalaxyCreationView extends BlackPanel {
         + "Without it only your governor and commander death news are shown."
         + "</html>");
     info.add(allNewsSubscribed);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 20)));
     return info;
   }
 
@@ -496,7 +488,7 @@ public class GalaxyCreationView extends BlackPanel {
     SpaceLabel label = new SpaceLabel("Number of realms");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] players = new String[15];
     players[0] = "Two realms";
     players[1] = "Three realms";
@@ -518,11 +510,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayers.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("AI Difficulty");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 8)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 8)));
     String[] genericDifficulty = new String[3];
     genericDifficulty[0] = "Weak";
     genericDifficulty[1] = "Normal";
@@ -532,11 +524,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboDifficulty.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboDifficulty.addActionListener(listener);
     info.add(comboDifficulty);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("Starting position");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 8)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 8)));
     String[] startPos = new String[4];
     startPos[0] = "Border";
     startPos[1] = "Random";
@@ -547,11 +539,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayerPos.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("Elder realm headstart");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] headStarts = new String[5];
     headStarts[0] = "40 star years";
     headStarts[1] = "60 star years";
@@ -575,11 +567,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboElderTurns.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboElderTurns.addActionListener(listener);
     info.add(comboElderTurns);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     label = new SpaceLabel("Victory by score");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] scoringVictory = new String[6];
     scoringVictory[0] = "Very short (200 star years)";
     scoringVictory[1] = "Short (300 star years)";
@@ -602,12 +594,12 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringVictory.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboScoringVictory.addActionListener(listener);
     info.add(comboScoringVictory);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
 
     label = new SpaceLabel("Victory by culture");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] scoringCulture = new String[5];
     scoringCulture[0] = "Disable cultural victory";
     scoringCulture[1] = "Faster (75% regular limit)";
@@ -629,12 +621,12 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringCulture.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboScoringCulture.addActionListener(listener);
     info.add(comboScoringCulture);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
 
     label = new SpaceLabel("Victory by domination");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] scoringDomination = new String[2];
     scoringDomination[0] = "Disabled";
     scoringDomination[1] = "Enabled";
@@ -645,7 +637,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringDomination.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboScoringDomination.addActionListener(listener);
     info.add(comboScoringDomination);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     switch (this.config.getScoreLimitConquer()) {
       case 0: comboScoringDomination.setSelectedIndex(0); break;
       case 1: comboScoringDomination.setSelectedIndex(1); break;
@@ -655,7 +647,7 @@ public class GalaxyCreationView extends BlackPanel {
     label = new SpaceLabel("Victory by science");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] scoringScience = new String[6];
     scoringScience[0] = "Disabled";
     scoringScience[1] = "1 Scientic achievement";
@@ -669,7 +661,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringScientific.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboScoringScientific.addActionListener(listener);
     info.add(comboScoringScientific);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     switch (this.config.getScoreLimitResearch()) {
       case 0: comboScoringScientific.setSelectedIndex(0); break;
       case 1: comboScoringScientific.setSelectedIndex(1); break;
@@ -683,7 +675,7 @@ public class GalaxyCreationView extends BlackPanel {
     label = new SpaceLabel("Victory by diplomacy");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] scoringDiplomacy = new String[6];
     scoringDiplomacy[0] = "Disabled";
     scoringDiplomacy[1] = "2 diplomatic votes";
@@ -702,7 +694,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringDiplomatic.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboScoringDiplomatic.addActionListener(listener);
     info.add(comboScoringDiplomatic);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     switch (this.config.getScoreLimitDiplomacy()) {
       case 0: comboScoringDiplomatic.setSelectedIndex(0); break;
       case 1: comboScoringDiplomatic.setSelectedIndex(1); break;
@@ -715,7 +707,7 @@ public class GalaxyCreationView extends BlackPanel {
     label = new SpaceLabel("Victory by population");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     String[] scoringPopulation = new String[6];
     scoringPopulation[0] = "Disabled";
     scoringPopulation[1] = "40% of whole galaxy";
@@ -732,7 +724,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringPopulation.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboScoringPopulation.addActionListener(listener);
     info.add(comboScoringPopulation);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     switch (this.config.getScoreLimitPopulation()) {
       case 0: comboScoringPopulation.setSelectedIndex(0); break;
       case 1: comboScoringPopulation.setSelectedIndex(1); break;
@@ -741,7 +733,7 @@ public class GalaxyCreationView extends BlackPanel {
       case 4: comboScoringPopulation.setSelectedIndex(4); break;
       default: comboScoringPopulation.setSelectedIndex(2); break;
     }
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     tutorialEnabled = new SpaceCheckBox("Tutorial enabled");
     tutorialEnabled.setSelected(this.config.isEnableTutorial());
     tutorialEnabled.addActionListener(listener);
@@ -751,7 +743,7 @@ public class GalaxyCreationView extends BlackPanel {
         + " shown as in-game messages.<br> Tutorial can be enabled or disabled"
         + " while playing and helps can accessed from Star Map view.</html>");
     info.add(tutorialEnabled);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 5)));
     aiOnlyGame = new SpaceCheckBox("AI Only game");
     aiOnlyGame.setSelected(this.config.isAiOnly());
     aiOnlyGame.addActionListener(listener);
@@ -761,6 +753,7 @@ public class GalaxyCreationView extends BlackPanel {
         + "<br> After each turn human can watch and see choices AI made."
         + "</html>");
     info.add(aiOnlyGame);
+    info.add(Box.createRigidArea(UIScale.scaledDimension(5, 20)));
     return info;
   }
   /**

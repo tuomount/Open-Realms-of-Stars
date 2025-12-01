@@ -146,22 +146,23 @@ public class SpaceCheckBox extends JCheckBox {
 
     // Early exit if no text to draw
     String text = getText();
-    if (text == null || text.isEmpty()) {
-      return;
-    }
-
-    String[] texts = text.split("\n");
-    g.setFont(GuiFonts.getFontCubellan());
-    int longest = 0;
-    for (int i = 0; i < texts.length; i++) {
-      if (texts[i].length() > texts[longest].length()) {
-        longest = i;
+    int textHeight = 16;
+    int textWidth = 0;
+    String[] texts = null;
+    if (text != null && !text.isEmpty()) {
+       texts = text.split("\n");
+      g.setFont(GuiFonts.getFontCubellan());
+      int longest = 0;
+      for (int i = 0; i < texts.length; i++) {
+        if (texts[i].length() > texts[longest].length()) {
+          longest = i;
+        }
       }
+      textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
+          texts[longest]);
+      textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
+          texts[longest]);
     }
-    int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
-        texts[longest]);
-    int textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
-        texts[longest]);
     if (icon != null) {
       if (this.isSelected()) {
         if (type == CHECKBOX_TYPE_NORMAL) {
@@ -185,11 +186,13 @@ public class SpaceCheckBox extends JCheckBox {
       icon.draw(g2d, sx, sy + offsetY);
     }
 
-    for (int i = 0; i < texts.length; i++) {
-      textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
-          texts[i]);
-      int offsetX = width / 2 - textWidth / 2 + sx + UIScale.scale(1);
-      g2d.drawString(texts[i], offsetX, textHeight * (i + 1) + sy);
+    if (texts != null) {
+      for (int i = 0; i < texts.length; i++) {
+        textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
+            texts[i]);
+        int offsetX = width / 2 - textWidth / 2 + sx + UIScale.scale(1);
+        g2d.drawString(texts[i], offsetX, textHeight * (i + 1) + sy);
+      }
     }
 
   }

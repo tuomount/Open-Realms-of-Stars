@@ -49,6 +49,7 @@ import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.government.Government;
@@ -163,13 +164,10 @@ public class RealmSetupView extends BlackPanel {
       final ActionListener listener, final boolean allowChangeRealm) {
     this.config = config;
     this.actionListener = listener;
-    rigidSize = 15;
+    rigidSize = 5;
     if (listener instanceof Game) {
       Game game = (Game) listener;
-      if (game.getHeight() < 960) {
-        rigidSize = 5;
-      }
-      maxComboWidth = (game.getWidth() - 24) / 2;
+      maxComboWidth = (game.getWidth() - 24) / 3;
     }
     this.allowChangingRealm = allowChangeRealm;
     realmIndex = 0;
@@ -189,13 +187,13 @@ public class RealmSetupView extends BlackPanel {
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Realm Setup");
     imgBase.setLayout(new BorderLayout());
     this.setLayout(new BorderLayout());
-    imgBase.add(Box.createRigidArea(new Dimension(500, 100)),
+    imgBase.add(Box.createRigidArea(UIScale.scaledDimension(500, 100)),
         BorderLayout.NORTH);
 
     InfoPanel mainPanel = new InfoPanel();
     mainPanel.setTitle("Realm Setup");
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    mainPanel.add(Box.createRigidArea(new Dimension(500, 10)));
+    mainPanel.add(Box.createRigidArea(UIScale.scaledDimension(500, 10)));
     mainPanel.add(createRealmSetup(realmIndex, actionListener));
     imgBase.add(mainPanel, BorderLayout.CENTER);
 
@@ -335,7 +333,7 @@ public class RealmSetupView extends BlackPanel {
     }
     SpaceGreyPanel xinvis = new SpaceGreyPanel();
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
-    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    xinvis.add(Box.createRigidArea(UIScale.scaledDimension(10, 10)));
 
     SpaceGreyPanel topPanel = new SpaceGreyPanel();
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
@@ -360,7 +358,7 @@ public class RealmSetupView extends BlackPanel {
     fullPanel.add(topPanel, BorderLayout.NORTH);
     SpaceGreyPanel westPanel = new SpaceGreyPanel();
     westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
-    westPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(10, 10)));
     SpaceLabel label = new SpaceLabel("Space Race:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -383,7 +381,8 @@ public class RealmSetupView extends BlackPanel {
       comboRaceSelect.setEnabled(false);
     }
     westPanel.add(comboRaceSelect);
-    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(rigidSize,
+        rigidSize)));
     label = new SpaceLabel("Realm Government:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -405,7 +404,8 @@ public class RealmSetupView extends BlackPanel {
     comboGovernmentSelect.setActionCommand(
         GameCommands.COMMAND_GOVERNMENT_SETUP);
     westPanel.add(comboGovernmentSelect);
-    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(rigidSize,
+        rigidSize)));
     label = new SpaceLabel("Ancient Realm:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -416,7 +416,8 @@ public class RealmSetupView extends BlackPanel {
         + " start and will make realm more stronger than others.<br>"
         + "Elder realms are played by AI for amount of head start.</html>");
     westPanel.add(checkElderRealm);
-    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(rigidSize,
+        rigidSize)));
     label = new SpaceLabel("Realm name:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -434,7 +435,8 @@ public class RealmSetupView extends BlackPanel {
       realmName.setText(config.getPlayerName(index));
     }
     westPanel.add(realmName);
-    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(rigidSize,
+        rigidSize)));
     label = new SpaceLabel("Realm color:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -458,7 +460,8 @@ public class RealmSetupView extends BlackPanel {
     comboRealmColor.setToolTipText("<html>Realm color in map and"
         + " statistics.</html>");
     westPanel.add(comboRealmColor);
-    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(rigidSize,
+        rigidSize)));
     label = new SpaceLabel("Realm's starting scenario:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -493,7 +496,8 @@ public class RealmSetupView extends BlackPanel {
         GameCommands.COMMAND_SCENARIO_SETUP);
     comboScenario.addActionListener(listener);
     westPanel.add(comboScenario);
-    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(rigidSize,
+        rigidSize)));
     label = new SpaceLabel("AI Difficulty:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -515,9 +519,10 @@ public class RealmSetupView extends BlackPanel {
       comboDifficult.setToolTipText("");
     }
     westPanel.add(comboDifficult);
-    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    westPanel.add(Box.createRigidArea(UIScale.scaledDimension(rigidSize,
+        rigidSize)));
     xinvis.add(westPanel);
-    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    xinvis.add(Box.createRigidArea(UIScale.scaledDimension(10, 10)));
     fullPanel.add(xinvis, BorderLayout.WEST);
     EmptyInfoPanel panelX = new EmptyInfoPanel();
     panelX.setLayout(new BoxLayout(panelX, BoxLayout.Y_AXIS));
@@ -528,9 +533,10 @@ public class RealmSetupView extends BlackPanel {
     if (minWidth < 500) {
       minWidth = 500;
     }
-    infoPanelForSpaceRace.setMinimumSize(new Dimension(500, 200));
-    infoPanelForSpaceRace.setPreferredSize(new Dimension(minWidth, 600));
-    infoPanelForSpaceRace.setMaximumSize(new Dimension(800, 800));
+    infoPanelForSpaceRace.setMinimumSize(UIScale.scaledDimension(500, 200));
+    infoPanelForSpaceRace.setPreferredSize(UIScale.scaledDimension(minWidth,
+        600));
+    infoPanelForSpaceRace.setMaximumSize(UIScale.scaledDimension(800, 800));
     JScrollPane scroll = new JScrollPane(infoPanelForSpaceRace);
     spaceRaceInfo = new HyperLabel(
         SpaceRaceFactory.getRandomRace().getFullDescription(false, false));
@@ -540,9 +546,9 @@ public class RealmSetupView extends BlackPanel {
     InfoPanel info = new InfoPanel();
     info.setTitle("Government information");
     info.setLayout(new BorderLayout());
-    info.setMinimumSize(new Dimension(400, 200));
-    info.setPreferredSize(new Dimension(minWidth, 600));
-    info.setMaximumSize(new Dimension(600, 500));
+    info.setMinimumSize(UIScale.scaledDimension(400, 200));
+    info.setPreferredSize(UIScale.scaledDimension(minWidth, 600));
+    info.setMaximumSize(UIScale.scaledDimension(600, 500));
     governmentInfo = new HyperLabel(
         GovernmentFactory.getRandomGovernment().getDescription(false));
     governmentInfo.setFont(GuiFonts.getFontCubellanSmaller());
@@ -583,7 +589,7 @@ public class RealmSetupView extends BlackPanel {
     comboScenario.getModel().setSelectedItem(config.getStartingScenario(index));
     spaceRaceInfo.setText(config.getRace(index).getFullDescription(false,
         false));
-/*    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
+/*    Dimension dim = UIScale.scaledDimension(infoPanelForSpaceRace.getWidth(),
         spaceRaceInfo.getAdjustHeight());
     infoPanelForSpaceRace.setPreferredSize(dim);
     infoPanelForSpaceRace.setMaximumSize(dim);*/

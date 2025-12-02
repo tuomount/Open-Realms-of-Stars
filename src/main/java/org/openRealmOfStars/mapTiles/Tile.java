@@ -509,6 +509,44 @@ public class Tile {
   }
 
   /**
+   * Is tile Gas/Ice giant
+   * @return True if gas/ice giant tile
+   */
+  public boolean isGasGiant() {
+    if (name.equals(TileNames.JUPITER_NE)
+        || name.equals(TileNames.JUPITER_NW)
+        || name.equals(TileNames.JUPITER_SE)
+        || name.equals(TileNames.JUPITER_SW)
+        || name.equals(TileNames.GAS_GIANT_1_NE)
+        || name.equals(TileNames.GAS_GIANT_1_NW)
+        || name.equals(TileNames.GAS_GIANT_1_SE)
+        || name.equals(TileNames.GAS_GIANT_1_SW)
+        || name.equals(TileNames.GAS_GIANT_2_NE)
+        || name.equals(TileNames.GAS_GIANT_2_NW)
+        || name.equals(TileNames.GAS_GIANT_2_SE)
+        || name.equals(TileNames.GAS_GIANT_2_SW)
+        || name.equals(TileNames.GAS_GIANT_3_NE)
+        || name.equals(TileNames.GAS_GIANT_3_NW)
+        || name.equals(TileNames.GAS_GIANT_3_SE)
+        || name.equals(TileNames.GAS_GIANT_3_SW)
+        || name.equals(TileNames.ICEGIANT1_NE)
+        || name.equals(TileNames.ICEGIANT1_NW)
+        || name.equals(TileNames.ICEGIANT1_SE)
+        || name.equals(TileNames.ICEGIANT1_SW)
+        || name.equals(TileNames.ICEGIANT2_NE)
+        || name.equals(TileNames.ICEGIANT2_NW)
+        || name.equals(TileNames.ICEGIANT2_SE)
+        || name.equals(TileNames.ICEGIANT2_SW)
+        || name.equals(TileNames.SATURN_NE)
+        || name.equals(TileNames.SATURN_NW)
+        || name.equals(TileNames.SATURN_SE)
+        || name.equals(TileNames.SATURN_SW)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Is tile black hole
    * @return True if black hole
    */

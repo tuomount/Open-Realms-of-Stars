@@ -82,6 +82,10 @@ public final class GuiStatics {
   public static final Stroke TEXT_LINE = new BasicStroke(12,
       BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1, new float[] {1f }, 0);
 
+  /** Line type for text background */
+  public static final Stroke TEXT_LINE_SMALL = new BasicStroke(8,
+      BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1, new float[] {1f }, 0);
+
   /** Sun Line type for text background, opacity 230. */
   public static final Color COLOR_GOLD_TRANS = new Color(210, 181, 44, 230);
 
@@ -110,8 +114,19 @@ public final class GuiStatics {
   /** Planet Line type for text background, opacity 65. */
   public static final Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
   /** Planet Line type for text background. */
-  public static final Color COLOR_GREYBLUE_NO_OPAGUE =
+  public static final Color COLOR_GREYBLUE_OPAQUE =
       new Color(180, 180, 200);
+
+  /** Planet Line type for text background. */
+  public static final Color COLOR_GREYBLUE_NO_OPAQUE =
+      new Color(180, 180, 200, 30);
+
+  /** Planet Line type for text background. */
+  public static final Color COLOR_GREYGREEN_OPAQUE =
+      new Color(180, 200, 180);
+  /** Planet Line type for text background. */
+  public static final Color COLOR_GREYGREEN_NO_OPAQUE =
+      new Color(180, 200, 180, 30);
 
   /** Green text */
   public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);

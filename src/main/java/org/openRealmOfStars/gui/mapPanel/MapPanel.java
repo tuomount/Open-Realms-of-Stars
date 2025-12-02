@@ -516,13 +516,19 @@ public class MapPanel extends JPanel {
    * @param barStartX Bar start X coordinate
    * @param barEndX Bar end X coordinate
    * @param tileHeight Height of the tile for centering calculations
+   * @param zoomLevel StarMap Zoom level
    */
-  private void drawTextWithColoredBar(final Graphics2D gr,
+  private static void drawTextWithColoredBar(final Graphics2D gr,
       final String text, final Font font, final Color barColor,
       final int textX, final int textY,
-      final int barStartX, final int barEndX, final int tileHeight) {
-    int lineY = textY + tileHeight / 2 - UIScale.scale(3);
-    gr.setStroke(GuiStatics.TEXT_LINE);
+      final int barStartX, final int barEndX, final int tileHeight,
+      final int zoomLevel) {
+    int lineY = textY + tileHeight / 2;
+    if (zoomLevel == Tile.ZOOM_OUT1) {
+      gr.setStroke(GuiStatics.TEXT_LINE_SMALL);
+    } else {
+      gr.setStroke(GuiStatics.TEXT_LINE);
+    }
     gr.setColor(barColor);
     for (int y = -3; y <= 3; y++) {
       gr.drawLine(barStartX, lineY + y, barEndX, lineY + y);
@@ -531,7 +537,7 @@ public class MapPanel extends JPanel {
     gr.setFont(font);
     java.awt.FontMetrics fm = gr.getFontMetrics();
     int finalTextY = textY + (tileHeight - fm.getHeight()) / 2
-        + fm.getAscent() - UIScale.scale(3);
+        + fm.getAscent() + UIScale.scale(1);
     gr.drawString(text, textX, finalTextY);
   }
 
@@ -829,10 +835,14 @@ public class MapPanel extends JPanel {
             - textWidth / 2, pixelY,
             pixelX - offset,
             pixelX - Tile.getMaxWidth(starMap.getZoomLevel()) + offset,
-            Tile.getMaxHeight(starMap.getZoomLevel()));
+            Tile.getMaxHeight(starMap.getZoomLevel()), starMap.getZoomLevel());
       }
     }
 
+    if (info != null && info.getSectorVisibility(new Coordinate(i + cx,
+            j + cy)) != PlayerInfo.UNCHARTED && tile.isGasGiant()) {
+      redrawTile[i + viewPointX][j + viewPointY] = true;
+    }
     // Draw Gas giant text
     if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE)
         && i > -viewPointX
@@ -864,11 +874,17 @@ public class MapPanel extends JPanel {
       // Gas giants use negative vertical offset for top positioning
       int adjustedPixelY = pixelY - Tile.getMaxHeight(starMap.getZoomLevel())
           / 2 - UIScale.scale(3);
+      Color color = GuiStatics.COLOR_GREYBLUE_OPAQUE;
+      if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+        color = GuiStatics.COLOR_GREYBLUE_OPAQUE;
+      } else {
+        color = GuiStatics.COLOR_GREYBLUE_NO_OPAQUE;
+      }
       drawTextWithColoredBar(gr, text, font,
-          GuiStatics.COLOR_GREYBLUE_NO_OPAGUE,
+          color,
           pixelX - textWidth / 2, adjustedPixelY,
           pixelX - offset, pixelX + offset,
-          Tile.getMaxHeight(starMap.getZoomLevel()));
+          Tile.getMaxHeight(starMap.getZoomLevel()), starMap.getZoomLevel());
     }
 
     // Draw planet text
@@ -886,13 +902,19 @@ public class MapPanel extends JPanel {
           gr.getFontRenderContext()).getWidth();
       int offset = Tile.getMaxWidth(starMap.getZoomLevel()) / 2
           - textWidth / 2 - UIScale.scale(1);
+      Color color = GuiStatics.COLOR_GREYGREEN_OPAQUE;
+      if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+        color = GuiStatics.COLOR_GREYGREEN_OPAQUE;
+      } else {
+        color = GuiStatics.COLOR_GREYGREEN_NO_OPAQUE;
+      }
       drawTextWithColoredBar(gr, text, font,
-          new Color(70, 160, 70, 140),
+          color,
           pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2
               - textWidth / 2, pixelY,
           pixelX + offset,
           pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) - offset,
-          Tile.getMaxHeight(starMap.getZoomLevel()));
+          Tile.getMaxHeight(starMap.getZoomLevel()), starMap.getZoomLevel());
     }
   }
   /**
@@ -1163,9 +1185,19 @@ public class MapPanel extends JPanel {
               redrawTile[i + viewPointX - 1][j + viewPointY] = true;
             }
           }
+          if (starMap.getZoomLevel() == Tile.ZOOM_OUT1 && tile != null
+              && tile.getName().equals(TileNames.EMPTY)) {
+            Tile tile3 = starMap.getTile(i + cx - 2, j + cy);
+            if (tile3 != null && (tile3.getName().equals(TileNames.SUN_E)
+                || tile3.getName().equals(TileNames.BLUE_STAR_E)
+                || tile3.getName().equals(TileNames.STAR_E))) {
+              redrawTile[i + viewPointX][j + viewPointY] = false;
+            }
+          }
           if (tile == null) {
             continue;
           }
+
           // Draw fleet
           drawFleet(gr, fleetMap, cx, cy, i, j, starMap, info, pixelX, pixelY);
 
@@ -1574,7 +1606,8 @@ public class MapPanel extends JPanel {
             drawTextWithColoredBar(gr, sun.getName(), font,
                 GuiStatics.COLOR_GOLD_TRANS,
                 pixelX - tileWidth / 2 - textWidth / 2, pixelY,
-                pixelX - offset, pixelX - tileWidth + offset, tileHeight);
+                pixelX - offset, pixelX - tileWidth + offset, tileHeight,
+                starMap.getZoomLevel());
           }
         }
 
@@ -1602,9 +1635,10 @@ public class MapPanel extends JPanel {
           // Gas giants use negative vertical offset for top positioning
           int adjustedPixelY = pixelY - tileHeight / 2 - UIScale.scale(3);
           drawTextWithColoredBar(gr, text, font,
-              GuiStatics.COLOR_GREYBLUE_NO_OPAGUE,
+              GuiStatics.COLOR_GREYBLUE_NO_OPAQUE,
               pixelX - textWidth / 2, adjustedPixelY,
-              pixelX - offset, pixelX + offset, tileHeight);
+              pixelX - offset, pixelX + offset, tileHeight,
+              starMap.getZoomLevel());
         }
 
         // Draw planet text
@@ -1617,9 +1651,10 @@ public class MapPanel extends JPanel {
               gr.getFontRenderContext()).getWidth();
           int offset = tileWidth / 2 - textWidth / 2 - UIScale.scale(1);
           drawTextWithColoredBar(gr, text, font,
-              new Color(70, 160, 70, 140),
+              GuiStatics.COLOR_GREYGREEN_NO_OPAQUE,
               pixelX + tileWidth / 2 - textWidth / 2, pixelY,
-              pixelX + offset, pixelX + tileWidth - offset, tileHeight);
+              pixelX + offset, pixelX + tileWidth - offset, tileHeight,
+              starMap.getZoomLevel());
         }
         pixelX = pixelX + tileWidth;
       }

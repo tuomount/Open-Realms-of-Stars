@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -46,7 +46,7 @@ public class TechList {
   /**
    * Maximum number of tech levels
    */
-  public static final int MAX_TECH_LEVEL = 10;
+  public static final int MAX_TECH_LEVEL = 20;
 
   /**
    * Maximum number of tech types
@@ -209,8 +209,8 @@ public class TechList {
     if (isTechListForLevelFull(tech.getType(), lvl + 1)
         && lvl + 1 >= techLevels[index]) {
       techLevels[index] = lvl + 2;
-      if (techLevels[index] > 10) {
-        techLevels[index] = 10;
+      if (techLevels[index] > MAX_TECH_LEVEL) {
+        techLevels[index] = MAX_TECH_LEVEL;
       }
     }
   }
@@ -218,7 +218,7 @@ public class TechList {
   /**
    * Get Tech Level
    * @param type Tech type which level is going to be checked
-   * @return Level 1-10
+   * @return Level 1-20
    */
   public int getTechLevel(final TechType type) {
     int index = type.getIndex();
@@ -231,11 +231,12 @@ public class TechList {
   /**
    * Set Tech Level
    * @param type Tech type which is going to be set
-   * @param level Level must be between 1-10
+   * @param level Level must be between 1-20
    */
   public void setTechLevel(final TechType type, final int level) {
     int index = type.getIndex();
-    if (level >= 1 && level < 11 && index >= 0 && index < techLevels.length) {
+    if (level >= 1 && level < (MAX_TECH_LEVEL + 1) && index >= 0
+        && index < techLevels.length) {
       techLevels[index] = level;
     }
   }
@@ -711,7 +712,7 @@ public class TechList {
    */
   public Tech[] getListForTypeAndLevel(final TechType type, final int level) {
     int levelIndex = level - 1;
-    if (levelIndex >= 10 || levelIndex < 0) {
+    if (levelIndex >= MAX_TECH_LEVEL || levelIndex < 0) {
       return new Tech[0];
     }
     ArrayList<Tech> list = new ArrayList<>();
@@ -730,7 +731,7 @@ public class TechList {
    */
   public Tech[] getListMissingTech(final TechType type, final int level) {
     int levelIndex = level - 1;
-    if (levelIndex >= 10 || levelIndex < 0) {
+    if (levelIndex >= MAX_TECH_LEVEL || levelIndex < 0) {
       return new Tech[0];
     }
     Tech[] techGot = getListForTypeAndLevel(type, level);

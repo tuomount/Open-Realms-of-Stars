@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -94,7 +94,7 @@ public class Tech {
    * Create a new Tech with defaults
    * @param name Tech Name
    * @param type Tech Type
-   * @param level Tech level 1-10
+   * @param level Tech level 1-20
    */
   public Tech(final String name, final TechType type, final int level) {
     this.name = name;
@@ -146,7 +146,7 @@ public class Tech {
 
   /**
    * Get Tech Level.
-   * @return int between 1-10
+   * @return int between 1-20
    */
   public int getLevel() {
     return level;
@@ -154,7 +154,7 @@ public class Tech {
 
   /**
    * Set Tech level
-   * @param level between 1-10
+   * @param level between 1-20
    */
   public void setLevel(final int level) {
     if (level >= 1 && level < 11) {

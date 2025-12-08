@@ -66,5 +66,10 @@ public enum ParticleEffectType {
   /**
    * Bullet particle
    */
-  BULLET_PARTICLE;
+  BULLET_PARTICLE,
+  /**
+   * Short living particle next to the beam, not moving
+   */
+  BLUE_LASER_PARTICLE;
+
 }

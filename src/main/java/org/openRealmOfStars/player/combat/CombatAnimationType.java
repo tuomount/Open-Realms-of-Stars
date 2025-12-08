@@ -29,9 +29,9 @@ public enum CombatAnimationType {
    */
   PLASMA_BEAM,
   /**
-   * Antimatter beam, Light blue laser with light blue particles
+   * Antimatter beam, Blue laser with light blue particles
    */
-  ANTIMATTER_BEAM,
+  BLUE_LASER,
   /**
    * Phasor beam, Green laser with green particles
    */
@@ -115,7 +115,12 @@ public enum CombatAnimationType {
   /**
    * Rotate spanner
    */
-  SPANNER
+  SPANNER,
+  /**
+   * Antimatter beam, Light cyan laser with light cyan particles
+   */
+  ANTIMATTER_BEAM
+
 
 
 }

@@ -92,6 +92,10 @@ public class ShipComponent {
   private int defenseValue;
 
   /**
+   * Bay size for component.
+   */
+  private int baySize;
+  /**
    * weapon damage
    */
   private int damage;
@@ -167,6 +171,41 @@ public class ShipComponent {
     this.cultureBonus = 0;
     this.setEspionageBonus(0);
     this.setHitBonus(0);
+    this.setBaySize(0);
+  }
+
+  /**
+   * Constructor for ship component
+   * @param name Component name
+   * @param cost Production cost for single component
+   * @param metalCost Metal cost for single component
+   * @param type Component type
+   */
+  public ShipComponent(final String name, final int cost,
+      final int metalCost, final ShipComponentType type) {
+    this.index = 0;
+    this.name = name;
+    this.cost = cost;
+    this.metalCost = metalCost;
+    this.type = type;
+    this.energyRequirement = 0;
+    this.energyResource = 0;
+    this.ftlSpeed = 0;
+    this.speed = 0;
+    this.tacticSpeed = 0;
+    this.scannerRange = 0;
+    this.cloakDetection = 0;
+    this.cloaking = 0;
+    this.defenseValue = 0;
+    this.damage = 0;
+    this.initiativeBoost = 0;
+    this.setWeaponRange(0);
+    this.researchBonus = 0;
+    this.creditBonus = 0;
+    this.cultureBonus = 0;
+    this.setEspionageBonus(0);
+    this.setHitBonus(0);
+    this.setBaySize(0);
   }
 
   /**
@@ -407,7 +446,7 @@ public class ShipComponent {
    * @return Bay size
    */
   public int getBaySize() {
-    return defenseValue;
+    return baySize;
   }
   /**
    * Set Bay size for fighter bays.
@@ -415,7 +454,7 @@ public class ShipComponent {
    * @param size Bay size to set
    */
   public void setBaySize(final int size) {
-    this.defenseValue = size;
+    this.baySize = size;
   }
   /**
    * Set component defense value. This is used for both armor and shields.

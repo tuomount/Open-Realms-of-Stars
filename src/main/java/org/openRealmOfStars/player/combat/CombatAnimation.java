@@ -267,6 +267,7 @@ public class CombatAnimation {
     case MULTICANNON:
     case PHASOR_BEAM:
     case LASER_BEAM:
+    case BLUE_LASER:
     case ION_CANNON: {
       count = 40;
       break;
@@ -392,6 +393,8 @@ public class CombatAnimation {
           initType = CombatAnimationType.ANTIMATTER_BEAM;
         } else if (weapon.getName().startsWith("Phasors")) {
           initType = CombatAnimationType.PHASOR_BEAM;
+        } else if (weapon.getName().startsWith("Blue laser")) {
+          initType = CombatAnimationType.BLUE_LASER;
         } else {
           initType = CombatAnimationType.LASER_BEAM;
         }
@@ -504,6 +507,7 @@ public class CombatAnimation {
       boolean phasorsParticle = type == CombatAnimationType.PHASOR_BEAM;
       boolean antimatterParticle = type == CombatAnimationType.ANTIMATTER_BEAM;
       boolean ionParticle = type == CombatAnimationType.ION_CANNON;
+      boolean blueParticle = type == CombatAnimationType.BLUE_LASER;
       if (type == CombatAnimationType.GRAVITY_RIPPER) {
         phasorsParticle = true;
       }
@@ -532,6 +536,10 @@ public class CombatAnimation {
         } else if (ionParticle) {
           ParticleEffect particle = new ParticleEffect(
               ParticleEffectType.ION_PARTICLE_LOW_ACTIVE, px, py);
+          particles.add(particle);
+        } else if (blueParticle) {
+          ParticleEffect particle = new ParticleEffect(
+              ParticleEffectType.BLUE_LASER_PARTICLE, px, py);
           particles.add(particle);
         } else {
           ParticleEffect particle = new ParticleEffect(
@@ -928,8 +936,10 @@ public class CombatAnimation {
    */
   public Color getBeamColor() {
     if (type == CombatAnimationType.ANTIMATTER_BEAM) {
-      return new Color(2 * count, 2 * count,
+      return new Color(0, 2 * count,
           COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count));
+    } else if (type == CombatAnimationType.BLUE_LASER) {
+      return new Color(count, count, COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count));
     } else if (type == CombatAnimationType.PHASOR_BEAM) {
       return new Color(2 * count, COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count),
           2 * count);

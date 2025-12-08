@@ -106,7 +106,7 @@ public final class TechFactory {
   /**
    * Combat tech names for level 8
    */
-  public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Blue lase Mk3",
+  public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Blue laser Mk3",
       "Railgun Mk8", "Photon torpedo Mk8", "ECM torpedo Mk6",
       "HE missile Mk6", "Autocannon Mk3", "Orbital fusion bomb"};
   /**
@@ -948,7 +948,8 @@ public final class TechFactory {
         Tech tech = new Tech(techName, TechType.Combat, level);
         tech.setComponent(techName);
         if (techName.startsWith("Laser") || techName.startsWith("Phasor")
-            || techName.startsWith("Antimatter beam")) {
+            || techName.startsWith("Antimatter beam")
+            || techName.startsWith("Blue laser")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LASERGUN));
         } else if (techName.startsWith("Railgun")
             || techName.startsWith("Massdrive")) {
@@ -980,7 +981,8 @@ public final class TechFactory {
           tech.setRareTech(true);
         } else if (techName.startsWith("Callisto multicannon")
             || techName.startsWith("Autocannon")
-            || techName.startsWith("Chaingun")) {
+            || techName.startsWith("Chaingun")
+            || techName.startsWith("Artemis fragcannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MULTI_CANNON));
           //TODO: Currently there is no reason to exclude railgun from
           //based on any traits. Maybe this could be randomize later
@@ -1143,9 +1145,11 @@ public final class TechFactory {
         } else {
           tech.setComponent(techName);
         }
-        if (techName.startsWith("Shield")) {
+        if (techName.startsWith("Shield")
+            || techName.startsWith("Shadow shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
-        } else if (techName.startsWith("Armor plating")) {
+        } else if (techName.startsWith("Armor plating")
+            || techName.startsWith("Shadow armor")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ARMOR));
         } else if (techName.startsWith("Planetary defense turret Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
@@ -1291,8 +1295,9 @@ public final class TechFactory {
           tech.setTradeable(false);
           return tech;
         } else if (techName.equals("Minor orbital")
-            || techName.equals("Large orbital")
-            || techName.equals("Massive orbital")) {
+            || techName.equals("Death Moon")
+            || techName.equals("Large orbital station")
+            || techName.equals("Orbital station")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
           tech.setTradeable(false);
           tech.setExcludeList(false);
@@ -1307,7 +1312,8 @@ public final class TechFactory {
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
         }
-        if (techName.startsWith("Privateer Mk")) {
+        if (techName.startsWith("Privateer Mk")
+            || techName.startsWith("Galleon Mk")) {
           tech.setComponent("Privateer module");
           tech.setHull(techName);
         } else if (techName.startsWith("Colony")) {
@@ -1326,6 +1332,10 @@ public final class TechFactory {
           tech.setExcludeList(false);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.SPORE_COLONIZATION));
+        } else if (techName.startsWith("Cargo bay")
+            || techName.startsWith("Armored cargo bay")) {
+          tech.setComponent(techName);
+          tech.setIcon(Icons.getIconByName(Icons.ICON_CLOSED));
         } else if (techName.startsWith("Fighter bay Mk")) {
           tech.setComponent(techName);
         } else if (techName.startsWith("Repair module Mk")) {
@@ -1432,7 +1442,8 @@ public final class TechFactory {
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
-        } else if (techName.startsWith("Starbase")) {
+        } else if (techName.startsWith("Starbase")
+            || techName.startsWith("Zero-G")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else if (techName.startsWith("Deadly virus")) {
@@ -1440,10 +1451,13 @@ public final class TechFactory {
           tech.setRareTech(true);
         } else {
           tech.setImprovement(techName);
-          if (techName.startsWith("Barracks")) {
+          if (techName.startsWith("Barracks")
+              || techName.startsWith("Galactic academy")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
           } else if (techName.startsWith("Basic lab")
               || techName.startsWith("Advanced laboratory")
+              || techName.startsWith("Improved laboratory")
+              || techName.startsWith("Ultimate laboratory")
               || techName.startsWith("Research center")
               || techName.startsWith("New technology center")
               || techName.startsWith("Neural research center")
@@ -1464,7 +1478,9 @@ public final class TechFactory {
               || techName.startsWith("Stock market")
               || techName.startsWith("Galactic bank")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_CREDIT));
-          } else if (techName.startsWith("Advanced farm")) {
+          } else if (techName.startsWith("Advanced farm")
+              || techName.startsWith("Improved farm")
+              || techName.startsWith("Ultimate farm")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
             tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
@@ -1491,6 +1507,8 @@ public final class TechFactory {
                 TraitIds.ROBOTIC, TraitIds.CYBORG_LIFE_SPAN));
             tech.setTradeable(false);
           } else if (techName.startsWith("Advanced furnace")
+              || techName.startsWith("Improved furnace")
+              || techName.startsWith("Ultimate furnace")
               || techName.startsWith("Massive blast furnace")
               || techName.startsWith("Planetary furnace")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_METAL));
@@ -1501,6 +1519,8 @@ public final class TechFactory {
             // but they can trade it to others if they wish.
             tech.setRareTech(true);
           } else if (techName.startsWith("Advanced reservoir")
+              || techName.startsWith("Improved reservoir")
+              || techName.startsWith("Ultimate reservoir")
               || techName.startsWith("Underground reservoir")
               || techName.startsWith("Crust reservoir")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
@@ -1510,16 +1530,22 @@ public final class TechFactory {
                 TraitIds.PHOTOSYNTHESIS));
             tech.setRareTech(true);
           } else if (techName.startsWith("Advanced mine")
+              || techName.startsWith("Improved mine")
+              || techName.startsWith("Ultimate mine")
               || techName.startsWith("Mining center")
               || techName.startsWith("Nanobot mining center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_MINE));
           } else if (techName.startsWith("Advanced factory")
+              || techName.startsWith("Improved factory")
+              || techName.startsWith("Ultimate factory")
               || techName.startsWith("Manufacturing center")
               || techName.startsWith("Nanobot manufacturing center")
               || techName.startsWith("Replicator center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FACTORY));
           } else if (techName.startsWith("Culture center")
               || techName.startsWith("Extreme sports center")
+              || techName.startsWith("Culture complex")
+              || techName.startsWith("Advanced culture complex")
               || techName.startsWith("Galactic sports center")
               || techName.startsWith("VR movie center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_CULTURE));

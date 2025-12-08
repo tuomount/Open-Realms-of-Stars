@@ -1935,6 +1935,7 @@ public class MapPanel extends JPanel {
         switch (anim.getType()) {
         case LASER_BEAM:
         case PHASOR_BEAM:
+        case BLUE_LASER:
         case ANTIMATTER_BEAM: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_BEAM);
           break;
@@ -2017,6 +2018,7 @@ public class MapPanel extends JPanel {
 
       if (anim.getType() == CombatAnimationType.ANTIMATTER_BEAM
           || anim.getType() == CombatAnimationType.LASER_BEAM
+              || anim.getType() == CombatAnimationType.BLUE_LASER
           || anim.getType() == CombatAnimationType.PHASOR_BEAM) {
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);

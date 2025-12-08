@@ -243,6 +243,14 @@ public final class GuiStatics {
       new Color(18, 18, 255),
       new Color(155, 77, 255)};
 
+  /** Cyan beam colors */
+  public static final Color[] CYAN_BEAM_COLORS = {
+      new Color(36, 36,  255),
+      new Color(96, 96, 255),
+      new Color(128, 128, 255),
+      new Color(18, 18, 255),
+      new Color(77, 155, 255)};
+
   /** Player color red. */
   public static final Color PLAYER_RED = new Color(215, 30, 34);
   /** Player color blue. */

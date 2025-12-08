@@ -1,0 +1,362 @@
+[
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk1",
+    "cost": 6,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 1,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk2",
+    "cost": 6,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk3",
+    "cost": 6,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "damage": 3,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk4",
+    "cost": 7,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "damage": 4,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk5",
+    "cost": 8,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "damage": 5,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk1",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 6,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk2",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 7,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk3",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 8,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk4",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 9,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk5",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 10,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk1",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 11,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk2",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 12,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk3",
+    "cost": 9,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 13,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk4",
+    "cost": 10,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 14,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk5",
+    "cost": 11,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 15,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk1",
+    "cost": 10,
+    "metalCost": 4,
+    "energyRequirement": 4,
+    "damage": 16,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk2",
+    "cost": 11,
+    "metalCost": 4,
+    "energyRequirement": 4,
+    "damage": 17,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk3",
+    "cost": 12,
+    "metalCost": 4,
+    "energyRequirement": 4,
+    "damage": 18,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk4",
+    "cost": 13,
+    "metalCost": 4,
+    "energyRequirement": 5,
+    "damage": 19,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk5",
+    "cost": 14,
+    "metalCost": 5,
+    "energyRequirement": 5,
+    "damage": 20,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk1",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 1,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk2",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk3",
+    "cost": 7,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 3,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk4",
+    "cost": 7,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 4,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk5",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 5,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk6",
+    "cost": 9,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 6,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk7",
+    "cost": 9,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 7,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk8",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 8,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk9",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 9,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk10",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 10,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk11",
+    "cost": 8,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 11,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk12",
+    "cost": 9,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 12,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk13",
+    "cost": 10,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 13,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk14",
+    "cost": 10,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 14,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk15",
+    "cost": 11,
+    "metalCost": 6,
+    "energyRequirement": 4,
+    "damage": 15,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk16",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 16,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk17",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 17,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk18",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 18,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk19",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 5,
+    "damage": 19,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk20",
+    "cost": 11,
+    "metalCost": 5,
+    "energyRequirement": 5,
+    "damage": 20,
+    "weaponRange": 4
+  },
+]

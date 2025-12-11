@@ -536,6 +536,16 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case SHADOW_ARMOR: {
+      sb.append("Armor value: ");
+      sb.append(getDefenseValue());
+      sb.append(" Cloaking: ");
+      sb.append(getCloaking());
+      sb.append("\n\n");
+      sb.append("Shadow armor has both armor and cloaking.");
+      sb.append("\n");
+      break;
+    }
     case REPAIR_MODULE: {
       sb.append("Repair module for fixing armor and hull damage\n");
       sb.append("when overloaded in combat.");

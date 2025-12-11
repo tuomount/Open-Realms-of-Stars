@@ -199,7 +199,11 @@ public enum ShipComponentType {
   /**
    * Plasma spit functions as plasma cannot expect looks like photon torpedo.
    */
-  PLASMA_SPIT;
+  PLASMA_SPIT,
+  /**
+   * Armor component that also adds cloaking.
+   */
+  SHADOW_ARMOR;
 
 
   /**
@@ -241,6 +245,8 @@ public enum ShipComponentType {
       return "Shield";
     case ARMOR:
       return "Armor";
+    case SHADOW_ARMOR:
+      return "Shadow armor";
     case SHIELD_GENERATOR:
       return "Shield generator";
     case ENGINE:
@@ -333,6 +339,9 @@ public enum ShipComponentType {
     case SHIELD:
       return Icons.ICON_SHIELD;
     case ARMOR:
+      return Icons.ICON_ARMOR;
+    case SHADOW_ARMOR:
+      //TODO: Change icon
       return Icons.ICON_ARMOR;
     case SHIELD_GENERATOR:
       return Icons.ICON_CIRCUIT_BOARD;

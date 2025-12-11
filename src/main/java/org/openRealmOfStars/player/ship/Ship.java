@@ -554,6 +554,11 @@ private boolean isIndexValid(final int index) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_ARMOR
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.REPAIR_MODULE
           && componentIsWorking(i)) {
           totalArmor = totalArmor + comp.getDefenseValue();
@@ -958,7 +963,8 @@ private int getRemainingEnergy(final int index) {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
-          && comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          && (comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR)
           && hasComponentEnergy(i)
           && comp.getCloaking() > cloak) {
           cloak = comp.getCloaking();
@@ -1316,7 +1322,8 @@ private int increaseHitChanceByComponent() {
         thrusters = true;
       }
       if (hullPoints[i] > 0
-          && comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          && (comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR)
           && hasComponentEnergy(i)) {
         cloakingDevice = true;
       }
@@ -1766,6 +1773,10 @@ private int increaseHitChanceByComponent() {
         totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_ARMOR) {
+        totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.REPAIR_MODULE) {
         totalArmor = totalArmor + comp.getDefenseValue();
       }
@@ -1916,7 +1927,8 @@ private int increaseHitChanceByComponent() {
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
           || comp.getType() == ShipComponentType.REPAIR_MODULE
-          || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
@@ -1992,7 +2004,8 @@ private int increaseHitChanceByComponent() {
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
           || comp.getType() == ShipComponentType.REPAIR_MODULE
-          || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE

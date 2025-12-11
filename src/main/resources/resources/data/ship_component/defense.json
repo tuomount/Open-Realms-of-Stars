@@ -347,4 +347,40 @@
     "energyRequirement": 1,
     "defense": 60,
   },
+  {
+    "type": "SHADOW_ARMOR",
+    "name": "Shadow armor Mk1",
+    "cost": 8,
+    "metalCost": 11,
+    "energyRequirement": 1,
+    "defense": 2,
+    "cloaking": 10
+  },
+  {
+    "type": "SHADOW_ARMOR",
+    "name": "Shadow armor Mk2",
+    "cost": 9,
+    "metalCost": 12,
+    "energyRequirement": 1,
+    "defense": 5,
+    "cloaking": 30
+  },
+  {
+    "type": "SHADOW_ARMOR",
+    "name": "Shadow armor Mk3",
+    "cost": 10,
+    "metalCost": 14,
+    "energyRequirement": 1,
+    "defense": 9,
+    "cloaking": 50
+  },
+  {
+    "type": "SHADOW_ARMOR",
+    "name": "Shadow armor Mk4",
+    "cost": 11,
+    "metalCost": 16,
+    "energyRequirement": 1,
+    "defense": 14,
+    "cloaking": 90
+  },
 ]

@@ -94,6 +94,11 @@ public final class ShipGenerator {
         scores[i] = scores[i] + comp.getEnergyResource() * 5;
         break;
       }
+      case SHADOW_ARMOR: {
+        scores[i] = scores[i] + comp.getDefenseValue() * 5;
+        scores[i] = scores[i] + comp.getCloaking() / 5;
+        break;
+      }
       case ORGANIC_ARMOR: {
         scores[i] = scores[i] + comp.getDefenseValue() * 5;
         scores[i] = scores[i] + 10; // Regenerating

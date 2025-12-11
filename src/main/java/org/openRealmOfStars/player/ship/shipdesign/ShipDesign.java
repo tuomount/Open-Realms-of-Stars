@@ -352,6 +352,10 @@ public class ShipDesign {
         armor = armor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_ARMOR) {
+        armor = armor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.REPAIR_MODULE) {
         armor = armor + comp.getDefenseValue();
       }
@@ -425,7 +429,8 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.DISTORTION_SHIELD
           || comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
-          || comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
+          || comp.getType() == ShipComponentType.ORGANIC_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
         return true;
       }
     }
@@ -699,6 +704,9 @@ public class ShipDesign {
         power = power + comp.getEspionageBonus() * 2;
       }
       if (comp.getType() == ShipComponentType.CLOAKING_DEVICE) {
+        power = power + comp.getCloaking();
+      }
+      if (comp.getType() == ShipComponentType.SHADOW_ARMOR) {
         power = power + comp.getCloaking();
       }
       if (comp.getType() == ShipComponentType.SCANNER) {
@@ -1142,7 +1150,8 @@ public class ShipDesign {
       if (comp.getType() == ShipComponentType.THRUSTERS) {
         thrusters = true;
       }
-      if (comp.getType() == ShipComponentType.CLOAKING_DEVICE) {
+      if (comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
         cloakingDevice = true;
       }
     }

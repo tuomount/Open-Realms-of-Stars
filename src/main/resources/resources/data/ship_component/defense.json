@@ -383,4 +383,49 @@
     "defense": 14,
     "cloaking": 90
   },
+  {
+    "type": "SHADOW_SHIELD",
+    "name": "Shadow shield Mk1",
+    "cost": 7,
+    "metalCost": 2,
+    "energyRequirement": 3,
+    "defense": 3,
+    "cloaking": 10
+  },
+  {
+    "type": "SHADOW_SHIELD",
+    "name": "Shadow shield Mk2",
+    "cost": 8,
+    "metalCost": 2,
+    "energyRequirement": 4,
+    "defense": 6,
+    "cloaking": 30
+  },
+  {
+    "type": "SHADOW_SHIELD",
+    "name": "Shadow shield Mk3",
+    "cost": 9,
+    "metalCost": 3,
+    "energyRequirement": 4,
+    "defense": 10,
+    "cloaking": 50
+  },
+  {
+    "type": "SHADOW_SHIELD",
+    "name": "Shadow shield Mk4",
+    "cost": 10,
+    "metalCost": 3,
+    "energyRequirement": 4,
+    "defense": 14,
+    "cloaking": 90
+  },
+  {
+    "type": "SHADOW_SHIELD",
+    "name": "Shadow shield Mk5",
+    "cost": 11,
+    "metalCost": 3,
+    "energyRequirement": 5,
+    "defense": 18,
+    "cloaking": 150
+  },
 ]

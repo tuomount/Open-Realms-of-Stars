@@ -203,7 +203,12 @@ public enum ShipComponentType {
   /**
    * Armor component that also adds cloaking.
    */
-  SHADOW_ARMOR;
+  SHADOW_ARMOR,
+  /**
+   * Shield defense component that also adds cloaking
+   */
+  SHADOW_SHIELD;
+
 
 
   /**
@@ -243,6 +248,8 @@ public enum ShipComponentType {
       return "Scanner";
     case SHIELD:
       return "Shield";
+    case SHADOW_SHIELD:
+      return "Shadow shield";
     case ARMOR:
       return "Armor";
     case SHADOW_ARMOR:
@@ -337,6 +344,9 @@ public enum ShipComponentType {
     case SCANNER:
       return Icons.ICON_SCANNER;
     case SHIELD:
+      return Icons.ICON_SHIELD;
+    case SHADOW_SHIELD:
+      //TODO: Change icon
       return Icons.ICON_SHIELD;
     case ARMOR:
       return Icons.ICON_ARMOR;

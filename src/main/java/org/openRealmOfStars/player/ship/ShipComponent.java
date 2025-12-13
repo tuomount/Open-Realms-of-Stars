@@ -601,8 +601,21 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case SHADOW_SHIELD: {
+      sb.append("Shield value: ");
+      sb.append(getDefenseValue());
+      sb.append(" Cloaking: ");
+      sb.append(getCloaking());
+      sb.append("\n\n");
+      sb.append("Shadow shield protects ships' hull from impacts and tries to"
+          + "\n cloak fleet in starmap. Cloaked ship is also more difficult "
+          + "\nto hit in combat. Shadow shield can be overload "
+          + "\nto regenerate faster.");
+      sb.append("\n");
+      break;
+    }
     case CLOAKING_DEVICE: {
-      sb.append("Cloaking:");
+      sb.append("Cloaking: ");
       sb.append(getCloaking());
       sb.append("\n\n");
       sb.append("Cloaking device tries to hide fleet in star map."

@@ -535,7 +535,8 @@ public class ShipDesignView extends BlackPanel {
                 || comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
                 || comp.getType() == ShipComponentType.SOLAR_ARMOR
                 || comp.getType() == ShipComponentType.ORGANIC_ARMOR
-                || comp.getType() == ShipComponentType.SHADOW_ARMOR)) {
+                || comp.getType() == ShipComponentType.SHADOW_ARMOR
+                || comp.getType() == ShipComponentType.SHADOW_SHIELD)) {
           components.add(comp);
           continue;
         }

@@ -495,6 +495,14 @@ private boolean isIndexValid(final int index) {
           shield++;
         }
       }
+      if (comp.getType() == ShipComponentType.SHADOW_SHIELD
+          && componentIsWorking(i) && !shieldsUp) {
+        workingShields = true;
+        shieldsUp = true;
+        if (shield < getTotalShield()) {
+          shield++;
+        }
+      }
       if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
           && componentIsWorking(i) && !armorUp) {
         armorUp = true;
@@ -570,6 +578,11 @@ private boolean isIndexValid(final int index) {
       }
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD
+          && componentIsWorking(i)) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_SHIELD
           && componentIsWorking(i)) {
           totalShield = totalShield + comp.getDefenseValue();
       }
@@ -1653,6 +1666,10 @@ private int increaseHitChanceByComponent() {
           totalShield = totalShield + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_SHIELD) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
           totalShield = totalShield + comp.getDefenseValue();
       }
@@ -1928,7 +1945,8 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.SHIELD
           || comp.getType() == ShipComponentType.REPAIR_MODULE
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
-          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
@@ -2005,7 +2023,8 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.SHIELD
           || comp.getType() == ShipComponentType.REPAIR_MODULE
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
-          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE

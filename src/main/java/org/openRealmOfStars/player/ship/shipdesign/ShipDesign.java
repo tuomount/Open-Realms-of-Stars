@@ -226,6 +226,10 @@ public class ShipDesign {
         shield = shield + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_SHIELD) {
+        shield = shield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
         shield = shield + comp.getDefenseValue();
       }
@@ -430,7 +434,8 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
           || comp.getType() == ShipComponentType.ORGANIC_ARMOR
-          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
         return true;
       }
     }

@@ -2156,7 +2156,7 @@ public final class TechFactory {
       lowBonus = -7;
       mediumBonus = -15;
       highBonus = -25;
-      veryHighBonus = -50;
+      veryHighBonus = -43;
     } else if (gameLength <= 300) {
       veryveryLowBonus = 0;
       veryLowBonus = -2;
@@ -2178,7 +2178,7 @@ public final class TechFactory {
       mediumBonus = 0;
       highBonus = 0;
     } else if (gameLength <= 800) {
-      multiplier = 1;
+      multiplier = 2;
       veryveryLowBonus = 0;
       veryLowBonus = 2;
       lowBonus = 3;
@@ -2186,13 +2186,13 @@ public final class TechFactory {
       highBonus = 12;
       veryHighBonus = 15;
     } else if (gameLength <= 1000) {
-      multiplier = 1;
-      veryveryLowBonus = 0;
-      veryLowBonus = 3;
-      lowBonus = 6;
-      mediumBonus = 9;
-      highBonus = 12;
-      veryHighBonus = 15;
+      multiplier = 2;
+      veryveryLowBonus = 2;
+      veryLowBonus = 5;
+      lowBonus = 9;
+      mediumBonus = 13;
+      highBonus = 23;
+      veryHighBonus = 27;
     }
     switch (level) {
     case 1:

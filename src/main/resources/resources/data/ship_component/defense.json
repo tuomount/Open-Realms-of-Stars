@@ -428,4 +428,20 @@
     "defense": 18,
     "cloaking": 150
   },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Command outpost",
+    "cost": 20,
+    "metalCost": 10,
+    "energyRequirement": 2,
+    "fleetCapacityBonus": 1
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Command center",
+    "cost": 30,
+    "metalCost": 15,
+    "energyRequirement": 2,
+    "fleetCapacityBonus": 2
+  },
 ]

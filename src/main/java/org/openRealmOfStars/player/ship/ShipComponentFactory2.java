@@ -79,7 +79,7 @@ public final class ShipComponentFactory2 {
   private void init() {
     final var dataFilesBase = "resources/data/ship_component/";
     final String[] dataFiles = {
-        "weapons"};
+        "weapons", "defense", "hulls"};
 
     var loadedCount = loader.loadAll(shipComponents, dataFilesBase, dataFiles);
     ErrorLogger.log("Ship Components loaded: " + loadedCount);
@@ -101,6 +101,7 @@ public final class ShipComponentFactory2 {
         tmp.setEnergyRequirement(jobj.optInt("energyRequirement", 0));
         tmp.setEnergyResource(jobj.optInt("energySource", 0));
         tmp.setFtlSpeed(jobj.optInt("ftlSpeed", 0));
+        tmp.setBaySize(jobj.optInt("baySize", 0));
         tmp.setSpeed(jobj.optInt("speed", 0));
         tmp.setTacticSpeed(jobj.optInt("tacticSpeed", 0));
         tmp.setScannerRange(jobj.optInt("scannerRange", 0));

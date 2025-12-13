@@ -473,7 +473,7 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL3_NAMES = {
       "Improved mine", "Improved factory", "Market center",
-      "Starbase music" };
+      "Starbase music hall" };
   /**
    * Planetary Improvement rare tech names for level 3
    */

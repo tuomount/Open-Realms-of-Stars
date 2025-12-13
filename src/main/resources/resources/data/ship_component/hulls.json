@@ -45,4 +45,11 @@
     "energyRequirement": 1,
     "baySize": 4
   },
+  {
+    "type": "PRIVATEERING_MODULE",
+    "name": "Privateer Module",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+  },
 ]

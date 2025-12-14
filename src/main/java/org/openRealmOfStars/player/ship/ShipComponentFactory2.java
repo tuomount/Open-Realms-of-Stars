@@ -79,7 +79,8 @@ public final class ShipComponentFactory2 {
   private void init() {
     final var dataFilesBase = "resources/data/ship_component/";
     final String[] dataFiles = {
-        "weapons", "defense", "hulls", "improvements", "propulsion"};
+        "weapons", "defense", "hulls", "improvements", "propulsion",
+        "electronics"};
 
     var loadedCount = loader.loadAll(shipComponents, dataFilesBase, dataFiles);
     ErrorLogger.log("Ship Components loaded: " + loadedCount);

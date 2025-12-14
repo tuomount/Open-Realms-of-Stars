@@ -1,0 +1,292 @@
+[
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk1",
+    "cost": 2,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "scannerRange": 2,
+    "cloakDetection": 10
+  },
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk2",
+    "cost": 2,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "scannerRange": 2,
+    "cloakDetection": 20
+  },
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk3",
+    "cost": 3,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "scannerRange": 3,
+    "cloakDetection": 40
+  },
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk4",
+    "cost": 3,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "scannerRange": 4,
+    "cloakDetection": 60
+  },
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk5",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "scannerRange": 5,
+    "cloakDetection": 80
+  },
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk6",
+    "cost": 2,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "scannerRange": 5,
+    "cloakDetection": 100
+  },
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk7",
+    "cost": 3,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "scannerRange": 6,
+    "cloakDetection": 120
+  },
+  {
+    "type": "SCANNER",
+    "name": "Scanner Mk8",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "scannerRange": 7,
+    "cloakDetection": 140
+  },
+  {
+    "type": "SCANNER",
+    "name": "LR Scanner Mk1",
+    "cost": 2,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "scannerRange": 4,
+    "cloakDetection": 20
+  },
+  {
+    "type": "SCANNER",
+    "name": "LR Scanner Mk2",
+    "cost": 3,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "scannerRange": 5,
+    "cloakDetection": 30
+  },
+  {
+    "type": "SCANNER",
+    "name": "LR Scanner Mk3",
+    "cost": 3,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "scannerRange": 6,
+    "cloakDetection": 40
+  },
+  {
+    "type": "SCANNER",
+    "name": "LR Scanner Mk4",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "scannerRange": 7,
+    "cloakDetection": 60
+  },
+  {
+    "type": "SCANNER",
+    "name": "LR Scanner Mk5",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "scannerRange": 8,
+    "cloakDetection": 80
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk1",
+    "cost": 2,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "cloaking": 20
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk2",
+    "cost": 2,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "cloaking": 40
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk3",
+    "cost": 3,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "cloaking": 60
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk4",
+    "cost": 3,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "cloaking": 80
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk5",
+    "cost": 4,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "cloaking": 100
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk6",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "cloaking": 120
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk7",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 3,
+    "cloaking": 140
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk7",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 3,
+    "cloaking": 160
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk8",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 3,
+    "cloaking": 180
+  },
+  {
+    "type": "CLOAKING_DEVICE",
+    "name": "Cloaking device Mk9",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "cloaking": 200
+  },
+  {
+    "type": "TARGETING_COMPUTER",
+    "name": "Targeting computer Mk1",
+    "cost": 2,
+    "metalCost": 2,
+    "energyRequirement": 1,
+    "damage": 10,
+    "initiativeBoost": 1
+  },
+  {
+    "type": "TARGETING_COMPUTER",
+    "name": "Targeting computer Mk2",
+    "cost": 3,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "damage": 20,
+    "initiativeBoost": 2
+  },
+  {
+    "type": "TARGETING_COMPUTER",
+    "name": "Targeting computer Mk3",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 30,
+    "initiativeBoost": 3
+  },
+  {
+    "type": "TARGETING_COMPUTER",
+    "name": "Targeting computer Mk4",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 3,
+    "damage": 40,
+    "initiativeBoost": 4
+  },
+  {
+    "type": "TARGETING_COMPUTER",
+    "name": "Targeting computer Mk5",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 4,
+    "damage": 50,
+    "initiativeBoost": 5
+  },
+  {
+    "type": "ESPIONAGE_MODULE",
+    "name": "Espionage module Mk1",
+    "cost": 3,
+    "metalCost": 1,
+    "energyRequirement": 1,
+    "espionageBonus": 1
+  },
+  {
+    "type": "ESPIONAGE_MODULE",
+    "name": "Espionage module Mk2",
+    "cost": 4,
+    "metalCost": 1,
+    "energyRequirement": 1,
+    "espionageBonus": 2
+  },
+  {
+    "type": "ESPIONAGE_MODULE",
+    "name": "Espionage module Mk3",
+    "cost": 4,
+    "metalCost": 1,
+    "energyRequirement": 1,
+    "espionageBonus": 3
+  },
+  {
+    "type": "ESPIONAGE_MODULE",
+    "name": "Espionage module Mk4",
+    "cost": 5,
+    "metalCost": 1,
+    "energyRequirement": 2,
+    "espionageBonus": 4
+  },
+  {
+    "type": "ESPIONAGE_MODULE",
+    "name": "Espionage module Mk5",
+    "cost": 6,
+    "metalCost": 1,
+    "energyRequirement": 2,
+    "espionageBonus": 5
+  },
+  {
+    "type": "ESPIONAGE_MODULE",
+    "name": "Espionage module Mk6",
+    "cost": 7,
+    "metalCost": 1,
+    "energyRequirement": 2,
+    "espionageBonus": 6
+  },
+]

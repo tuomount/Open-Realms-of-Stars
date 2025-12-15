@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Scout Mk1",
+    "type": "NORMAL",
+    "size": "SMALL",
+    "maxSlots": 4,
+    "hp": 1,
+    "cost": 5,
+    "metalCost": 5,
+    "fleetCapacity": 0.1,
+    "image": "Scout"
+  },
+]

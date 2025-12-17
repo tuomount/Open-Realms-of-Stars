@@ -289,4 +289,11 @@
     "energyRequirement": 2,
     "espionageBonus": 6
   },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Orbital ascension portal",
+    "cost": 40,
+    "metalCost": 40,
+    "energyRequirement": 8,
+  },
 ]

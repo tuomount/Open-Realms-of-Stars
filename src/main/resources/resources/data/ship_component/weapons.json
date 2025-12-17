@@ -1138,4 +1138,188 @@
     "energyRequirement": 0,
     "damage": 100,
   },
+  {
+    "type": "TRACTOR_BEAM",
+    "name": "Tractor beam",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 0,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk1",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk2",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 3,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk3",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 5,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk4",
+    "cost": 7,
+    "metalCost": 5,
+    "energyRequirement": 3,
+    "damage": 7,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk5",
+    "cost": 8,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 9,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk1",
+    "cost": 5,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 3,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk2",
+    "cost": 5,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 5,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk3",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 7,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk4",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 9,
+    "weaponRange": 2
+  },
+  {
+    "type": "BITE",
+    "name": "Massive mouth with teeth Mk1",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 1
+  },
+  {
+    "type": "BITE",
+    "name": "Massive mouth with teeth Mk2",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 4,
+    "weaponRange": 1
+  },
+  {
+    "type": "BITE",
+    "name": "Massive mouth with teeth Mk3",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 6,
+    "weaponRange": 1
+  },
+  {
+    "type": "TENTACLE",
+    "name": "Tentacle Mk1",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 3,
+    "weaponRange": 1
+  },
+  {
+    "type": "TENTACLE",
+    "name": "Tentacle Mk2",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 5,
+    "weaponRange": 1
+  },
+  {
+    "type": "GRAVITY_RIPPER",
+    "name": "Gravity ripper Mk1",
+    "cost": 15,
+    "metalCost": 15,
+    "energyRequirement": 5,
+    "damage": 6,
+    "hitBonus": 100,
+    "weaponRange": 1
+  },
+  {
+    "type": "GRAVITY_RIPPER",
+    "name": "Gravity ripper Mk2",
+    "cost": 16,
+    "metalCost": 15,
+    "energyRequirement": 5,
+    "damage": 8,
+    "hitBonus": 100,
+    "weaponRange": 1
+  },
+  {
+    "type": "GRAVITY_RIPPER",
+    "name": "Gravity ripper Mk3",
+    "cost": 16,
+    "metalCost": 16,
+    "energyRequirement": 5,
+    "damage": 10,
+    "hitBonus": 100,
+    "weaponRange": 1
+  },
+  {
+    "type": "ARM_SPIKE",
+    "name": "Arm spike",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 6,
+    "weaponRange": 1
+  },
+  {
+    "type": "PLASMA_SPIT",
+    "name": "Plasma spit",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 8,
+    "weaponRange": 2
+  },
+
 ]

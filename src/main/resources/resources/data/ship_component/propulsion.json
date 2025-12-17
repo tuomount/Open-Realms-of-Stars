@@ -595,5 +595,29 @@
       "speed": 3,
       "tacticSpeed": 3
   },
+  {
+    "type": "SPACE_FIN",
+    "name": "Space fin",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "ftlSpeed": 1,
+    "speed": 1,
+    "tacticSpeed": 1
+  },
+  {
+    "type": "HEART",
+    "name": "Heart",
+    "cost": 0,
+    "metalCost": 0,
+    "energySource": 6,
+  },
+  {
+    "type": "HEART",
+    "name": "Large heart",
+    "cost": 0,
+    "metalCost": 0,
+    "energySource": 9,
+  },
 
 ]

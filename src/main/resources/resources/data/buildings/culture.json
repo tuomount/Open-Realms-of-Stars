@@ -112,5 +112,27 @@
     "singleAllowed": true,
     "maintenanceCost": 0.25,
     "name": "Culture center"
+  },
+  {
+    "description": "All possible different culture types under single building\nbut not advanced.",
+    "cultBonus": 2,
+    "type": "CULTURE",
+    "metalCost": 8,
+    "prodCost": 20,
+    "iconId": "Culture",
+    "singleAllowed": true,
+    "maintenanceCost": 0.25,
+    "name": "Culture complex"
+  },
+  {
+    "description": "All possible different culture types under single building.",
+    "cultBonus": 4,
+    "type": "CULTURE",
+    "metalCost": 10,
+    "prodCost": 25,
+    "iconId": "Culture",
+    "singleAllowed": true,
+    "maintenanceCost": 0.33,
+    "name": "Advanced culture complex"
   }
 ]

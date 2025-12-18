@@ -631,7 +631,8 @@ public final class DefaultScoring {
       }
     } else {
       if (building.getName().equals("Radiation dampener")
-          || building.getName().equals("Radiation well")) {
+          || building.getName().equals("Radiation well")
+          || building.getName().equals("Radiation shield")) {
         // Radiation level is not high so never building these
         score = -1;
       }

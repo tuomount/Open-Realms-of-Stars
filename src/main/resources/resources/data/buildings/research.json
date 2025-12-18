@@ -41,7 +41,7 @@
     "prodCost": 48,
     "iconId": "Research",
     "singleAllowed": true,
-    "reseBonus": 4,
+    "reseBonus": 5,
     "maintenanceCost": 0.33,
     "name": "Neural research center"
   },
@@ -77,7 +77,27 @@
     "iconId": "Research",
     "reseBonus": 2,
     "maintenanceCost": 0.25,
+    "name": "Improved laboratory"
+  },
+  {
+    "description": "Fully equiped research laboratory.",
+    "type": "RESEARCH",
+    "metalCost": 12,
+    "prodCost": 28,
+    "iconId": "Research",
+    "reseBonus": 3,
+    "maintenanceCost": 0.33,
     "name": "Advanced laboratory"
+  },
+  {
+    "description": "High class science laboratory.",
+    "type": "RESEARCH",
+    "metalCost": 18,
+    "prodCost": 36,
+    "iconId": "Research",
+    "reseBonus": 4,
+    "maintenanceCost": 0.33,
+    "name": "Ultimate laboratory"
   },
   {
     "ancientArtifactResearch": 2,

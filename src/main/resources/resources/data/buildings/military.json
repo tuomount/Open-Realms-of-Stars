@@ -21,7 +21,7 @@
     "name": "Planetary defense turret Mk2"
   },
   {
-    "description": "Biggest and meanest defense turret.",
+    "description": "Big and scary defense turret.",
     "type": "MILITARY",
     "metalCost": 70,
     "prodCost": 70,
@@ -29,6 +29,16 @@
     "defenseDamage": 9,
     "iconId": "PlanetaryTurret",
     "name": "Planetary defense turret Mk3"
+  },
+  {
+    "description": "Biggest and meanest defense turret.",
+    "type": "MILITARY",
+    "metalCost": 90,
+    "prodCost": 90,
+    "happiness": 1,
+    "defenseDamage": 12,
+    "iconId": "PlanetaryTurret",
+    "name": "Planetary defense turret Mk4"
   },
   {
     "description": "Big and powerful defense turret.",
@@ -62,6 +72,19 @@
     "singleAllowed": true,
     "maintenanceCost": 0.25,
     "name": "Space academy",
+    "battleBonus": 25
+  },
+  {
+    "description": "Increases military culture on planet.\nRecruited leaders start at level 2.",
+    "type": "MILITARY",
+    "metalCost": 25,
+    "prodCost": 35,
+    "happiness": 1,
+    "cultBonus": 1,
+    "iconId": "Troops",
+    "singleAllowed": true,
+    "maintenanceCost": 0.33,
+    "name": "Galactic academy",
     "battleBonus": 25
   },
   {

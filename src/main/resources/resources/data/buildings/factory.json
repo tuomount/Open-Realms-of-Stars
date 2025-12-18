@@ -20,14 +20,34 @@
     "name": "Basic factory"
   },
   {
-    "description": "Advanced production line with robotics.",
+    "description": "Improved factory with robotics.",
     "type": "FACTORY",
     "metalCost": 10,
     "prodCost": 30,
     "iconId": "Factory",
     "factBonus": 2,
     "maintenanceCost": 0.25,
+    "name": "Improved factory"
+  },
+  {
+    "description": "Advanced factory with automatic production lines.",
+    "type": "FACTORY",
+    "metalCost": 20,
+    "prodCost": 40,
+    "iconId": "Factory",
+    "factBonus": 3,
+    "maintenanceCost": 0.33,
     "name": "Advanced factory"
+  },
+  {
+    "description": "Ultimate factory with multiple automatic production lines.",
+    "type": "FACTORY",
+    "metalCost": 30,
+    "prodCost": 50,
+    "iconId": "Factory",
+    "factBonus": 4,
+    "maintenanceCost": 0.33,
+    "name": "Ultimate factory"
   },
   {
     "description": "Replicated goods can sold with good profit.",
@@ -39,6 +59,17 @@
     "factBonus": 2,
     "name": "Replicator center",
     "credBonus": 2
+  },
+  {
+    "description": "Utopic replicator center produces goods which can sold with good profit.",
+    "type": "FACTORY",
+    "metalCost": 60,
+    "prodCost": 60,
+    "iconId": "Factory",
+    "singleAllowed": true,
+    "factBonus": 4,
+    "name": "Utopic replicator center",
+    "credBonus": 4
   },
   {
     "description": "Orbital elevator that increases production and give happiness. Now with bigger elevator.",
@@ -130,7 +161,7 @@
     "prodCost": 50,
     "iconId": "Factory",
     "singleAllowed": true,
-    "factBonus": 4,
+    "factBonus": 5,
     "maintenanceCost": 0.33,
     "name": "Nanobot manufacturing center"
   },
@@ -153,5 +184,17 @@
     "singleAllowed": true,
     "maintenanceCost": 1,
     "name": "Radiation dampener"
+  },
+  {
+    "description": "Decrease planet radiation by two.",
+    "type": "FACTORY",
+    "metalCost": 40,
+    "prodCost": 40,
+    "happiness": 1,
+    "iconId": "Radiation",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "name": "Radiation shield"
   }
+
 ]

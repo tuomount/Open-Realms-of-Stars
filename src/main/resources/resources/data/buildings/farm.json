@@ -1,13 +1,33 @@
 [
   {
-    "description": "Advanced automation farm.",
+    "description": "Improved farm with fertilizers.",
     "type": "FARM",
     "metalCost": 8,
     "prodCost": 20,
     "iconId": "Farm",
     "maintenanceCost": 0.25,
-    "name": "Advanced farm",
+    "name": "Improved farm",
     "farmBonus": 2
+  },
+  {
+    "description": "Advanced automation farm.",
+    "type": "FARM",
+    "metalCost": 12,
+    "prodCost": 25,
+    "iconId": "Farm",
+    "maintenanceCost": 0.33,
+    "name": "Advanced farm",
+    "farmBonus": 3
+  },
+  {
+    "description": "Fully automated farm.",
+    "type": "FARM",
+    "metalCost": 20,
+    "prodCost": 30,
+    "iconId": "Farm",
+    "maintenanceCost": 0.33,
+    "name": "Ultimate farm",
+    "farmBonus": 4
   },
   {
     "description": "Hydropodic farms producing food.",
@@ -18,13 +38,13 @@
     "singleAllowed": true,
     "maintenanceCost": 0.33,
     "name": "Hydropodic farming center",
-    "farmBonus": 4
+    "farmBonus": 5
   },
   {
     "description": "Group of automated farms.",
     "type": "FARM",
-    "metalCost": 20,
-    "prodCost": 30,
+    "metalCost": 10,
+    "prodCost": 20,
     "iconId": "Farm",
     "singleAllowed": true,
     "maintenanceCost": 0.25,
@@ -41,14 +61,34 @@
     "farmBonus": 1
   },
   {
-    "description": "Advanced reservoir for increase water amount.",
+    "description": "Improved reservoir with bigger tanks.",
     "type": "WATER",
     "metalCost": 20,
     "prodCost": 8,
     "iconId": "Farm",
     "maintenanceCost": 0.25,
-    "name": "Advanced reservoir",
+    "name": "Improved reservoir",
     "waterBonus": 2
+  },
+  {
+    "description": "Advanced reservoir for increase water amount.",
+    "type": "WATER",
+    "metalCost": 22,
+    "prodCost": 12,
+    "iconId": "Farm",
+    "maintenanceCost": 0.33,
+    "name": "Advanced reservoir",
+    "waterBonus": 3
+  },
+  {
+    "description": "Advanced reservoir for increase water amount.",
+    "type": "WATER",
+    "metalCost": 25,
+    "prodCost": 15,
+    "iconId": "Farm",
+    "maintenanceCost": 0.33,
+    "name": "Ultimate reservoir",
+    "waterBonus": 4
   },
   {
     "description": "Large underground reservoir for increase water amount.",
@@ -70,7 +110,7 @@
     "singleAllowed": true,
     "maintenanceCost": 0.33,
     "name": "Crust reservoir",
-    "waterBonus": 4
+    "waterBonus": 5
   },
   {
     "description": "Reservoir built on ground.",

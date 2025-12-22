@@ -100,7 +100,7 @@
   },
   {
     "name": "Spore",
-    "type": "Spore",
+    "type": "FREIGHTER",
     "size": "SMALL",
     "maxSlots": 2,
     "hp": 1,
@@ -200,7 +200,7 @@
   {
     "name": "Minor orbital",
     "type": "ORBITAL",
-    "size": "Minor",
+    "size": "MINOR",
     "maxSlots": 3,
     "hp": 1,
     "cost": 3,

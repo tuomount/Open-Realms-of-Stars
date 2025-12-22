@@ -174,7 +174,7 @@
   },
   {
     "type": "CLOAKING_DEVICE",
-    "name": "Cloaking device Mk7",
+    "name": "Cloaking device Mk8",
     "cost": 5,
     "metalCost": 5,
     "energyRequirement": 3,
@@ -182,7 +182,7 @@
   },
   {
     "type": "CLOAKING_DEVICE",
-    "name": "Cloaking device Mk8",
+    "name": "Cloaking device Mk9",
     "cost": 5,
     "metalCost": 5,
     "energyRequirement": 3,
@@ -190,7 +190,7 @@
   },
   {
     "type": "CLOAKING_DEVICE",
-    "name": "Cloaking device Mk9",
+    "name": "Cloaking device Mk10",
     "cost": 6,
     "metalCost": 6,
     "energyRequirement": 3,

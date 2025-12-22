@@ -2284,8 +2284,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = COMBAT_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = COMBAT_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = COMBAT_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = COMBAT_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = COMBAT_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = COMBAT_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = COMBAT_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = COMBAT_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = COMBAT_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = COMBAT_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = COMBAT_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Defense:
@@ -2320,8 +2350,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = DEFENSE_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = DEFENSE_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = DEFENSE_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = DEFENSE_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = DEFENSE_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = DEFENSE_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = DEFENSE_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = DEFENSE_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = DEFENSE_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = DEFENSE_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = DEFENSE_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Hulls:
@@ -2356,8 +2416,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = HULL_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = HULL_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = HULL_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = HULL_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = HULL_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = HULL_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = HULL_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = HULL_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = HULL_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = HULL_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = HULL_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Improvements:
@@ -2392,8 +2482,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = IMPROVEMENT_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Propulsion:
@@ -2428,8 +2548,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = PROPULSION_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = PROPULSION_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = PROPULSION_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = PROPULSION_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = PROPULSION_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = PROPULSION_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = PROPULSION_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = PROPULSION_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = PROPULSION_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = PROPULSION_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = PROPULSION_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Electrics:
@@ -2464,8 +2614,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = ELECTRONICS_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = ELECTRONICS_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = ELECTRONICS_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = ELECTRONICS_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = ELECTRONICS_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = ELECTRONICS_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = ELECTRONICS_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = ELECTRONICS_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = ELECTRONICS_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = ELECTRONICS_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = ELECTRONICS_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     default:

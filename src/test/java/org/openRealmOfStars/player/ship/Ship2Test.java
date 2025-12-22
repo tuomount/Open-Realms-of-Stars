@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2024 Tuomo Untinen
+ * Copyright (C) 2018-2025 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -551,7 +551,7 @@ public class Ship2Test {
         ShipHull shiphull = Mockito.mock(ShipHull.class);
         ShipComponent weaponLaser = ShipComponentFactory.createByName("Laser Mk1");
         ShipComponent weaponECMTorpedo = ShipComponentFactory.createByName("ECM torpedo Mk1");
-        ShipComponent weaponPhotoTorpedo = ShipComponentFactory.createByName("Photon torpedo Mk9");
+        ShipComponent weaponPhotoTorpedo = ShipComponentFactory.createByName("Photon torpedo Mk16");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
 
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
@@ -1006,7 +1006,7 @@ public class Ship2Test {
 
         Ship ship = new Ship(shipdesign);
         assertEquals(2, ship.getScannerLvl());
-        assertEquals(20, ship.getScannerDetectionLvl());
+        assertEquals(10, ship.getScannerDetectionLvl());
     }
 
     /**

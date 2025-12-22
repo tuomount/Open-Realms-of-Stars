@@ -300,6 +300,22 @@
     "defense": 20,
   },
   {
+    "type": "SHIELD_GENERATOR",
+    "name": "Shield generator Mk1",
+    "cost": 6,
+    "metalCost": 1,
+    "defense": 1,
+    "energyRequirement": 1
+  },
+  {
+    "type": "SHIELD_GENERATOR",
+    "name": "Shield generator Mk2",
+    "cost": 8,
+    "metalCost": 2,
+    "defense": 2,
+    "energyRequirement": 1
+  },
+  {
     "type": "JAMMER",
     "name": "Jammer Mk1",
     "cost": 5,

@@ -157,7 +157,7 @@ public class Tech {
    * @param level between 1-20
    */
   public void setLevel(final int level) {
-    if (level >= 1 && level < 11) {
+    if (level >= 1 && level < TechList.MAX_TECH_LEVEL) {
       this.level = level;
     }
   }

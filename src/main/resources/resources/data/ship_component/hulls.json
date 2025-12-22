@@ -1,7 +1,7 @@
 [
   {
     "type": "COLONY_MODULE",
-    "name": "Colony module",
+    "name": "Colonization module",
     "cost": 2,
     "metalCost": 8,
     "energyRequirement": 1

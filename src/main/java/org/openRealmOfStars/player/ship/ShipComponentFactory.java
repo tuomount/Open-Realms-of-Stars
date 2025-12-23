@@ -72,7 +72,7 @@ public final class ShipComponentFactory {
     }
 
     final var cachedTrait = shipComponents.get(name);
-    if (cachedTrait == null) {
+    if (cachedTrait == null && name != null) {
       ErrorLogger.log("Could not create component " + name + ".");
     }
     return Optional.ofNullable(cachedTrait);

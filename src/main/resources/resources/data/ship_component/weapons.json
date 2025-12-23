@@ -736,7 +736,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk1",
+    "name": "HE missile Mk1",
     "cost": 2,
     "metalCost": 4,
     "energyRequirement": 0,
@@ -745,7 +745,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk2",
+    "name": "HE missile Mk2",
     "cost": 2,
     "metalCost": 4,
     "energyRequirement": 0,
@@ -754,7 +754,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missle Mk3",
+    "name": "HE missile Mk3",
     "cost": 2,
     "metalCost": 4,
     "energyRequirement": 0,
@@ -763,7 +763,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk4",
+    "name": "HE missile Mk4",
     "cost": 2,
     "metalCost": 5,
     "energyRequirement": 0,
@@ -772,7 +772,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk5",
+    "name": "HE missile Mk5",
     "cost": 3,
     "metalCost": 5,
     "energyRequirement": 0,
@@ -781,7 +781,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk6",
+    "name": "HE missile Mk6",
     "cost": 3,
     "metalCost": 5,
     "energyRequirement": 0,
@@ -790,7 +790,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk7",
+    "name": "HE missile Mk7",
     "cost": 3,
     "metalCost": 5,
     "energyRequirement": 0,
@@ -799,7 +799,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk8",
+    "name": "HE missile Mk8",
     "cost": 3,
     "metalCost": 6,
     "energyRequirement": 0,
@@ -808,7 +808,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk9",
+    "name": "HE missile Mk9",
     "cost": 4,
     "metalCost": 6,
     "energyRequirement": 0,
@@ -817,7 +817,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk10",
+    "name": "HE missile Mk10",
     "cost": 4,
     "metalCost": 7,
     "energyRequirement": 0,
@@ -826,7 +826,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk11",
+    "name": "HE missile Mk11",
     "cost": 4,
     "metalCost": 7,
     "energyRequirement": 0,
@@ -835,7 +835,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk12",
+    "name": "HE missile Mk12",
     "cost": 4,
     "metalCost": 8,
     "energyRequirement": 0,
@@ -844,7 +844,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk13",
+    "name": "HE missile Mk13",
     "cost": 4,
     "metalCost": 8,
     "energyRequirement": 0,
@@ -853,7 +853,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk14",
+    "name": "HE missile Mk14",
     "cost": 4,
     "metalCost": 8,
     "energyRequirement": 0,
@@ -862,7 +862,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk15",
+    "name": "HE missile Mk15",
     "cost": 5,
     "metalCost": 9,
     "energyRequirement": 0,
@@ -871,7 +871,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk16",
+    "name": "HE missile Mk16",
     "cost": 5,
     "metalCost": 9,
     "energyRequirement": 0,
@@ -880,7 +880,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk17",
+    "name": "HE missile Mk17",
     "cost": 6,
     "metalCost": 10,
     "energyRequirement": 0,
@@ -889,7 +889,7 @@
   },
   {
     "type": "WEAPON_HE_MISSILE",
-    "name": "HE Missile Mk18",
+    "name": "HE missile Mk18",
     "cost": 6,
     "metalCost": 10,
     "energyRequirement": 0,

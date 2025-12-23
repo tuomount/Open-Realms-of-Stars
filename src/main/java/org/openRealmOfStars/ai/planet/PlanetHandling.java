@@ -146,19 +146,21 @@ public final class PlanetHandling {
     Construction[] constructions = planet.getProductionList();
     boolean constructionSelected = false;
     int gotFactory = gotBuildings(new String[] {
-        "Basic factory", "Advanced factory", "Manufacturing center",
-        "Nanobot manufacturing center", "Ancient factory" },
+        "Basic factory", "Improved factory", "Manufacturing center",
+        "Nanobot manufacturing center", "Ancient factory",
+        "Advanced factory", "Ultimate factory"},
         buildings);
     int gotLabs = gotBuildings(new String[] {
-        "Basic lab", "Advanced laboratory", "Research center",
-        "Neural research center", "Ancient lab", "College of history" },
+        "Basic lab", "Improved laboratory", "Research center",
+        "Neural research center", "Ancient lab", "College of history",
+        "Advanced laboratory", "Ultimate laboratory"},
         buildings);
     int gotFarms = gotBuildings(new String[] {
-        "Basic farm", "Advanced farm",
+        "Basic farm", "Improved farm", "Advanced farm", "Ultimate farm",
         "Farming center", "Hydropodic farming center" },
         buildings);
     int gotMines = gotBuildings(new String[] {
-        "Basic mine", "Advanced mine",
+        "Basic mine", "Improved mine", "Advanced mine", "Ultimate mine",
         "Mining center", "Nanobot mining center" },
         buildings);
     int gotSpacePort = gotBuildings(new String[] {

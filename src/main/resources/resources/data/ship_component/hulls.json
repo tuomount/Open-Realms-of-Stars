@@ -47,7 +47,7 @@
   },
   {
     "type": "PRIVATEERING_MODULE",
-    "name": "Privateer Module",
+    "name": "Privateer module",
     "cost": 6,
     "metalCost": 4,
     "energyRequirement": 1,

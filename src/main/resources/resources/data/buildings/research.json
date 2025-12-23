@@ -153,6 +153,14 @@
     "name": "Basic lab"
   },
   {
+    "description": "Basic laboratory for science.",
+    "type": "RESEARCH",
+    "metalCost": 8,
+    "prodCost": 4,
+    "iconId": "Research",
+    "name": "Telescopes"
+  },
+  {
     "description": "Ancient laboratory for science.",
     "type": "RESEARCH",
     "metalCost": 3,

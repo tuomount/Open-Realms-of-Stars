@@ -655,7 +655,7 @@ public final class TechFactory {
    */
   public static final String[] PROPULSION_TECH_LEVEL10_NAMES = {
       "Warp drive Mk8", "Hyper drive Mk8", "Impulse engine Mk4",
-      "Combat thruster Mk3" };
+      "Combat thrusters Mk3" };
   /**
    * Propulsion rare tech names for level 10.
    */
@@ -671,7 +671,7 @@ public final class TechFactory {
    * Propulsion tech names for level 12
    */
   public static final String[] PROPULSION_TECH_LEVEL12_NAMES = {
-      "Warp drive Mk10", "Hyper drive Mk10", "Combat thruster Mk4" };
+      "Warp drive Mk10", "Hyper drive Mk10", "Combat thrusters Mk4" };
   /**
    * Propulsion tech names for level 13
    */
@@ -810,7 +810,7 @@ public final class TechFactory {
    * Electronics tech names for level 17
    */
   public static final String[] ELECTRONICS_TECH_LEVEL17_NAMES = {
-      "LR Scanner Mk5" };
+      "LR scanner Mk5" };
   /**
    * Electronics tech names for level 18
    */

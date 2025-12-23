@@ -609,18 +609,18 @@ public final class DefaultScoring {
     }
     if (building.getName().equals("Basic mine")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced mine")
+            "Improved mine")
         && metal > 4) {
       score = -1;
     }
     if (building.getName().equals("Basic farm")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced farm")) {
+            "Improved farm")) {
       score = -1;
     }
     if (building.getName().equals("Basic lab")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced laboratory")) {
+            "Improved laboratory")) {
       score = -1;
     }
     if (planet.exceedRadiation()) {

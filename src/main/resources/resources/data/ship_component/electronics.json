@@ -73,7 +73,7 @@
   },
   {
     "type": "SCANNER",
-    "name": "LR Scanner Mk1",
+    "name": "LR scanner Mk1",
     "cost": 2,
     "metalCost": 2,
     "energyRequirement": 1,
@@ -82,7 +82,7 @@
   },
   {
     "type": "SCANNER",
-    "name": "LR Scanner Mk2",
+    "name": "LR scanner Mk2",
     "cost": 3,
     "metalCost": 2,
     "energyRequirement": 1,
@@ -91,7 +91,7 @@
   },
   {
     "type": "SCANNER",
-    "name": "LR Scanner Mk3",
+    "name": "LR scanner Mk3",
     "cost": 3,
     "metalCost": 3,
     "energyRequirement": 2,
@@ -100,7 +100,7 @@
   },
   {
     "type": "SCANNER",
-    "name": "LR Scanner Mk4",
+    "name": "LR scanner Mk4",
     "cost": 4,
     "metalCost": 4,
     "energyRequirement": 2,
@@ -109,7 +109,7 @@
   },
   {
     "type": "SCANNER",
-    "name": "LR Scanner Mk5",
+    "name": "LR scanner Mk5",
     "cost": 5,
     "metalCost": 5,
     "energyRequirement": 2,

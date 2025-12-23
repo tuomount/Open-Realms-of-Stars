@@ -1276,6 +1276,7 @@ public final class ShipGenerator {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     int value = -1;
+    int hullPoint = -1;
     Tech hullTech = null;
     for (Tech tech : hullTechs) {
       ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
@@ -1287,6 +1288,13 @@ public final class ShipGenerator {
           && hull.getHullType() == ShipHullType.FREIGHTER) {
         hullTech = tech;
         value = hull.getMaxSlot();
+        hullPoint = hull.getSlotHull();
+      } else if (hull.getMaxSlot() == value
+          && hull.getHullType() == ShipHullType.FREIGHTER
+          && hull.getSlotHull() > hullPoint) {
+        hullTech = tech;
+        value = hull.getMaxSlot();
+        hullPoint = hull.getSlotHull();
       }
     }
     if (hullTech != null) {

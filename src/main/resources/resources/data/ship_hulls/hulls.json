@@ -110,13 +110,24 @@
     "image": "SPORE"
   },
   {
-    "name": "Small freighter",
+    "name": "Small freighter Mk1",
     "type": "FREIGHTER",
     "size": "MEDIUM",
     "maxSlots": 6,
     "hp": 1,
     "cost": 6,
     "metalCost": 4,
+    "fleetCapacity": 0,
+    "image": "SMALL_FREIGHTER"
+  },
+  {
+    "name": "Small freighter Mk2",
+    "type": "FREIGHTER",
+    "size": "MEDIUM",
+    "maxSlots": 6,
+    "hp": 2,
+    "cost": 8,
+    "metalCost": 8,
     "fleetCapacity": 0,
     "image": "SMALL_FREIGHTER"
   },

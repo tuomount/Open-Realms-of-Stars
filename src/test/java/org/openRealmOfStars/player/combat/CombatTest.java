@@ -276,11 +276,12 @@ public class CombatTest {
     mission.setPhase(MissionPhase.EXECUTING);
     assertEquals(null, info2.getMissions().getMissionForPlanet("Test I",
         MissionPhase.PLANNING));
+    colony = new Ship(design2);
     fleet2 = new Fleet(colony, 6, 5);
     info2.getFleets().add(fleet2);
     combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     combat.setPlanet(planet);
-    combat.doFastCombat();
+    combat.doFastCombat(true);
     assertEquals(info1, combat.getWinner());
     assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test I",
         MissionPhase.PLANNING));
@@ -293,7 +294,7 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info1.getTechList().addTech(TechFactory.createHullTech(
-        TechFactory.HULL_TECH_LEVEL5_NAMES[2], 5));
+        TechFactory.HULL_TECH_LEVEL5_NAMES[1], 5));
     info1.getTechList().addTech(TechFactory.createDefenseTech(
         "Shield Mk3", 3));
     info1.getTechList().addTech(TechFactory.createCombatTech(
@@ -325,7 +326,7 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info1.getTechList().addTech(TechFactory.createHullTech(
-        TechFactory.HULL_TECH_LEVEL5_NAMES[2], 5));
+        TechFactory.HULL_TECH_LEVEL5_NAMES[1], 5));
     info1.getTechList().addTech(TechFactory.createDefenseTech(
         "Shield Mk3", 3));
     info1.getTechList().addTech(TechFactory.createCombatTech(

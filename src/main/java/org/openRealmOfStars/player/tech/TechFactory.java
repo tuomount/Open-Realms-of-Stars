@@ -293,7 +293,7 @@ public final class TechFactory {
    */
   public static final String[] DEFENSE_TECH_LEVEL12_NAMES = {"Shield Mk12",
       "Armor plating Mk12", "Orbital elevator Mk3",
-      "Planetary defense turrer Mk4", "Shadow shield Mk3" };
+      "Planetary defense turret Mk4", "Shadow shield Mk3" };
   /**
    * Defense tech names for level 13
    */
@@ -323,12 +323,12 @@ public final class TechFactory {
    * Defense tech names for level 18
    */
   public static final String[] DEFENSE_TECH_LEVEL18_NAMES = {"Shield Mk18",
-      "Armor plating Mk18", "Shadow shield Mk5"};
+      "Armor plating Mk18", "Jammer Mk6"};
   /**
    * Defense tech names for level 19
    */
   public static final String[] DEFENSE_TECH_LEVEL19_NAMES = {"Shield Mk19",
-      "Armor plating Mk19", "Jammer Mk6"};
+      "Armor plating Mk19", "Shadow shield Mk5"};
   /**
    * Defense tech names for level 20
    */
@@ -545,12 +545,12 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL12_NAMES = {
       "Neural research center", "Super AI center",
-      "Advanced farm", "Advcance furnace", "Advanced reservoir"};
+      "Advanced farm", "Advanced furnace", "Advanced reservoir"};
   /**
    * Planetary Improvement tech names for level 13
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL13_NAMES = {
-      "Advanced mine", "Advcance factory", "Aquatic colonization"};
+      "Advanced mine", "Advanced factory", "Aquatic colonization"};
   //, "Mass relay Mk2"};
   /**
    * Planetary Improvement tech names for level 14
@@ -780,7 +780,7 @@ public final class TechFactory {
    * Electronics tech names for level 11
    */
   public static final String[] ELECTRONICS_TECH_LEVEL11_NAMES = {
-      "LR Scanner Mk4" };
+      "LR scanner Mk4" };
   /**
    * Electronics tech names for level 12
    */

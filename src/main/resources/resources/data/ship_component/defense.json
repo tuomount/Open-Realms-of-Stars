@@ -400,6 +400,15 @@
     "cloaking": 90
   },
   {
+    "type": "SHADOW_ARMOR",
+    "name": "Shadow armor Mk5",
+    "cost": 11,
+    "metalCost": 18,
+    "energyRequirement": 1,
+    "defense": 14,
+    "cloaking": 150
+  },
+  {
     "type": "SHADOW_SHIELD",
     "name": "Shadow shield Mk1",
     "cost": 7,
@@ -441,7 +450,7 @@
     "cost": 11,
     "metalCost": 3,
     "energyRequirement": 5,
-    "defense": 18,
+    "defense": 17,
     "cloaking": 150
   },
   {

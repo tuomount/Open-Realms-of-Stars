@@ -115,7 +115,7 @@ public class ShipDesignTest extends TestCase {
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(3,design.getNumberOfComponents());
     assertEquals(0,design.getTotalMilitaryPower());
-    assertEquals(1,design.getFreeSlots());
+    assertEquals(1,design.getFreeCargoSpace());
     assertEquals(9, design.getTotalColonyPower());
     assertEquals(11, design.getInitiative());
 

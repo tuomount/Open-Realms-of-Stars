@@ -795,6 +795,21 @@ public class ShipDesign {
   }
 
   /**
+   * Get Free cargo space in ship.
+   * @return Cargo space in ship.
+   */
+  public int getFreeCargoSpace() {
+    int result = hull.getMaxSlot() - getNumberOfComponents();
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.CARGO_BAY) {
+        result = result + comp.getBaySize();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Change component priority order
    * @param index Index which to change
    * @param higher true for higher priority and false for lower
@@ -904,7 +919,8 @@ public class ShipDesign {
       designOk = false;
       sb.append("Too many components!\n");
     }
-    if (getFreeSlots() == 0 && hull.getHullType() == ShipHullType.FREIGHTER) {
+    if (getFreeCargoSpace() == 0
+        && hull.getHullType() == ShipHullType.FREIGHTER) {
       flawNoCargoSpace = true;
     }
     if (allowArmedFreighters && hull.getHullType() == ShipHullType.FREIGHTER) {

@@ -46,6 +46,14 @@
     "baySize": 4
   },
   {
+    "type": "CARGO_BAY",
+    "name": "Cargo bay",
+    "cost": 1,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "baySize": 1
+  },
+  {
     "type": "PRIVATEERING_MODULE",
     "name": "Privateer module",
     "cost": 6,

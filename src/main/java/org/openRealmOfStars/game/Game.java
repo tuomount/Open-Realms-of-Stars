@@ -2219,7 +2219,7 @@ public class Game implements ActionListener {
         sb.append(i + 1);
         sb.append(". ");
         if (comp == null) {
-          ErrorLogger.log("Hull not found:" + tech.getImprovement());
+          ErrorLogger.log("Component not found:" + tech.getImprovement());
         }
         sb.append(comp.toString());
         sb.append("\n\n");

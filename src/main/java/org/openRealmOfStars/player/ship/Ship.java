@@ -557,6 +557,11 @@ private boolean isIndexValid(final int index) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.CARGO_BAY
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SOLAR_ARMOR
           && componentIsWorking(i)) {
           totalArmor = totalArmor + comp.getDefenseValue();
@@ -1782,6 +1787,11 @@ private int increaseHitChanceByComponent() {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.CARGO_BAY
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SOLAR_ARMOR) {
         totalArmor = totalArmor + comp.getDefenseValue();
       }
@@ -1894,13 +1904,27 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Get Free cargo space in ship.
+   * @return Cargo space in ship.
+   */
+  public int getFreeCargoSpace() {
+    int result = hull.getMaxSlot() - getNumberOfComponents();
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.CARGO_BAY) {
+        result = result + comp.getBaySize();
+      }
+    }
+    return result;
+  }
+  /**
    * How much metal can be fit to cargo space
    * @return Cargo room for metal
    */
   public int getFreeCargoMetal() {
     int freeCargoMetal = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-        freeCargoMetal = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoMetal = getFreeCargoSpace();
         freeCargoMetal = freeCargoMetal - getColonist() / 2
                                         - getMetal() / 10
                                         - getColonist() % 2;
@@ -1916,7 +1940,7 @@ private int increaseHitChanceByComponent() {
   public int getFreeCargoColonists() {
     int freeCargoColonists = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-        freeCargoColonists = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoColonists = getFreeCargoSpace();
         freeCargoColonists = freeCargoColonists - (getColonist() / 2)
             - (getMetal() / 10);
         freeCargoColonists = freeCargoColonists * 2;
@@ -1943,6 +1967,7 @@ private int increaseHitChanceByComponent() {
       }
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
+              || comp.getType() == ShipComponentType.CARGO_BAY
           || comp.getType() == ShipComponentType.REPAIR_MODULE
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
           || comp.getType() == ShipComponentType.SHADOW_ARMOR
@@ -2021,6 +2046,7 @@ private int increaseHitChanceByComponent() {
       }
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.CARGO_BAY
           || comp.getType() == ShipComponentType.REPAIR_MODULE
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
           || comp.getType() == ShipComponentType.SHADOW_ARMOR

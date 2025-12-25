@@ -1240,6 +1240,15 @@ public final class ShipGenerator {
             bombTech.getComponent()));
       }
     }
+    if (result.getFreeSlots() >= 1) {
+      Tech[] hullTechs = player.getTechList()
+          .getListForType(TechType.Hulls);
+      Tech cargoTech = TechList.getBestTech(hullTechs, "Cargo bay");
+      if (cargoTech != null) {
+        result.addComponent(ShipComponentFactory.createByName(
+                cargoTech.getComponent()));
+      }
+    }
     return result;
   }
 
@@ -1391,6 +1400,15 @@ public final class ShipGenerator {
         if (spyModule.getEnergyRequirement() <= result.getFreeEnergy()) {
           result.addComponent(spyModule);
         }
+      }
+    }
+    Tech[] hullTechs = player.getTechList()
+        .getListForType(TechType.Hulls);
+    Tech cargoTech = TechList.getBestTech(hullTechs, "Cargo bay");
+    if (cargoTech != null) {
+      while (result.getFreeSlots() > 0) {
+        result.addComponent(ShipComponentFactory.createByName(
+                cargoTech.getComponent()));
       }
     }
     return result;

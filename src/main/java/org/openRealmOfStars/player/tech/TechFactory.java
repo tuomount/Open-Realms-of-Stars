@@ -225,7 +225,7 @@ public final class TechFactory {
    * Defense tech names for level 4
    */
   public static final String[] DEFENSE_TECH_LEVEL4_NAMES = {"Shield Mk4",
-      "Armor plating Mk4", "Command outpost", "Shadow Shield Mk1" };
+      "Armor plating Mk4", "Command outpost", "Shadow shield Mk1" };
   /**
    * Defense rare tech names for level 4.
    */
@@ -241,7 +241,7 @@ public final class TechFactory {
    */
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = {"Shield Mk6",
       "Armor plating Mk6", "Desert colonization",
-      "Planetary defense turrer Mk2" };
+      "Planetary defense turret Mk2" };
   /**
    * Defense rare tech names for level 6.
    */
@@ -261,7 +261,7 @@ public final class TechFactory {
    * Defense tech names for level 8
    */
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = {"Shield Mk8",
-      "Armor plating Mk8", "Shadow Shield Mk2",
+      "Armor plating Mk8", "Shadow shield Mk2",
       "Orbital elevator Mk2"};
   /**
    * Defense rare tech names for level 8.
@@ -272,7 +272,7 @@ public final class TechFactory {
    * Defense tech names for level 9
    */
   public static final String[] DEFENSE_TECH_LEVEL9_NAMES = {"Shield Mk9",
-      "Armor plating Mk9", "Space Academy", "Planetary defense turret Mk3" };
+      "Armor plating Mk9", "Space academy", "Planetary defense turret Mk3" };
   /**
    * Defense rare tech names for level 9.
    */

@@ -536,6 +536,16 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case CARGO_BAY: {
+      sb.append("Baysize: ");
+      sb.append(getBaySize());
+      sb.append(" Armor value: ");
+      sb.append(getDefenseValue());
+      sb.append("\n\n");
+      sb.append("Cargo bay adds hull integrity and possible armor.");
+      sb.append("\n");
+      break;
+    }
     case SHADOW_ARMOR: {
       sb.append("Armor value: ");
       sb.append(getDefenseValue());

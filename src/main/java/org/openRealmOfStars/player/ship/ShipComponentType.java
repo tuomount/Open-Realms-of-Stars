@@ -207,7 +207,11 @@ public enum ShipComponentType {
   /**
    * Shield defense component that also adds cloaking
    */
-  SHADOW_SHIELD;
+  SHADOW_SHIELD,
+  /**
+   * Cargo bay adds cargo space and hull point(s).
+   */
+  CARGO_BAY;
 
 
 
@@ -320,6 +324,8 @@ public enum ShipComponentType {
       return "Arm spike";
     case PLASMA_SPIT:
       return "Plasma spit";
+    case CARGO_BAY:
+      return "Cargo bay";
     default:
       return "Error - Unknown";
     }
@@ -417,6 +423,9 @@ public enum ShipComponentType {
       return Icons.ICON_ARM_SPIKE;
     case PLASMA_SPIT:
       return Icons.ICON_PLASMA_SPIT;
+    case CARGO_BAY:
+      // TODO: Change icon
+      return Icons.ICON_ARMOR;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

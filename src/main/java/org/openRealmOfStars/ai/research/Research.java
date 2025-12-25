@@ -343,7 +343,8 @@ public final class Research {
                .gotCertainType(ShipComponentType.PLANETARY_INVASION_MODULE)
             && !stat.isObsolete()) {
           notFound = false;
-          if (design.getFreeSlots() > stat.getDesign().getFreeSlots()) {
+          if (design.getFreeCargoSpace()
+              > stat.getDesign().getFreeCargoSpace()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

@@ -421,7 +421,7 @@ public class Ship2Test {
         ShipComponent weaponRailgun = ShipComponentFactory.createByName("Railgun Mk1");
         ShipComponent weaponPhotoTorpedo = ShipComponentFactory.createByName("Photon torpedo Mk1");
         ShipComponent weaponECMTorpedo = ShipComponentFactory.createByName("ECM torpedo Mk1");
-        ShipComponent weaponHeMissile = ShipComponentFactory.createByName("HE Missile Mk1");
+        ShipComponent weaponHeMissile = ShipComponentFactory.createByName("HE missile Mk1");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk2");
 
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
@@ -1027,7 +1027,7 @@ public class Ship2Test {
         ShipComponent weaponRailgun = ShipComponentFactory.createByName("Railgun Mk1");
         ShipComponent weaponPhotoTorpedo = ShipComponentFactory.createByName("Photon torpedo Mk1");
         ShipComponent weaponECMTorpedo = ShipComponentFactory.createByName("ECM torpedo Mk1");
-        ShipComponent weaponHeMissile = ShipComponentFactory.createByName("HE Missile Mk1");
+        ShipComponent weaponHeMissile = ShipComponentFactory.createByName("HE missile Mk1");
         ShipComponent targetingComputer = ShipComponentFactory.createByName("Targeting computer Mk1");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk2");
 
@@ -1224,7 +1224,7 @@ public class Ship2Test {
         ShipComponent weaponRailgun = ShipComponentFactory.createByName("Railgun Mk1");
         ShipComponent weaponPhotoTorpedo = ShipComponentFactory.createByName("Photon torpedo Mk1");
         ShipComponent weaponECMTorpedo = ShipComponentFactory.createByName("ECM torpedo Mk1");
-        ShipComponent weaponHeMissile = ShipComponentFactory.createByName("HE Missile Mk1");
+        ShipComponent weaponHeMissile = ShipComponentFactory.createByName("HE missile Mk1");
 
         ship.setShield(1);
         ship.setArmor(1);
@@ -1305,7 +1305,7 @@ public class Ship2Test {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
 
-        ShipComponent weaponMissile = ShipComponentFactory.createByName("HE Missile Mk8");
+        ShipComponent weaponMissile = ShipComponentFactory.createByName("HE missile Mk8");
         ShipComponent weaponTorpedo = ShipComponentFactory.createByName("ECM torpedo Mk8");
 
         ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -1347,7 +1347,7 @@ public class Ship2Test {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
 
-        ShipComponent weaponMissile = ShipComponentFactory.createByName("HE Missile Mk8");
+        ShipComponent weaponMissile = ShipComponentFactory.createByName("HE missile Mk8");
         ShipComponent targetingComputer = ShipComponentFactory.createByName("Targeting computer Mk2");
         ShipComponent jammer = ShipComponentFactory.createByName("Jammer Mk4");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk2");

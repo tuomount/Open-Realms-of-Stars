@@ -156,7 +156,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -208,7 +208,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -233,7 +233,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Cruiser Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -258,7 +258,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -310,7 +310,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk2",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk9");
@@ -356,7 +356,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk3");

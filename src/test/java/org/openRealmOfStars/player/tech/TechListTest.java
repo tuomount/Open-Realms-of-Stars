@@ -95,9 +95,9 @@ public class TechListTest extends TestCase {
     Tech[] ownTechs = new Tech[2];
     Tech[] tradeTechs = new Tech[2];
     ownTechs[0] = TechFactory.createHullTech("Scout Mk1", 1);
-    ownTechs[1] = TechFactory.createHullTech("Scout Mk3", 7);
+    ownTechs[1] = TechFactory.createHullTech("Scout Mk3", 9);
     tradeTechs[0] = TechFactory.createHullTech("Scout Mk1", 1);
-    tradeTechs[1] = TechFactory.createHullTech("Scout Mk2", 4);
+    tradeTechs[1] = TechFactory.createHullTech("Scout Mk2", 5);
     Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
     assertEquals(0, techs.length);
     techs = TechList.getTechDifference(ownTechs, tradeTechs);
@@ -111,7 +111,7 @@ public class TechListTest extends TestCase {
     Tech[] ownTechs = new Tech[1];
     Tech[] tradeTechs = new Tech[1];
     ownTechs[0] = TechFactory.createHullTech("Destroyer Mk1", 1);
-    tradeTechs[0] = TechFactory.createHullTech("Destroyer Mk2", 3);
+    tradeTechs[0] = TechFactory.createHullTech("Destroyer Mk2", 7);
     Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
     assertEquals(1 , techs.length);
     assertEquals("Destroyer Mk2", techs[0].getName());
@@ -182,37 +182,34 @@ public class TechListTest extends TestCase {
   public void testMissingTechDefense() {
     TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     Tech[] missing = list.getListMissingTech(TechType.Defense, 5);
-    assertEquals(4, missing.length);
+    assertEquals(3, missing.length);
     assertEquals("Shield Mk5", missing[0].getName());
     assertEquals("Armor plating Mk5", missing[1].getName());
-    assertEquals("Planetary defense turret Mk2", missing[2].getName());
-    assertEquals("Jammer Mk2", missing[3].getName());
+    assertEquals("Shield generator Mk1", missing[2].getName());
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechHull() {
     TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
-    list.addTech(TechFactory.createHullTech("Large freighter", 6));
-    Tech[] missing = list.getListMissingTech(TechType.Hulls, 6);
-    assertEquals(4, missing.length);
-    assertEquals("Large starbase", missing[0].getName());
-    assertEquals("Corvette Mk2", missing[1].getName());
-    assertEquals("Artificial planet", missing[2].getName());
-    assertEquals("Probe Mk3", missing[3].getName());
+    list.addTech(TechFactory.createHullTech("Large freighter Mk1", 8));
+    Tech[] missing = list.getListMissingTech(TechType.Hulls, 8);
+    assertEquals(3, missing.length);
+    assertEquals("Battleship Mk1", missing[0].getName());
+    assertEquals("Cruiser Mk2", missing[1].getName());
+    assertEquals("Medium starbase Mk2", missing[2].getName());
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechImprovement() {
     TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
-    list.addTech(TechFactory.createImprovementTech("VR movie center", 7));
+    list.addTech(TechFactory.createImprovementTech("Galactic sports center", 7));
     Tech[] missing = list.getListMissingTech(TechType.Improvements, 7);
-    assertEquals(4, missing.length);
-    assertEquals("New technology center", missing[0].getName());
-    assertEquals("Advanced recycle center", missing[1].getName());
-    assertEquals("Starbase nano lab", missing[2].getName());
-    assertEquals("Aquatic colonization", missing[3].getName());
+    assertEquals(3, missing.length);
+    assertEquals("Research center", missing[0].getName());
+    assertEquals("Stock market", missing[1].getName());
+    assertEquals("Starbase sports hall", missing[2].getName());
   }
 
   @Test
@@ -235,7 +232,7 @@ public class TechListTest extends TestCase {
     list.addTech(TechFactory.createElectronicsTech("Planetary scanner Mk4", 8));
     Tech[] missing = list.getListMissingTech(TechType.Electrics, 8);
     assertEquals(2, missing.length);
-    assertEquals("Cloaking device Mk5", missing[0].getName());
+    assertEquals("Cloaking device Mk4", missing[0].getName());
     assertEquals("LR scanner Mk3", missing[1].getName());
   }
 
@@ -292,14 +289,14 @@ public class TechListTest extends TestCase {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullList() {
     TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
-    for (int i = 1; i < 11; i++) {
+    for (int i = 1; i < 21; i++) {
       String[] names = TechFactory.getListByTechLevel(TechType.Combat, i,
           SpaceRaceFactory.createOne("HUMANS"));
       assertEquals(i, list.getTechLevel(TechType.Combat));
       for (String name : names) {
         list.addTech(TechFactory.createCombatTech(name, i));
       }
-      if (i < 10) {
+      if (i < 20) {
         assertEquals(i+1, list.getTechLevel(TechType.Combat));
       } else {
         assertEquals(i, list.getTechLevel(TechType.Combat));
@@ -313,12 +310,12 @@ public class TechListTest extends TestCase {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStarbaseTech() {
     TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
-    list.addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
-    list.addTech(TechFactory.createImprovementTech("Starbase market", 3));
-    list.addTech(TechFactory.createImprovementTech("Starbase lab", 4));
-    list.addTech(TechFactory.createImprovementTech("Starbase sports hall", 6));
-    list.addTech(TechFactory.createImprovementTech("Starbase nano lab", 7));
-    list.addTech(TechFactory.createImprovementTech("Starbase bank", 8));
+    list.addTech(TechFactory.createImprovementTech("Starbase music hall", 3));
+    list.addTech(TechFactory.createImprovementTech("Starbase market", 4));
+    list.addTech(TechFactory.createImprovementTech("Starbase lab", 5));
+    list.addTech(TechFactory.createImprovementTech("Starbase sports hall", 7));
+    list.addTech(TechFactory.createImprovementTech("Starbase nano lab", 8));
+    list.addTech(TechFactory.createImprovementTech("Starbase bank", 9));
     Tech tech = list.getBestStarbaseLab();
     assertEquals("Starbase nano lab", tech.getName());
     tech = list.getBestStarbaseCredit();

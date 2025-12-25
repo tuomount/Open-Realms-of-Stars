@@ -31,7 +31,7 @@ public class ShipComponentFactoryTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testEngines() {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk4");
-    assertEquals(3, engine.getSpeed());
+    assertEquals(4, engine.getSpeed());
     assertEquals(4, engine.getFtlSpeed());
     assertEquals(3, engine.getTacticSpeed());
     assertEquals(4, engine.getEnergyResource());
@@ -40,12 +40,12 @@ public class ShipComponentFactoryTest {
     assertEquals(7, engine.getMetalCost());
     engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     assertEquals(3, engine.getSpeed());
-    assertEquals(7, engine.getFtlSpeed());
+    assertEquals(6, engine.getFtlSpeed());
     assertEquals(2, engine.getTacticSpeed());
     assertEquals(0, engine.getEnergyResource());
-    assertEquals(2, engine.getEnergyRequirement());
-    assertEquals(9, engine.getCost());
-    assertEquals(8, engine.getMetalCost());
+    assertEquals(1, engine.getEnergyRequirement());
+    assertEquals(6, engine.getCost());
+    assertEquals(6, engine.getMetalCost());
   }
 
   @Test
@@ -55,20 +55,20 @@ public class ShipComponentFactoryTest {
     assertEquals(4, weapon.getDamage());
     assertEquals(3, weapon.getWeaponRange());
     assertEquals(0, weapon.getEnergyRequirement());
-    assertEquals(3, weapon.getCost());
-    assertEquals(7, weapon.getMetalCost());
+    assertEquals(2, weapon.getCost());
+    assertEquals(4, weapon.getMetalCost());
     weapon = ShipComponentFactory.createByName("Massdrive Mk1");
-    assertEquals(6, weapon.getDamage());
+    assertEquals(11, weapon.getDamage());
     assertEquals(3, weapon.getWeaponRange());
     assertEquals(3, weapon.getEnergyRequirement());
-    assertEquals(5, weapon.getCost());
-    assertEquals(5, weapon.getMetalCost());
+    assertEquals(6, weapon.getCost());
+    assertEquals(6, weapon.getMetalCost());
     weapon = ShipComponentFactory.createByName("Chaingun Mk1");
     assertEquals(1, weapon.getDamage());
     assertEquals(1, weapon.getWeaponRange());
     assertEquals(0, weapon.getEnergyRequirement());
-    assertEquals(3, weapon.getCost());
-    assertEquals(3, weapon.getMetalCost());
+    assertEquals(4, weapon.getCost());
+    assertEquals(4, weapon.getMetalCost());
   }
 
   @Test
@@ -77,13 +77,13 @@ public class ShipComponentFactoryTest {
     ShipComponent defense = ShipComponentFactory.createByName("Shield Mk8");
     assertEquals(8, defense.getDefenseValue());
     assertEquals(3, defense.getEnergyRequirement());
-    assertEquals(11, defense.getCost());
+    assertEquals(10, defense.getCost());
     assertEquals(3, defense.getMetalCost());
     defense = ShipComponentFactory.createByName("Armor plating Mk8");
     assertEquals(8, defense.getDefenseValue());
     assertEquals(0, defense.getEnergyRequirement());
-    assertEquals(5, defense.getCost());
-    assertEquals(11, defense.getMetalCost());
+    assertEquals(7, defense.getCost());
+    assertEquals(14, defense.getMetalCost());
   }
 
   @Test
@@ -92,10 +92,10 @@ public class ShipComponentFactoryTest {
     ShipComponent electronics = ShipComponentFactory.createByName("Cloaking device Mk3");
     assertEquals(60, electronics.getCloaking());
     assertEquals(2, electronics.getEnergyRequirement());
-    assertEquals(4, electronics.getCost());
-    assertEquals(2, electronics.getMetalCost());
+    assertEquals(3, electronics.getCost());
+    assertEquals(3, electronics.getMetalCost());
     electronics = ShipComponentFactory.createByName("Orbital bombs Mk1");
-    assertEquals(40, electronics.getDamage());
+    assertEquals(30, electronics.getDamage());
     assertEquals(0, electronics.getEnergyRequirement());
     assertEquals(6, electronics.getCost());
     assertEquals(3, electronics.getMetalCost());
@@ -155,7 +155,7 @@ public class ShipComponentFactoryTest {
     electronics = ShipComponentFactory.createByName("Espionage module Mk2");
     assertEquals(2, electronics.getEspionageBonus());
     assertEquals(1, electronics.getEnergyRequirement());
-    assertEquals(3, electronics.getCost());
+    assertEquals(4, electronics.getCost());
     assertEquals(1, electronics.getMetalCost());
     electronics = ShipComponentFactory.createByName("Espionage module Mk3");
     assertEquals(3, electronics.getEspionageBonus());
@@ -164,11 +164,11 @@ public class ShipComponentFactoryTest {
     assertEquals(1, electronics.getMetalCost());
     electronics = ShipComponentFactory.createByName("Espionage module Mk4");
     assertEquals(4, electronics.getEspionageBonus());
-    assertEquals(1, electronics.getEnergyRequirement());
-    assertEquals(4, electronics.getCost());
+    assertEquals(2, electronics.getEnergyRequirement());
+    assertEquals(5, electronics.getCost());
     assertEquals(1, electronics.getMetalCost());
     electronics = ShipComponentFactory.createByName("Espionage module Mk5");
-    assertEquals(6, electronics.getEspionageBonus());
+    assertEquals(5, electronics.getEspionageBonus());
     assertEquals(2, electronics.getEnergyRequirement());
     assertEquals(6, electronics.getCost());
     assertEquals(1, electronics.getMetalCost());
@@ -177,7 +177,7 @@ public class ShipComponentFactoryTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testThrustersAndFighterBays() {
-    ShipComponent component = ShipComponentFactory.createByName("Combat thrusters");
+    ShipComponent component = ShipComponentFactory.createByName("Combat thrusters Mk1");
     assertEquals(1, component.getTacticSpeed());
     assertEquals(1, component.getSpeed());
     assertEquals(1, component.getInitiativeBoost());

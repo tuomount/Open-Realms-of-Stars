@@ -145,6 +145,9 @@ public class ShipDesign {
    * @param comp ShipComponent to add
    */
   public void addComponent(final ShipComponent comp) {
+    if (comp == null) {
+      throw new NullPointerException();
+    }
     components.add(comp);
   }
 

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2017-2025 Tuomo Untinen
  * Copyright (C) 2025 Richard Smit
  *
  * This program is free software; you can redistribute it and/or

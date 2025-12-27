@@ -169,7 +169,7 @@ public class GameTest {
         tech = tech + game.getPlayers().getPlayerInfoByIndex(i)
             .getTechList().getTechLevel(techtype);
       }
-      tech = tech * 10 / 6;
+      tech = tech * 5 / 6;
       String scenario = game.getPlayers().getPlayerInfoByIndex(i)
           .getStartingScenario().getName();
       StringBuilder sb = new StringBuilder();

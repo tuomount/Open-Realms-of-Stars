@@ -142,32 +142,32 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL11_NAMES = {
       "Phasors Mk1", "Massdrive Mk1", "Photon torpedo Mk11",
-      "Autocannon Mk6", "ECM torpedo Mk9", "HE missile Mk9"};
+      "Callisto multicannon Mk1", "ECM torpedo Mk9", "HE missile Mk9"};
   /**
    * Combat tech names for level 12
    */
   public static final String[] COMBAT_TECH_LEVEL12_NAMES = {
       "Phasors Mk2", "Massdrive Mk2", "Photon torpedo Mk12",
-      "Callisto multicannon Mk1", "ECM torpedo Mk10", "HE missile Mk10"};
+      "Callisto multicannon Mk2", "ECM torpedo Mk10", "HE missile Mk10"};
   /**
    * Combat tech names for level 13
    */
   public static final String[] COMBAT_TECH_LEVEL13_NAMES = {
       "Phasors Mk3", "Massdrive Mk3", "Photon torpedo Mk13",
-      "Callisto multicannon Mk2", "ECM torpedo Mk11", "HE missile Mk11",
+      "Callisto multicannon Mk3", "ECM torpedo Mk11", "HE missile Mk11",
       "Orbital smart bombs"};
   /**
    * Combat tech names for level 14
    */
   public static final String[] COMBAT_TECH_LEVEL14_NAMES = {
       "Phasors Mk4", "Massdrive Mk4", "Photon torpedo Mk14",
-      "Callisto multicannon Mk3", "ECM torpedo Mk12", "HE missile Mk12"};
+      "Callisto multicannon Mk4", "ECM torpedo Mk12", "HE missile Mk12"};
   /**
    * Combat tech names for level 15
    */
   public static final String[] COMBAT_TECH_LEVEL15_NAMES = {
       "Phasors Mk5", "Massdrive Mk5", "Photon torpedo Mk15",
-      "Callisto multicannon Mk4", "ECM torpedo Mk13", "HE missile Mk13",
+      "Callisto multicannon Mk5", "ECM torpedo Mk13", "HE missile Mk13",
       "Orbital neutron bomb"};
   /**
    * Combat tech names for level 16
@@ -990,37 +990,9 @@ public final class TechFactory {
         } else if (techName.startsWith("Ion cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setRareTech(true);
-          if (techName.equals("Ion cannon Mk1")) {
-            tech.setNextTechOnTree("Ion cannon Mk2");
-            tech.setNextTechLevel(5);
-          }
-          if (techName.equals("Ion cannon Mk2")) {
-            tech.setNextTechOnTree("Ion cannon Mk3");
-            tech.setNextTechLevel(7);
-          }
-          if (techName.equals("Ion cannon Mk3")) {
-            tech.setNextTechOnTree("Ion cannon Mk4");
-            tech.setNextTechLevel(9);
-          }
         } else if (techName.startsWith("Plasma cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLASMA_CANNON));
           tech.setRareTech(true);
-          if (techName.equals("Plasma cannon Mk1")) {
-            tech.setNextTechOnTree("Plasma cannon Mk2");
-            tech.setNextTechLevel(3);
-          }
-          if (techName.equals("Plasma cannon Mk2")) {
-            tech.setNextTechOnTree("Plasma cannon Mk3");
-            tech.setNextTechLevel(5);
-          }
-          if (techName.equals("Plasma cannon Mk3")) {
-            tech.setNextTechOnTree("Plasma cannon Mk4");
-            tech.setNextTechLevel(7);
-          }
-          if (techName.equals("Plasma cannon Mk4")) {
-            tech.setNextTechOnTree("Plasma cannon Mk5");
-            tech.setNextTechLevel(9);
-          }
         } else if (techName.startsWith("Gravity ripper")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_GRAVITY_RIPPER));
           tech.setRareTech(true);
@@ -1166,36 +1138,12 @@ public final class TechFactory {
         } else if (techName.startsWith("Solar armor")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_SOLAR_ARMOR));
             tech.setRareTech(true);
-            if (techName.equals("Solar armor Mk1")) {
-              tech.setNextTechOnTree("Solar armor Mk2");
-              tech.setNextTechLevel(6);
-            }
-            if (techName.equals("Solar armor Mk2")) {
-              tech.setNextTechOnTree("Solar armor Mk3");
-              tech.setNextTechLevel(9);
-            }
         } else if (techName.startsWith("Organic armor")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
           tech.setRareTech(true);
-          if (techName.equals("Organic armor Mk1")) {
-            tech.setNextTechOnTree("Organic armor Mk2");
-            tech.setNextTechLevel(6);
-          }
-          if (techName.equals("Organic armor Mk2")) {
-            tech.setNextTechOnTree("Organic armor Mk3");
-            tech.setNextTechLevel(8);
-          }
       } else if (techName.startsWith("Distortion shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DISTORTION_SHIELD));
           tech.setRareTech(true);
-          if (techName.equals("Distortion shield Mk1")) {
-            tech.setNextTechOnTree("Distortion shield Mk2");
-            tech.setNextTechLevel(6);
-          }
-          if (techName.equals("Distortion shield Mk2")) {
-            tech.setNextTechOnTree("Distortion shield Mk3");
-            tech.setNextTechLevel(8);
-          }
         } else if (techName.equals("Multi-dimension shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MULTIDIMENSION_SHIELD));
           tech.setRareTech(true);
@@ -2135,6 +2083,107 @@ public final class TechFactory {
       return choices.get(index);
     }
     return null;
+  }
+
+  /**
+   * Get All Rare tech names for certain type and level.
+   * This are in separate list, but no easy way to fetch them
+   * So creating a helper method for doing that.
+   *
+   * @param type TechType
+   * @param level Tech Level
+   * @return All rare techs on that type and level or empty list.
+   */
+  public static String[] getAllRareTechNames(final TechType type,
+      final int level) {
+    if (type == TechType.Combat) {
+      if (level == 2) {
+        return COMBAT_RARE_TECH_LEVEL2_NAMES;
+      }
+      if (level == 3) {
+        return COMBAT_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 5) {
+        return COMBAT_RARE_TECH_LEVEL5_NAMES;
+      }
+      if (level == 6) {
+        return COMBAT_RARE_TECH_LEVEL6_NAMES;
+      }
+      if (level == 7) {
+        return COMBAT_RARE_TECH_LEVEL7_NAMES;
+      }
+      if (level == 8) {
+        return COMBAT_RARE_TECH_LEVEL8_NAMES;
+      }
+      if (level == 9) {
+        return COMBAT_RARE_TECH_LEVEL9_NAMES;
+      }
+      if (level == 10) {
+        return COMBAT_RARE_TECH_LEVEL10_NAMES;
+      }
+    }
+    if (type == TechType.Defense) {
+      if (level == 3) {
+        return DEFENSE_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 4) {
+        return DEFENSE_RARE_TECH_LEVEL4_NAMES;
+      }
+      if (level == 6) {
+        return DEFENSE_RARE_TECH_LEVEL6_NAMES;
+      }
+      if (level == 7) {
+        return DEFENSE_RARE_TECH_LEVEL7_NAMES;
+      }
+      if (level == 8) {
+        return DEFENSE_RARE_TECH_LEVEL8_NAMES;
+      }
+      if (level == 9) {
+        return DEFENSE_RARE_TECH_LEVEL9_NAMES;
+      }
+    }
+    if (type == TechType.Hulls) {
+      if (level == 3) {
+        return HULL_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 5) {
+        return HULL_RARE_TECH_LEVEL5_NAMES;
+      }
+      if (level == 7) {
+        return HULL_RARE_TECH_LEVEL7_NAMES;
+      }
+    }
+    if (type == TechType.Improvements) {
+      if (level == 3) {
+        return IMPROVEMENT_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 4) {
+        return IMPROVEMENT_RARE_TECH_LEVEL4_NAMES;
+      }
+      if (level == 9) {
+        return IMPROVEMENT_RARE_TECH_LEVEL9_NAMES;
+      }
+    }
+    if (type == TechType.Propulsion) {
+      if (level == 5) {
+        return PROPULSION_RARE_TECH_LEVEL5_NAMES;
+      }
+      if (level == 8) {
+        return PROPULSION_RARE_TECH_LEVEL8_NAMES;
+      }
+      if (level == 10) {
+        return PROPULSION_RARE_TECH_LEVEL10_NAMES;
+      }
+    }
+    if (type == TechType.Electrics) {
+      if (level == 3) {
+        return ELECTRONICS_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 7) {
+        return ELECTRONICS_RARE_TECH_LEVEL7_NAMES;
+      }
+    }
+    return new String[0];
   }
   /**
    * Get tech level cost as research points

@@ -63,11 +63,6 @@ public class Tech {
    */
   private boolean rareTech;
   /**
-   * Next rare tech on same tree. This should be null if
-   * not rare tech or last tech on tree.
-   */
-  private String nextTechOnTree;
-  /**
    * Which level next tech will be found.
    */
   private int nextTechLevel;
@@ -103,7 +98,6 @@ public class Tech {
     hull = null;
     improvement = null;
     component = null;
-    nextTechOnTree = null;
     nextTechLevel = 1;
     rareTech = false;
     tradeable = true;
@@ -357,21 +351,6 @@ public class Tech {
     this.rareTech = rareTech;
   }
 
-  /**
-   * Get next possible tech name or null.
-   * @return the nextTechOnTree or null.
-   */
-  public String getNextTechOnTree() {
-    return nextTechOnTree;
-  }
-
-  /**
-   * Set next tech on same tree.
-   * @param nextTechOnTree the nextTechOnTree to set
-   */
-  public void setNextTechOnTree(final String nextTechOnTree) {
-    this.nextTechOnTree = nextTechOnTree;
-  }
 
   /**
    * Get next tech level.

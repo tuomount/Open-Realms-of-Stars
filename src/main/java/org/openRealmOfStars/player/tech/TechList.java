@@ -977,12 +977,16 @@ public class TechList {
     ArrayList<Tech> list = new ArrayList<>();
     Tech[] techs = getRareTechs();
     for (Tech tech : techs) {
-      if (tech.getType() == techType && tech.getNextTechOnTree() != null
-          && tech.getNextTechLevel() == level) {
-        Tech rareTech = TechFactory.createTech(techType, level,
-            tech.getNextTechOnTree());
-        if (rareTech != null && !isOnList(techs, rareTech)) {
-          list.add(rareTech);
+      String[] namePart = tech.getName().split("Mk");
+      if (namePart.length == 2) {
+        String[] names = TechFactory.getAllRareTechNames(techType, level);
+        for (String name : names) {
+          if (namePart[0].contains(name)) {
+            Tech rareTech = TechFactory.createTech(techType, level, name);
+            if (rareTech != null && !isOnList(techs, rareTech)) {
+              list.add(rareTech);
+            }
+          }
         }
       }
     }

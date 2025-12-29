@@ -283,6 +283,11 @@ public class StarMapGenerator {
         planet.addBuilding(BuildingFactory.createByName(buildingName));
       }
     }
+    if (playerInfo.getTechList().hasTech("Telescopes")
+        && planet.getBuildingList().length < planet.getGroundSize()) {
+      planet.addBuilding(BuildingFactory.createByName("Telescopes"));
+      starMap.doTelescopeScan(playerInfo, planet);
+    }
     if (playerInfo.isHuman()) {
       // Adding starting building for human.
       planet.setUnderConstruction(ConstructionFactory.createByName(

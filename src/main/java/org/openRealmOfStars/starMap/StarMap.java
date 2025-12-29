@@ -2158,6 +2158,29 @@ public class StarMap {
   }
 
   /**
+   * Do Planet telescope scan ipdate for star map.
+   * @param info Player who controls the fleet
+   * @param planet Planet which is doing the rescan
+   */
+  public void doTelescopeScan(final PlayerInfo info,
+      final Planet planet) {
+    forceRedraw = true;
+    int scanRad = 5;
+    int cx = 0;
+    int cy = 0;
+    if (planet == null) {
+      return;
+    }
+    cx = planet.getX();
+    cy = planet.getY();
+    for (int y = -scanRad; y < scanRad + 1; y++) {
+      for (int x = -scanRad; x < scanRad + 1; x++) {
+        drawTelescopeLine(info, cx, cy, cx + x, cy + y, scanRad);
+      }
+    }
+  }
+
+  /**
    * Do fleet scan for blocked sector.
    *
    * @param info PlayerInfo making the scan
@@ -3330,6 +3353,63 @@ public class StarMap {
         }
         if (detectValue > 0) {
           detectValue = detectValue - 10;
+        }
+      }
+    }
+  }
+
+  /**
+   * Draw telescope line and set visibility info for one player
+   * @param info PlayerInfo
+   * @param sx Start X
+   * @param sy Start Y
+   * @param ex End X
+   * @param ey End Y
+   * @param maxRad maximum radius
+   */
+  private void drawTelescopeLine(final PlayerInfo info, final int sx,
+      final int sy, final int ex, final int ey, final int maxRad) {
+    double startX = sx;
+    double startY = sy;
+    double dx = Math.abs(startX - ex);
+    double dy = Math.abs(startY - ey);
+    // Calculate distance to end
+    int distance = (int) dy;
+    if (dx > dy) {
+      distance = (int) dx;
+    }
+    double mx;
+    double my;
+    // Calculate how much move each round
+    if (distance > 0) {
+      mx = (ex - startX) / distance;
+      my = (ey - startY) / distance;
+    } else {
+      mx = 0;
+      my = 0;
+    }
+    if (info.getSectorVisibility(
+        new Coordinate(sx, sy)) == PlayerInfo.UNCHARTED) {
+      info.setSectorVisibility(sx, sy, PlayerInfo.FOG_OF_WAR);
+    }
+    // Moving loop
+    for (int i = 0; i < distance; i++) {
+      startX = startX + mx;
+      startY = startY + my;
+      int nx = (int) Math.round(startX);
+      int ny = (int) Math.round(startY);
+      Coordinate startCoordinate = new Coordinate(sx, sy);
+      Coordinate coordinate = new Coordinate(nx, ny);
+      if (startCoordinate.calculateDistance(coordinate) > maxRad) {
+        // We have moved to maximum radius
+        break;
+      }
+      if (isValidCoordinate(nx, ny)
+          && info.getSectorVisibility(coordinate) == PlayerInfo.UNCHARTED) {
+        info.setSectorVisibility(nx, ny, PlayerInfo.FOG_OF_WAR);
+        if (tileInfo[nx][ny].isVisibilityBlocked()) {
+          // There is something that blocks the vision
+          break;
         }
       }
     }

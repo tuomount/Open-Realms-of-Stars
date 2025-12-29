@@ -153,10 +153,11 @@
     "name": "Basic lab"
   },
   {
-    "description": "Basic laboratory for science.",
+    "description": "Telescopes for mapping near by space.",
     "type": "RESEARCH",
     "metalCost": 8,
     "prodCost": 4,
+	"singleAllowed": true,
     "iconId": "Research",
     "name": "Telescopes"
   },

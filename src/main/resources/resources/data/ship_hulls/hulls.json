@@ -8,7 +8,7 @@
     "cost": 5,
     "metalCost": 5,
     "fleetCapacity": 0.1,
-    "image": "SCOUT"
+    "image": "Scout"
   },
   {
     "name": "Scout Mk2",
@@ -19,7 +19,7 @@
     "cost": 6,
     "metalCost": 8,
     "fleetCapacity": 0.1,
-    "image": "SCOUT"
+    "image": "Scout"
   },
   {
     "name": "Scout Mk3",
@@ -30,7 +30,7 @@
     "cost": 8,
     "metalCost": 10,
     "fleetCapacity": 0.1,
-    "image": "SCOUT"
+    "image": "Scout"
   },
   {
     "name": "Scout Mk4",
@@ -41,7 +41,7 @@
     "cost": 10,
     "metalCost": 12,
     "fleetCapacity": 0.1,
-    "image": "SCOUT"
+    "image": "Scout"
   },
   {
     "name": "Destroyer Mk1",
@@ -52,7 +52,7 @@
     "cost": 6,
     "metalCost": 8,
     "fleetCapacity": 0.2,
-    "image": "DESTROYER"
+    "image": "Destroyer"
   },
   {
     "name": "Destroyer Mk2",
@@ -63,7 +63,7 @@
     "cost": 8,
     "metalCost": 10,
     "fleetCapacity": 0.2,
-    "image": "DESTROYER"
+    "image": "Destroyer"
   },
   {
     "name": "Destroyer Mk3",
@@ -74,7 +74,7 @@
     "cost": 10,
     "metalCost": 12,
     "fleetCapacity": 0.2,
-    "image": "DESTROYER"
+    "image": "Destroyer"
   },
   {
     "name": "Destroyer Mk4",
@@ -85,7 +85,7 @@
     "cost": 12,
     "metalCost": 14,
     "fleetCapacity": 0.2,
-    "image": "DESTROYER"
+    "image": "Destroyer"
   },
   {
     "name": "Colony",
@@ -96,7 +96,7 @@
     "cost": 6,
     "metalCost": 4,
     "fleetCapacity": 0,
-    "image": "COLONY"
+    "image": "Colony"
   },
   {
     "name": "Spore",
@@ -107,7 +107,7 @@
     "cost": 3,
     "metalCost": 3,
     "fleetCapacity": 0,
-    "image": "SPORE"
+    "image": "Spore"
   },
   {
     "name": "Small freighter Mk1",
@@ -118,7 +118,7 @@
     "cost": 6,
     "metalCost": 4,
     "fleetCapacity": 0,
-    "image": "SMALL_FREIGHTER"
+    "image": "Small freighter"
   },
   {
     "name": "Small freighter Mk2",
@@ -129,7 +129,7 @@
     "cost": 8,
     "metalCost": 8,
     "fleetCapacity": 0,
-    "image": "SMALL_FREIGHTER"
+    "image": "Small freighter"
   },
   {
     "name": "Medium freighter Mk1",
@@ -140,7 +140,7 @@
     "cost": 8,
     "metalCost": 12,
     "fleetCapacity": 0,
-    "image": "MEDIUM_FREIGHTER"
+    "image": "Medium freighter"
   },
   {
     "name": "Medium freighter Mk2",
@@ -151,7 +151,7 @@
     "cost": 8,
     "metalCost": 14,
     "fleetCapacity": 0,
-    "image": "MEDIUM_FREIGHTER"
+    "image": "Medium freighter"
   },
   {
     "name": "Large freighter Mk1",
@@ -162,7 +162,7 @@
     "cost": 12,
     "metalCost": 20,
     "fleetCapacity": 0,
-    "image": "LARGE_FREIGHTER"
+    "image": "Large freighter"
   },
   {
     "name": "Large freighter Mk2",
@@ -173,7 +173,7 @@
     "cost": 12,
     "metalCost": 24,
     "fleetCapacity": 0,
-    "image": "LARGE_FREIGHTER"
+    "image": "Large freighter"
   },
   {
     "name": "Massive freighter Mk1",
@@ -184,7 +184,7 @@
     "cost": 14,
     "metalCost": 25,
     "fleetCapacity": 0,
-    "image": "MASSIVE_FREIGHTER"
+    "image": "Massive freighter"
   },
   {
     "name": "Massive freighter Mk2",
@@ -195,7 +195,7 @@
     "cost": 16,
     "metalCost": 25,
     "fleetCapacity": 0,
-    "image": "MASSIVE_FREIGHTER"
+    "image": "Massive freighter"
   },
   {
     "name": "Massive freighter Mk3",
@@ -206,7 +206,7 @@
     "cost": 18,
     "metalCost": 28,
     "fleetCapacity": 0,
-    "image": "MASSIVE_FREIGHTER"
+    "image": "Massive freighter"
   },
   {
     "name": "Minor orbital",
@@ -217,7 +217,7 @@
     "cost": 3,
     "metalCost": 3,
     "fleetCapacity": 0,
-    "image": "SMALL_STARBASE"
+    "image": "Small starbaseE"
   },
   {
     "name": "Small orbital",
@@ -228,7 +228,7 @@
     "cost": 6,
     "metalCost": 6,
     "fleetCapacity": 0,
-    "image": "SMALL_STARBASE"
+    "image": "Small starbase"
   },
   {
     "name": "Medium orbital",
@@ -239,7 +239,7 @@
     "cost": 8,
     "metalCost": 8,
     "fleetCapacity": 0,
-    "image": "MEDIUM_STARBASE"
+    "image": "Medium starbase"
   },
   {
     "name": "Orbital station",
@@ -250,7 +250,7 @@
     "cost": 8,
     "metalCost": 10,
     "fleetCapacity": 0,
-    "image": "MEDIUM_STARBASE"
+    "image": "Medium starbase"
   },
   {
     "name": "Large orbital",
@@ -261,7 +261,7 @@
     "cost": 8,
     "metalCost": 12,
     "fleetCapacity": 0,
-    "image": "LARGE_STARBASE"
+    "image": "Large starbase"
   },
   {
     "name": "Large orbital station",
@@ -272,7 +272,7 @@
     "cost": 9,
     "metalCost": 13,
     "fleetCapacity": 0,
-    "image": "LARGE_STARBASE"
+    "image": "Large starbase"
   },
   {
     "name": "Massive orbital Mk1",
@@ -283,7 +283,7 @@
     "cost": 14,
     "metalCost": 18,
     "fleetCapacity": 0,
-    "image": "MASSIVE_STARBASE"
+    "image": "Massive starbase"
   },
   {
     "name": "Massive orbital Mk2",
@@ -294,7 +294,7 @@
     "cost": 14,
     "metalCost": 20,
     "fleetCapacity": 0,
-    "image": "MASSIVE_STARBASE"
+    "image": "Massive starbase"
   },
   {
     "name": "Death moon",
@@ -305,7 +305,7 @@
     "cost": 30,
     "metalCost": 30,
     "fleetCapacity": 0,
-    "image": "ARTIFICIAL_PLANET"
+    "image": "Artificial planet"
   },
   {
     "name": "Small starbase Mk1",
@@ -316,7 +316,7 @@
     "cost": 6,
     "metalCost": 6,
     "fleetCapacity": 0,
-    "image": "SMALL_STARBASE"
+    "image": "Small starbase"
   },
   {
     "name": "Small starbase Mk2",
@@ -327,7 +327,7 @@
     "cost": 6,
     "metalCost": 8,
     "fleetCapacity": 0,
-    "image": "SMALL_STARBASE"
+    "image": "Small starbase"
   },
   {
     "name": "Medium starbase Mk1",
@@ -338,7 +338,7 @@
     "cost": 8,
     "metalCost": 10,
     "fleetCapacity": 0,
-    "image": "MEDIUM_STARBASE"
+    "image": "Medium starbase"
   },
   {
     "name": "Medium starbase Mk2",
@@ -349,7 +349,7 @@
     "cost": 8,
     "metalCost": 12,
     "fleetCapacity": 0,
-    "image": "MEDIUM_STARBASE"
+    "image": "Medium starbase"
   },
   {
     "name": "Medium starbase Mk3",
@@ -360,7 +360,7 @@
     "cost": 8,
     "metalCost": 14,
     "fleetCapacity": 0,
-    "image": "MEDIUM_STARBASE"
+    "image": "Medium starbase"
   },
   {
     "name": "Large starbase Mk1",
@@ -371,7 +371,7 @@
     "cost": 15,
     "metalCost": 15,
     "fleetCapacity": 0,
-    "image": "LARGE_STARBASE"
+    "image": "Large starbase"
   },
   {
     "name": "Large starbase Mk2",
@@ -382,7 +382,7 @@
     "cost": 15,
     "metalCost": 18,
     "fleetCapacity": 0,
-    "image": "LARGE_STARBASE"
+    "image": "Large starbase"
   },
   {
     "name": "Massive starbase Mk1",
@@ -393,7 +393,7 @@
     "cost": 25,
     "metalCost": 25,
     "fleetCapacity": 0,
-    "image": "MASSIVE_STARBASE"
+    "image": "Massive starbase"
   },
   {
     "name": "Massive starbase Mk2",
@@ -404,7 +404,7 @@
     "cost": 25,
     "metalCost": 30,
     "fleetCapacity": 0,
-    "image": "MASSIVE_STARBASE"
+    "image": "Massive starbase"
   },
   {
     "name": "Artificial planet",
@@ -415,7 +415,7 @@
     "cost": 200,
     "metalCost": 300,
     "fleetCapacity": 0,
-    "image": "ARTIFICIAL_PLANET"
+    "image": "Artificial planet"
   },
   {
     "name": "Corvette Mk1",
@@ -426,7 +426,7 @@
     "cost": 5,
     "metalCost": 6,
     "fleetCapacity": 0.15,
-    "image": "CORVETTE"
+    "image": "Corvette"
   },
   {
     "name": "Corvette Mk2",
@@ -437,7 +437,7 @@
     "cost": 5,
     "metalCost": 7,
     "fleetCapacity": 0.15,
-    "image": "CORVETTE"
+    "image": "Corvette"
   },
   {
     "name": "Corvette Mk3",
@@ -448,7 +448,7 @@
     "cost": 5,
     "metalCost": 8,
     "fleetCapacity": 0.15,
-    "image": "CORVETTE"
+    "image": "Corvette"
   },
   {
     "name": "Corvette Mk4",
@@ -459,7 +459,7 @@
     "cost": 6,
     "metalCost": 9,
     "fleetCapacity": 0.15,
-    "image": "CORVETTE"
+    "image": "Corvette"
   },
   {
     "name": "Probe",
@@ -470,7 +470,7 @@
     "cost": 2,
     "metalCost": 2,
     "fleetCapacity": 0,
-    "image": "PROBE"
+    "image": "Probe"
   },
   {
     "name": "Probe Mk2",
@@ -481,7 +481,7 @@
     "cost": 3,
     "metalCost": 2,
     "fleetCapacity": 0,
-    "image": "PROBE"
+    "image": "Probe"
   },
   {
     "name": "Probe Mk3",
@@ -492,7 +492,7 @@
     "cost": 4,
     "metalCost": 4,
     "fleetCapacity": 0,
-    "image": "PROBE"
+    "image": "Probe"
   },
   {
     "name": "Cruiser Mk1",
@@ -503,7 +503,7 @@
     "cost": 8,
     "metalCost": 14,
     "fleetCapacity": 0.4,
-    "image": "CRUISER"
+    "image": "Cruiser"
   },
   {
     "name": "Cruiser Mk2",
@@ -514,7 +514,7 @@
     "cost": 8,
     "metalCost": 16,
     "fleetCapacity": 0.4,
-    "image": "CRUISER"
+    "image": "Cruiser"
   },
   {
     "name": "Cruiser Mk3",
@@ -525,7 +525,7 @@
     "cost": 8,
     "metalCost": 18,
     "fleetCapacity": 0.4,
-    "image": "CRUISER"
+    "image": "Cruiser"
   },
   {
     "name": "Cruiser Mk4",
@@ -536,7 +536,7 @@
     "cost": 8,
     "metalCost": 20,
     "fleetCapacity": 0.4,
-    "image": "CRUISER"
+    "image": "Cruiser"
   },
   {
     "name": "Privateer Mk1",
@@ -558,7 +558,7 @@
     "cost": 8,
     "metalCost": 10,
     "fleetCapacity": 0.15,
-    "image": "PRIVATEER"
+    "image": "Privateer"
   },
   {
     "name": "Privateer Mk3",
@@ -569,7 +569,7 @@
     "cost": 8,
     "metalCost": 12,
     "fleetCapacity": 0.15,
-    "image": "PRIVATEER"
+    "image": "Privateer"
   },
   {
     "name": "Battle cruiser Mk1",
@@ -580,7 +580,7 @@
     "cost": 12,
     "metalCost": 12,
     "fleetCapacity": 0.5,
-    "image": "BATTLECRUISER"
+    "image": "Battle cruiser"
   },
   {
     "name": "Battle cruiser Mk2",
@@ -591,7 +591,7 @@
     "cost": 12,
     "metalCost": 14,
     "fleetCapacity": 0.5,
-    "image": "BATTLECRUISER"
+    "image": "Battle cruiser"
   },
   {
     "name": "Battle cruiser Mk3",
@@ -602,7 +602,7 @@
     "cost": 12,
     "metalCost": 16,
     "fleetCapacity": 0.5,
-    "image": "BATTLECRUISER"
+    "image": "Battle cruiser"
   },
   {
     "name": "Battleship Mk1",
@@ -613,7 +613,7 @@
     "cost": 20,
     "metalCost": 20,
     "fleetCapacity": 0.6,
-    "image": "BATTLESHIP"
+    "image": "Battleship"
   },
   {
     "name": "Battleship Mk2",
@@ -624,7 +624,7 @@
     "cost": 20,
     "metalCost": 22,
     "fleetCapacity": 0.6,
-    "image": "BATTLESHIP"
+    "image": "Battleship"
   },
   {
     "name": "Battleship Mk3",
@@ -635,7 +635,7 @@
     "cost": 20,
     "metalCost": 24,
     "fleetCapacity": 0.6,
-    "image": "BATTLESHIP"
+    "image": "Battleship"
   },
   {
     "name": "Galleon Mk1",
@@ -646,7 +646,7 @@
     "cost": 12,
     "metalCost": 14,
     "fleetCapacity": 0.3,
-    "image": "PRIVATEER_LARGE"
+    "image": "Large privateer"
   },
   {
     "name": "Galleon Mk2",
@@ -657,7 +657,7 @@
     "cost": 12,
     "metalCost": 16,
     "fleetCapacity": 0.3,
-    "image": "PRIVATEER_LARGE"
+    "image": "Large privateer"
   },
   {
     "name": "Galleon Mk3",
@@ -668,7 +668,7 @@
     "cost": 12,
     "metalCost": 18,
     "fleetCapacity": 0.3,
-    "image": "PRIVATEER_LARGE"
+    "image": "Large privateer"
   },
   {
     "name": "Capital ship",
@@ -679,7 +679,7 @@
     "cost": 30,
     "metalCost": 30,
     "fleetCapacity": 1.0,
-    "image": "CAPITAL_SHIP"
+    "image": "Capital ship"
   },
   {
     "name": "Space worm",
@@ -690,7 +690,7 @@
     "cost": 0,
     "metalCost": 0,
     "fleetCapacity": .15,
-    "image": "SPACE_WORM"
+    "image": "Space worm"
   },
   {
     "name": "Kraken",
@@ -701,7 +701,7 @@
     "cost": 0,
     "metalCost": 0,
     "fleetCapacity": 0.2,
-    "image": "SPACE_KRAKEN"
+    "image": "Space kraken"
   },
   {
     "name": "Large kraken",
@@ -712,7 +712,7 @@
     "cost": 0,
     "metalCost": 0,
     "fleetCapacity": 0.4,
-    "image": "SPACE_KRAKEN"
+    "image": "Large space kraken"
   },
   {
     "name": "Devourer",
@@ -723,7 +723,7 @@
     "cost": 0,
     "metalCost": 0,
     "fleetCapacity": 0.8,
-    "image": "DEVOURER"
+    "image": "Devourer"
   },
 
   ]

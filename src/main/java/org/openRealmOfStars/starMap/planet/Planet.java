@@ -2807,6 +2807,9 @@ public class Planet {
           eventOnPlanet.setText(news.getNewsText());
           map.getHistory().addEvent(eventOnPlanet);
         }
+        if (building.getName().equals("Telescopes") && map != null) {
+          map.doTelescopeScan(planetOwnerInfo, this);
+        }
         if (building.getName().equals("United Galaxy Tower") && map != null) {
           NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(
               planetOwnerInfo, this, map.getStarYear());

@@ -55,12 +55,29 @@
   },
   {
     "type": "CARGO_BAY",
+    "name": "Dimension cargo bay",
+    "cost": 8,
+    "metalCost": 1,
+    "energyRequirement": 0,
+    "baySize": 2
+  },
+  {
+    "type": "CARGO_BAY",
     "name": "Armored cargo bay",
     "cost": 4,
     "metalCost": 15,
     "energyRequirement": 0,
     "baySize": 1,
     "defense": 4
+  },
+  {
+    "type": "CARGO_BAY",
+    "name": "Armored dimension cargo bay",
+    "cost": 12,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "baySize": 2,
+    "defense": 6
   },
   {
     "type": "PRIVATEERING_MODULE",

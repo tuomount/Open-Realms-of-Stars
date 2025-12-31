@@ -494,6 +494,14 @@
       "energySource": 3,
   },
   {
+      "type": "SOLAR_ARMOR",
+      "name": "Solar armor Mk4",
+      "cost": 9,
+      "metalCost": 10,
+      "defense": 8,
+      "energySource": 4,
+  },
+  {
       "type": "DISTORTION_SHIELD",
       "name": "Distortion shield Mk1",
       "cost": 7,
@@ -543,6 +551,14 @@
       "metalCost": 10,
       "defense": 6,
       "energyRequirement": 1,
+  },
+  {
+      "type": "ORGANIC_ARMOR",
+      "name": "Organic armor Mk4",
+      "cost": 12,
+      "metalCost": 12,
+      "defense": 10,
+      "energyRequirement": 2,
   },
   {
       "type": "MULTIDIMENSION_SHIELD",

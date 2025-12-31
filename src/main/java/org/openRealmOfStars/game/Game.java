@@ -2416,16 +2416,22 @@ public class Game implements ActionListener {
         TechType.Combat, 3));
     sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL5_NAMES,
         TechType.Combat, 5));
-    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL6_NAMES,
-        TechType.Combat, 6));
     sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL7_NAMES,
         TechType.Combat, 7));
-    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL8_NAMES,
-        TechType.Combat, 8));
     sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL9_NAMES,
         TechType.Combat, 9));
     sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL10_NAMES,
         TechType.Combat, 10));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL11_NAMES,
+        TechType.Combat, 11));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL12_NAMES,
+        TechType.Combat, 12));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL15_NAMES,
+        TechType.Combat, 15));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL16_NAMES,
+        TechType.Combat, 16));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL18_NAMES,
+        TechType.Combat, 18));
     sb.append("## Rare Defense technology\n\n");
     sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL3_NAMES,
         TechType.Defense, 3));
@@ -2439,6 +2445,8 @@ public class Game implements ActionListener {
         TechType.Defense, 8));
     sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL9_NAMES,
         TechType.Defense, 9));
+    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL12_NAMES,
+        TechType.Defense, 12));
     sb.append("## Rare Hull technology\n\n");
     sb.append(printTech(TechFactory.HULL_RARE_TECH_LEVEL3_NAMES,
         TechType.Hulls, 3));
@@ -2446,6 +2454,8 @@ public class Game implements ActionListener {
         TechType.Hulls, 5));
     sb.append(printTech(TechFactory.HULL_RARE_TECH_LEVEL7_NAMES,
         TechType.Hulls, 7));
+    sb.append(printTech(TechFactory.HULL_RARE_TECH_LEVEL11_NAMES,
+        TechType.Hulls, 11));
     sb.append("## Rare Planetary Improvement technology\n\n");
     sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL3_NAMES,
         TechType.Improvements, 3));
@@ -2454,12 +2464,12 @@ public class Game implements ActionListener {
     sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL9_NAMES,
         TechType.Improvements, 9));
     sb.append("## Rare Propulsion technology\n\n");
-    sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL5_NAMES,
-        TechType.Propulsion, 5));
-    sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL8_NAMES,
-        TechType.Propulsion, 8));
     sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL10_NAMES,
         TechType.Propulsion, 10));
+    sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL14_NAMES,
+        TechType.Propulsion, 14));
+    sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL16_NAMES,
+        TechType.Propulsion, 16));
     sb.append("## Rare Electronics technology\n\n");
     sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL3_NAMES,
         TechType.Electrics, 3));

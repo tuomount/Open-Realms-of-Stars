@@ -1193,6 +1193,33 @@
     "weaponRange": 2
   },
   {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk6",
+    "cost": 10,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 11,
+    "weaponRange": 3
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk7",
+    "cost": 12,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 15,
+    "weaponRange": 3
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk8",
+    "cost": 12,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 18,
+    "weaponRange": 3
+  },
+  {
     "type": "ION_CANNON",
     "name": "Ion cannon Mk1",
     "cost": 5,
@@ -1227,6 +1254,33 @@
     "energyRequirement": 2,
     "damage": 9,
     "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk5",
+    "cost": 8,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 11,
+    "weaponRange": 3
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk6",
+    "cost": 9,
+    "metalCost": 7,
+    "energyRequirement": 3,
+    "damage": 15,
+    "weaponRange": 3
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk7",
+    "cost": 10,
+    "metalCost": 8,
+    "energyRequirement": 3,
+    "damage": 18,
+    "weaponRange": 3
   },
   {
     "type": "BITE",
@@ -1279,7 +1333,7 @@
     "cost": 15,
     "metalCost": 15,
     "energyRequirement": 5,
-    "damage": 6,
+    "damage": 10,
     "hitBonus": 100,
     "weaponRange": 1
   },
@@ -1287,19 +1341,19 @@
     "type": "GRAVITY_RIPPER",
     "name": "Gravity ripper Mk2",
     "cost": 16,
-    "metalCost": 15,
-    "energyRequirement": 5,
-    "damage": 8,
+    "metalCost": 16,
+    "energyRequirement": 6,
+    "damage": 12,
     "hitBonus": 100,
     "weaponRange": 1
   },
   {
     "type": "GRAVITY_RIPPER",
     "name": "Gravity ripper Mk3",
-    "cost": 16,
-    "metalCost": 16,
-    "energyRequirement": 5,
-    "damage": 10,
+    "cost": 18,
+    "metalCost": 18,
+    "energyRequirement": 7,
+    "damage": 16,
     "hitBonus": 100,
     "weaponRange": 1
   },

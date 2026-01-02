@@ -2366,7 +2366,7 @@ private int increaseHitChanceByComponent() {
     if (credit > 5) {
       credit = 5;
     }
-    int freeCargo = hull.getMaxSlot() - getNumberOfComponents();
+    int freeCargo = getFreeCargoSpace();
     credit = credit * freeCargo;
     if (credit > 25) {
       credit = 25;

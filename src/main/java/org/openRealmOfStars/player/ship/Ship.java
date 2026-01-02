@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -327,6 +327,10 @@ public class Ship extends Construction {
     sb.append("\n");
     sb.append("Defense: ");
     sb.append(getDefenseValue());
+    if (getCloakingValue() > 0) {
+      sb.append(" Cloaking: ");
+      sb.append(getCloakingValue());
+    }
 
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
@@ -982,7 +986,8 @@ private int getRemainingEnergy(final int index) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
           && (comp.getType() == ShipComponentType.CLOAKING_DEVICE
-          || comp.getType() == ShipComponentType.SHADOW_ARMOR)
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD)
           && hasComponentEnergy(i)
           && comp.getCloaking() > cloak) {
           cloak = comp.getCloaking();

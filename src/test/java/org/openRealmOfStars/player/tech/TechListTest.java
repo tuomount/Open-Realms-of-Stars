@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2017-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -223,6 +223,16 @@ public class TechListTest extends TestCase {
     assertEquals("Hyper drive Mk6", missing[1].getName());
     assertEquals("Impulse engine Mk2", missing[2].getName());
     assertEquals("Nuclear drive Mk4", missing[3].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFastestEngine() {
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
+    list.addTech(TechFactory.createPropulsionTech("Hyper drive Mk1", 2));
+    list.addTech(TechFactory.createPropulsionTech("Hyper drive Mk2", 3));
+    Tech tech = list.getFastestEngine();
+    assertEquals("Hyper drive Mk2", tech.getName());
   }
 
   @Test

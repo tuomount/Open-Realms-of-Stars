@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -383,7 +383,7 @@ public class FleetTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
-    assertEquals("Test-Fleet\nTerran alliance\nCapacity: 0.1\nSpeed: 1 FTL: 2\nMoves: 1\nScout - 15"
+    assertEquals("Test-Fleet\nTerran alliance\nCapacity: 0.1\nDetection: 40\nSpeed: 1 FTL: 2\nMoves: 1\nScout - 15"
         + "\n\n\nEnroute", fleet.getInfoAsText(info));
   }
 
@@ -470,7 +470,7 @@ public class FleetTest {
     assertEquals(true, fleet.allFixed());
     assertEquals(false, fleet.isPrivateerFleet());
     assertEquals(1, fleet.getCulturalValue());
-    assertEquals("Fleet #0\nCapacity: 0.1\nSpeed: 1 FTL: 1\nMoves: 0\nPopulation: 2\nScout - 15\nColony - 0"
+    assertEquals("Fleet #0\nCapacity: 0.1\nDetection: 40\nSpeed: 1 FTL: 1\nMoves: 0\nPopulation: 2\nScout - 15\nColony - 0"
         + "\n\n\nMoved", fleet.getInfoAsText(null));
   }
 
@@ -540,7 +540,7 @@ public class FleetTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
-    assertEquals("Fleet #0\nPrivateer fleet\nCapacity: 1.0\nSpeed: 1 FTL: 2\nMoves: 0"
+    assertEquals("Fleet #0\nPrivateer fleet\nCapacity: 1.0\nCloaking: 40\nDetection: 40\nSpeed: 1 FTL: 2\nMoves: 0"
         + "\nPrivateer - 20\nPrivateer - 20\n\n\nMoved", fleet.getInfoAsText(info));
   }
 

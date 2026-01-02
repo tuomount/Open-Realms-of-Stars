@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.combat;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2017-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -281,7 +281,7 @@ public class CombatTest {
     info2.getFleets().add(fleet2);
     combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     combat.setPlanet(planet);
-    combat.doFastCombat(true);
+    combat.doFastCombat(false);
     assertEquals(info1, combat.getWinner());
     assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test I",
         MissionPhase.PLANNING));

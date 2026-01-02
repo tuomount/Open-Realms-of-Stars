@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -381,6 +381,7 @@ public class ShipDesignView extends BlackPanel {
     componentTypes.add("Electronics");
     componentTypes.add("Modules");
     componentTypes.add("Invasion");
+    componentTypes.add("Tools");
     for (int i = 0; i < ShipComponentType.values().length; i++) {
       componentTypes.add(ShipComponentType.getTypeByIndex(i).toString());
     }
@@ -561,6 +562,17 @@ public class ShipDesignView extends BlackPanel {
             && (comp.getType() == ShipComponentType.ORBITAL_BOMBS
                 || comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
                 || comp.getType() == ShipComponentType.ORBITAL_NUKE)) {
+          components.add(comp);
+          continue;
+        }
+        if (comp != null && filter.equalsIgnoreCase("Tools")
+            && (comp.getType() == ShipComponentType.CARGO_BAY
+                || comp.getType() == ShipComponentType.FIGHTER_BAY
+                || comp.getType() == ShipComponentType.REPAIR_MODULE
+                || comp.getType() == ShipComponentType.SCANNER
+                || comp.getType() == ShipComponentType.PRIVATEERING_MODULE
+                || comp.getType() == ShipComponentType.COLONY_MODULE
+                || comp.getType() == ShipComponentType.SPORE_MODULE)) {
           components.add(comp);
           continue;
         }

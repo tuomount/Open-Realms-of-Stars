@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -543,6 +543,14 @@ public class Fleet {
     }
     sb.append("Capacity: ");
     sb.append(String.format("%.1f", getTotalFleetCapacity()));
+    if (getFleetCloackingValue() > 0) {
+      sb.append("\nCloaking: ");
+      sb.append(getFleetCloackingValue());
+    }
+    if (getFleetCloakDetection() > 0) {
+      sb.append("\nDetection: ");
+      sb.append(getFleetCloakDetection());
+    }
     sb.append("\nSpeed: ");
     sb.append(getFleetSpeed());
     sb.append(" FTL: ");

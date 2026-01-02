@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -2166,6 +2166,13 @@ public class StarMap {
       final Planet planet) {
     forceRedraw = true;
     int scanRad = 5;
+    if (maxX >= 160) {
+      scanRad = 8;
+    } else if (maxX >= 128) {
+      scanRad = 7;
+    } else if (maxX >= 75) {
+      scanRad = 6;
+    }
     int cx = 0;
     int cy = 0;
     if (planet == null) {

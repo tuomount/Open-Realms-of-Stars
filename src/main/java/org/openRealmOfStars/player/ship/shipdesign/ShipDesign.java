@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship.shipdesign;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -873,9 +873,9 @@ public class ShipDesign {
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
       sb.append("\n");
       sb.append("Cargo: ");
-      sb.append(getFreeSlots() * 10);
+      sb.append(getFreeCargoSpace() * 10);
       sb.append(" units or ");
-      sb.append(getFreeSlots() * 2);
+      sb.append(getFreeCargoSpace() * 2);
       sb.append(" population");
     }
     int baySize = getTotalBaySize();

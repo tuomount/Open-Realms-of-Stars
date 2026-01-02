@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -542,6 +542,7 @@ public class TechList {
     Tech best = null;
     int bestValue = -1;
     int ftl = 0;
+    int energyUsage = 0;
     Tech[] list = getListForType(TechType.Propulsion);
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
@@ -550,14 +551,23 @@ public class TechList {
           && (comp.getType() == ShipComponentType.ENGINE
               || comp.getType() == ShipComponentType.SPACE_FIN)) {
         int compValue = comp.getFtlSpeed();
+        int compEnergy = comp.getEnergyResource() - comp.getEnergyRequirement();
         if (comp.getSpeed() > bestValue) {
           best = tech;
           bestValue = comp.getSpeed();
           ftl = compValue;
+          energyUsage = compEnergy;
         } else if (comp.getSpeed() == bestValue && compValue > ftl) {
           best = tech;
           bestValue = comp.getSpeed();
           ftl = compValue;
+          energyUsage = compEnergy;
+        } else if (comp.getSpeed() == bestValue && compValue == ftl
+            && energyUsage < compEnergy) {
+          best = tech;
+          bestValue = comp.getSpeed();
+          ftl = compValue;
+          energyUsage = compEnergy;
         }
       }
     }

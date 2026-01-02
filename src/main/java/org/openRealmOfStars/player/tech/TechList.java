@@ -535,6 +535,46 @@ public class TechList {
   }
 
   /**
+   * Get fastest FTL speed Engine for current technology.
+   * @return Best engine tech or null if not found
+   */
+  public Tech getFastestFtlEngine() {
+    Tech best = null;
+    int bestValue = -1;
+    int regularSpeed = -1;
+    int energyUsage = 0;
+    Tech[] list = getListForType(TechType.Propulsion);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
+      if (comp != null
+          && (comp.getType() == ShipComponentType.ENGINE
+              || comp.getType() == ShipComponentType.SPACE_FIN)) {
+        int compValue = comp.getFtlSpeed();
+        int compEnergy = comp.getEnergyResource() - comp.getEnergyRequirement();
+        if (compValue > bestValue) {
+          best = tech;
+          regularSpeed = comp.getSpeed();
+          bestValue = compValue;
+          energyUsage = compEnergy;
+        } else if (compValue == bestValue && comp.getSpeed() > regularSpeed) {
+          best = tech;
+          regularSpeed = comp.getSpeed();
+          bestValue = compValue;
+          energyUsage = compEnergy;
+        } else if (compValue == bestValue && comp.getSpeed() == regularSpeed
+            && energyUsage < compEnergy) {
+          best = tech;
+          regularSpeed = comp.getSpeed();
+          bestValue = compValue;
+          energyUsage = compEnergy;
+        }
+      }
+    }
+    return best;
+  }
+
+  /**
    * Get fastest regular speed Engine for current technology.
    * @return Best engine tech or null if not found
    */

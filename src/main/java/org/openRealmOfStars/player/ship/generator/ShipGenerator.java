@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship.generator;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1172,7 +1172,8 @@ public final class ShipGenerator {
           + (player.getShipStatHighestNumber("Trooper Mk") + 1));
     }
     ShipComponent engine = ShipComponentFactory
-        .createByName(player.getTechList().getBestEngine().getComponent());
+        .createByName(player.getTechList().getFastestFtlEngine()
+            .getComponent());
     result.addComponent(engine);
     ShipComponent power = ShipComponentFactory.createByName(
         player.getTechList().getBestEnergySource().getComponent());
@@ -1329,7 +1330,8 @@ public final class ShipGenerator {
     result.setName("Freighter Mk"
           + (player.getShipStatHighestNumber("Freighter Mk") + 1));
     ShipComponent engine = ShipComponentFactory
-        .createByName(player.getTechList().getBestEngine().getComponent());
+        .createByName(player.getTechList().getFastestFtlEngine()
+            .getComponent());
     result.addComponent(engine);
     ShipComponent power = ShipComponentFactory.createByName(
         player.getTechList().getBestEnergySource().getComponent());

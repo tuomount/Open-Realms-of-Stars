@@ -142,6 +142,8 @@ public class ShipDesign {
 
   /**
    * Add new component to list
+   * Added component cannot be null or NPE occurs.
+   * This helps get possible null component much earlier.
    * @param comp ShipComponent to add
    */
   public void addComponent(final ShipComponent comp) {

@@ -1406,7 +1406,14 @@ public final class ShipGenerator {
     }
     Tech[] hullTechs = player.getTechList()
         .getListForType(TechType.Hulls);
-    Tech cargoTech = TechList.getBestTech(hullTechs, "Armored cargo bay");
+    Tech cargoTech = TechList.getBestTech(hullTechs,
+        "Armored dimension cargo bay");
+    if (cargoTech == null) {
+      cargoTech = TechList.getBestTech(hullTechs, "Dimension cargo bay");
+    }
+    if (cargoTech == null) {
+      cargoTech = TechList.getBestTech(hullTechs, "Armored cargo bay");
+    }
     if (cargoTech == null) {
       cargoTech = TechList.getBestTech(hullTechs, "Cargo bay");
     }

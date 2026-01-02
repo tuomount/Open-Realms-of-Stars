@@ -158,7 +158,7 @@
     "metalCost": 8,
     "prodCost": 4,
 	"singleAllowed": true,
-    "iconId": "Research",
+    "iconId": "IconMap",
     "name": "Telescopes"
   },
   {

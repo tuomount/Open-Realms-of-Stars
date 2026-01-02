@@ -618,7 +618,7 @@ public final class TechFactory {
   public static final String[] IMPROVEMENT_TECH_LEVEL20_NAMES = {
       "Utopic replicator center"
       };
-  //, "Mass relay Mk4"};
+  //, "Mass relay Mk5"};
 
   /**
    * Propulsion tech names for level 1

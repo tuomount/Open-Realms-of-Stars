@@ -447,6 +447,9 @@ public final class PlanetHandling {
       if (building.getWildLifePower() > 0) {
         score = score - building.getWildLifePower() * 2;
       }
+      if (building.getName().equals("Telescopes")) {
+        score = -2;
+      }
       if (newBuild != null && building.getType() == newBuild.getType()) {
         // This should increase the chance for upgrading the building.
         int newBonus = newBuild.getBattleBonus() + newBuild.getCredBonus()

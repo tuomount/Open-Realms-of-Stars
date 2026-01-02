@@ -425,7 +425,6 @@ public class Ship extends Construction {
     sb.append("\n");
     sb.append("Defense: ");
     sb.append(getDefenseValue());
-    //FIXME
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
       sb.append("Military power: ");
@@ -1346,7 +1345,8 @@ private int increaseHitChanceByComponent() {
       }
       if (hullPoints[i] > 0
           && (comp.getType() == ShipComponentType.CLOAKING_DEVICE
-          || comp.getType() == ShipComponentType.SHADOW_ARMOR)
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD)
           && hasComponentEnergy(i)) {
         cloakingDevice = true;
       }

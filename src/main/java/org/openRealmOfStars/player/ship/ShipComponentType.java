@@ -199,7 +199,20 @@ public enum ShipComponentType {
   /**
    * Plasma spit functions as plasma cannot expect looks like photon torpedo.
    */
-  PLASMA_SPIT;
+  PLASMA_SPIT,
+  /**
+   * Armor component that also adds cloaking.
+   */
+  SHADOW_ARMOR,
+  /**
+   * Shield defense component that also adds cloaking
+   */
+  SHADOW_SHIELD,
+  /**
+   * Cargo bay adds cargo space and hull point(s).
+   */
+  CARGO_BAY;
+
 
 
   /**
@@ -239,8 +252,12 @@ public enum ShipComponentType {
       return "Scanner";
     case SHIELD:
       return "Shield";
+    case SHADOW_SHIELD:
+      return "Shadow shield";
     case ARMOR:
       return "Armor";
+    case SHADOW_ARMOR:
+      return "Shadow armor";
     case SHIELD_GENERATOR:
       return "Shield generator";
     case ENGINE:
@@ -307,6 +324,8 @@ public enum ShipComponentType {
       return "Arm spike";
     case PLASMA_SPIT:
       return "Plasma spit";
+    case CARGO_BAY:
+      return "Cargo bay";
     default:
       return "Error - Unknown";
     }
@@ -332,7 +351,13 @@ public enum ShipComponentType {
       return Icons.ICON_SCANNER;
     case SHIELD:
       return Icons.ICON_SHIELD;
+    case SHADOW_SHIELD:
+      //TODO: Change icon
+      return Icons.ICON_SHIELD;
     case ARMOR:
+      return Icons.ICON_ARMOR;
+    case SHADOW_ARMOR:
+      //TODO: Change icon
       return Icons.ICON_ARMOR;
     case SHIELD_GENERATOR:
       return Icons.ICON_CIRCUIT_BOARD;
@@ -398,6 +423,9 @@ public enum ShipComponentType {
       return Icons.ICON_ARM_SPIKE;
     case PLASMA_SPIT:
       return Icons.ICON_PLASMA_SPIT;
+    case CARGO_BAY:
+      // TODO: Change icon
+      return Icons.ICON_ARMOR;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

@@ -1,0 +1,74 @@
+[
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Starbase music hall",
+    "cost": 9,
+    "metalCost": 9,
+    "energyRequirement": 2,
+    "cultureBonus": 1
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Starbase sports hall",
+    "cost": 18,
+    "metalCost": 18,
+    "energyRequirement": 2,
+    "cultureBonus": 2
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Zero-G sports stadium",
+    "cost": 27,
+    "metalCost": 27,
+    "energyRequirement": 2,
+    "cultureBonus": 3
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Starbase market",
+    "cost": 12,
+    "metalCost": 6,
+    "energyRequirement": 2,
+    "creditBonus": 1
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Starbase bank",
+    "cost": 24,
+    "metalCost": 12,
+    "energyRequirement": 2,
+    "creditBonus": 2
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Zero-G credit facility",
+    "cost": 36,
+    "metalCost": 18,
+    "energyRequirement": 2,
+    "creditBonus": 3
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Starbase lab",
+    "cost": 12,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "researchBonus": 1
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Starbase nano lab",
+    "cost": 24,
+    "metalCost": 8,
+    "energyRequirement": 2,
+    "researchBonus": 2
+  },
+  {
+    "type": "STARBASE_COMPONENT",
+    "name": "Zero-G research facility",
+    "cost": 36,
+    "metalCost": 12,
+    "energyRequirement": 2,
+    "researchBonus": 3
+  },
+]

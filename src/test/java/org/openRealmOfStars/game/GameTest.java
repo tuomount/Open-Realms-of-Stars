@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2017-2025 Tuomo Untinen
  * Copyright (C) 2025 Richard Smit
  *
  * This program is free software; you can redistribute it and/or
@@ -169,7 +169,7 @@ public class GameTest {
         tech = tech + game.getPlayers().getPlayerInfoByIndex(i)
             .getTechList().getTechLevel(techtype);
       }
-      tech = tech * 10 / 6;
+      tech = tech * 5 / 6;
       String scenario = game.getPlayers().getPlayerInfoByIndex(i)
           .getStartingScenario().getName();
       StringBuilder sb = new StringBuilder();

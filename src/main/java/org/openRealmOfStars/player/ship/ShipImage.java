@@ -211,6 +211,42 @@ public class ShipImage {
       case 24: return "Devourer";
     }
   }
+
+  /**
+   * Get Ship type.
+   * @param type Type as string
+   * @return type as int.
+   */
+  public static int getShipType(final String type) {
+    switch (type) {
+      default:
+      case "Scout": return 0;
+      case "Colony": return 1;
+      case "Destroyer": return 2;
+      case "Probe": return 3;
+      case "Small freighter": return 4;
+      case "Small starbase": return 5;
+      case "Corvette": return 6;
+      case "Medium starbase": return 7;
+      case "Medium freighter": return 8;
+      case "Cruiser": return 9;
+      case "Battleship": return 10;
+      case "Privateer": return 11;
+      case "Large privateer": return 12;
+      case "Large freighter": return 13;
+      case "Large starbase": return 14;
+      case "Battle cruiser": return 15;
+      case "Massive freighter": return 16;
+      case "Massive starbase": return 17;
+      case "Capital ship": return 18;
+      case "Artificial planet": return 19;
+      case "Space worm": return 20;
+      case "Space kraken": return 21;
+      case "Large space kraken": return 22;
+      case "Spore": return 23;
+      case "Devourer": return 24;
+    }
+  }
   /**
    * Initialize ship images.
    * @param fileToRead Needs to be inside JAR file

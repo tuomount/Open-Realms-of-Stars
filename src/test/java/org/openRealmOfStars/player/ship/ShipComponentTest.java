@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -148,7 +148,7 @@ public class ShipComponentTest {
     component.setCloaking(40);
     assertEquals("Cloak\n"
         + "Cost: 3 Metal: 3\n"
-        + "Cloaking:40\n"
+        + "Cloaking: 40\n"
         + "\n"
         + "Cloaking device tries to hide fleet in star map.\n"
         + "It will also make ship more difficult target in combat.\n"

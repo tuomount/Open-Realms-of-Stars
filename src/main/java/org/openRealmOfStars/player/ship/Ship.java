@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -327,6 +327,10 @@ public class Ship extends Construction {
     sb.append("\n");
     sb.append("Defense: ");
     sb.append(getDefenseValue());
+    if (getCloakingValue() > 0) {
+      sb.append(" Cloaking: ");
+      sb.append(getCloakingValue());
+    }
 
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
@@ -421,7 +425,6 @@ public class Ship extends Construction {
     sb.append("\n");
     sb.append("Defense: ");
     sb.append(getDefenseValue());
-    //FIXME
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
       sb.append("Military power: ");
@@ -495,6 +498,14 @@ private boolean isIndexValid(final int index) {
           shield++;
         }
       }
+      if (comp.getType() == ShipComponentType.SHADOW_SHIELD
+          && componentIsWorking(i) && !shieldsUp) {
+        workingShields = true;
+        shieldsUp = true;
+        if (shield < getTotalShield()) {
+          shield++;
+        }
+      }
       if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
           && componentIsWorking(i) && !armorUp) {
         armorUp = true;
@@ -549,7 +560,17 @@ private boolean isIndexValid(final int index) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.CARGO_BAY
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SOLAR_ARMOR
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_ARMOR
           && componentIsWorking(i)) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
@@ -565,6 +586,11 @@ private boolean isIndexValid(final int index) {
       }
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD
+          && componentIsWorking(i)) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_SHIELD
           && componentIsWorking(i)) {
           totalShield = totalShield + comp.getDefenseValue();
       }
@@ -958,7 +984,9 @@ private int getRemainingEnergy(final int index) {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
-          && comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          && (comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD)
           && hasComponentEnergy(i)
           && comp.getCloaking() > cloak) {
           cloak = comp.getCloaking();
@@ -1316,7 +1344,9 @@ private int increaseHitChanceByComponent() {
         thrusters = true;
       }
       if (hullPoints[i] > 0
-          && comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          && (comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD)
           && hasComponentEnergy(i)) {
         cloakingDevice = true;
       }
@@ -1646,6 +1676,10 @@ private int increaseHitChanceByComponent() {
           totalShield = totalShield + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_SHIELD) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
           totalShield = totalShield + comp.getDefenseValue();
       }
@@ -1758,11 +1792,20 @@ private int increaseHitChanceByComponent() {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.CARGO_BAY
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SOLAR_ARMOR) {
         totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
+        totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_ARMOR) {
         totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
@@ -1866,13 +1909,27 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Get Free cargo space in ship.
+   * @return Cargo space in ship.
+   */
+  public int getFreeCargoSpace() {
+    int result = hull.getMaxSlot() - getNumberOfComponents();
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.CARGO_BAY) {
+        result = result + comp.getBaySize();
+      }
+    }
+    return result;
+  }
+  /**
    * How much metal can be fit to cargo space
    * @return Cargo room for metal
    */
   public int getFreeCargoMetal() {
     int freeCargoMetal = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-        freeCargoMetal = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoMetal = getFreeCargoSpace();
         freeCargoMetal = freeCargoMetal - getColonist() / 2
                                         - getMetal() / 10
                                         - getColonist() % 2;
@@ -1888,7 +1945,7 @@ private int increaseHitChanceByComponent() {
   public int getFreeCargoColonists() {
     int freeCargoColonists = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-        freeCargoColonists = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoColonists = getFreeCargoSpace();
         freeCargoColonists = freeCargoColonists - (getColonist() / 2)
             - (getMetal() / 10);
         freeCargoColonists = freeCargoColonists * 2;
@@ -1915,8 +1972,11 @@ private int increaseHitChanceByComponent() {
       }
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
+              || comp.getType() == ShipComponentType.CARGO_BAY
           || comp.getType() == ShipComponentType.REPAIR_MODULE
-          || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
@@ -1991,8 +2051,11 @@ private int increaseHitChanceByComponent() {
       }
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.CARGO_BAY
           || comp.getType() == ShipComponentType.REPAIR_MODULE
-          || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
@@ -2303,7 +2366,7 @@ private int increaseHitChanceByComponent() {
     if (credit > 5) {
       credit = 5;
     }
-    int freeCargo = hull.getMaxSlot() - getNumberOfComponents();
+    int freeCargo = getFreeCargoSpace();
     credit = credit * freeCargo;
     if (credit > 25) {
       credit = 25;

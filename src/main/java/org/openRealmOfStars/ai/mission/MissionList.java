@@ -173,6 +173,9 @@ public class MissionList {
     if (info.getTechList().isTech("Radiation well")) {
       maxRad++;
     }
+    if (info.getTechList().isTech("Radiation shield")) {
+      maxRad = maxRad + 2;
+    }
     maxRad = Math.min(RadiationType.values().length - 1, maxRad);
     int divider = 1;
     if (map.getMaxX() < 75) {

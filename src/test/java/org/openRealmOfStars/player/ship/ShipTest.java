@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2017-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -156,7 +156,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -180,7 +180,7 @@ public class ShipTest {
     assertEquals(3,ship.getCulture());
     assertEquals(10,ship.getArmor());
     assertEquals(10,ship.getShield());
-    assertEquals(7,ship.getFtlSpeed());
+    assertEquals(6,ship.getFtlSpeed());
     assertEquals(3,ship.getSpeed());
     assertEquals(2,ship.getTacticSpeed());
     assertEquals(0,ship.getColonist());
@@ -189,16 +189,16 @@ public class ShipTest {
     assertEquals(0,ship.getHullPointForComponent(99));
     assertEquals(true,ship.hasWeapons());
     assertEquals(false,ship.hasBombs());
-    assertEquals(100, ship.getScannerDetectionLvl());
+    assertEquals(80, ship.getScannerDetectionLvl());
     assertEquals(5, ship.getScannerLvl());
-    assertEquals(5, ship.getDefenseValue());
+    assertEquals(10, ship.getDefenseValue());
     assertEquals(false, ship.isColonyShip());
     assertEquals(true, ship.isPrivateeringShip());
     assertEquals(false, ship.isTrooperShip());
     assertEquals(false, ship.isColonyModule());
     assertEquals(false, ship.isTrooperModule());
     assertEquals(50, ship.getHitChance(weapon));
-    assertEquals(55, ship.getTotalMilitaryPower());
+    assertEquals(49, ship.getTotalMilitaryPower());
     assertEquals(120, ship.getCloakingValue());
   }
 
@@ -208,7 +208,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -224,16 +224,16 @@ public class ShipTest {
     design.addComponent(targetingComp);
     Ship ship = new Ship(design);
 
-    assertEquals(59, ship.getTotalMilitaryPower());
+    assertEquals(53, ship.getTotalMilitaryPower());
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTopCruiser() {
-    ShipHull hull = ShipHullFactory.createByName("Cruiser",
+    ShipHull hull = ShipHullFactory.createByName("Cruiser Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
@@ -249,7 +249,7 @@ public class ShipTest {
     design.addComponent(targetingComp);
     Ship ship = new Ship(design);
 
-    assertEquals(56, ship.getTotalMilitaryPower());
+    assertEquals(48, ship.getTotalMilitaryPower());
   }
 
   @Test
@@ -258,13 +258,13 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
     ShipComponent shield = ShipComponentFactory.createByName("Shield Mk10");
     ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk5");
-    ShipComponent thrusters = ShipComponentFactory.createByName("Combat thrusters");
+    ShipComponent thrusters = ShipComponentFactory.createByName("Combat thrusters Mk1");
     design.addComponent(energy);
     design.addComponent(engine);
     design.addComponent(armor);
@@ -282,7 +282,7 @@ public class ShipTest {
     assertEquals(3,ship.getCulture());
     assertEquals(10,ship.getArmor());
     assertEquals(10,ship.getShield());
-    assertEquals(7,ship.getFtlSpeed());
+    assertEquals(6,ship.getFtlSpeed());
     assertEquals(4,ship.getSpeed());
     assertEquals(3,ship.getTacticSpeed());
     assertEquals(0,ship.getColonist());
@@ -290,27 +290,27 @@ public class ShipTest {
     assertEquals(3,ship.getHullPointForComponent(0));
     assertEquals(0,ship.getHullPointForComponent(99));
     assertEquals(true,ship.hasWeapons());
-    assertEquals(10, ship.getInitiative());
+    assertEquals(14, ship.getInitiative());
     assertEquals(false,ship.hasBombs());
-    assertEquals(100, ship.getScannerDetectionLvl());
+    assertEquals(80, ship.getScannerDetectionLvl());
     assertEquals(5, ship.getScannerLvl());
-    assertEquals(5, ship.getDefenseValue());
+    assertEquals(10, ship.getDefenseValue());
     assertEquals(false, ship.isColonyShip());
     assertEquals(true, ship.isPrivateeringShip());
     assertEquals(false, ship.isTrooperShip());
     assertEquals(false, ship.isColonyModule());
     assertEquals(false, ship.isTrooperModule());
     assertEquals(50, ship.getHitChance(weapon));
-    assertEquals(55, ship.getTotalMilitaryPower());
+    assertEquals(49, ship.getTotalMilitaryPower());
     assertEquals(0, ship.getCloakingValue());
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTopFiringTestBeam() {
-    ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
+    ShipHull hull = ShipHullFactory.createByName("Privateer Mk2",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk9");
@@ -325,7 +325,7 @@ public class ShipTest {
     design.addComponent(armor);
     Ship ship = new Ship(design);
 
-    weapon = ShipComponentFactory.createByName("Phasors Mk1");
+    weapon = ShipComponentFactory.createByName("Blue laser Mk1");
     ShipDamage shipDamage = ship.damageBy(weapon, 0);
     assertEquals(true, shipDamage.getValue() >= 0);
     shipDamage = ship.damageBy(weapon, 0);
@@ -356,7 +356,7 @@ public class ShipTest {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
-    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk3");
@@ -379,7 +379,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCarrierShip() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -401,7 +401,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -439,7 +439,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip2() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -462,7 +462,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip3() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -497,7 +497,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip4() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -532,7 +532,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip5() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -582,7 +582,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip6() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -602,7 +602,7 @@ public class ShipTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTrooper() {
-    ShipHull hull = ShipHullFactory.createByName("Medium freighter",
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -627,7 +627,7 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testProbeFTLSpeedp() {
+  public void testProbeFTLSpeed() {
     ShipHull hull = ShipHullFactory.createByName("Probe",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
@@ -688,7 +688,7 @@ public class ShipTest {
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk2");
     ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk1");
-    ShipComponent spy = ShipComponentFactory.createByName("Espionage Module Mk1");
+    ShipComponent spy = ShipComponentFactory.createByName("Espionage module Mk1");
     design.addComponent(engine);
     design.addComponent(scanner);
     design.addComponent(spy);
@@ -715,7 +715,7 @@ public class ShipTest {
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk2");
     ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk1");
-    ShipComponent spy = ShipComponentFactory.createByName("Espionage Module Mk1");
+    ShipComponent spy = ShipComponentFactory.createByName("Espionage module Mk1");
     design.addComponent(engine);
     design.addComponent(scanner);
     design.addComponent(spy);
@@ -781,14 +781,14 @@ public class ShipTest {
   public void testStarBase2() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
     info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
-    info.getTechList().addTech(TechFactory.createHullTech("Medium starbase", 4));
-    info.getTechList().addTech(TechFactory.createHullTech("Large starbase", 6));
-    info.getTechList().addTech(TechFactory.createHullTech("Massive starbase", 8));
+    info.getTechList().addTech(TechFactory.createHullTech("Medium starbase Mk1", 4));
+    info.getTechList().addTech(TechFactory.createHullTech("Large starbase Mk1", 11));
+    info.getTechList().addTech(TechFactory.createHullTech("Massive starbase Mk1", 17));
     info.getTechList().addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     info.getTechList().addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     info.getTechList().addTech(TechFactory.createDefenseTech("Armor Mk1", 1));
     info.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
-    info.getTechList().addTech(TechFactory.createImprovementTech("Starbase lab", 4));
+    info.getTechList().addTech(TechFactory.createImprovementTech("Starbase lab", 5));
     ShipDesign design = ShipGenerator.createStarbase(info, ShipSize.MEDIUM);
     assertNotEquals(null, design);
     Ship ship = new Ship(design);
@@ -808,7 +808,7 @@ public class ShipTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testStarBase3() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
-    info.getTechList().addTech(TechFactory.createHullTech("Large starbase", 6));
+    info.getTechList().addTech(TechFactory.createHullTech("Large starbase Mk1", 11));
     info.getTechList().addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     info.getTechList().addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     info.getTechList().addTech(TechFactory.createDefenseTech("Armor Mk1", 1));
@@ -817,7 +817,7 @@ public class ShipTest {
     info.getTechList().addTech(TechFactory.createImprovementTech("Starbase market", 3));
     info.getTechList().addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
     info.getTechList().addTech(TechFactory.createPropulsionTech("Zero-point source Mk2", 10));
-    ShipHull hull = ShipHullFactory.createByName("Large starbase",
+    ShipHull hull = ShipHullFactory.createByName("Large starbase Mk1",
         SpaceRaceFactory.createOne("HUMANS"));
     ShipDesign design = new ShipDesign(hull);
     ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");

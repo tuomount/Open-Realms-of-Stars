@@ -26,11 +26,11 @@
     "type": "MINE",
     "metalCost": 100,
     "prodCost": 200,
-    "mineBonus": 4,
+    "mineBonus": 5,
     "iconId": "Metal",
     "singleAllowed": true,
     "scientificAchievement": true,
-    "factBonus": 2,
+    "factBonus": 3,
     "name": "Planetary furnace"
   },
   {
@@ -45,17 +45,37 @@
     "name": "Mining center"
   },
   {
-    "description": "Advanced mine with robotic miners.",
+    "description": "Improved mine with robotic miners.",
     "type": "MINE",
     "metalCost": 12,
     "prodCost": 20,
     "mineBonus": 2,
     "iconId": "Mine",
     "maintenanceCost": 0.25,
+    "name": "Improved mine"
+  },
+  {
+    "description": "Advanced mine with automatic robotic miners.",
+    "type": "MINE",
+    "metalCost": 12,
+    "prodCost": 20,
+    "mineBonus": 3,
+    "iconId": "Mine",
+    "maintenanceCost": 0.33,
     "name": "Advanced mine"
   },
   {
-    "description": "Advanced furnace produces metal and production.",
+    "description": "Ultimate mine with shiny automatic robot miners.",
+    "type": "MINE",
+    "metalCost": 12,
+    "prodCost": 20,
+    "mineBonus": 4,
+    "iconId": "Mine",
+    "maintenanceCost": 0.33,
+    "name": "Ultimate mine"
+  },
+  {
+    "description": "Improved furnace with improved heat.",
     "type": "MINE",
     "metalCost": 20,
     "prodCost": 20,
@@ -63,14 +83,36 @@
     "iconId": "Metal",
     "singleAllowed": true,
     "factBonus": 1,
+    "name": "Improved furnace"
+  },
+  {
+    "description": "Advanced furnace produces metal and production.",
+    "type": "MINE",
+    "metalCost": 30,
+    "prodCost": 30,
+    "mineBonus": 2,
+    "iconId": "Metal",
+    "singleAllowed": true,
+    "factBonus": 1,
     "name": "Advanced furnace"
+  },
+  {
+    "description": "Ultimate furnace produces metal and production with extreme heat.",
+    "type": "MINE",
+    "metalCost": 40,
+    "prodCost": 40,
+    "mineBonus": 3,
+    "iconId": "Metal",
+    "singleAllowed": true,
+    "factBonus": 2,
+    "name": "Ultimate furnace"
   },
   {
     "description": "Mining done by millions of nanobots",
     "type": "MINE",
     "metalCost": 36,
     "prodCost": 40,
-    "mineBonus": 4,
+    "mineBonus": 5,
     "iconId": "Mine",
     "singleAllowed": true,
     "maintenanceCost": 0.33,

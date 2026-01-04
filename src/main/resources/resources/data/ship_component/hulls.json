@@ -1,0 +1,89 @@
+[
+  {
+    "type": "COLONY_MODULE",
+    "name": "Colonization module",
+    "cost": 2,
+    "metalCost": 8,
+    "energyRequirement": 1
+  },
+  {
+    "type": "SPORE_MODULE",
+    "name": "Spore module",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 1
+  },
+  {
+    "type": "FIGHTER_BAY",
+    "name": "Fighter bay Mk1",
+    "cost": 2,
+    "metalCost": 5,
+    "energyRequirement": 1,
+    "baySize": 1
+  },
+  {
+    "type": "FIGHTER_BAY",
+    "name": "Fighter bay Mk2",
+    "cost": 2,
+    "metalCost": 5,
+    "energyRequirement": 1,
+    "baySize": 2
+  },
+  {
+    "type": "FIGHTER_BAY",
+    "name": "Fighter bay Mk3",
+    "cost": 2,
+    "metalCost": 6,
+    "energyRequirement": 1,
+    "baySize": 3
+  },
+  {
+    "type": "FIGHTER_BAY",
+    "name": "Fighter bay Mk4",
+    "cost": 3,
+    "metalCost": 7,
+    "energyRequirement": 1,
+    "baySize": 4
+  },
+  {
+    "type": "CARGO_BAY",
+    "name": "Cargo bay",
+    "cost": 1,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "baySize": 1
+  },
+  {
+    "type": "CARGO_BAY",
+    "name": "Dimension cargo bay",
+    "cost": 8,
+    "metalCost": 1,
+    "energyRequirement": 0,
+    "baySize": 2
+  },
+  {
+    "type": "CARGO_BAY",
+    "name": "Armored cargo bay",
+    "cost": 4,
+    "metalCost": 15,
+    "energyRequirement": 0,
+    "baySize": 1,
+    "defense": 4
+  },
+  {
+    "type": "CARGO_BAY",
+    "name": "Armored dimension cargo bay",
+    "cost": 12,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "baySize": 2,
+    "defense": 6
+  },
+  {
+    "type": "PRIVATEERING_MODULE",
+    "name": "Privateer module",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+  },
+]

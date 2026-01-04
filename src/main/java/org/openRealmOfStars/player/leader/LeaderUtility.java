@@ -271,6 +271,9 @@ public final class LeaderUtility {
           if (building.getName().equals("Space academy")) {
             level++;
           }
+          if (building.getName().equals("Galactic academy")) {
+            level++;
+          }
         }
         Leader leader = LeaderUtility.createLeader(player, planet, level);
         leader.setExperience(xp);
@@ -491,6 +494,9 @@ public final class LeaderUtility {
               value = value + 20;
             }
             if (building.getName().equals("Space academy")) {
+              value = value + 40;
+            }
+            if (building.getName().equals("Galactic academy")) {
               value = value + 40;
             }
           }

@@ -105,7 +105,7 @@ public class ShipDesignTest extends TestCase {
     ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
-    ShipComponent module = ShipComponentFactory.createByName("Colony Module");
+    ShipComponent module = ShipComponentFactory.createByName("Colonization module");
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
@@ -115,7 +115,7 @@ public class ShipDesignTest extends TestCase {
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(3,design.getNumberOfComponents());
     assertEquals(0,design.getTotalMilitaryPower());
-    assertEquals(1,design.getFreeSlots());
+    assertEquals(1,design.getFreeCargoSpace());
     assertEquals(9, design.getTotalColonyPower());
     assertEquals(11, design.getInitiative());
 
@@ -125,10 +125,10 @@ public class ShipDesignTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTrooperDesignByGenerator() {
     PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
-    player.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
-    player.getTechList().addTech(TechFactory.createHullTech("Medium freighter", 4));
-    player.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
-    player.getTechList().addTech(TechFactory.createHullTech("Massive freighter", 8));
+    player.getTechList().addTech(TechFactory.createHullTech("Small freighter Mk1", 2));
+    player.getTechList().addTech(TechFactory.createHullTech("Medium freighter Mk1", 4));
+    player.getTechList().addTech(TechFactory.createHullTech("Large freighter Mk1", 8));
+    player.getTechList().addTech(TechFactory.createHullTech("Massive freighter Mk1", 13));
     player.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     ShipDesign design = ShipGenerator.createColony(player, true);
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
@@ -225,7 +225,7 @@ public class ShipDesignTest extends TestCase {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
-    ShipComponent module = ShipComponentFactory.createByName("Privateer Module");
+    ShipComponent module = ShipComponentFactory.createByName("Privateer module");
     String tmp = design.getFlaws();
     assertEquals(true, tmp.contains(ShipDesignConsts.ENGINE_IS_MISSING));
     assertEquals(true, tmp.contains(ShipDesignConsts.PRIVATEER_MODULE_MISSING));
@@ -251,7 +251,7 @@ public class ShipDesignTest extends TestCase {
     ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
     ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
-    ShipComponent bomb = ShipComponentFactory.createByName("Orbital Bombs Mk1");
+    ShipComponent bomb = ShipComponentFactory.createByName("Orbital bombs Mk1");
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);

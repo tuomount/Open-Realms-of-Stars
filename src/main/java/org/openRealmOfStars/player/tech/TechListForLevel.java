@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +45,7 @@ public class TechListForLevel {
    */
   public TechListForLevel(final int level) {
     techList = new ArrayList<>();
-    if (level >= 1 && level < 10) {
+    if (level >= 1 && level < TechList.MAX_TECH_LEVEL) {
       this.level = level;
     } else {
       this.level = 1;
@@ -75,7 +75,7 @@ public class TechListForLevel {
   public TechListForLevel(final int level, final TechType type,
       final DataInputStream dis) throws IOException {
     techList = new ArrayList<>();
-    if (level >= 1 && level < 10) {
+    if (level >= 1 && level < TechList.MAX_TECH_LEVEL) {
       this.level = level;
     } else {
       this.level = 1;
@@ -139,7 +139,7 @@ public class TechListForLevel {
 
   /**
    * Get Tech Level
-   * @return Level 1-10
+   * @return Level 1-20
    */
   public int getLevel() {
     return level;

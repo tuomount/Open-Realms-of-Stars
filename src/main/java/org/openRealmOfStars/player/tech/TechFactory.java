@@ -75,7 +75,7 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL5_NAMES = {"Laser Mk5",
       "Railgun Mk5", "Photon torpedo Mk5", "ECM torpedo Mk3", "HE missile Mk3",
-      "Orbital bombs Mk2", "Autocannon Mk1" };
+      "Chaingun Mk5" };
   /**
    * Rare combat tech names for level 5.
    */
@@ -84,21 +84,15 @@ public final class TechFactory {
   /**
    * Combat tech names for level 6
    */
-  public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
-      "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
-      "HE missile Mk4", "Orbital fusion bomb", "Autocannon Mk2" };
-  /**
-   * Rare combat tech names for level 6.
-   */
-  public static final String[] COMBAT_RARE_TECH_LEVEL6_NAMES = {
-      "Gravity ripper Mk1" };
+  public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Blue laser Mk1",
+      "Railgun Mk6", "Photon torpedo Mk6", "ECM torpedo Mk4",
+      "HE missile Mk4", "Autocannon Mk1", "Orbital bombs Mk2", };
   /**
    * Combat tech names for level 7
    */
-  public static final String[] COMBAT_TECH_LEVEL7_NAMES = {"Phasors Mk2",
-      "Massdrive Mk2", "Photon torpedo Mk7", "ECM torpedo Mk5",
-      "HE missile Mk5", "Shock trooper module", "Orbital antimatter bomb",
-      "Autocannon Mk3"};
+  public static final String[] COMBAT_TECH_LEVEL7_NAMES = {"Blue laser Mk2",
+      "Railgun Mk7", "Photon torpedo Mk7", "ECM torpedo Mk5",
+      "HE missile Mk5", "Shock trooper module", "Autocannon Mk2"};
   /**
    * Rare combat tech names for level 7.
    */
@@ -107,21 +101,15 @@ public final class TechFactory {
   /**
    * Combat tech names for level 8
    */
-  public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Phasors Mk3",
-      "Massdrive Mk3", "Photon torpedo Mk8", "ECM torpedo Mk6",
-      "HE missile Mk6", "Orbital smart bombs", "Callisto multicannon Mk1"};
-  /**
-   * Rare combat tech names for level 8.
-   */
-  public static final String[] COMBAT_RARE_TECH_LEVEL8_NAMES = {
-      "Gravity ripper Mk2" };
+  public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Blue laser Mk3",
+      "Railgun Mk8", "Photon torpedo Mk8", "ECM torpedo Mk6",
+      "HE missile Mk6", "Autocannon Mk3", "Orbital fusion bomb"};
   /**
    * Combat tech names for level 9
    */
   public static final String[] COMBAT_TECH_LEVEL9_NAMES = {
-      "Antimatter beam Mk1", "Massdrive Mk4", "Photon torpedo Mk9",
-      "ECM torpedo Mk7", "HE missile Mk7", "Orbital neutron bomb",
-      "Callisto multicannon Mk2"};
+      "Blue laser Mk4", "Railgun Mk8", "Photon torpedo Mk9",
+      "ECM torpedo Mk7", "HE missile Mk7", "Autocannon Mk4"};
   /**
    * Rare combat tech names for level 7.
    */
@@ -131,13 +119,102 @@ public final class TechFactory {
    * Combat tech names for level 10
    */
   public static final String[] COMBAT_TECH_LEVEL10_NAMES = {
-      "Antimatter beam Mk2", "Massdrive Mk5", "Photon torpedo Mk10",
-      "ECM torpedo Mk8", "HE missile Mk8", "Callisto multicannon Mk3" };
+      "Blue laser Mk5", "Railgun Mk10", "Photon torpedo Mk10",
+      "ECM torpedo Mk8", "HE missile Mk8", "Autocannon Mk5",
+      "Orbital bombs Mk3"};
   /**
    * Rare combat tech names for level 10.
    */
   public static final String[] COMBAT_RARE_TECH_LEVEL10_NAMES = {
+      "Gravity ripper Mk1" };
+  /**
+   * Combat tech names for level 11
+   */
+  public static final String[] COMBAT_TECH_LEVEL11_NAMES = {
+      "Phasors Mk1", "Massdrive Mk1", "Photon torpedo Mk11",
+      "Callisto multicannon Mk1", "ECM torpedo Mk9", "HE missile Mk9"};
+  /**
+   * Rare combat tech names for level 11.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL11_NAMES = {
+      "Ion cannon Mk5", "Plasma cannon Mk6"};
+  /**
+   * Combat tech names for level 12
+   */
+  public static final String[] COMBAT_TECH_LEVEL12_NAMES = {
+      "Phasors Mk2", "Massdrive Mk2", "Photon torpedo Mk12",
+      "Callisto multicannon Mk2", "ECM torpedo Mk10", "HE missile Mk10"};
+  /**
+   * Rare combat tech names for level 12.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL12_NAMES = {
+      "Gravity ripper Mk2" };
+
+  /**
+   * Combat tech names for level 13
+   */
+  public static final String[] COMBAT_TECH_LEVEL13_NAMES = {
+      "Phasors Mk3", "Massdrive Mk3", "Photon torpedo Mk13",
+      "Callisto multicannon Mk3", "ECM torpedo Mk11", "HE missile Mk11",
+      "Orbital smart bombs"};
+  /**
+   * Combat tech names for level 14
+   */
+  public static final String[] COMBAT_TECH_LEVEL14_NAMES = {
+      "Phasors Mk4", "Massdrive Mk4", "Photon torpedo Mk14",
+      "Callisto multicannon Mk4", "ECM torpedo Mk12", "HE missile Mk12"};
+  /**
+   * Combat tech names for level 15
+   */
+  public static final String[] COMBAT_TECH_LEVEL15_NAMES = {
+      "Phasors Mk5", "Massdrive Mk5", "Photon torpedo Mk15",
+      "Callisto multicannon Mk5", "ECM torpedo Mk13", "HE missile Mk13",
+      "Orbital neutron bomb"};
+  /**
+   * Rare combat tech names for level 15.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL15_NAMES = {
+      "Ion cannon Mk6", "Plasma cannon Mk7"};
+  /**
+   * Combat tech names for level 16
+   */
+  public static final String[] COMBAT_TECH_LEVEL16_NAMES = {
+      "Antimatter beam Mk1", "Massdrive Mk6", "Photon torpedo Mk16",
+      "Artemis fragcannon Mk1", "ECM torpedo Mk14", "HE missile Mk14"};
+  /**
+   * Rare combat tech names for level 16.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL16_NAMES = {
       "Gravity ripper Mk3" };
+  /**
+   * Combat tech names for level 17
+   */
+  public static final String[] COMBAT_TECH_LEVEL17_NAMES = {
+      "Antimatter beam Mk2", "Massdrive Mk7", "Photon torpedo Mk17",
+      "Artemis fragcannon Mk2", "ECM torpedo Mk15", "HE missile Mk15"};
+  /**
+   * Combat tech names for level 18
+   */
+  public static final String[] COMBAT_TECH_LEVEL18_NAMES = {
+      "Antimatter beam Mk3", "Massdrive Mk8", "Photon torpedo Mk18",
+      "Artemis fragcannon Mk3", "ECM torpedo Mk16", "HE missile Mk16"};
+  /**
+   * Rare combat tech names for level 18.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL18_NAMES = {
+      "Ion cannon Mk7", "Plasma cannon Mk8"};
+  /**
+   * Combat tech names for level 19
+   */
+  public static final String[] COMBAT_TECH_LEVEL19_NAMES = {
+      "Antimatter beam Mk4", "Massdrive Mk9", "Photon torpedo Mk19",
+      "Artemis fragcannon Mk4", "ECM torpedo Mk17", "HE missile Mk17"};
+  /**
+   * Combat tech names for level 20
+   */
+  public static final String[] COMBAT_TECH_LEVEL20_NAMES = {
+      "Antimatter beam Mk5", "Massdrive Mk10", "Photon torpedo Mk20",
+      "Artemis fragcannon Mk5", "ECM torpedo Mk18", "HE missile Mk18"};
 
   /**
    * Defense tech names for level 1
@@ -154,7 +231,7 @@ public final class TechFactory {
    * Defense tech names for level 3
    */
   public static final String[] DEFENSE_TECH_LEVEL3_NAMES = {"Shield Mk3",
-      "Armor plating Mk3", "Jammer Mk1", "Command outpost" };
+      "Armor plating Mk3", "Jammer Mk1", "Shadow armor Mk1" };
   /**
    * Defense rare tech names for level 3.
    */
@@ -164,7 +241,7 @@ public final class TechFactory {
    * Defense tech names for level 4
    */
   public static final String[] DEFENSE_TECH_LEVEL4_NAMES = {"Shield Mk4",
-      "Armor plating Mk4", "Shield generator Mk1", "Desert colonization" };
+      "Armor plating Mk4", "Command outpost", "Shadow shield Mk1" };
   /**
    * Defense rare tech names for level 4.
    */
@@ -174,13 +251,13 @@ public final class TechFactory {
    * Defense tech names for level 5
    */
   public static final String[] DEFENSE_TECH_LEVEL5_NAMES = {"Shield Mk5",
-      "Armor plating Mk5", "Planetary defense turret Mk2", "Jammer Mk2",
-      "Orbital elevator Mk2"};
+      "Armor plating Mk5", "Shield generator Mk1"};
   /**
    * Defense tech names for level 6
    */
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = {"Shield Mk6",
-      "Armor plating Mk6", "Space academy", "Volcanic colonization" };
+      "Armor plating Mk6", "Desert colonization",
+      "Planetary defense turret Mk2" };
   /**
    * Defense rare tech names for level 6.
    */
@@ -190,7 +267,7 @@ public final class TechFactory {
    * Defense tech names for level 7
    */
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
-      "Armor plating Mk7", "Jammer Mk3", "Command center" };
+      "Armor plating Mk7", "Jammer Mk2", "Shadow armor Mk2" };
   /**
    * Defense rare tech names for level 7.
    */
@@ -200,8 +277,8 @@ public final class TechFactory {
    * Defense tech names for level 8
    */
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = {"Shield Mk8",
-      "Armor plating Mk8", "Planetary defense turret Mk3",
-      "Orbital elevator Mk3"};
+      "Armor plating Mk8", "Shadow shield Mk2",
+      "Orbital elevator Mk2"};
   /**
    * Defense rare tech names for level 8.
    */
@@ -211,7 +288,7 @@ public final class TechFactory {
    * Defense tech names for level 9
    */
   public static final String[] DEFENSE_TECH_LEVEL9_NAMES = {"Shield Mk9",
-      "Armor plating Mk9", "Shield generator Mk2", "Orbital shield" };
+      "Armor plating Mk9", "Space academy", "Planetary defense turret Mk3" };
   /**
    * Defense rare tech names for level 9.
    */
@@ -221,7 +298,63 @@ public final class TechFactory {
    * Defense tech names for level 10
    */
   public static final String[] DEFENSE_TECH_LEVEL10_NAMES = {"Shield Mk10",
-      "Armor plating Mk10", "Jammer Mk4" };
+      "Armor plating Mk10", "Volcanic colonization", "Command center" };
+  /**
+   * Defense tech names for level 11
+   */
+  public static final String[] DEFENSE_TECH_LEVEL11_NAMES = {"Shield Mk11",
+      "Armor plating Mk11", "Jammer Mk3", "Shadow armor Mk3" };
+  /**
+   * Defense tech names for level 12
+   */
+  public static final String[] DEFENSE_TECH_LEVEL12_NAMES = {"Shield Mk12",
+      "Armor plating Mk12", "Orbital elevator Mk3",
+      "Planetary defense turret Mk4", "Shadow shield Mk3" };
+  /**
+   * Defense rare tech names for level 12.
+   */
+  public static final String[] DEFENSE_RARE_TECH_LEVEL12_NAMES = {
+      "Solar armor Mk4", "Organic armor Mk4"};
+  /**
+   * Defense tech names for level 13
+   */
+  public static final String[] DEFENSE_TECH_LEVEL13_NAMES = {"Shield Mk13",
+      "Armor plating Mk13", "Shield generator Mk2"};
+  /**
+   * Defense tech names for level 14
+   */
+  public static final String[] DEFENSE_TECH_LEVEL14_NAMES = {"Shield Mk14",
+      "Armor plating Mk14", "Jammer Mk4"};
+  /**
+   * Defense tech names for level 15
+   */
+  public static final String[] DEFENSE_TECH_LEVEL15_NAMES = {"Shield Mk15",
+      "Armor plating Mk15", "Orbital shield"};
+  /**
+   * Defense tech names for level 16
+   */
+  public static final String[] DEFENSE_TECH_LEVEL16_NAMES = {"Shield Mk16",
+      "Armor plating Mk16", "Jammer Mk5", "Shadow shield Mk4"};
+  /**
+   * Defense tech names for level 17
+   */
+  public static final String[] DEFENSE_TECH_LEVEL17_NAMES = {"Shield Mk17",
+      "Armor plating Mk17", "Shadow armor Mk4"};
+  /**
+   * Defense tech names for level 18
+   */
+  public static final String[] DEFENSE_TECH_LEVEL18_NAMES = {"Shield Mk18",
+      "Armor plating Mk18", "Jammer Mk6"};
+  /**
+   * Defense tech names for level 19
+   */
+  public static final String[] DEFENSE_TECH_LEVEL19_NAMES = {"Shield Mk19",
+      "Armor plating Mk19", "Shadow shield Mk5"};
+  /**
+   * Defense tech names for level 20
+   */
+  public static final String[] DEFENSE_TECH_LEVEL20_NAMES = {"Shield Mk20",
+      "Armor plating Mk20", "Shadow armor Mk5"};
 
   /**
    * Hull tech names for level 1
@@ -232,12 +365,12 @@ public final class TechFactory {
    * Hull tech names for level 2
    */
   public static final String[] HULL_TECH_LEVEL2_NAMES = {"Probe",
-      "Small freighter", "Small starbase Mk1", "Small orbital"};
+      "Small freighter Mk1", "Small starbase Mk1", "Small orbital"};
   /**
    * Hull tech names for level 3
    */
-  public static final String[] HULL_TECH_LEVEL3_NAMES = {"Destroyer Mk2",
-      "Corvette Mk1", "Small starbase Mk2", "Advanced colonization"};
+  public static final String[] HULL_TECH_LEVEL3_NAMES = {"Corvette Mk1",
+      "Advanced colonization", "Cargo bay"}; //, "Remote miner Mk1"}
   /**
    * Hull rare tech names for level 3.
    */
@@ -247,14 +380,15 @@ public final class TechFactory {
   /**
    * Hull tech names for level 4
    */
-  public static final String[] HULL_TECH_LEVEL4_NAMES = {"Medium freighter",
-      "Medium starbase", "Scout Mk2", "Fighter bay Mk1", "Medium orbital",
+  public static final String[] HULL_TECH_LEVEL4_NAMES = {"Medium freighter Mk1",
+      "Medium starbase Mk1", "Fighter bay Mk1", "Medium orbital",
       "Probe Mk2"};
   /**
    * Hull tech names for level 5
    */
-  public static final String[] HULL_TECH_LEVEL5_NAMES = {"Cruiser",
-      "Battleship Mk1", "Privateer Mk1", "Fighter bay Mk2", "Large orbital" };
+  public static final String[] HULL_TECH_LEVEL5_NAMES = {"Cruiser Mk1",
+      "Privateer Mk1", "Scout Mk2", "Small starbase Mk2",
+      "Small freighter Mk2"};
   /**
    * Hull rare tech names for level 5.
    */
@@ -263,52 +397,110 @@ public final class TechFactory {
   /**
    * Hull tech names for level 6
    */
-  public static final String[] HULL_TECH_LEVEL6_NAMES = {"Large freighter",
-      "Large starbase", "Corvette Mk2", "Artificial planet",
-      "Massive orbital", "Probe Mk3"};
+  public static final String[] HULL_TECH_LEVEL6_NAMES = {"Medium freighter Mk2",
+      "Corvette Mk2", "Probe Mk3", "Orbital station"};
   /**
    * Hull tech names for level 7
    */
   public static final String[] HULL_TECH_LEVEL7_NAMES = {"Battle cruiser Mk1",
-      "Privateer Mk2", "Scout Mk3", "Fighter bay Mk3" };
+      "Privateer Mk2", "Destroyer Mk2", "Fighter bay Mk2"};
+  //, "Remote miner Mk2" };
   /**
    * Hull rare tech names for level 7.
    */
   public static final String[] HULL_RARE_TECH_LEVEL7_NAMES = {
-      "Repair module Mk3"};
+      "Repair module Mk3", "Dimension cargo bay"};
   /**
    * Hull tech names for level 8
    */
-  public static final String[] HULL_TECH_LEVEL8_NAMES = {"Massive freighter",
-      "Massive starbase", "Destroyer Mk3", "Corvette Mk3" };
+  public static final String[] HULL_TECH_LEVEL8_NAMES = {"Large freighter Mk1",
+      "Battleship Mk1", "Cruiser Mk2", "Medium starbase Mk2" };
   /**
    * Hull tech names for level 9
    */
-  public static final String[] HULL_TECH_LEVEL9_NAMES = {"Battleship Mk2",
-      "Privateer Mk3", "Battle cruiser Mk2", "Scout Mk4", "Fighter bay Mk4" };
+  public static final String[] HULL_TECH_LEVEL9_NAMES = {"Scout Mk3",
+      "Large orbital", "Armored cargo bay"};
   /**
    * Hull tech names for level 10
    */
-  public static final String[] HULL_TECH_LEVEL10_NAMES = {"Capital ship",
-      "Destroyer Mk4", "Corvette Mk4" };
+  public static final String[] HULL_TECH_LEVEL10_NAMES = {"Large freighter Mk2",
+      "Corvette Mk3", "Destroyer Mk3", "Fighter bay Mk3"};
+  //, "Remote miner Mk3" };
+  /**
+   * Hull tech names for level 11
+   */
+  public static final String[] HULL_TECH_LEVEL11_NAMES = {"Galleon Mk1",
+      "Cruiser Mk3", "Large starbase Mk1"};
+  /**
+   * Hull rare tech names for level 11.
+   */
+  public static final String[] HULL_RARE_TECH_LEVEL11_NAMES = {
+      "Armored dimension cargo bay"};
+
+  /**
+   * Hull tech names for level 12
+   */
+  public static final String[] HULL_TECH_LEVEL12_NAMES = {"Battle cruiser Mk2",
+      "Large orbital station", "Medium starbase Mk3"};
+  /**
+   * Hull tech names for level 13
+   */
+  public static final String[] HULL_TECH_LEVEL13_NAMES = {"Battleship Mk2",
+      "Massive freighter Mk1", "Scout Mk4"};
+  /**
+   * Hull tech names for level 14
+   */
+  public static final String[] HULL_TECH_LEVEL14_NAMES = {"Corvette Mk3",
+      "Destroyer Mk3", "Fighter bay Mk4"};
+  //, "Remote miner Mk4" };
+  /**
+   * Hull tech names for level 15
+   */
+  public static final String[] HULL_TECH_LEVEL15_NAMES = {"Large starbase Mk2",
+      "Privateer Mk3", "Cruiser Mk4", "Artificial planet"};
+  /**
+   * Hull tech names for level 16
+   */
+  public static final String[] HULL_TECH_LEVEL16_NAMES = {"Massive orbital Mk1",
+      "Massive freigher Mk2", "Battle cruiser Mk3"};
+  /**
+   * Hull tech names for level 17
+   */
+  public static final String[] HULL_TECH_LEVEL17_NAMES = {"Galleon Mk2",
+      "Massive starbase Mk1", "Battleship Mk3"};
+  /**
+   * Hull tech names for level 18
+   */
+  public static final String[] HULL_TECH_LEVEL18_NAMES = {"Capital ship",
+      "Massive orbital Mk2"}; //, "Remote miner Mk5"};
+  /**
+   * Hull tech names for level 19
+   */
+  public static final String[] HULL_TECH_LEVEL19_NAMES = {"Death Moon",
+      "Massive starbase Mk2"};
+  /**
+   * Hull tech names for level 20
+   */
+  public static final String[] HULL_TECH_LEVEL20_NAMES = {
+      "Massive freighter Mk3", "Galleon Mk3"};
 
   /**
    * Planetary Improvement tech names for level 1
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL1_NAMES = {"Basic lab",
-      "Barracks", "Tax center" };
+      "Telescopes", "Tax center" };
   /**
    * Planetary Improvement tech names for level 2
    */
-  public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = {"Advanced farm",
-      "Advanced mine", "Advanced factory", "Starbase music hall", "Cyber lab",
-      "Advanced furnace", "Advanced reservoir"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = {"Improved farm",
+      "Barracks", "Culture center", "Cyber lab",
+      "Improved furnace", "Improved reservoir"};
   /**
    * Planetary Improvement tech names for level 3
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL3_NAMES = {
-      "Advanced laboratory", "Market center", "Culture center",
-      "Starbase market" };
+      "Improved mine", "Improved factory", "Market center",
+      "Starbase music hall" };
   /**
    * Planetary Improvement rare tech names for level 3
    */
@@ -319,8 +511,7 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 4
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
-      "Extreme sports center", "Recycle center", "Starbase lab",
-      "Swamp colonization"};
+      "Extreme sports center", "Improved laboratory", "Starbase market"};
   /**
    * Planetary Improvement rare tech names for level 4
    */
@@ -331,35 +522,33 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 5
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = {
-      "Farming center", "Mining center", "Manufacturing center",
-      "Radiation dampener", "Galactic sports center",
+      "Farming center", "Starbase lab", "Recycle center",
       "Collective research center", "Massive blast furnace",
       "Underground reservoir" };
   /**
    * Planetary Improvement tech names for level 6
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL6_NAMES = {
-      "Research center", "Stock market", "United Galaxy Tower",
-      "Starbase sports hall"};
+      "Mining center", "Manufacturing center", "Radiation dampener"};
   /**
    * Planetary Improvement tech names for level 7
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL7_NAMES = {
-      "New technology center", "VR movie center", "Advanced recycle center",
-      "Starbase nano lab", "Aquatic colonization"};
+      "Galactic sports center", "Research center", "Stock market",
+      "Starbase sports hall"};
 
   /**
    * Planetary Improvement tech names for level 8
    */
-  public static final String[] IMPROVEMENT_TECH_LEVEL8_NAMES = {"Galactic bank",
-      "Radiation well", "Starbase bank", "Orbital defense grid" };
+  public static final String[] IMPROVEMENT_TECH_LEVEL8_NAMES = {
+      "New technology center", "VR movie center", "Advanced recycle center",
+      "Starbase nano lab", "United Galaxy Tower" };
   /**
    * Planetary Improvement tech names for level 9
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL9_NAMES = {
-      "Hydropodic farming center", "Nanobot mining center",
-      "Nanobot manufacturing center", "Research matrix",
-      "Planetary furnace", "Crust reservoir"};
+      "Starbase bank", "Hydropodic farming center",
+      "Research matrix", "Planetary furnace", "Crust reservoir"};
   /**
    * Planetary Improvement rare tech names for level 9
    */
@@ -369,7 +558,67 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 10
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL10_NAMES = {
-      "Neural research center", "Super AI center", "Replicator center" };
+      "Galactic bank", "Culture complex", "Radiation well"};
+  //, "Mass relay Mk1"};
+  /**
+   * Planetary Improvement tech names for level 11
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL11_NAMES = {
+      "Advanced laboratory", "Nanobot mining center",
+      "Nanobot manufacturing center", "Swamp colonization",
+      "Galactic academy"};
+  /**
+   * Planetary Improvement tech names for level 12
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL12_NAMES = {
+      "Neural research center", "Super AI center",
+      "Advanced farm", "Advanced furnace", "Advanced reservoir"};
+  /**
+   * Planetary Improvement tech names for level 13
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL13_NAMES = {
+      "Advanced mine", "Advanced factory", "Aquatic colonization"};
+  //, "Mass relay Mk2"};
+  /**
+   * Planetary Improvement tech names for level 14
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL14_NAMES = {
+      "Radiation shield", "Replicator center", "Zero-G sports stadium"};
+  /**
+   * Planetary Improvement tech names for level 15
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL15_NAMES = {
+      "Zero-G research facility", "Ultimate laboratory"};
+  /**
+   * Planetary Improvement tech names for level 16
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL16_NAMES = {
+      "Zero-G credit facility", "Advanced culture complex"};
+  //, "Mass relay Mk3"};
+  /**
+   * Planetary Improvement tech names for level 17
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL17_NAMES = {
+      "Ultimate farm", "Ultimate furnace", "Ultimate reservoir"};
+  /**
+   * Planetary Improvement tech names for level 18
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL18_NAMES = {
+      // FIXME: This empty list could be problem...
+      };
+  //, "Mass relay Mk4"};
+  /**
+   * Planetary Improvement tech names for level 19
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL19_NAMES = {
+      "Ultimate mine", "Ultimate factory"};
+  /**
+   * Planetary Improvement tech names for level 20
+   */
+  public static final String[] IMPROVEMENT_TECH_LEVEL20_NAMES = {
+      "Utopic replicator center"
+      };
+  //, "Mass relay Mk5"};
 
   /**
    * Propulsion tech names for level 1
@@ -381,76 +630,126 @@ public final class TechFactory {
    * Propulsion tech names for level 2
    */
   public static final String[] PROPULSION_TECH_LEVEL2_NAMES = {"Ion drive Mk3",
-      "Hyper drive Mk1", "Fusion source Mk1" };
+      "Hyper drive Mk1"};
   /**
    * Propulsion tech names for level 3
    */
   public static final String[] PROPULSION_TECH_LEVEL3_NAMES = {"Warp drive Mk1",
-      "Nuclear drive Mk2", "Fusion source Mk2" };
+      "Hyper drive Mk2", "Fusion source Mk1" };
   /**
    * Propulsion tech names for level 4
    */
   public static final String[] PROPULSION_TECH_LEVEL4_NAMES = {"Warp drive Mk2",
-      "Hyper drive Mk2", "Tachyon source Mk1", "Combat thrusters" };
+      "Nuclear drive Mk2", "Fusion source Mk2", "Combat thrusters Mk1" };
   /**
    * Propulsion tech names for level 5
    */
   public static final String[] PROPULSION_TECH_LEVEL5_NAMES = {"Warp drive Mk3",
-      "Hyper drive Mk3", "Tachyon source Mk2", "Ice colonization" };
-  /**
-   * Propulsion rare tech names for level 5.
-   */
-  public static final String[] PROPULSION_RARE_TECH_LEVEL5_NAMES = {
-      "Tachyon source Mk3"};
+      "Hyper drive Mk3", "Fusion source Mk3"};
   /**
    * Propulsion tech names for level 6
    */
   public static final String[] PROPULSION_TECH_LEVEL6_NAMES = {"Warp drive Mk4",
-      "Hyper drive Mk4", "Nuclear drive Mk3", "Antimatter source Mk1",
-      "Combat thrusters Mk2"};
+      "Hyper drive Mk4", "Nuclear drive Mk3", "Combat thrusters Mk2"};
   /**
    * Propulsion tech names for level 7
    */
   public static final String[] PROPULSION_TECH_LEVEL7_NAMES = {"Warp drive Mk5",
-      "Hyper drive Mk5", "Impulse engine Mk1", "Material replicator" };
+      "Hyper drive Mk5", "Impulse engine Mk1", "Tachyon source Mk1" };
   /**
    * Propulsion tech names for level 8
    */
   public static final String[] PROPULSION_TECH_LEVEL8_NAMES = {"Warp drive Mk6",
-      "Hyper drive Mk6", "Impulse engine Mk2", "Antimatter source Mk2",
-      "Nuclear drive Mk4" };
-  /**
-   * Propulsion rare tech names for level 8.
-   */
-  public static final String[] PROPULSION_RARE_TECH_LEVEL8_NAMES = {
-      "Antimatter source Mk3"};
+      "Hyper drive Mk6", "Impulse engine Mk2", "Nuclear drive Mk4" };
   /**
    * Propulsion tech names for level 9
    */
   public static final String[] PROPULSION_TECH_LEVEL9_NAMES = {"Warp drive Mk7",
-      "Hyper drive Mk7", "Impulse engine Mk3", "Zero-point source Mk1" };
+      "Hyper drive Mk7", "Impulse engine Mk3", "Tachyon source Mk2",
+      "Ice colonization"};
   /**
    * Propulsion tech names for level 10
    */
   public static final String[] PROPULSION_TECH_LEVEL10_NAMES = {
       "Warp drive Mk8", "Hyper drive Mk8", "Impulse engine Mk4",
-      "Zero-point source Mk2" };
+      "Combat thrusters Mk3" };
   /**
    * Propulsion rare tech names for level 10.
    */
   public static final String[] PROPULSION_RARE_TECH_LEVEL10_NAMES = {
+      "Tachyon source Mk3"};
+  /**
+   * Propulsion tech names for level 11
+   */
+  public static final String[] PROPULSION_TECH_LEVEL11_NAMES = {
+      "Warp drive Mk9", "Hyper drive Mk9", "Impulse engine Mk5",
+      "Antimatter source Mk1" };
+  /**
+   * Propulsion tech names for level 12
+   */
+  public static final String[] PROPULSION_TECH_LEVEL12_NAMES = {
+      "Warp drive Mk10", "Hyper drive Mk10", "Combat thrusters Mk4" };
+  /**
+   * Propulsion tech names for level 13
+   */
+  public static final String[] PROPULSION_TECH_LEVEL13_NAMES = {
+      "Warp drive Mk11", "Hyper drive Mk11", "Antimatter source Mk2" };
+  /**
+   * Propulsion tech names for level 14
+   */
+  public static final String[] PROPULSION_TECH_LEVEL14_NAMES = {
+      "Impulse engine Mk6", "Combat thrusters Mk4"};
+  /**
+   * Propulsion rare tech names for level 14.
+   */
+  public static final String[] PROPULSION_RARE_TECH_LEVEL14_NAMES = {
+      "Antimatter source Mk3"};
+  /**
+   * Propulsion tech names for level 15
+   */
+  public static final String[] PROPULSION_TECH_LEVEL15_NAMES = {
+      "Impulse engine Mk7", "Zero-point source Mk1", "Material replicator"};
+  /**
+   * Propulsion tech names for level 16
+   */
+  public static final String[] PROPULSION_TECH_LEVEL16_NAMES = {
+      "Warp drive Mk12", "Hyper drive Mk12", "Zero-point source Mk2"};
+  /**
+   * Propulsion rare tech names for level 16.
+   */
+  public static final String[] PROPULSION_RARE_TECH_LEVEL16_NAMES = {
       "Zero-point source Mk3"};
+  /**
+   * Propulsion tech names for level 17
+   */
+  public static final String[] PROPULSION_TECH_LEVEL17_NAMES = {
+      "Impulse engine Mk8", "Dark matter source Mk1"};
+  /**
+   * Propulsion tech names for level 18
+   */
+  public static final String[] PROPULSION_TECH_LEVEL18_NAMES = {
+      "Warp drive Mk12", "Hyper drive Mk12", "Dark matter source Mk2"};
+  /**
+   * Propulsion tech names for level 19
+   */
+  public static final String[] PROPULSION_TECH_LEVEL19_NAMES = {
+      "Dark matter source Mk3"};
+  /**
+   * Propulsion tech names for level 20
+   */
+  public static final String[] PROPULSION_TECH_LEVEL20_NAMES = {
+      "Dark matter source Mk4"};
 
   /**
    * Electronics tech names for level 1
    */
   public static final String[] ELECTRONICS_TECH_LEVEL1_NAMES = {"Scanner Mk1",
-      "Planetary scanner Mk1", "Cloaking device Mk1" };
+      "Planetary scanner Mk1" };
   /**
    * Electronics tech names for level 2
    */
   public static final String[] ELECTRONICS_TECH_LEVEL2_NAMES = {
-      "Cloaking device Mk2", "Targeting computer Mk1", "Espionage module Mk1" };
+      "Cloaking device Mk1", "Targeting computer Mk1", "Espionage module Mk1" };
   /**
    * Electronics tech names for level 3
    */
@@ -466,7 +765,7 @@ public final class TechFactory {
    * Electronics tech names for level 4
    */
   public static final String[] ELECTRONICS_TECH_LEVEL4_NAMES = {
-      "Cloaking device Mk3", "Targeting computer Mk2", "LR scanner Mk1",
+      "Cloaking device Mk2", "Targeting computer Mk2", "LR scanner Mk1",
       "Broadcasting antenna"};
   /**
    * Electronics tech names for level 5
@@ -477,12 +776,12 @@ public final class TechFactory {
    * Electronics tech names for level 6
    */
   public static final String[] ELECTRONICS_TECH_LEVEL6_NAMES = {
-      "Cloaking device Mk4", "Targeting computer Mk3", "LR scanner Mk2" };
+      "Cloaking device Mk3", "Targeting computer Mk3", "LR scanner Mk2" };
   /**
    * Electronics tech names for level 7
    */
   public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = {"Scanner Mk4",
-      "Espionage module Mk4", "Deep space scanner" };
+      "Espionage module Mk4"};
   /**
    * Electronics rare tech names for level 7
    */
@@ -492,7 +791,7 @@ public final class TechFactory {
    * Electronics tech names for level 8
    */
   public static final String[] ELECTRONICS_TECH_LEVEL8_NAMES = {
-      "Cloaking device Mk5", "Planetary scanner Mk4", "LR scanner Mk3" };
+      "Cloaking device Mk4", "Planetary scanner Mk4", "LR scanner Mk3" };
 
   /**
    * Electronics tech names for level 9
@@ -503,7 +802,57 @@ public final class TechFactory {
    * Electronics tech names for level 10
    */
   public static final String[] ELECTRONICS_TECH_LEVEL10_NAMES = {
-      "Cloaking device Mk6", "Planetary scanner Mk5", "Espionage module Mk5" };
+      "Cloaking device Mk5", "Planetary scanner Mk5", "Espionage module Mk5" };
+  /**
+   * Electronics tech names for level 11
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL11_NAMES = {
+      "LR scanner Mk4" };
+  /**
+   * Electronics tech names for level 12
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL12_NAMES = {
+      "Scanner Mk5", "Planetary scanner Mk6", "Cloaking device Mk6" };
+  /**
+   * Electronics tech names for level 13
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL13_NAMES = {
+      "Espionage module Mk6", "Targeting computer Mk5"};
+  /**
+   * Electronics tech names for level 14
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL14_NAMES = {
+     "Planetary scanner Mk7", "Cloaking device Mk7" };
+  /**
+   * Electronics tech names for level 15
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL15_NAMES = {
+      "Scanner Mk6", "Deep space scanner"};
+  /**
+   * Electronics tech names for level 16
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL16_NAMES = {
+     "Planetary scanner Mk8", "Cloaking device Mk8" };
+  /**
+   * Electronics tech names for level 17
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL17_NAMES = {
+      "LR scanner Mk5" };
+  /**
+   * Electronics tech names for level 18
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL18_NAMES = {
+     "Planetary scanner Mk9", "Cloaking device Mk9" };
+  /**
+   * Electronics tech names for level 19
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL19_NAMES = {
+      "Scanner Mk7"};
+  /**
+   * Electronics tech names for level 20
+   */
+  public static final String[] ELECTRONICS_TECH_LEVEL20_NAMES = {
+     "Planetary scanner Mk10", "Cloaking device Mk10" };
 
   /**
    * Find technology with certain name.
@@ -568,16 +917,14 @@ public final class TechFactory {
           COMBAT_RARE_TECH_LEVEL5_NAMES);
       break;
     case 6:
-      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL6_NAMES,
-          COMBAT_RARE_TECH_LEVEL6_NAMES);
+      list = COMBAT_TECH_LEVEL6_NAMES;
       break;
     case 7:
       list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL7_NAMES,
           COMBAT_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
-      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL8_NAMES,
-          COMBAT_RARE_TECH_LEVEL8_NAMES);
+      list = COMBAT_TECH_LEVEL8_NAMES;
       break;
     case 9:
       list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL9_NAMES,
@@ -586,6 +933,41 @@ public final class TechFactory {
     case 10:
       list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL10_NAMES,
           COMBAT_RARE_TECH_LEVEL10_NAMES);
+      break;
+    case 11:
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL11_NAMES,
+          COMBAT_RARE_TECH_LEVEL11_NAMES);
+      break;
+    case 12:
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL12_NAMES,
+          COMBAT_RARE_TECH_LEVEL12_NAMES);
+      break;
+    case 13:
+      list = COMBAT_TECH_LEVEL13_NAMES;
+      break;
+    case 14:
+      list = COMBAT_TECH_LEVEL14_NAMES;
+      break;
+    case 15:
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL15_NAMES,
+          COMBAT_RARE_TECH_LEVEL15_NAMES);
+      break;
+    case 16:
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL16_NAMES,
+          COMBAT_RARE_TECH_LEVEL16_NAMES);
+      break;
+    case 17:
+      list = COMBAT_TECH_LEVEL17_NAMES;
+      break;
+    case 18:
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL18_NAMES,
+          COMBAT_RARE_TECH_LEVEL18_NAMES);
+      break;
+    case 19:
+      list = COMBAT_TECH_LEVEL19_NAMES;
+      break;
+    case 20:
+      list = COMBAT_TECH_LEVEL20_NAMES;
       break;
     default:
       return null;
@@ -596,7 +978,8 @@ public final class TechFactory {
         Tech tech = new Tech(techName, TechType.Combat, level);
         tech.setComponent(techName);
         if (techName.startsWith("Laser") || techName.startsWith("Phasor")
-            || techName.startsWith("Antimatter beam")) {
+            || techName.startsWith("Antimatter beam")
+            || techName.startsWith("Blue laser")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LASERGUN));
         } else if (techName.startsWith("Railgun")
             || techName.startsWith("Massdrive")) {
@@ -628,7 +1011,8 @@ public final class TechFactory {
           tech.setRareTech(true);
         } else if (techName.startsWith("Callisto multicannon")
             || techName.startsWith("Autocannon")
-            || techName.startsWith("Chaingun")) {
+            || techName.startsWith("Chaingun")
+            || techName.startsWith("Artemis fragcannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MULTI_CANNON));
           //TODO: Currently there is no reason to exclude railgun from
           //based on any traits. Maybe this could be randomize later
@@ -636,37 +1020,9 @@ public final class TechFactory {
         } else if (techName.startsWith("Ion cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setRareTech(true);
-          if (techName.equals("Ion cannon Mk1")) {
-            tech.setNextTechOnTree("Ion cannon Mk2");
-            tech.setNextTechLevel(5);
-          }
-          if (techName.equals("Ion cannon Mk2")) {
-            tech.setNextTechOnTree("Ion cannon Mk3");
-            tech.setNextTechLevel(7);
-          }
-          if (techName.equals("Ion cannon Mk3")) {
-            tech.setNextTechOnTree("Ion cannon Mk4");
-            tech.setNextTechLevel(9);
-          }
         } else if (techName.startsWith("Plasma cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLASMA_CANNON));
           tech.setRareTech(true);
-          if (techName.equals("Plasma cannon Mk1")) {
-            tech.setNextTechOnTree("Plasma cannon Mk2");
-            tech.setNextTechLevel(3);
-          }
-          if (techName.equals("Plasma cannon Mk2")) {
-            tech.setNextTechOnTree("Plasma cannon Mk3");
-            tech.setNextTechLevel(5);
-          }
-          if (techName.equals("Plasma cannon Mk3")) {
-            tech.setNextTechOnTree("Plasma cannon Mk4");
-            tech.setNextTechLevel(7);
-          }
-          if (techName.equals("Plasma cannon Mk4")) {
-            tech.setNextTechOnTree("Plasma cannon Mk5");
-            tech.setNextTechLevel(9);
-          }
         } else if (techName.startsWith("Gravity ripper")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_GRAVITY_RIPPER));
           tech.setRareTech(true);
@@ -724,6 +1080,37 @@ public final class TechFactory {
     case 10:
       list = DEFENSE_TECH_LEVEL10_NAMES;
       break;
+    case 11:
+      list = DEFENSE_TECH_LEVEL11_NAMES;
+      break;
+    case 12:
+      list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL12_NAMES,
+          DEFENSE_RARE_TECH_LEVEL12_NAMES);
+      break;
+    case 13:
+      list = DEFENSE_TECH_LEVEL13_NAMES;
+      break;
+    case 14:
+      list = DEFENSE_TECH_LEVEL14_NAMES;
+      break;
+    case 15:
+      list = DEFENSE_TECH_LEVEL15_NAMES;
+      break;
+    case 16:
+      list = DEFENSE_TECH_LEVEL16_NAMES;
+      break;
+    case 17:
+      list = DEFENSE_TECH_LEVEL17_NAMES;
+      break;
+    case 18:
+      list = DEFENSE_TECH_LEVEL18_NAMES;
+      break;
+    case 19:
+      list = DEFENSE_TECH_LEVEL19_NAMES;
+      break;
+    case 20:
+      list = DEFENSE_TECH_LEVEL20_NAMES;
+      break;
     default:
       return null;
     }
@@ -761,9 +1148,11 @@ public final class TechFactory {
         } else {
           tech.setComponent(techName);
         }
-        if (techName.startsWith("Shield")) {
+        if (techName.startsWith("Shield")
+            || techName.startsWith("Shadow shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
-        } else if (techName.startsWith("Armor plating")) {
+        } else if (techName.startsWith("Armor plating")
+            || techName.startsWith("Shadow armor")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ARMOR));
         } else if (techName.startsWith("Planetary defense turret Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
@@ -780,36 +1169,12 @@ public final class TechFactory {
         } else if (techName.startsWith("Solar armor")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_SOLAR_ARMOR));
             tech.setRareTech(true);
-            if (techName.equals("Solar armor Mk1")) {
-              tech.setNextTechOnTree("Solar armor Mk2");
-              tech.setNextTechLevel(6);
-            }
-            if (techName.equals("Solar armor Mk2")) {
-              tech.setNextTechOnTree("Solar armor Mk3");
-              tech.setNextTechLevel(9);
-            }
         } else if (techName.startsWith("Organic armor")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
           tech.setRareTech(true);
-          if (techName.equals("Organic armor Mk1")) {
-            tech.setNextTechOnTree("Organic armor Mk2");
-            tech.setNextTechLevel(6);
-          }
-          if (techName.equals("Organic armor Mk2")) {
-            tech.setNextTechOnTree("Organic armor Mk3");
-            tech.setNextTechLevel(8);
-          }
       } else if (techName.startsWith("Distortion shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DISTORTION_SHIELD));
           tech.setRareTech(true);
-          if (techName.equals("Distortion shield Mk1")) {
-            tech.setNextTechOnTree("Distortion shield Mk2");
-            tech.setNextTechLevel(6);
-          }
-          if (techName.equals("Distortion shield Mk2")) {
-            tech.setNextTechOnTree("Distortion shield Mk3");
-            tech.setNextTechLevel(8);
-          }
         } else if (techName.equals("Multi-dimension shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MULTIDIMENSION_SHIELD));
           tech.setRareTech(true);
@@ -864,6 +1229,37 @@ public final class TechFactory {
     case 10:
       list = HULL_TECH_LEVEL10_NAMES;
       break;
+    case 11:
+      list = TextUtilities.concanateStringArrays(HULL_TECH_LEVEL11_NAMES,
+          HULL_RARE_TECH_LEVEL11_NAMES);
+      break;
+    case 12:
+      list = HULL_TECH_LEVEL12_NAMES;
+      break;
+    case 13:
+      list = HULL_TECH_LEVEL13_NAMES;
+      break;
+    case 14:
+      list = HULL_TECH_LEVEL14_NAMES;
+      break;
+    case 15:
+      list = HULL_TECH_LEVEL15_NAMES;
+      break;
+    case 16:
+      list = HULL_TECH_LEVEL16_NAMES;
+      break;
+    case 17:
+      list = HULL_TECH_LEVEL17_NAMES;
+      break;
+    case 18:
+      list = HULL_TECH_LEVEL18_NAMES;
+      break;
+    case 19:
+      list = HULL_TECH_LEVEL19_NAMES;
+      break;
+    case 20:
+      list = HULL_TECH_LEVEL20_NAMES;
+      break;
     default:
       return null;
     }
@@ -879,8 +1275,9 @@ public final class TechFactory {
           tech.setTradeable(false);
           return tech;
         } else if (techName.equals("Minor orbital")
-            || techName.equals("Large orbital")
-            || techName.equals("Massive orbital")) {
+            || techName.equals("Death Moon")
+            || techName.equals("Large orbital station")
+            || techName.equals("Orbital station")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
           tech.setTradeable(false);
           tech.setExcludeList(false);
@@ -895,7 +1292,8 @@ public final class TechFactory {
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
         }
-        if (techName.startsWith("Privateer Mk")) {
+        if (techName.startsWith("Privateer Mk")
+            || techName.startsWith("Galleon Mk")) {
           tech.setComponent("Privateer module");
           tech.setHull(techName);
         } else if (techName.startsWith("Colony")) {
@@ -914,6 +1312,10 @@ public final class TechFactory {
           tech.setExcludeList(false);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.SPORE_COLONIZATION));
+        } else if (techName.startsWith("Cargo bay")
+            || techName.startsWith("Armored cargo bay")) {
+          tech.setComponent(techName);
+          tech.setIcon(Icons.getIconByName(Icons.ICON_CLOSED));
         } else if (techName.startsWith("Fighter bay Mk")) {
           tech.setComponent(techName);
         } else if (techName.startsWith("Repair module Mk")) {
@@ -971,6 +1373,36 @@ public final class TechFactory {
     case 10:
       list = IMPROVEMENT_TECH_LEVEL10_NAMES;
       break;
+    case 11:
+      list = IMPROVEMENT_TECH_LEVEL11_NAMES;
+      break;
+    case 12:
+      list = IMPROVEMENT_TECH_LEVEL12_NAMES;
+      break;
+    case 13:
+      list = IMPROVEMENT_TECH_LEVEL13_NAMES;
+      break;
+    case 14:
+      list = IMPROVEMENT_TECH_LEVEL14_NAMES;
+      break;
+    case 15:
+      list = IMPROVEMENT_TECH_LEVEL15_NAMES;
+      break;
+    case 16:
+      list = IMPROVEMENT_TECH_LEVEL16_NAMES;
+      break;
+    case 17:
+      list = IMPROVEMENT_TECH_LEVEL17_NAMES;
+      break;
+    case 18:
+      list = IMPROVEMENT_TECH_LEVEL18_NAMES;
+      break;
+    case 19:
+      list = IMPROVEMENT_TECH_LEVEL19_NAMES;
+      break;
+    case 20:
+      list = IMPROVEMENT_TECH_LEVEL20_NAMES;
+      break;
     default:
       return null;
     }
@@ -990,7 +1422,8 @@ public final class TechFactory {
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
-        } else if (techName.startsWith("Starbase")) {
+        } else if (techName.startsWith("Starbase")
+            || techName.startsWith("Zero-G")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else if (techName.startsWith("Deadly virus")) {
@@ -998,10 +1431,13 @@ public final class TechFactory {
           tech.setRareTech(true);
         } else {
           tech.setImprovement(techName);
-          if (techName.startsWith("Barracks")) {
+          if (techName.startsWith("Barracks")
+              || techName.startsWith("Galactic academy")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
           } else if (techName.startsWith("Basic lab")
               || techName.startsWith("Advanced laboratory")
+              || techName.startsWith("Improved laboratory")
+              || techName.startsWith("Ultimate laboratory")
               || techName.startsWith("Research center")
               || techName.startsWith("New technology center")
               || techName.startsWith("Neural research center")
@@ -1022,7 +1458,9 @@ public final class TechFactory {
               || techName.startsWith("Stock market")
               || techName.startsWith("Galactic bank")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_CREDIT));
-          } else if (techName.startsWith("Advanced farm")) {
+          } else if (techName.startsWith("Advanced farm")
+              || techName.startsWith("Improved farm")
+              || techName.startsWith("Ultimate farm")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
             tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
@@ -1049,6 +1487,8 @@ public final class TechFactory {
                 TraitIds.ROBOTIC, TraitIds.CYBORG_LIFE_SPAN));
             tech.setTradeable(false);
           } else if (techName.startsWith("Advanced furnace")
+              || techName.startsWith("Improved furnace")
+              || techName.startsWith("Ultimate furnace")
               || techName.startsWith("Massive blast furnace")
               || techName.startsWith("Planetary furnace")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_METAL));
@@ -1059,6 +1499,8 @@ public final class TechFactory {
             // but they can trade it to others if they wish.
             tech.setRareTech(true);
           } else if (techName.startsWith("Advanced reservoir")
+              || techName.startsWith("Improved reservoir")
+              || techName.startsWith("Ultimate reservoir")
               || techName.startsWith("Underground reservoir")
               || techName.startsWith("Crust reservoir")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
@@ -1068,16 +1510,22 @@ public final class TechFactory {
                 TraitIds.PHOTOSYNTHESIS));
             tech.setRareTech(true);
           } else if (techName.startsWith("Advanced mine")
+              || techName.startsWith("Improved mine")
+              || techName.startsWith("Ultimate mine")
               || techName.startsWith("Mining center")
               || techName.startsWith("Nanobot mining center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_MINE));
           } else if (techName.startsWith("Advanced factory")
+              || techName.startsWith("Improved factory")
+              || techName.startsWith("Ultimate factory")
               || techName.startsWith("Manufacturing center")
               || techName.startsWith("Nanobot manufacturing center")
               || techName.startsWith("Replicator center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FACTORY));
           } else if (techName.startsWith("Culture center")
               || techName.startsWith("Extreme sports center")
+              || techName.startsWith("Culture complex")
+              || techName.startsWith("Advanced culture complex")
               || techName.startsWith("Galactic sports center")
               || techName.startsWith("VR movie center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_CULTURE));
@@ -1115,8 +1563,7 @@ public final class TechFactory {
       list = PROPULSION_TECH_LEVEL4_NAMES;
       break;
     case 5:
-      list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL5_NAMES,
-          PROPULSION_RARE_TECH_LEVEL5_NAMES);
+      list = PROPULSION_TECH_LEVEL5_NAMES;
       break;
     case 6:
       list = PROPULSION_TECH_LEVEL6_NAMES;
@@ -1125,8 +1572,7 @@ public final class TechFactory {
       list = PROPULSION_TECH_LEVEL7_NAMES;
       break;
     case 8:
-      list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL8_NAMES,
-          PROPULSION_RARE_TECH_LEVEL8_NAMES);
+      list = PROPULSION_TECH_LEVEL8_NAMES;
       break;
     case 9:
       list = PROPULSION_TECH_LEVEL9_NAMES;
@@ -1134,6 +1580,38 @@ public final class TechFactory {
     case 10:
       list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL10_NAMES,
           PROPULSION_RARE_TECH_LEVEL10_NAMES);
+      break;
+    case 11:
+      list = PROPULSION_TECH_LEVEL11_NAMES;
+      break;
+    case 12:
+      list = PROPULSION_TECH_LEVEL12_NAMES;
+      break;
+    case 13:
+      list = PROPULSION_TECH_LEVEL13_NAMES;
+      break;
+    case 14:
+      list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL14_NAMES,
+          PROPULSION_RARE_TECH_LEVEL14_NAMES);
+      break;
+    case 15:
+      list = PROPULSION_TECH_LEVEL15_NAMES;
+      break;
+    case 16:
+      list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL16_NAMES,
+          PROPULSION_RARE_TECH_LEVEL16_NAMES);
+      break;
+    case 17:
+      list = PROPULSION_TECH_LEVEL17_NAMES;
+      break;
+    case 18:
+      list = PROPULSION_TECH_LEVEL18_NAMES;
+      break;
+    case 19:
+      list = PROPULSION_TECH_LEVEL19_NAMES;
+      break;
+    case 20:
+      list = PROPULSION_TECH_LEVEL20_NAMES;
       break;
     default:
       return null;
@@ -1211,6 +1689,36 @@ public final class TechFactory {
       break;
     case 10:
       list = ELECTRONICS_TECH_LEVEL10_NAMES;
+      break;
+    case 11:
+      list = ELECTRONICS_TECH_LEVEL11_NAMES;
+      break;
+    case 12:
+      list = ELECTRONICS_TECH_LEVEL12_NAMES;
+      break;
+    case 13:
+      list = ELECTRONICS_TECH_LEVEL13_NAMES;
+      break;
+    case 14:
+      list = ELECTRONICS_TECH_LEVEL14_NAMES;
+      break;
+    case 15:
+      list = ELECTRONICS_TECH_LEVEL15_NAMES;
+      break;
+    case 16:
+      list = ELECTRONICS_TECH_LEVEL16_NAMES;
+      break;
+    case 17:
+      list = ELECTRONICS_TECH_LEVEL17_NAMES;
+      break;
+    case 18:
+      list = ELECTRONICS_TECH_LEVEL18_NAMES;
+      break;
+    case 19:
+      list = ELECTRONICS_TECH_LEVEL19_NAMES;
+      break;
+    case 20:
+      list = ELECTRONICS_TECH_LEVEL20_NAMES;
       break;
     default:
       return null;
@@ -1434,35 +1942,75 @@ public final class TechFactory {
   /**
    * Tech 4 Level cost
    */
-  private static final int TECH_4_LEVEL_RP_COST = 18;
+  private static final int TECH_4_LEVEL_RP_COST = 14;
   /**
    * Tech 5 Level cost
    */
-  private static final int TECH_5_LEVEL_RP_COST = 25;
+  private static final int TECH_5_LEVEL_RP_COST = 19;
   /**
    * Tech 6 Level cost
    */
-  private static final int TECH_6_LEVEL_RP_COST = 40;
+  private static final int TECH_6_LEVEL_RP_COST = 25;
   /**
    * Tech 7 Level cost
    */
-  private static final int TECH_7_LEVEL_RP_COST = 60;
+  private static final int TECH_7_LEVEL_RP_COST = 33;
   /**
    * Tech 8 Level cost
    */
-  private static final int TECH_8_LEVEL_RP_COST = 84;
+  private static final int TECH_8_LEVEL_RP_COST = 42;
   /**
    * Tech 9 Level cost
    */
-  private static final int TECH_9_LEVEL_RP_COST = 104;
+  private static final int TECH_9_LEVEL_RP_COST = 50;
   /**
    * Tech 10 Level cost
    */
-  private static final int TECH_10_LEVEL_RP_COST = 130;
+  private static final int TECH_10_LEVEL_RP_COST = 59;
+  /**
+   * Tech 11 Level cost
+   */
+  private static final int TECH_11_LEVEL_RP_COST = 69;
+  /**
+   * Tech 12 Level cost
+   */
+  private static final int TECH_12_LEVEL_RP_COST = 81;
+  /**
+   * Tech 13 Level cost
+   */
+  private static final int TECH_13_LEVEL_RP_COST = 94;
+  /**
+   * Tech 14 Level cost
+   */
+  private static final int TECH_14_LEVEL_RP_COST = 108;
+  /**
+   * Tech 15 Level cost
+   */
+  private static final int TECH_15_LEVEL_RP_COST = 123;
+  /**
+   * Tech 16 Level cost
+   */
+  private static final int TECH_16_LEVEL_RP_COST = 139;
+  /**
+   * Tech 17 Level cost
+   */
+  private static final int TECH_17_LEVEL_RP_COST = 156;
+  /**
+   * Tech 18 Level cost
+   */
+  private static final int TECH_18_LEVEL_RP_COST = 174;
+  /**
+   * Tech 19 Level cost
+   */
+  private static final int TECH_19_LEVEL_RP_COST = 193;
+  /**
+   * Tech 20 Level cost
+   */
+  private static final int TECH_20_LEVEL_RP_COST = 213;
   /**
    * Tech FUTURE Level cost
    */
-  private static final int TECH_FUTURE_LEVEL_RP_COST = 168;
+  private static final int TECH_FUTURE_LEVEL_RP_COST = 238;
 
   /**
    * If list contains tech with certain name.
@@ -1568,6 +2116,122 @@ public final class TechFactory {
     }
     return null;
   }
+
+  /**
+   * Get All Rare tech names for certain type and level.
+   * This are in separate list, but no easy way to fetch them
+   * So creating a helper method for doing that.
+   *
+   * @param type TechType
+   * @param level Tech Level
+   * @return All rare techs on that type and level or empty list.
+   */
+  public static String[] getAllRareTechNames(final TechType type,
+      final int level) {
+    if (type == TechType.Combat) {
+      if (level == 2) {
+        return COMBAT_RARE_TECH_LEVEL2_NAMES;
+      }
+      if (level == 3) {
+        return COMBAT_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 5) {
+        return COMBAT_RARE_TECH_LEVEL5_NAMES;
+      }
+      if (level == 7) {
+        return COMBAT_RARE_TECH_LEVEL7_NAMES;
+      }
+      if (level == 9) {
+        return COMBAT_RARE_TECH_LEVEL9_NAMES;
+      }
+      if (level == 10) {
+        return COMBAT_RARE_TECH_LEVEL10_NAMES;
+      }
+      if (level == 11) {
+        return COMBAT_RARE_TECH_LEVEL11_NAMES;
+      }
+      if (level == 12) {
+        return COMBAT_RARE_TECH_LEVEL12_NAMES;
+      }
+      if (level == 15) {
+        return COMBAT_RARE_TECH_LEVEL15_NAMES;
+      }
+      if (level == 16) {
+        return COMBAT_RARE_TECH_LEVEL16_NAMES;
+      }
+      if (level == 18) {
+        return COMBAT_RARE_TECH_LEVEL18_NAMES;
+      }
+    }
+    if (type == TechType.Defense) {
+      if (level == 3) {
+        return DEFENSE_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 4) {
+        return DEFENSE_RARE_TECH_LEVEL4_NAMES;
+      }
+      if (level == 6) {
+        return DEFENSE_RARE_TECH_LEVEL6_NAMES;
+      }
+      if (level == 7) {
+        return DEFENSE_RARE_TECH_LEVEL7_NAMES;
+      }
+      if (level == 8) {
+        return DEFENSE_RARE_TECH_LEVEL8_NAMES;
+      }
+      if (level == 9) {
+        return DEFENSE_RARE_TECH_LEVEL9_NAMES;
+      }
+      if (level == 12) {
+        return DEFENSE_RARE_TECH_LEVEL12_NAMES;
+      }
+    }
+    if (type == TechType.Hulls) {
+      if (level == 3) {
+        return HULL_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 5) {
+        return HULL_RARE_TECH_LEVEL5_NAMES;
+      }
+      if (level == 7) {
+        return HULL_RARE_TECH_LEVEL7_NAMES;
+      }
+      if (level == 11) {
+        return HULL_RARE_TECH_LEVEL11_NAMES;
+      }
+    }
+    if (type == TechType.Improvements) {
+      if (level == 3) {
+        return IMPROVEMENT_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 4) {
+        return IMPROVEMENT_RARE_TECH_LEVEL4_NAMES;
+      }
+      if (level == 9) {
+        return IMPROVEMENT_RARE_TECH_LEVEL9_NAMES;
+      }
+    }
+    if (type == TechType.Propulsion) {
+      if (level == 10) {
+        return PROPULSION_RARE_TECH_LEVEL10_NAMES;
+      }
+      if (level == 14) {
+        return PROPULSION_RARE_TECH_LEVEL14_NAMES;
+      }
+      if (level == 16) {
+        return PROPULSION_RARE_TECH_LEVEL16_NAMES;
+      }
+    }
+    if (type == TechType.Electrics) {
+      if (level == 3) {
+        return ELECTRONICS_RARE_TECH_LEVEL3_NAMES;
+      }
+      if (level == 7) {
+        return ELECTRONICS_RARE_TECH_LEVEL7_NAMES;
+      }
+    }
+    return new String[0];
+  }
   /**
    * Get tech level cost as research points
    * @param level Level to research
@@ -1581,45 +2245,50 @@ public final class TechFactory {
     int lowBonus = 0;
     int mediumBonus = 0;
     int highBonus = 0;
+    int veryHighBonus = 0;
     if (gameLength <= 200) {
+      veryveryLowBonus = -2;
+      veryLowBonus = -5;
+      lowBonus = -7;
+      mediumBonus = -15;
+      highBonus = -25;
+      veryHighBonus = -43;
+    } else if (gameLength <= 300) {
       veryveryLowBonus = 0;
       veryLowBonus = -2;
       lowBonus = -5;
-      mediumBonus = -10;
+      mediumBonus = -7;
       highBonus = -15;
-    } else if (gameLength <= 300) {
+      veryHighBonus = -25;
+    } else if (gameLength <= 400) {
+      veryveryLowBonus = 0;
+      veryLowBonus = 0;
+      lowBonus = -2;
+      mediumBonus = -5;
+      highBonus = -7;
+      veryHighBonus = -15;
+    } else if (gameLength <= 600) {
       veryveryLowBonus = 0;
       veryLowBonus = 0;
       lowBonus = 0;
       mediumBonus = 0;
       highBonus = 0;
-    } else if (gameLength <= 400) {
-      veryveryLowBonus = 0;
-      veryLowBonus = 0;
-      lowBonus = 2;
-      mediumBonus = 5;
-      highBonus = 8;
-    } else if (gameLength <= 600) {
-      multiplier = 2;
-      veryveryLowBonus = -2;
-      veryLowBonus = 2;
-      lowBonus = 8;
-      mediumBonus = 16;
-      highBonus = 32;
     } else if (gameLength <= 800) {
       multiplier = 2;
-      veryveryLowBonus = 2;
-      veryLowBonus = 4;
-      lowBonus = 16;
-      mediumBonus = 32;
-      highBonus = 64;
+      veryveryLowBonus = 0;
+      veryLowBonus = 2;
+      lowBonus = 3;
+      mediumBonus = 6;
+      highBonus = 12;
+      veryHighBonus = 15;
     } else if (gameLength <= 1000) {
-      multiplier = 3;
-      veryveryLowBonus = -2;
-      veryLowBonus = 10;
-      lowBonus = 32;
-      mediumBonus = 64;
-      highBonus = 128;
+      multiplier = 2;
+      veryveryLowBonus = 2;
+      veryLowBonus = 5;
+      lowBonus = 9;
+      mediumBonus = 13;
+      highBonus = 23;
+      veryHighBonus = 27;
     }
     switch (level) {
     case 1:
@@ -1627,23 +2296,43 @@ public final class TechFactory {
     case 2:
       return TECH_2_LEVEL_RP_COST * multiplier + veryveryLowBonus;
     case 3:
-      return TECH_3_LEVEL_RP_COST * multiplier + veryLowBonus;
+      return TECH_3_LEVEL_RP_COST * multiplier + veryveryLowBonus;
     case 4:
-      return TECH_4_LEVEL_RP_COST * multiplier + veryLowBonus;
+      return TECH_4_LEVEL_RP_COST * multiplier + veryveryLowBonus;
     case 5:
-      return TECH_5_LEVEL_RP_COST * multiplier + lowBonus;
+      return TECH_5_LEVEL_RP_COST * multiplier + veryLowBonus;
     case 6:
-      return TECH_6_LEVEL_RP_COST * multiplier + lowBonus;
+      return TECH_6_LEVEL_RP_COST * multiplier + veryLowBonus;
     case 7:
-      return TECH_7_LEVEL_RP_COST * multiplier + mediumBonus;
+      return TECH_7_LEVEL_RP_COST * multiplier + veryLowBonus;
     case 8:
-      return TECH_8_LEVEL_RP_COST * multiplier + mediumBonus;
+      return TECH_8_LEVEL_RP_COST * multiplier + lowBonus;
     case 9:
-      return TECH_9_LEVEL_RP_COST * multiplier + highBonus;
+      return TECH_9_LEVEL_RP_COST * multiplier + lowBonus;
     case 10:
-      return TECH_10_LEVEL_RP_COST * multiplier + highBonus;
+      return TECH_10_LEVEL_RP_COST * multiplier + mediumBonus;
+    case 11:
+      return TECH_11_LEVEL_RP_COST * multiplier + mediumBonus;
+    case 12:
+      return TECH_12_LEVEL_RP_COST * multiplier + mediumBonus;
+    case 13:
+      return TECH_13_LEVEL_RP_COST * multiplier + mediumBonus;
+    case 14:
+      return TECH_14_LEVEL_RP_COST * multiplier + highBonus;
+    case 15:
+      return TECH_15_LEVEL_RP_COST * multiplier + highBonus;
+    case 16:
+      return TECH_16_LEVEL_RP_COST * multiplier + highBonus;
+    case 17:
+      return TECH_17_LEVEL_RP_COST * multiplier + highBonus;
+    case 18:
+      return TECH_18_LEVEL_RP_COST * multiplier + veryHighBonus;
+    case 19:
+      return TECH_19_LEVEL_RP_COST * multiplier + veryHighBonus;
+    case 20:
+      return TECH_20_LEVEL_RP_COST * multiplier + veryHighBonus;
     default:
-      return TECH_FUTURE_LEVEL_RP_COST * multiplier + highBonus;
+      return TECH_FUTURE_LEVEL_RP_COST * multiplier + veryHighBonus;
     }
   }
 
@@ -1691,8 +2380,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = COMBAT_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = COMBAT_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = COMBAT_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = COMBAT_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = COMBAT_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = COMBAT_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = COMBAT_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = COMBAT_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = COMBAT_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = COMBAT_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = COMBAT_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Defense:
@@ -1727,8 +2446,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = DEFENSE_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = DEFENSE_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = DEFENSE_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = DEFENSE_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = DEFENSE_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = DEFENSE_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = DEFENSE_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = DEFENSE_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = DEFENSE_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = DEFENSE_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = DEFENSE_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Hulls:
@@ -1763,8 +2512,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = HULL_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = HULL_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = HULL_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = HULL_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = HULL_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = HULL_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = HULL_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = HULL_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = HULL_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = HULL_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = HULL_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Improvements:
@@ -1799,8 +2578,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = IMPROVEMENT_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = IMPROVEMENT_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Propulsion:
@@ -1835,8 +2644,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = PROPULSION_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = PROPULSION_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = PROPULSION_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = PROPULSION_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = PROPULSION_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = PROPULSION_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = PROPULSION_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = PROPULSION_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = PROPULSION_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = PROPULSION_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = PROPULSION_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     case Electrics:
@@ -1871,8 +2710,38 @@ public final class TechFactory {
       case 10:
         possibleTechs = ELECTRONICS_TECH_LEVEL10_NAMES;
         break;
+      case 11:
+        possibleTechs = ELECTRONICS_TECH_LEVEL11_NAMES;
+        break;
+      case 12:
+        possibleTechs = ELECTRONICS_TECH_LEVEL12_NAMES;
+        break;
+      case 13:
+        possibleTechs = ELECTRONICS_TECH_LEVEL13_NAMES;
+        break;
+      case 14:
+        possibleTechs = ELECTRONICS_TECH_LEVEL14_NAMES;
+        break;
+      case 15:
+        possibleTechs = ELECTRONICS_TECH_LEVEL15_NAMES;
+        break;
+      case 16:
+        possibleTechs = ELECTRONICS_TECH_LEVEL16_NAMES;
+        break;
+      case 17:
+        possibleTechs = ELECTRONICS_TECH_LEVEL17_NAMES;
+        break;
+      case 18:
+        possibleTechs = ELECTRONICS_TECH_LEVEL18_NAMES;
+        break;
+      case 19:
+        possibleTechs = ELECTRONICS_TECH_LEVEL19_NAMES;
+        break;
+      case 20:
+        possibleTechs = ELECTRONICS_TECH_LEVEL20_NAMES;
+        break;
       default:
-        throw new IllegalArgumentException("Tech level is beyond 10!");
+        throw new IllegalArgumentException("Tech level is beyond 20!");
       }
       break;
     default:

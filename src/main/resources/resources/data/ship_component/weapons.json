@@ -1,0 +1,1379 @@
+[
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk1",
+    "cost": 6,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 1,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk2",
+    "cost": 6,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk3",
+    "cost": 6,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "damage": 3,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk4",
+    "cost": 7,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "damage": 4,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Laser Mk5",
+    "cost": 8,
+    "metalCost": 3,
+    "energyRequirement": 2,
+    "damage": 5,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk1",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 6,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk2",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 7,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk3",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 8,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk4",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 9,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Blue laser Mk5",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 10,
+    "weaponRange": 1
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk1",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 11,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk2",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 12,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk3",
+    "cost": 9,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 13,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk4",
+    "cost": 10,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 14,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Phasors Mk5",
+    "cost": 11,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 15,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk1",
+    "cost": 10,
+    "metalCost": 4,
+    "energyRequirement": 4,
+    "damage": 16,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk2",
+    "cost": 11,
+    "metalCost": 4,
+    "energyRequirement": 4,
+    "damage": 17,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk3",
+    "cost": 12,
+    "metalCost": 4,
+    "energyRequirement": 4,
+    "damage": 18,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk4",
+    "cost": 13,
+    "metalCost": 4,
+    "energyRequirement": 5,
+    "damage": 19,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_BEAM",
+    "name": "Antimatter beam Mk5",
+    "cost": 14,
+    "metalCost": 5,
+    "energyRequirement": 5,
+    "damage": 20,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk1",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 1,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk2",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk3",
+    "cost": 7,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 3,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk4",
+    "cost": 7,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 4,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk5",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 5,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk6",
+    "cost": 9,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 6,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk7",
+    "cost": 9,
+    "metalCost": 4,
+    "energyRequirement": 3,
+    "damage": 7,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk8",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 8,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk9",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 9,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk10",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 10,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk11",
+    "cost": 8,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 11,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk12",
+    "cost": 9,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 12,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk13",
+    "cost": 10,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 13,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk14",
+    "cost": 10,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 14,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk15",
+    "cost": 11,
+    "metalCost": 6,
+    "energyRequirement": 4,
+    "damage": 15,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk16",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 16,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk17",
+    "cost": 9,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 17,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk18",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 4,
+    "damage": 18,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk19",
+    "cost": 10,
+    "metalCost": 5,
+    "energyRequirement": 5,
+    "damage": 19,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_PHOTON_TORPEDO",
+    "name": "Photon torpedo Mk20",
+    "cost": 11,
+    "metalCost": 5,
+    "energyRequirement": 5,
+    "damage": 20,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk1",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 1,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk2",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk3",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 3,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk4",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 4,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk5",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 2,
+    "damage": 5,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk6",
+    "cost": 6,
+    "metalCost": 5,
+    "energyRequirement": 3,
+    "damage": 6,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk7",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 7,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk8",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 2,
+    "damage": 8,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk9",
+    "cost": 5,
+    "metalCost": 7,
+    "energyRequirement": 2,
+    "damage": 9,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Railgun Mk10",
+    "cost": 5,
+    "metalCost": 7,
+    "energyRequirement": 2,
+    "damage": 10,
+    "weaponRange": 2
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk1",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 11,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk2",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 12,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk3",
+    "cost": 7,
+    "metalCost": 7,
+    "energyRequirement": 3,
+    "damage": 13,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk4",
+    "cost": 7,
+    "metalCost": 7,
+    "energyRequirement": 3,
+    "damage": 14,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk5",
+    "cost": 7,
+    "metalCost": 7,
+    "energyRequirement": 4,
+    "damage": 15,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk6",
+    "cost": 8,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 16,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk7",
+    "cost": 8,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 17,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk8",
+    "cost": 9,
+    "metalCost": 9,
+    "energyRequirement": 4,
+    "damage": 18,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk9",
+    "cost": 9,
+    "metalCost": 9,
+    "energyRequirement": 5,
+    "damage": 19,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_RAILGUN",
+    "name": "Massdrive Mk10",
+    "cost": 10,
+    "metalCost": 9,
+    "energyRequirement": 5,
+    "damage": 20,
+    "weaponRange": 4
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Chaingun Mk1",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 1,
+    "weaponRange": 1
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Chaingun Mk2",
+    "cost": 4,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 2,
+    "weaponRange": 1
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Chaingun Mk3",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 3,
+    "weaponRange": 1
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Chaingun Mk4",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 4,
+    "weaponRange": 1
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Chaingun Mk5",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 5,
+    "weaponRange": 1
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Autocannon Mk1",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 6,
+    "weaponRange": 1,
+    "hitBonus": 5
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Autocannon Mk2",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 7,
+    "weaponRange": 1,
+    "hitBonus": 10
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Autocannon Mk3",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 8,
+    "weaponRange": 1,
+    "hitBonus": 15
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Autocannon Mk4",
+    "cost": 7,
+    "metalCost": 7,
+    "energyRequirement": 0,
+    "damage": 9,
+    "weaponRange": 1,
+    "hitBonus": 15
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Autocannon Mk5",
+    "cost": 7,
+    "metalCost": 7,
+    "energyRequirement": 0,
+    "damage": 10,
+    "weaponRange": 1,
+    "hitBonus": 15
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Callisto multicannon Mk1",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 11,
+    "weaponRange": 1,
+    "hitBonus": 20
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Callisto multicannon Mk2",
+    "cost": 5,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 12,
+    "weaponRange": 1,
+    "hitBonus": 25
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Callisto multicannon Mk3",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 13,
+    "weaponRange": 1,
+    "hitBonus": 30
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Callisto multicannon Mk4",
+    "cost": 6,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 14,
+    "weaponRange": 1,
+    "hitBonus": 30
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Callisto multicannon Mk5",
+    "cost": 7,
+    "metalCost": 7,
+    "energyRequirement": 0,
+    "damage": 15,
+    "weaponRange": 1,
+    "hitBonus": 30
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Artemis fragcannon Mk1",
+    "cost": 7,
+    "metalCost": 7,
+    "energyRequirement": 0,
+    "damage": 16,
+    "weaponRange": 1,
+    "hitBonus": 35
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Artemis fragcannon Mk2",
+    "cost": 8,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "damage": 17,
+    "weaponRange": 1,
+    "hitBonus": 40
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Artemis fragcannon Mk3",
+    "cost": 8,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "damage": 18,
+    "weaponRange": 1,
+    "hitBonus": 45
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Artemis fragcannon Mk4",
+    "cost": 9,
+    "metalCost": 9,
+    "energyRequirement": 0,
+    "damage": 19,
+    "weaponRange": 1,
+    "hitBonus": 45
+  },
+  {
+    "type": "MULTICANNON",
+    "name": "Artemis fragcannon Mk5",
+    "cost": 10,
+    "metalCost": 10,
+    "energyRequirement": 0,
+    "damage": 20,
+    "weaponRange": 1,
+    "hitBonus": 45
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk1",
+    "cost": 2,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 3,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk2",
+    "cost": 2,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 4,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk3",
+    "cost": 2,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 5,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk4",
+    "cost": 2,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 6,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk5",
+    "cost": 3,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 7,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk6",
+    "cost": 3,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 8,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk7",
+    "cost": 3,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 9,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk8",
+    "cost": 3,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 10,
+    "weaponRange": 3
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk9",
+    "cost": 4,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 11,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk10",
+    "cost": 4,
+    "metalCost": 7,
+    "energyRequirement": 0,
+    "damage": 12,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk11",
+    "cost": 4,
+    "metalCost": 7,
+    "energyRequirement": 0,
+    "damage": 13,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk12",
+    "cost": 4,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "damage": 14,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk13",
+    "cost": 4,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "damage": 15,
+    "weaponRange": 4
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk14",
+    "cost": 4,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "damage": 16,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk15",
+    "cost": 5,
+    "metalCost": 9,
+    "energyRequirement": 0,
+    "damage": 17,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk16",
+    "cost": 5,
+    "metalCost": 9,
+    "energyRequirement": 0,
+    "damage": 18,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk17",
+    "cost": 6,
+    "metalCost": 10,
+    "energyRequirement": 0,
+    "damage": 19,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_HE_MISSILE",
+    "name": "HE missile Mk18",
+    "cost": 6,
+    "metalCost": 10,
+    "energyRequirement": 0,
+    "damage": 20,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk1",
+    "cost": 8,
+    "metalCost": 2,
+    "energyRequirement": 0,
+    "damage": 3,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk2",
+    "cost": 8,
+    "metalCost": 2,
+    "energyRequirement": 0,
+    "damage": 4,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk3",
+    "cost": 8,
+    "metalCost": 2,
+    "energyRequirement": 0,
+    "damage": 5,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk4",
+    "cost": 8,
+    "metalCost": 2,
+    "energyRequirement": 0,
+    "damage": 6,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk5",
+    "cost": 9,
+    "metalCost": 3,
+    "energyRequirement": 0,
+    "damage": 7,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk6",
+    "cost": 9,
+    "metalCost": 3,
+    "energyRequirement": 0,
+    "damage": 8,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk7",
+    "cost": 9,
+    "metalCost": 3,
+    "energyRequirement": 0,
+    "damage": 9,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk8",
+    "cost": 9,
+    "metalCost": 3,
+    "energyRequirement": 0,
+    "damage": 10,
+    "weaponRange": 5
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk9",
+    "cost": 10,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 11,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk10",
+    "cost": 10,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 12,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk11",
+    "cost": 11,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 13,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk12",
+    "cost": 11,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 14,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk13",
+    "cost": 12,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 15,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk14",
+    "cost": 12,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 16,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk15",
+    "cost": 13,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 17,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk16",
+    "cost": 13,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 18,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk17",
+    "cost": 14,
+    "metalCost": 5,
+    "energyRequirement": 0,
+    "damage": 19,
+    "weaponRange": 6
+  },
+  {
+    "type": "WEAPON_ECM_TORPEDO",
+    "name": "ECM torpedo Mk18",
+    "cost": 14,
+    "metalCost": 6,
+    "energyRequirement": 0,
+    "damage": 20,
+    "weaponRange": 6
+  },
+  {
+    "type": "PLANETARY_INVASION_MODULE",
+    "name": "Planetary invasion module",
+    "cost": 6,
+    "metalCost": 8,
+    "energyRequirement": 1,
+    "damage": 50,
+  },
+  {
+    "type": "PLANETARY_INVASION_MODULE",
+    "name": "Shock trooper module",
+    "cost": 6,
+    "metalCost": 8,
+    "energyRequirement": 1,
+    "damage": 90,
+  },
+  {
+    "type": "ORBITAL_BOMBS",
+    "name": "Orbital bombs Mk1",
+    "cost": 6,
+    "metalCost": 3,
+    "energyRequirement": 0,
+    "damage": 30,
+  },
+  {
+    "type": "ORBITAL_BOMBS",
+    "name": "Orbital bombs Mk2",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 55,
+  },
+  {
+    "type": "ORBITAL_BOMBS",
+    "name": "Orbital bombs Mk3",
+    "cost": 9,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 75,
+  },
+  {
+    "type": "ORBITAL_BOMBS",
+    "name": "Orbital smart bombs",
+    "cost": 12,
+    "metalCost": 4,
+    "energyRequirement": 0,
+    "damage": 90,
+  },
+  {
+    "type": "ORBITAL_NUKE",
+    "name": "Orbital nuke",
+    "cost": 8,
+    "metalCost": 8,
+    "energyRequirement": 0,
+    "damage": 20,
+  },
+  {
+    "type": "ORBITAL_NUKE",
+    "name": "Orbital fusion bomb",
+    "cost": 9,
+    "metalCost": 9,
+    "energyRequirement": 0,
+    "damage": 50,
+  },
+  {
+    "type": "ORBITAL_NUKE",
+    "name": "Orbital antimatter bomb",
+    "cost": 11,
+    "metalCost": 11,
+    "energyRequirement": 0,
+    "damage": 80,
+  },
+  {
+    "type": "ORBITAL_NUKE",
+    "name": "Orbital neutron bomb",
+    "cost": 13,
+    "metalCost": 13,
+    "energyRequirement": 0,
+    "damage": 100,
+  },
+  {
+    "type": "TRACTOR_BEAM",
+    "name": "Tractor beam",
+    "cost": 8,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 0,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk1",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk2",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 1,
+    "damage": 3,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk3",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 5,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk4",
+    "cost": 7,
+    "metalCost": 5,
+    "energyRequirement": 3,
+    "damage": 7,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk5",
+    "cost": 8,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 9,
+    "weaponRange": 2
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk6",
+    "cost": 10,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 11,
+    "weaponRange": 3
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk7",
+    "cost": 12,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 15,
+    "weaponRange": 3
+  },
+  {
+    "type": "PLASMA_CANNON",
+    "name": "Plasma cannon Mk8",
+    "cost": 12,
+    "metalCost": 8,
+    "energyRequirement": 4,
+    "damage": 18,
+    "weaponRange": 3
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk1",
+    "cost": 5,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 3,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk2",
+    "cost": 5,
+    "metalCost": 3,
+    "energyRequirement": 1,
+    "damage": 5,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk3",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 7,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk4",
+    "cost": 6,
+    "metalCost": 4,
+    "energyRequirement": 2,
+    "damage": 9,
+    "weaponRange": 2
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk5",
+    "cost": 8,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 11,
+    "weaponRange": 3
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk6",
+    "cost": 9,
+    "metalCost": 7,
+    "energyRequirement": 3,
+    "damage": 15,
+    "weaponRange": 3
+  },
+  {
+    "type": "ION_CANNON",
+    "name": "Ion cannon Mk7",
+    "cost": 10,
+    "metalCost": 8,
+    "energyRequirement": 3,
+    "damage": 18,
+    "weaponRange": 3
+  },
+  {
+    "type": "BITE",
+    "name": "Massive mouth with teeth Mk1",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 2,
+    "weaponRange": 1
+  },
+  {
+    "type": "BITE",
+    "name": "Massive mouth with teeth Mk2",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 4,
+    "weaponRange": 1
+  },
+  {
+    "type": "BITE",
+    "name": "Massive mouth with teeth Mk3",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 6,
+    "weaponRange": 1
+  },
+  {
+    "type": "TENTACLE",
+    "name": "Tentacle Mk1",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 3,
+    "weaponRange": 1
+  },
+  {
+    "type": "TENTACLE",
+    "name": "Tentacle Mk2",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 5,
+    "weaponRange": 1
+  },
+  {
+    "type": "GRAVITY_RIPPER",
+    "name": "Gravity ripper Mk1",
+    "cost": 15,
+    "metalCost": 15,
+    "energyRequirement": 5,
+    "damage": 10,
+    "hitBonus": 100,
+    "weaponRange": 1
+  },
+  {
+    "type": "GRAVITY_RIPPER",
+    "name": "Gravity ripper Mk2",
+    "cost": 16,
+    "metalCost": 16,
+    "energyRequirement": 6,
+    "damage": 12,
+    "hitBonus": 100,
+    "weaponRange": 1
+  },
+  {
+    "type": "GRAVITY_RIPPER",
+    "name": "Gravity ripper Mk3",
+    "cost": 18,
+    "metalCost": 18,
+    "energyRequirement": 7,
+    "damage": 16,
+    "hitBonus": 100,
+    "weaponRange": 1
+  },
+  {
+    "type": "ARM_SPIKE",
+    "name": "Arm spike",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 6,
+    "weaponRange": 1
+  },
+  {
+    "type": "PLASMA_SPIT",
+    "name": "Plasma spit",
+    "cost": 0,
+    "metalCost": 0,
+    "energyRequirement": 1,
+    "damage": 8,
+    "weaponRange": 2
+  },
+
+]

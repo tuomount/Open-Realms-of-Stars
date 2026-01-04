@@ -587,7 +587,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[8]);
     planet.addBuilding(createTaxCenter());
     info.getTechList().addTech(TechFactory.createImprovementTech(
-        "Advanced factory", 2));
+        "Improved factory", 3));
     constructions = planet.getProductionList();
     scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
@@ -2009,7 +2009,7 @@ public class PlanetHandlingTest extends TestCase {
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 4);
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
@@ -2039,7 +2039,7 @@ public class PlanetHandlingTest extends TestCase {
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 4);
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
@@ -2068,7 +2068,7 @@ public class PlanetHandlingTest extends TestCase {
     planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 6);
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
@@ -2212,13 +2212,13 @@ public class PlanetHandlingTest extends TestCase {
     planet.generateGravityBasedOnSize();
     planet.addBuilding(BuildingFactory.createByName("Space port"));
     planet.addBuilding(BuildingFactory.createByName("Tax center"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced laboratory"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced laboratory"));
+    planet.addBuilding(BuildingFactory.createByName("Improved laboratory"));
+    planet.addBuilding(BuildingFactory.createByName("Improved laboratory"));
     planet.addBuilding(BuildingFactory.createByName("Planetary defense turret Mk1"));
     planet.addBuilding(BuildingFactory.createByName("Barracks"));
     planet.addBuilding(BuildingFactory.createByName("Market center"));
     planet.addBuilding(BuildingFactory.createByName("Trade center"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced factory"));
+    planet.addBuilding(BuildingFactory.createByName("Improved factory"));
     planet.addBuilding(BuildingFactory.createByName("Planetary defense turret Mk1"));
     planet.addBuilding(BuildingFactory.createByName("Manufacturing center"));
     planet.addBuilding(BuildingFactory.createByName("Basic mine"));
@@ -2319,11 +2319,11 @@ public class PlanetHandlingTest extends TestCase {
     planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced mine"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved mine"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced factory"));
+    planet.addBuilding(BuildingFactory.createByName("Improved factory"));
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 10);
@@ -2694,9 +2694,9 @@ public class PlanetHandlingTest extends TestCase {
     planet.addBuilding(BuildingFactory.createByName("Orbital elevator Mk1"));
     planet.addBuilding(BuildingFactory.createByName("Basic factory"));
     planet.addBuilding(BuildingFactory.createByName("Farming center"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
     planet.addBuilding(BuildingFactory.createByName("Mining center"));
-    planet.addBuilding(BuildingFactory.createByName("MAdvanced factory"));
+    planet.addBuilding(BuildingFactory.createByName("Improved factory"));
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
@@ -2708,7 +2708,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
@@ -2733,9 +2733,9 @@ public class PlanetHandlingTest extends TestCase {
     planet.addBuilding(BuildingFactory.createByName("Orbital elevator Mk1"));
     planet.addBuilding(BuildingFactory.createByName("Basic factory"));
     planet.addBuilding(BuildingFactory.createByName("Farming center"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
     planet.addBuilding(BuildingFactory.createByName("Mining center"));
-    planet.addBuilding(BuildingFactory.createByName("MAdvanced factory"));
+    planet.addBuilding(BuildingFactory.createByName("Improved factory"));
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
@@ -2747,7 +2747,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
@@ -2772,9 +2772,9 @@ public class PlanetHandlingTest extends TestCase {
     planet.addBuilding(BuildingFactory.createByName("Orbital elevator Mk1"));
     planet.addBuilding(BuildingFactory.createByName("Basic factory"));
     planet.addBuilding(BuildingFactory.createByName("Farming center"));
-    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Improved farm"));
     planet.addBuilding(BuildingFactory.createByName("Mining center"));
-    planet.addBuilding(BuildingFactory.createByName("MAdvanced factory"));
+    planet.addBuilding(BuildingFactory.createByName("Improved factory"));
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
@@ -2786,7 +2786,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));

@@ -21,7 +21,7 @@
     "name": "Planetary defense turret Mk2"
   },
   {
-    "description": "Biggest and meanest defense turret.",
+    "description": "Big and scary defense turret.",
     "type": "MILITARY",
     "metalCost": 70,
     "prodCost": 70,
@@ -29,6 +29,16 @@
     "defenseDamage": 9,
     "iconId": "PlanetaryTurret",
     "name": "Planetary defense turret Mk3"
+  },
+  {
+    "description": "Biggest and meanest defense turret.",
+    "type": "MILITARY",
+    "metalCost": 90,
+    "prodCost": 90,
+    "happiness": 1,
+    "defenseDamage": 12,
+    "iconId": "PlanetaryTurret",
+    "name": "Planetary defense turret Mk4"
   },
   {
     "description": "Big and powerful defense turret.",
@@ -65,6 +75,19 @@
     "battleBonus": 25
   },
   {
+    "description": "Increases military culture on planet.\nRecruited leaders start at level 2.",
+    "type": "MILITARY",
+    "metalCost": 25,
+    "prodCost": 35,
+    "happiness": 1,
+    "cultBonus": 1,
+    "iconId": "Troops",
+    "singleAllowed": true,
+    "maintenanceCost": 0.33,
+    "name": "Galactic academy",
+    "battleBonus": 25
+  },
+  {
     "description": "Population fights better against invaders.\nRecruited leaders start with 50 experience.",
     "type": "MILITARY",
     "fleetCapacityBonus": 1,
@@ -80,27 +103,60 @@
   {
     "description": "Planetary scanner to scan fleet around the planet.\nBest planetary scanner available.",
     "type": "MILITARY",
-    "metalCost": 80,
-    "prodCost": 80,
-    "scanCloakingDetection": 140,
+    "metalCost": 60,
+    "prodCost": 60,
+    "scanCloakingDetection": 200,
     "iconId": "LRScanner",
     "singleAllowed": true,
     "scanRange": 7,
-    "name": "Planetary scanner Mk5"
+    "name": "Planetary scanner Mk10"
   },
   {
-    "description": "Planetary scanner to scan fleets around the planet.\nEven longer range.",
+    "description": "Planetary scanner to scan fleet around the planet.\nBest planetary scanner available.",
     "type": "MILITARY",
-    "metalCost": 60,
-    "prodCost": 60,
+    "metalCost": 54,
+    "prodCost": 54,
+    "scanCloakingDetection": 180,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 7,
+    "name": "Planetary scanner Mk9"
+  },
+  {
+    "description": "Planetary scanner to scan fleet around the planet.\nBest planetary scanner available.",
+    "type": "MILITARY",
+    "metalCost": 52,
+    "prodCost": 52,
+    "scanCloakingDetection": 160,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 7,
+    "name": "Planetary scanner Mk8"
+  },
+  {
+    "description": "Planetary scanner to scan fleet around the planet.\nBest planetary scanner available.",
+    "type": "MILITARY",
+    "metalCost": 48,
+    "prodCost": 48,
+    "scanCloakingDetection": 140,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 6,
+    "name": "Planetary scanner Mk7"
+  },
+  {
+    "description": "Planetary scanner to scan fleet around the planet.\nBest planetary scanner available.",
+    "type": "MILITARY",
+    "metalCost": 45,
+    "prodCost": 45,
     "scanCloakingDetection": 120,
     "iconId": "LRScanner",
     "singleAllowed": true,
     "scanRange": 6,
-    "name": "Planetary scanner Mk4"
+    "name": "Planetary scanner Mk6"
   },
   {
-    "description": "Planetary scanner to scan fleets around the planet.\nNow with increased range.",
+    "description": "Planetary scanner to scan fleet around the planet.\nBest planetary scanner available.",
     "type": "MILITARY",
     "metalCost": 40,
     "prodCost": 40,
@@ -108,25 +164,47 @@
     "iconId": "LRScanner",
     "singleAllowed": true,
     "scanRange": 5,
+    "name": "Planetary scanner Mk5"
+  },
+  {
+    "description": "Planetary scanner to scan fleets around the planet.\nEven longer range.",
+    "type": "MILITARY",
+    "metalCost": 30,
+    "prodCost": 30,
+    "scanCloakingDetection": 80,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 5,
+    "name": "Planetary scanner Mk4"
+  },
+  {
+    "description": "Planetary scanner to scan fleets around the planet.\nNow with increased range.",
+    "type": "MILITARY",
+    "metalCost": 25,
+    "prodCost": 25,
+    "scanCloakingDetection": 60,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 4,
     "name": "Planetary scanner Mk3"
   },
   {
     "description": "Planetary scanner to scan fleets around the planet.\nThis is the improved version.",
     "type": "MILITARY",
-    "metalCost": 24,
-    "prodCost": 24,
-    "scanCloakingDetection": 80,
+    "metalCost": 20,
+    "prodCost": 20,
+    "scanCloakingDetection": 40,
     "iconId": "LRScanner",
     "singleAllowed": true,
-    "scanRange": 4,
+    "scanRange": 3,
     "name": "Planetary scanner Mk2"
   },
   {
     "description": "Planetary scanner to scan fleets around the planet.",
     "type": "MILITARY",
-    "metalCost": 16,
-    "prodCost": 16,
-    "scanCloakingDetection": 40,
+    "metalCost": 12,
+    "prodCost": 12,
+    "scanCloakingDetection": 20,
     "iconId": "LRScanner",
     "singleAllowed": true,
     "scanRange": 3,

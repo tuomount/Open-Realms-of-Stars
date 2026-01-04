@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship.shipdesign;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -142,9 +142,14 @@ public class ShipDesign {
 
   /**
    * Add new component to list
+   * Added component cannot be null or NPE occurs.
+   * This helps get possible null component much earlier.
    * @param comp ShipComponent to add
    */
   public void addComponent(final ShipComponent comp) {
+    if (comp == null) {
+      throw new NullPointerException();
+    }
     components.add(comp);
   }
 
@@ -223,6 +228,10 @@ public class ShipDesign {
       }
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+        shield = shield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_SHIELD) {
         shield = shield + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
@@ -352,6 +361,10 @@ public class ShipDesign {
         armor = armor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHADOW_ARMOR) {
+        armor = armor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.REPAIR_MODULE) {
         armor = armor + comp.getDefenseValue();
       }
@@ -425,7 +438,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.DISTORTION_SHIELD
           || comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
-          || comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
+          || comp.getType() == ShipComponentType.ORGANIC_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
         return true;
       }
     }
@@ -701,6 +716,9 @@ public class ShipDesign {
       if (comp.getType() == ShipComponentType.CLOAKING_DEVICE) {
         power = power + comp.getCloaking();
       }
+      if (comp.getType() == ShipComponentType.SHADOW_ARMOR) {
+        power = power + comp.getCloaking();
+      }
       if (comp.getType() == ShipComponentType.SCANNER) {
         power = power + comp.getScannerRange();
       }
@@ -779,6 +797,21 @@ public class ShipDesign {
   }
 
   /**
+   * Get Free cargo space in ship.
+   * @return Cargo space in ship.
+   */
+  public int getFreeCargoSpace() {
+    int result = hull.getMaxSlot() - getNumberOfComponents();
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.CARGO_BAY) {
+        result = result + comp.getBaySize();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Change component priority order
    * @param index Index which to change
    * @param higher true for higher priority and false for lower
@@ -842,9 +875,9 @@ public class ShipDesign {
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
       sb.append("\n");
       sb.append("Cargo: ");
-      sb.append(getFreeSlots() * 10);
+      sb.append(getFreeCargoSpace() * 10);
       sb.append(" units or ");
-      sb.append(getFreeSlots() * 2);
+      sb.append(getFreeCargoSpace() * 2);
       sb.append(" population");
     }
     int baySize = getTotalBaySize();
@@ -888,7 +921,8 @@ public class ShipDesign {
       designOk = false;
       sb.append("Too many components!\n");
     }
-    if (getFreeSlots() == 0 && hull.getHullType() == ShipHullType.FREIGHTER) {
+    if (getFreeCargoSpace() == 0
+        && hull.getHullType() == ShipHullType.FREIGHTER) {
       flawNoCargoSpace = true;
     }
     if (allowArmedFreighters && hull.getHullType() == ShipHullType.FREIGHTER) {
@@ -1142,7 +1176,8 @@ public class ShipDesign {
       if (comp.getType() == ShipComponentType.THRUSTERS) {
         thrusters = true;
       }
-      if (comp.getType() == ShipComponentType.CLOAKING_DEVICE) {
+      if (comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          || comp.getType() == ShipComponentType.SHADOW_ARMOR) {
         cloakingDevice = true;
       }
     }

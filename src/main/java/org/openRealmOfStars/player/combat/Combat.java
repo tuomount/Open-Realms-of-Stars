@@ -2245,8 +2245,15 @@ public boolean launchIntercept(final int distance,
           ShipComponentType.SHIELD);
       if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
           && DiceGenerator.getRandom(99) < 20) {
-        handleOverloading(textLogger, index);
-        overLoaded = true;
+        overLoaded = handleOverloading(textLogger, index);
+      }
+      if (!overLoaded) {
+        index = getCurrentShip().getComponentForUse(
+            ShipComponentType.SHADOW_SHIELD);
+        if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+            && DiceGenerator.getRandom(99) < 20) {
+          overLoaded = handleOverloading(textLogger, index);
+        }
       }
     }
     if (attacker != null
@@ -2412,7 +2419,8 @@ public boolean launchIntercept(final int distance,
         getCurrentShip().setOverloaded(true);
         return true;
       }
-      if (component.getType() == ShipComponentType.SHIELD
+      if ((component.getType() == ShipComponentType.SHIELD
+          || component.getType() == ShipComponentType.SHADOW_SHIELD)
           && ship.componentIsWorking(index)
           && getCurrentShip().getEnergyLevel() > 0
           && ship.getShield() < ship.getTotalShield()) {

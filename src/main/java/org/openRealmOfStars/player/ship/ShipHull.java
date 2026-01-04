@@ -159,6 +159,65 @@ public class ShipHull {
   }
 
   /**
+   * ShipHull constructor. Use another hull for base and add original builder.
+   * @param hull ShipHull
+   * @param race Original builder race.
+   */
+  public ShipHull(final ShipHull hull, final SpaceRace race) {
+    this.name = hull.name;
+    this.maxSlot = hull.maxSlot;
+    this.slotHull = hull.slotHull;
+    this.hullType = hull.hullType;
+    this.size = hull.size;
+    this.cost = hull.cost;
+    this.metalCost = hull.metalCost;
+    this.originalBuilder = race;
+    this.imageIndex = hull.imageIndex;
+    this.fleetCapacity = hull.fleetCapacity;
+    // Ships of physically large races have extra hull point per slot
+    // but hulls are more expensive.
+    if (race.hasTrait(TraitIds.MASSIVE_SIZE)) {
+      this.slotHull = this.slotHull + 1;
+      this.metalCost = this.metalCost * 2;
+      this.cost = this.cost * 3 / 2;
+    }
+    // Zero-G races have greatly lowered price of orbitals
+    if (race.hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && this.hullType == ShipHullType.ORBITAL) {
+      this.metalCost = this.metalCost / 2;
+      this.cost = this.cost / 2;
+    }
+  }
+  /**
+   * Constructor for Ship hull, not ready made, still
+   * needs the SpaceRace.
+   *
+   * @param name Hull name, must match one in techs
+   * @param maxSlots How many slots in hull
+   * @param hull How many hull points single slot has
+   * @param type ShipHullType
+   * @param size ShipSize
+   * @param cost production cost
+   * @param metal metal cost
+   */
+  public ShipHull(final String name, final int maxSlots,
+      final int hull, final ShipHullType type, final ShipSize size,
+      final int cost, final int metal) {
+    this.name = name;
+    this.maxSlot = maxSlots;
+    this.slotHull = hull;
+    this.hullType = type;
+    this.size = size;
+    this.cost = cost;
+    this.metalCost = metal;
+    this.originalBuilder = null;
+    // Default to Scout image
+    this.imageIndex = ShipImage.SCOUT;
+    // Default for fleet capacity.
+    this.fleetCapacity = 0.1;
+
+  }
+  /**
    * Get ship's 64x64 pixel image
    * @return BufferedImage
    */

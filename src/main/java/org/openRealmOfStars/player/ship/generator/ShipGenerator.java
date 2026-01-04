@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship.generator;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -92,6 +92,17 @@ public final class ShipGenerator {
         scores[i] = scores[i] + comp.getDefenseValue() * 5;
         scores[i] = scores[i] + 5; // No need for electricity
         scores[i] = scores[i] + comp.getEnergyResource() * 5;
+        break;
+      }
+      case SHADOW_ARMOR: {
+        scores[i] = scores[i] + comp.getDefenseValue() * 5;
+        scores[i] = scores[i] + comp.getCloaking() / 5;
+        break;
+      }
+      case SHADOW_SHIELD: {
+        scores[i] = scores[i] + comp.getDefenseValue();
+        scores[i] = scores[i] + comp.getCloaking() / 5;
+        scores[i] = scores[i] + 5; // Recharge
         break;
       }
       case ORGANIC_ARMOR: {
@@ -1161,7 +1172,8 @@ public final class ShipGenerator {
           + (player.getShipStatHighestNumber("Trooper Mk") + 1));
     }
     ShipComponent engine = ShipComponentFactory
-        .createByName(player.getTechList().getBestEngine().getComponent());
+        .createByName(player.getTechList().getFastestFtlEngine()
+            .getComponent());
     result.addComponent(engine);
     ShipComponent power = ShipComponentFactory.createByName(
         player.getTechList().getBestEnergySource().getComponent());
@@ -1229,6 +1241,15 @@ public final class ShipGenerator {
             bombTech.getComponent()));
       }
     }
+    if (result.getFreeSlots() >= 1) {
+      Tech[] hullTechs = player.getTechList()
+          .getListForType(TechType.Hulls);
+      Tech cargoTech = TechList.getBestTech(hullTechs, "Cargo bay");
+      if (cargoTech != null) {
+        result.addComponent(ShipComponentFactory.createByName(
+                cargoTech.getComponent()));
+      }
+    }
     return result;
   }
 
@@ -1265,6 +1286,7 @@ public final class ShipGenerator {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     int value = -1;
+    int hullPoint = -1;
     Tech hullTech = null;
     for (Tech tech : hullTechs) {
       ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
@@ -1276,6 +1298,13 @@ public final class ShipGenerator {
           && hull.getHullType() == ShipHullType.FREIGHTER) {
         hullTech = tech;
         value = hull.getMaxSlot();
+        hullPoint = hull.getSlotHull();
+      } else if (hull.getMaxSlot() == value
+          && hull.getHullType() == ShipHullType.FREIGHTER
+          && hull.getSlotHull() > hullPoint) {
+        hullTech = tech;
+        value = hull.getMaxSlot();
+        hullPoint = hull.getSlotHull();
       }
     }
     if (hullTech != null) {
@@ -1301,7 +1330,8 @@ public final class ShipGenerator {
     result.setName("Freighter Mk"
           + (player.getShipStatHighestNumber("Freighter Mk") + 1));
     ShipComponent engine = ShipComponentFactory
-        .createByName(player.getTechList().getBestEngine().getComponent());
+        .createByName(player.getTechList().getFastestFtlEngine()
+            .getComponent());
     result.addComponent(engine);
     ShipComponent power = ShipComponentFactory.createByName(
         player.getTechList().getBestEnergySource().getComponent());
@@ -1372,6 +1402,25 @@ public final class ShipGenerator {
         if (spyModule.getEnergyRequirement() <= result.getFreeEnergy()) {
           result.addComponent(spyModule);
         }
+      }
+    }
+    Tech[] hullTechs = player.getTechList()
+        .getListForType(TechType.Hulls);
+    Tech cargoTech = TechList.getBestTech(hullTechs,
+        "Armored dimension cargo bay");
+    if (cargoTech == null) {
+      cargoTech = TechList.getBestTech(hullTechs, "Dimension cargo bay");
+    }
+    if (cargoTech == null) {
+      cargoTech = TechList.getBestTech(hullTechs, "Armored cargo bay");
+    }
+    if (cargoTech == null) {
+      cargoTech = TechList.getBestTech(hullTechs, "Cargo bay");
+    }
+    if (cargoTech != null) {
+      while (result.getFreeSlots() > 0) {
+        result.addComponent(ShipComponentFactory.createByName(
+                cargoTech.getComponent()));
       }
     }
     return result;

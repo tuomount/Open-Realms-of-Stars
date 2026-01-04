@@ -2365,6 +2365,9 @@ public class PlayerInfo {
       if (getTechList().isTech("Radiation well")) {
         raceMaxRadInt++;
       }
+      if (getTechList().isTech("Radiation shield")) {
+        raceMaxRadInt++;
+      }
       raceMaxRadInt = Math.min(RadiationType.values().length - 1,
           raceMaxRadInt);
       if (planet.getRadiationLevel().getIndex() > raceMaxRadInt) {

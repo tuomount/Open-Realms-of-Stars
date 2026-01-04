@@ -259,7 +259,7 @@ public class ShipDesign2Test {
         ShipComponent shipcomponent2 = Mockito.mock(ShipComponent.class);
         design.addComponent(shipcomponent1);
         design.addComponent(shipcomponent2);
-        assertEquals(8, design.getFreeSlots());
+        assertEquals(8, design.getFreeCargoSpace());
     }
 
     /**

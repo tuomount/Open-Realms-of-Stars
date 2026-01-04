@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -63,11 +63,6 @@ public class Tech {
    */
   private boolean rareTech;
   /**
-   * Next rare tech on same tree. This should be null if
-   * not rare tech or last tech on tree.
-   */
-  private String nextTechOnTree;
-  /**
    * Which level next tech will be found.
    */
   private int nextTechLevel;
@@ -94,7 +89,7 @@ public class Tech {
    * Create a new Tech with defaults
    * @param name Tech Name
    * @param type Tech Type
-   * @param level Tech level 1-10
+   * @param level Tech level 1-20
    */
   public Tech(final String name, final TechType type, final int level) {
     this.name = name;
@@ -103,7 +98,6 @@ public class Tech {
     hull = null;
     improvement = null;
     component = null;
-    nextTechOnTree = null;
     nextTechLevel = 1;
     rareTech = false;
     tradeable = true;
@@ -146,7 +140,7 @@ public class Tech {
 
   /**
    * Get Tech Level.
-   * @return int between 1-10
+   * @return int between 1-20
    */
   public int getLevel() {
     return level;
@@ -154,10 +148,10 @@ public class Tech {
 
   /**
    * Set Tech level
-   * @param level between 1-10
+   * @param level between 1-20
    */
   public void setLevel(final int level) {
-    if (level >= 1 && level < 11) {
+    if (level >= 1 && level < TechList.MAX_TECH_LEVEL + 1) {
       this.level = level;
     }
   }
@@ -357,21 +351,6 @@ public class Tech {
     this.rareTech = rareTech;
   }
 
-  /**
-   * Get next possible tech name or null.
-   * @return the nextTechOnTree or null.
-   */
-  public String getNextTechOnTree() {
-    return nextTechOnTree;
-  }
-
-  /**
-   * Set next tech on same tree.
-   * @param nextTechOnTree the nextTechOnTree to set
-   */
-  public void setNextTechOnTree(final String nextTechOnTree) {
-    this.nextTechOnTree = nextTechOnTree;
-  }
 
   /**
    * Get next tech level.

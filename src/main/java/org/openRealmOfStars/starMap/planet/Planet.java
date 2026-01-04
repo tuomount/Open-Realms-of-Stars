@@ -1465,6 +1465,9 @@ public class Planet {
           || building.getName().equals("Radiation well")) {
         value = value - 1;
       }
+      if (building.getName().equals("Radiation shield")) {
+        value = value - 2;
+      }
     }
     if (value < 0) {
       value = 0;
@@ -1955,7 +1958,8 @@ public class Planet {
             if (!built && !exceedRadiation()) {
               result.add(tmp);
             } else if (!built && (tmp.getName().equals("Radiation dampener")
-                || tmp.getName().equals("Radiation well"))) {
+                || tmp.getName().equals("Radiation well")
+                || tmp.getName().equals("Radiation shield"))) {
               // Radiation well and dampener can be built even planet has
               // radiation.
               result.add(tmp);
@@ -2802,6 +2806,9 @@ public class Planet {
               getName(), getPlanetOwnerIndex());
           eventOnPlanet.setText(news.getNewsText());
           map.getHistory().addEvent(eventOnPlanet);
+        }
+        if (building.getName().equals("Telescopes") && map != null) {
+          map.doTelescopeScan(planetOwnerInfo, this);
         }
         if (building.getName().equals("United Galaxy Tower") && map != null) {
           NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(
@@ -3913,6 +3920,9 @@ public class Planet {
     if (info.getTechList().isTech("Radiation well")) {
       raceMaxRadInt++;
     }
+    if (info.getTechList().isTech("Radiation shield")) {
+      raceMaxRadInt = raceMaxRadInt + 2;
+    }
     raceMaxRadInt = Math.min(RadiationType.values().length - 1, raceMaxRadInt);
     final var planetRad = getRadiationLevel();
     // Races with radiosythesis rate planets with radiation more favorably
@@ -3946,6 +3956,9 @@ public class Planet {
     }
     if (realm.getTechList().hasTech("Radiation well")) {
       maxRad++;
+    }
+    if (realm.getTechList().hasTech("Radiation shield")) {
+      maxRad = maxRad + 2;
     }
     if (maxRad
         < getTotalRadiationLevel().getIndex()) {

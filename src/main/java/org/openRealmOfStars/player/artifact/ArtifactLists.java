@@ -401,17 +401,17 @@ public class ArtifactLists {
           default:
           case 0: {
             techName = "Gravity ripper Mk1";
-            techLevel = 6;
+            techLevel = 10;
             break;
           }
           case 1: {
             techName = "Gravity ripper Mk2";
-            techLevel = 8;
+            techLevel = 12;
             break;
           }
           case 2: {
             techName = "Gravity ripper Mk3";
-            techLevel = 10;
+            techLevel = 16;
             break;
           }
         }

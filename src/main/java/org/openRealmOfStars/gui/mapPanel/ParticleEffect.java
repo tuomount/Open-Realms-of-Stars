@@ -143,6 +143,14 @@ public class ParticleEffect {
           .getRandom(GuiStatics.BEAM_COLORS.length - 1)];
       break;
     }
+    case BLUE_LASER_PARTICLE: {
+      mx = 0;
+      my = 0;
+      ttl = 2;
+      color = GuiStatics.BLUE_BEAM_COLORS[DiceGenerator
+          .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
+      break;
+    }
     case BULLET_PARTICLE: {
       mx = 0;
       my = 0;
@@ -162,8 +170,8 @@ public class ParticleEffect {
       mx = 0;
       my = 0;
       ttl = 2;
-      color = GuiStatics.BLUE_BEAM_COLORS[DiceGenerator
-          .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
+      color = GuiStatics.CYAN_BEAM_COLORS[DiceGenerator
+          .getRandom(GuiStatics.CYAN_BEAM_COLORS.length - 1)];
       break;
     }
     case PHOTON_TORP_PARTICILE: {

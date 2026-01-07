@@ -963,6 +963,12 @@ public class ShipDesign {
           sb.append("Colonization module in non freighter hull.");
         }
       }
+      if (comp.getType() == ShipComponentType.CARGO_BAY
+          && hull.getHullType() != ShipHullType.FREIGHTER
+            && hull.getHullType() != ShipHullType.PRIVATEER) {
+        designOk = false;
+        sb.append("Cargo bay in non freighter or privateer hull.");
+      }
       if (comp.getType() == ShipComponentType.SPORE_MODULE) {
         colonizationModule = true;
         flawNoCargoSpace = false;

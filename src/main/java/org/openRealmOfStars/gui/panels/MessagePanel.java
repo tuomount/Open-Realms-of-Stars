@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.panels;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -147,6 +147,7 @@ public class MessagePanel extends JPanel {
     titleLabel.setLeftIcon(msg.getIcon());
     msgText.setText(TextUtilities.removeLineChanges(msg.getMessage()));
     msgText.setCaretPosition(0);
+    msgText.repaint();
     if (msg.getType() == MessageType.INFORMATION) {
       btnFocus.setEnabled(false);
     } else {

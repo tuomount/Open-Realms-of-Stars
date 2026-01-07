@@ -1,3 +1,13 @@
+- New features and updates -
+
+* Technology level now goes up to 20. Previous maximum was 10.
+* New UI scaling for HiDPI displays.
+* Ship hulls and ship components are now loaded from JSON.
+
+- Bugfixes -
+
+# Open Realm of Stars 0.28.2
+
 - Bugfixes -
 
 * Fixes issue where custom constructed population build project is never finished.

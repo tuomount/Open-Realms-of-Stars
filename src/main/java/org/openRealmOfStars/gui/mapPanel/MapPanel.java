@@ -1198,15 +1198,16 @@ public class MapPanel extends JPanel {
             continue;
           }
 
+          // Draw Tile text
+          drawTileText(gr, cx, cy, i, j, starMap, info, pixelX,
+              pixelY, planet);
+
           // Draw fleet
           drawFleet(gr, fleetMap, cx, cy, i, j, starMap, info, pixelX, pixelY);
 
           // Draw fog of war and uncharted tiles
           drawFogOfWar(gr, cx, cy, i, j, starMap, info, pixelX, pixelY);
 
-          // Draw Tile text
-          drawTileText(gr, cx, cy, i, j, starMap, info, pixelX,
-              pixelY, planet);
 
           if (routeData != null && routeData[i + cx][j + cy] == 1) {
             int offsetX = 0;

@@ -33,6 +33,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -131,7 +132,7 @@ public class BattleView extends BlackPanel {
   /**
    * Text area containing combat log
    */
-  private InfoTextArea logArea;
+  private BaseInfoTextArea logArea;
 
   /**
    * Text log
@@ -266,11 +267,12 @@ public class BattleView extends BlackPanel {
     if (GuiFonts.isLargerFonts()) {
       numberOfRows = MAX_LOG_NUMBER;
     }
-    logArea = new InfoTextArea(numberOfRows, 30);
+    //logArea = new InfoTextArea(numberOfRows, 30);
+    logArea = new BaseInfoTextArea(numberOfRows, 30);
     logArea.setEditable(false);
     logArea.setLineWrap(true);
     bottom.add(logArea);
-    textLogger = new Logger(MAX_LOG_NUMBER);
+    textLogger = new Logger(10);
     bottom.add(Box.createRigidArea(new Dimension(10, 10)));
 
     this.setLayout(new BorderLayout());

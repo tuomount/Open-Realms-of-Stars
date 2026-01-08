@@ -476,6 +476,7 @@ public class CombatAnimation {
     }
     if (type == CombatAnimationType.ANTIMATTER_BEAM
         || type == CombatAnimationType.LASER_BEAM
+        || type == CombatAnimationType.BLUE_LASER
         || type == CombatAnimationType.PHASOR_BEAM
         || type == CombatAnimationType.PLASMA_BEAM
         || type == CombatAnimationType.ION_CANNON

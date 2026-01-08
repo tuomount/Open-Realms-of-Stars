@@ -331,7 +331,14 @@ Metal rich surface by Tuomo Untinen with Stable Diffusion
 
 Ancient Factory by Tuomo Untinen with Stable Diffusion
 
-Ancient Laboratory by Tuomo Untinen with Stable Diffusion
+Ancient Laboratory by Tuomo Untinen.
+Licensed Under CC-BY-SA 4.0
+http://creativecommons.org/licenses/by-sa/4.0/
+An open book by mvdwoude. Lamp base by mvdwoude from courthammer base.
+Rest of the lamp by Tuomo Untinen. These are under CC-BY-SA 4.0.
+Victorian desk by philbgarner(CC0).
+Cobwebs done by SkyshipDev with CC-BY 4.0 license.
+All other included textures are under CC0.
 
 Ancient Temple by Tuomo Untinen with Stable Diffusion
 

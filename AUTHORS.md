@@ -360,8 +360,6 @@ Artifact on Planet by Tuomo Untinen with Stable Diffusion
 
 Destroyed planet map tile by Tuomo Untinen with Stable Diffusion
 
-City fire by Tuomo Untinen with Stable Diffusion
-
 Ancient artifact research by Tuomo Untinen
 
 Gravity veins map tiles by Tuomo Untinen
@@ -373,6 +371,8 @@ Blueish Black hole by Tuomo Untinen
 Devourer by Tuomo Untinen
 
 Devourer ship by Tuomo Untinen
+
+City fire by Tuomo Untinen with CC0 textures
 
 Animated Portal or Wormhole, several Variants by Hansjörg Malthaner
 http://opengameart.org/users/varkalandar

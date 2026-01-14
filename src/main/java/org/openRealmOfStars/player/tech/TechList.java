@@ -300,6 +300,25 @@ public class TechList {
 
   /**
    * Has certain tech in tech list. This will search tech from all types.
+   * Techname does not need to be full. You can also search for
+   * 'Gravity ripper Mk' which would match any Gravity ripper technologies.
+   * @param techName Tech name to search.
+   * @return True if tech is in list otherwise false.
+   */
+  public boolean hasTechForMk(final String techName) {
+    for (var techType : TechType.values()) {
+      Tech[] list = getListForType(techType);
+      for (int i = 0; i < list.length; i++) {
+        if (list[i].getName().startsWith(techName)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Has certain tech in tech list. This will search tech from all types.
    * @param techName Tech name to search.
    * @return True if tech is in list otherwise false.
    */

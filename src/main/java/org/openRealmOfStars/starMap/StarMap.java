@@ -4569,6 +4569,27 @@ public class StarMap {
         } else {
           getPlayerByIndex(i).setStrategy(WinningStrategy.GENERIC);
         }
+        WinningStrategy current = getPlayerByIndex(i).getStrategy();
+        byte activation = getAscensionEvents().getAscensionActivation();
+        Planet ascensionPlanet = getPlanetByCoordinate(
+            getAscensionPlanetCoordinate().getX(),
+            getAscensionPlanetCoordinate().getY());
+        PlayerInfo info = getPlayerByIndex(i);
+        if (current == WinningStrategy.GENERIC
+            && activation < AscensionEvents.ASCENSION_VEIN_ACTIVATED
+              && (info.getArtifactLists().hasDiscoveredArtifacts()
+                || info.getTechList().hasTechForMk("Gravity ripper Mk"))) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.ASCENSION);
+        }
+        if (ascensionPlanet.getPlanetPlayerInfo() == info
+            && activation == AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.ASCENSION);
+        }
+        if (activation == AscensionEvents.ASCENSION_VEIN_ACTIVATED
+            && (info.getTechList().hasTech("Planetary ascension portal")
+                || info.getTechList().hasTech("Orbital ascension portal"))) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.ASCENSION);
+        }
       }
     }
   }

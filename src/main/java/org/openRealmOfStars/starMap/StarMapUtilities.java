@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1093,7 +1093,8 @@ public final class StarMapUtilities {
         planets++;
       }
     }
-    if (realm.getStrategy() == WinningStrategy.GENERIC) {
+    if (realm.getStrategy() == WinningStrategy.GENERIC
+        || realm.getStrategy() == WinningStrategy.ASCENSION) {
       target[Planet.RESEARCH_PLANET] = 1;
       target[Planet.CULTURE_PLANET] = 0;
       target[Planet.POPULATION_PLANET] = 0;

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -1357,6 +1357,87 @@ public class AITurnView extends BlackPanel {
     }
   }
   /**
+   * Handle Realm search for black hole.
+   * @param info PlayerInfo
+   */
+  public void searchForBlackHoleForRealms(final PlayerInfo info) {
+    if (info == null) {
+      return;
+    }
+    if (!info.getTechList().hasTech("Tractor beam")) {
+      StarMap map = game.getStarMap();
+      int centerx = map.getMaxX() / 2;
+      int centery = map.getMaxY() / 2;
+      Coordinate center = new Coordinate(centerx, centery);
+      int closest = -1;
+      double distance = 9999.0;
+      for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+        Fleet fleet = info.getFleets().getByIndex(i);
+        Mission miss = info.getMissions().getMissionForFleet(fleet.getName());
+        if (miss != null && miss.getType() == MissionType.EXPLORE) {
+          double value = fleet.getCoordinate().calculateDistance(center);
+          if (value < distance && value / fleet.getFleetFtlSpeed() < 6) {
+            closest = i;
+            distance = value;
+          }
+        }
+      }
+      if (closest != -1) {
+        Fleet fleet = info.getFleets().getByIndex(closest);
+        Mission mission = info.getMissions().getMissionForFleet(
+            fleet.getName());
+        if (mission != null) {
+          mission.setTarget(center);
+          mission.setType(MissionType.MOVE);
+          mission.setPhase(MissionPhase.TREKKING);
+        } else {
+          mission = new Mission(MissionType.MOVE, MissionPhase.TREKKING,
+              center);
+          mission.setFleetName(fleet.getName());
+          info.getMissions().add(mission);
+        }
+      }
+    }
+    if (info.getStrategy() == WinningStrategy.ASCENSION) {
+      StarMap map = game.getStarMap();
+      if (map.getAscensionEvents().getAscensionActivation()
+          >= AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+        return;
+      }
+      int centerx = map.getMaxX() / 2;
+      int centery = map.getMaxY() / 2;
+      Coordinate center = new Coordinate(centerx, centery);
+      int closest = -1;
+      double distance = 9999.0;
+      for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+        Fleet fleet = info.getFleets().getByIndex(i);
+        Mission miss = info.getMissions().getMissionForFleet(fleet.getName());
+        if (miss != null && miss.getType() == MissionType.EXPLORE) {
+          double value = fleet.getCoordinate().calculateDistance(center);
+          if (value < distance && fleet.hasGravityRipper()) {
+            closest = i;
+            distance = value;
+          }
+        }
+      }
+      if (closest != -1) {
+        Fleet fleet = info.getFleets().getByIndex(closest);
+        Mission mission = info.getMissions().getMissionForFleet(
+            fleet.getName());
+        if (mission != null) {
+          mission.setTarget(center);
+          mission.setType(MissionType.MOVE);
+          mission.setPhase(MissionPhase.TREKKING);
+        } else {
+          mission = new Mission(MissionType.MOVE, MissionPhase.TREKKING,
+              center);
+          mission.setFleetName(fleet.getName());
+          info.getMissions().add(mission);
+        }
+      }
+    }
+  }
+  /**
    * Handle Space pirate search for black hole.
    */
   public void searchForBlackHole() {
@@ -1826,6 +1907,7 @@ public class AITurnView extends BlackPanel {
           // All fleets have moved. Checking the new possible planet
           searchPlanetsForMissions();
           searchDeepSpaceAnchors();
+          searchForBlackHoleForRealms(info);
         } else {
           searchPlanetsForSpacePirate();
           searchForBlackHole();

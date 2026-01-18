@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.research;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,6 +20,7 @@ package org.openRealmOfStars.ai.research;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -105,6 +106,10 @@ public final class Research {
     handleOrbitalDesign(info, ShipSize.MEDIUM);
     handleOrbitalDesign(info, ShipSize.LARGE);
     handleOrbitalDesign(info, ShipSize.HUGE);
+    handleAscensionOrbitalDesign(info, ShipSize.SMALL);
+    handleAscensionOrbitalDesign(info, ShipSize.MEDIUM);
+    handleAscensionOrbitalDesign(info, ShipSize.LARGE);
+    handleAscensionOrbitalDesign(info, ShipSize.HUGE);
     handleTrooperShipDesign(info);
     handleColonyShipDesign(info);
     handleFreighterShipDesign(info);
@@ -442,6 +447,53 @@ public final class Research {
           if (design.getTotalMilitaryPower() == stat.getDesign()
               .getTotalMilitaryPower() && design.getStarbaseValue() > stat
               .getDesign().getStarbaseValue()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+
+  }
+
+  /**
+   * Handle Orbital design for AI for certain size
+   * @param info Player
+   * @param size ShipSize to handle
+   */
+  private static void handleAscensionOrbitalDesign(final PlayerInfo info,
+      final ShipSize size) {
+    ShipDesign design = ShipGenerator.createAscensionOrbital(info, size);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      int designCost = design.getCost() + design.getMetalCost();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+          if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL
+              && !stat.getDesign().getHull().getName().equals("Minor orbital")
+              && !stat.isObsolete()) {
+            notFound = false;
+            int statCost = stat.getDesign().getCost()
+                + stat.getDesign().getMetalCost();
+            if (design.getTotalMilitaryPower() > stat.getDesign()
+                .getTotalMilitaryPower() && designCost <= statCost) {
+              stat.setObsolete(true);
+              ShipStat ship = new ShipStat(design);
+              info.addShipStat(ship);
+              break;
+            }
+          }
+        } else {
+          int statCost = stat.getDesign().getCost()
+              + stat.getDesign().getMetalCost();
+          if (designCost < statCost) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

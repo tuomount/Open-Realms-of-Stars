@@ -1785,6 +1785,13 @@ public class AITurnView extends BlackPanel {
         if (planet != null && planet.getPlanetPlayerInfo() == info) {
           fleet.aiUpgradeShips(info, planet);
         }
+        Planet ascensionPlanet = game.getStarMap().getPlanetByCoordinate(
+            game.getStarMap().getAscensionPlanetCoordinate().getX(),
+            game.getStarMap().getAscensionPlanetCoordinate().getY());
+        if (planet != null && ascensionPlanet == planet
+            && fleet.getMovesLeft() > 0) {
+          MissionHandling.handleAscension(fleet, info, game);
+        }
         Mission mission = null;
         if (info.getAiDifficulty() == AiDifficulty.WEAK) {
           mission = info.getMissions().getMission(MissionType.COLONIZE,

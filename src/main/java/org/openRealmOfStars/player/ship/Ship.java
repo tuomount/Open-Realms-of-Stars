@@ -1515,6 +1515,21 @@ private int increaseHitChanceByComponent() {
     }
     return false;
   }
+
+  /**
+   * Check if design has ascension portal.
+   * @return True if it does
+   */
+  public boolean hasAscensionPortal() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.STARBASE_COMPONENT
+          && comp.getName().equals("Orbital ascension portal")) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Get Troop power
    * @return Get Total troop power where improvements are taken to count

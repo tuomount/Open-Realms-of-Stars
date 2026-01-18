@@ -550,6 +550,20 @@ public class ShipDesign {
     }
     return false;
   }
+
+  /**
+   * Check if design has ascension portal.
+   * @return True if it does
+   */
+  public boolean hasAscensionPortal() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.STARBASE_COMPONENT
+          && comp.getName().equals("Orbital ascension portal")) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Does ship design have more than one engine?
    *  True if two or more engines are in place.

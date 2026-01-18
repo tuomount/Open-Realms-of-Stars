@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.planet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2022 Tuomo Untinen
+ * Copyright (C) 2022-2026 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -139,12 +139,32 @@ public final class ChallengingScoring {
             scores[i] = scores[i] + 60;
           }
         }
+        if (info.getStrategy() == WinningStrategy.ASCENSION
+            && building.getName().equals("Planetary ascension portal")) {
+          Planet ascensionPlanet = map.getPlanetByCoordinate(
+              map.getAscensionPlanetCoordinate().getX(),
+              map.getAscensionPlanetCoordinate().getY());
+          int time = planet.getProductionTime(constructions[i]);
+          if (planet == ascensionPlanet && time <= 15) {
+            scores[i] = scores[i] + 100;
+          }
+        }
+
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];
         int score = DefaultScoring.scoreShip(ship, map.getGameLengthState(),
             planet);
         int time = planet.getProductionTime(constructions[i]);
+        if (info.getStrategy() == WinningStrategy.ASCENSION
+            && ship.hasAscensionPortal()) {
+          Planet ascensionPlanet = map.getPlanetByCoordinate(
+              map.getAscensionPlanetCoordinate().getX(),
+              map.getAscensionPlanetCoordinate().getY());
+          if (planet == ascensionPlanet && time <= 15) {
+            score = score + 100;
+          }
+        }
         if (ship.getTotalMilitaryPower() > 0) {
           if (info.getDiplomacy().getNumberOfWar() > 0) {
             score = score + info.getDiplomacy().getNumberOfWar() * 3;

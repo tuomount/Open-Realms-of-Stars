@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.mission;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -249,6 +249,43 @@ public final class MissionHandling {
     return result;
   }
 
+  /**
+   * Check ascension portal near by the fleet
+   * @param fleet Fleet
+   * @param info PlayerInfo
+   * @param game Game for getting star map
+   */
+  public static void handleAscension(final Fleet fleet, final PlayerInfo info,
+      final Game game) {
+    StarMap starMap = game.getStarMap();
+    Coordinate center = fleet.getCoordinate();
+    Coordinate targetCoord = null;
+    for (int y = -1; y <= 1; y++) {
+      for (int x = -1; x <= 1; x++) {
+        if (x == 0 && y == 0) {
+          continue;
+        }
+        Tile tile = starMap.getTile(center.getX() + x, center.getY() + y);
+        if (info.getSectorVisibility(center.getX() + x,
+            center.getY() + y) == PlayerInfo.UNCHARTED) {
+          tile = null;
+        }
+        if (tile != null && tile.isAscensionPortal() && targetCoord == null) {
+          targetCoord = new Coordinate(center.getX() + x, center.getY() + y);
+        }
+      }
+    }
+    if (targetCoord != null) {
+      fleet.setRoute(null);
+      AStarSearch search = new AStarSearch(game.getStarMap(),
+          fleet.getX(), fleet.getY(), targetCoord.getX(),
+          targetCoord.getY(), false);
+      search.doSearch();
+      search.doRoute();
+      fleet.setaStarSearch(search);
+      makeRegularMoves(game, fleet, info);
+    }
+  }
   /**
    * Handle devourer mission.
    * @param mission Roaming mission, does nothing if type is wrong

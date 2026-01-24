@@ -75,6 +75,83 @@ public final class GraphRoutines {
   }
 
   /**
+   * Scale Tile from 32x32 to 24x24 size.
+   * @param image Original Tile
+   * @param borderFocus True for map tiles, false for ship tiles.
+   * @return BufferedImage
+   */
+  public static BufferedImage scaleTile32to24(final BufferedImage image,
+      final boolean borderFocus) {
+    byte[] maskBorder = {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1};
+    byte[] maskCenter = {0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+        1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0};
+    BufferedImage resizedImage = new BufferedImage(24, 24,
+        image.getType());
+    int i = 0;
+    int j = 0;
+    byte[] usedMask = maskCenter;
+    if (borderFocus) {
+      usedMask = maskBorder;
+    }
+    for (int y = 0; y < 32; y++) {
+      for (int x = 0; x < 32; x++) {
+        int mask = usedMask[x] & usedMask[y];
+        if (mask == 1) {
+          int color = image.getRGB(x, y);
+          resizedImage.setRGB(i, j, color);
+          i++;
+          if (i >= 24) {
+            i = 0;
+            j++;
+          }
+        }
+      }
+    }
+    return resizedImage;
+  }
+
+  /**
+   * Scale Tile from 64x64 to 48x48 size.
+   * @param image Original Tile
+   * @param borderFocus True for map tiles, false for ship tiles.
+   * @return BufferedImage
+   */
+  public static BufferedImage scaleTile64to48(final BufferedImage image,
+      final boolean borderFocus) {
+    byte[] maskBorder = {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0,
+                         1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1};
+    byte[] maskCenter = {0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+                         0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+        1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0,
+        1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0};
+    BufferedImage resizedImage = new BufferedImage(48, 48,
+        image.getType());
+    int i = 0;
+    int j = 0;
+    byte[] usedMask = maskCenter;
+    if (borderFocus) {
+      usedMask = maskBorder;
+    }
+    for (int y = 0; y < 64; y++) {
+      for (int x = 0; x < 64; x++) {
+        int mask = usedMask[x] & usedMask[y];
+        if (mask == 1) {
+          int color = image.getRGB(x, y);
+          resizedImage.setRGB(i, j, color);
+          i++;
+          if (i >= 48) {
+            i = 0;
+            j++;
+          }
+        }
+      }
+    }
+    return resizedImage;
+  }
+/**
    * Scale image and maintaing the aspect ration
    * @param image Image to scale
    * @param maxWidth New maximum width

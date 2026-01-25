@@ -19,6 +19,7 @@ package org.openRealmOfStars.player.ship;
 
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
@@ -31,9 +32,17 @@ public final class SharedShipImages {
    */
   private static BufferedImage[] shipImages;
   /**
+   * Larger than normal size ship images
+   */
+  private static BufferedImage[] largerShipImages;
+  /**
    * Normal size ship images
    */
   private static BufferedImage[] normalShipImages;
+  /**
+   * smaller than normal size ship images
+   */
+  private static BufferedImage[] smallerShipImages;
   /**
    * Min size ship images
    */
@@ -44,9 +53,17 @@ public final class SharedShipImages {
    */
   private static BufferedImage[] monsterShipImages;
   /**
+   * larger than normal size ship images
+   */
+  private static BufferedImage[] largerMonsterShipImages;
+  /**
    * Normal size ship images
    */
   private static BufferedImage[] normalMonsterShipImages;
+  /**
+   * Smaller size ship images
+   */
+  private static BufferedImage[] smallerMonsterShipImages;
   /**
    * Min size ship images
    */
@@ -109,49 +126,86 @@ public final class SharedShipImages {
     image = IOUtilities.loadImage("/resources/images/shared_ship_models.png");
     int number = NUMBER_OF_IMAGES;
     shipImages = new BufferedImage[number];
+    largerShipImages = new BufferedImage[number];
     normalShipImages = new BufferedImage[number];
+    smallerShipImages = new BufferedImage[number];
     smallShipImages = new BufferedImage[number];
     shipImages[PRIVATEER] = ShipImage.image64x64(image, 0, 0);
+    largerShipImages[PRIVATEER] = GraphRoutines.scaleTile64to48(
+        shipImages[PRIVATEER], false);
     normalShipImages[PRIVATEER] = ShipImage.scaleTo32x32(shipImages[PRIVATEER]);
+    smallerShipImages[PRIVATEER] = GraphRoutines.scaleTile32to24(
+        normalShipImages[PRIVATEER], false);
     smallShipImages[PRIVATEER] = ShipImage.scaleTo16x16(shipImages[PRIVATEER]);
     shipImages[PRIVATEER_LARGE] = ShipImage.image64x64(image, 1, 0);
+    largerShipImages[PRIVATEER_LARGE] = GraphRoutines.scaleTile64to48(
+        shipImages[PRIVATEER_LARGE], false);
     normalShipImages[PRIVATEER_LARGE] = ShipImage.scaleTo32x32(
         shipImages[PRIVATEER_LARGE]);
+    smallerShipImages[PRIVATEER_LARGE] = GraphRoutines.scaleTile32to24(
+        normalShipImages[PRIVATEER_LARGE], false);
     smallShipImages[PRIVATEER_LARGE] = ShipImage.scaleTo16x16(
         shipImages[PRIVATEER_LARGE]);
     shipImages[ARTIFICIAL_PLANET] = ShipImage.image64x64(image, 2, 0);
+    largerShipImages[ARTIFICIAL_PLANET] = GraphRoutines.scaleTile64to48(
+        shipImages[ARTIFICIAL_PLANET], false);
     normalShipImages[ARTIFICIAL_PLANET] = ShipImage.scaleTo32x32(
         shipImages[ARTIFICIAL_PLANET]);
+    smallerShipImages[ARTIFICIAL_PLANET] = GraphRoutines.scaleTile32to24(
+        normalShipImages[ARTIFICIAL_PLANET], false);
     smallShipImages[ARTIFICIAL_PLANET] = ShipImage.scaleTo16x16(
         shipImages[ARTIFICIAL_PLANET]);
     shipImages[SPORE] = ShipImage.image64x64(image, 3, 0);
+    largerShipImages[SPORE] = GraphRoutines.scaleTile64to48(
+        shipImages[SPORE], false);
     normalShipImages[SPORE] = ShipImage.scaleTo32x32(shipImages[SPORE]);
+    smallerShipImages[SPORE] = GraphRoutines.scaleTile32to24(
+        normalShipImages[SPORE], false);
     smallShipImages[SPORE] = ShipImage.scaleTo16x16(shipImages[SPORE]);
 
     image = IOUtilities.loadImage("/resources/images/space_monsters_ships.png");
     number = NUMBER_OF_MONSTER_IMAGES;
     monsterShipImages = new BufferedImage[number];
+    largerMonsterShipImages = new BufferedImage[number];
     normalMonsterShipImages = new BufferedImage[number];
+    smallerMonsterShipImages = new BufferedImage[number];
     smallMonsterShipImages = new BufferedImage[number];
 
     monsterShipImages[SPACE_WORM] = ShipImage.image64x64(image, 0, 0);
+    largerMonsterShipImages[SPACE_WORM] = GraphRoutines.scaleTile64to48(
+        monsterShipImages[SPACE_WORM], false);
     normalMonsterShipImages[SPACE_WORM] = ShipImage.scaleTo32x32(
         monsterShipImages[SPACE_WORM]);
+    smallerMonsterShipImages[SPACE_WORM] = GraphRoutines.scaleTile32to24(
+        normalMonsterShipImages[SPACE_WORM], false);
     smallMonsterShipImages[SPACE_WORM] = ShipImage.scaleTo16x16(
         monsterShipImages[SPACE_WORM]);
     monsterShipImages[SPACE_KRAKEN] = ShipImage.image64x64(image, 1, 0);
+    largerMonsterShipImages[SPACE_KRAKEN] = GraphRoutines.scaleTile64to48(
+        monsterShipImages[SPACE_KRAKEN], false);
     normalMonsterShipImages[SPACE_KRAKEN] = ShipImage.scaleTo32x32(
         monsterShipImages[SPACE_KRAKEN]);
+    smallerMonsterShipImages[SPACE_KRAKEN] = GraphRoutines.scaleTile32to24(
+        normalMonsterShipImages[SPACE_KRAKEN], false);
     smallMonsterShipImages[SPACE_KRAKEN] = ShipImage.scaleTo16x16(
         monsterShipImages[SPACE_KRAKEN]);
     monsterShipImages[LARGE_SPACE_KRAKEN] = ShipImage.image64x64(image, 2, 0);
+    largerMonsterShipImages[LARGE_SPACE_KRAKEN] = GraphRoutines.scaleTile64to48(
+        monsterShipImages[LARGE_SPACE_KRAKEN], false);
     normalMonsterShipImages[LARGE_SPACE_KRAKEN] = ShipImage.scaleTo32x32(
         monsterShipImages[LARGE_SPACE_KRAKEN]);
+    smallerMonsterShipImages[LARGE_SPACE_KRAKEN] =
+        GraphRoutines.scaleTile32to24(
+            normalMonsterShipImages[LARGE_SPACE_KRAKEN], false);
     smallMonsterShipImages[LARGE_SPACE_KRAKEN] = ShipImage.scaleTo16x16(
         monsterShipImages[LARGE_SPACE_KRAKEN]);
     monsterShipImages[DEVOURER] = ShipImage.image64x64(image, 3, 0);
+    largerMonsterShipImages[DEVOURER] = GraphRoutines.scaleTile64to48(
+        monsterShipImages[DEVOURER], false);
     normalMonsterShipImages[DEVOURER] = ShipImage.scaleTo32x32(
         monsterShipImages[DEVOURER]);
+    smallerMonsterShipImages[DEVOURER] = GraphRoutines.scaleTile32to24(
+        normalMonsterShipImages[DEVOURER], false);
     smallMonsterShipImages[DEVOURER] = ShipImage.scaleTo16x16(
         monsterShipImages[DEVOURER]);
   }
@@ -173,6 +227,22 @@ public final class SharedShipImages {
   }
 
   /**
+   * Get ship image(48x48) by index. If index is out of bounds scout privateer
+   * is returned.
+   * @param index The ship image index
+   * @return BufferedImage
+   */
+  public static BufferedImage getLargerShipImage(final int index) {
+    if (largerShipImages == null) {
+      loadImages();
+    }
+    if (index >= 0 && index < largerShipImages.length) {
+      return largerShipImages[index];
+    }
+    return largerShipImages[0];
+  }
+
+  /**
    * Get normal ship image(32x32) by index. If index is out of bounds privateer
    * image is returned.
    * @param index The ship image index
@@ -186,6 +256,22 @@ public final class SharedShipImages {
       return normalShipImages[index];
     }
     return normalShipImages[0];
+  }
+
+  /**
+   * Get smaller ship image(24x24) by index. If index is out of bounds privateer
+   * image is returned.
+   * @param index The ship image index
+   * @return BufferedImage
+   */
+  public static BufferedImage getSmallerShipImage(final int index) {
+    if (smallerShipImages == null) {
+      loadImages();
+    }
+    if (index >= 0 && index < smallerShipImages.length) {
+      return smallerShipImages[index];
+    }
+    return smallerShipImages[0];
   }
 
   /**
@@ -221,6 +307,22 @@ public final class SharedShipImages {
   }
 
   /**
+   * Get larger ship image by index. If index is out of bounds space worm
+   * image is returned.
+   * @param index The ship image index
+   * @return BufferedImage
+   */
+  public static BufferedImage getLargerMonsterShipImage(final int index) {
+    if (largerMonsterShipImages == null) {
+      loadImages();
+    }
+    if (index >= 0 && index < largerMonsterShipImages.length) {
+      return largerMonsterShipImages[index];
+    }
+    return largerMonsterShipImages[0];
+  }
+
+  /**
    * Get normal ship image by index. If index is out of bounds space worm
    * image is returned.
    * @param index The ship image index
@@ -234,6 +336,22 @@ public final class SharedShipImages {
       return normalMonsterShipImages[index];
     }
     return normalMonsterShipImages[0];
+  }
+
+  /**
+   * Get smaller ship image by index. If index is out of bounds space worm
+   * image is returned.
+   * @param index The ship image index
+   * @return BufferedImage
+   */
+  public static BufferedImage getSmallerMonsterShipImage(final int index) {
+    if (smallerMonsterShipImages == null) {
+      loadImages();
+    }
+    if (index >= 0 && index < smallerMonsterShipImages.length) {
+      return smallerMonsterShipImages[index];
+    }
+    return smallerMonsterShipImages[0];
   }
 
   /**

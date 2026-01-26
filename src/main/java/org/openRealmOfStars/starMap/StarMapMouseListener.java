@@ -347,8 +347,8 @@ public class StarMapMouseListener extends MouseAdapter {
     if (rotation < 0) {
       int zoomLevel = starMap.getZoomLevel();
       zoomLevel++;
-      if (zoomLevel > Tile.ZOOM_IN) {
-        zoomLevel = Tile.ZOOM_IN;
+      if (zoomLevel > Tile.ZOOM_IN2) {
+        zoomLevel = Tile.ZOOM_IN2;
       }
       starMap.setZoomLevel(zoomLevel);
       mapPanel.redoViewPoints();
@@ -357,8 +357,8 @@ public class StarMapMouseListener extends MouseAdapter {
     if (rotation > 0) {
       int zoomLevel = starMap.getZoomLevel();
       zoomLevel--;
-      if (zoomLevel < Tile.ZOOM_OUT1) {
-        zoomLevel = Tile.ZOOM_OUT1;
+      if (zoomLevel < Tile.ZOOM_OUT2) {
+        zoomLevel = Tile.ZOOM_OUT2;
       }
       starMap.setZoomLevel(zoomLevel);
       mapPanel.redoViewPoints();

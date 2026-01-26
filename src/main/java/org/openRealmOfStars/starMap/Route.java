@@ -431,7 +431,7 @@ public class Route {
           .loadImage("/resources/images/ftl_routedot.png");
       smallRouteDot = GuiStatics.scaleToHalf(routeDot);
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       return smallRouteDot;
     }
     return routeDot;
@@ -457,7 +457,7 @@ public class Route {
           .loadImage("/resources/images/green_routedot.png");
       smallGreenRouteDot = GuiStatics.scaleToHalf(greenRouteDot);
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       return smallGreenRouteDot;
     }
     return greenRouteDot;
@@ -483,7 +483,7 @@ public class Route {
           .loadImage("/resources/images/routedot.png");
       smallYellowRouteDot = GuiStatics.scaleToHalf(yellowRouteDot);
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       return smallYellowRouteDot;
     }
     return yellowRouteDot;
@@ -509,7 +509,7 @@ public class Route {
           .loadImage("/resources/images/repair.png");
       smallRepairDot = GuiStatics.scaleToHalf(repairDot);
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       return smallRepairDot;
     }
     return repairDot;
@@ -525,7 +525,7 @@ public class Route {
           .loadImage("/resources/images/defense.png");
       smallDefenseDot = GuiStatics.scaleToHalf(defenseDot);
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       return smallDefenseDot;
     }
     return defenseDot;
@@ -551,7 +551,7 @@ public class Route {
           .loadImage("/resources/images/bombed.png");
       smallBombedDot = GuiStatics.scaleToHalf(bombedDot);
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       return smallBombedDot;
     }
     return bombedDot;
@@ -577,7 +577,7 @@ public class Route {
           .loadImage("/resources/images/explored.png");
       smallExploredDot = GuiStatics.scaleToHalf(exploredDot);
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       return smallExploredDot;
     }
     return exploredDot;

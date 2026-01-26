@@ -158,8 +158,8 @@ public class MapInfoPanel extends InfoPanel {
       }
     }
     this.add(Box.createRigidArea(new Dimension(panelWidth, topSpace)));
-    BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_IN),
-        Tile.getMaxWidth(Tile.ZOOM_IN), BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_IN2),
+        Tile.getMaxWidth(Tile.ZOOM_IN2), BufferedImage.TYPE_4BYTE_ABGR);
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -342,8 +342,8 @@ public class MapInfoPanel extends InfoPanel {
    */
   public void updatePanel(final boolean debug, final PlayerInfo viewerInfo) {
     if (planet != null) {
-      BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_IN),
-          Tile.getMaxWidth(Tile.ZOOM_IN), BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_IN2),
+          Tile.getMaxWidth(Tile.ZOOM_IN2), BufferedImage.TYPE_4BYTE_ABGR);
       Tile tmpTile = Tiles.getTileByIndex(planet.getPlanetType()
           .getTileIndex());
       Graphics2D g2d = img.createGraphics();

@@ -773,73 +773,73 @@ public class BigImagePanel extends JPanel {
       if (tile.isBlueStarTile()) {
         img = new BufferedImage(192, 192, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = img.createGraphics();
-        Tiles.getTileByName(TileNames.BLUE_STAR_NW, Tile.ZOOM_IN).draw(g2d, 0,
+        Tiles.getTileByName(TileNames.BLUE_STAR_NW, Tile.ZOOM_IN2).draw(g2d, 0,
             0);
-        Tiles.getTileByName(TileNames.BLUE_STAR_N, Tile.ZOOM_IN).draw(g2d, 64,
+        Tiles.getTileByName(TileNames.BLUE_STAR_N, Tile.ZOOM_IN2).draw(g2d, 64,
             0);
-        Tiles.getTileByName(TileNames.BLUE_STAR_NE, Tile.ZOOM_IN).draw(g2d,
+        Tiles.getTileByName(TileNames.BLUE_STAR_NE, Tile.ZOOM_IN2).draw(g2d,
             128, 0);
-        Tiles.getTileByName(TileNames.BLUE_STAR_W, Tile.ZOOM_IN).draw(g2d, 0,
+        Tiles.getTileByName(TileNames.BLUE_STAR_W, Tile.ZOOM_IN2).draw(g2d, 0,
             64);
-        Tiles.getTileByName(TileNames.BLUE_STAR_C, Tile.ZOOM_IN).draw(g2d, 64,
+        Tiles.getTileByName(TileNames.BLUE_STAR_C, Tile.ZOOM_IN2).draw(g2d, 64,
             64);
-        Tiles.getTileByName(TileNames.BLUE_STAR_E, Tile.ZOOM_IN).draw(g2d, 128,
+        Tiles.getTileByName(TileNames.BLUE_STAR_E, Tile.ZOOM_IN2).draw(g2d, 128,
             64);
-        Tiles.getTileByName(TileNames.BLUE_STAR_SW, Tile.ZOOM_IN).draw(g2d, 0,
+        Tiles.getTileByName(TileNames.BLUE_STAR_SW, Tile.ZOOM_IN2).draw(g2d, 0,
             128);
-        Tiles.getTileByName(TileNames.BLUE_STAR_S, Tile.ZOOM_IN).draw(g2d, 64,
+        Tiles.getTileByName(TileNames.BLUE_STAR_S, Tile.ZOOM_IN2).draw(g2d, 64,
             128);
-        Tiles.getTileByName(TileNames.BLUE_STAR_SE, Tile.ZOOM_IN).draw(g2d,
+        Tiles.getTileByName(TileNames.BLUE_STAR_SE, Tile.ZOOM_IN2).draw(g2d,
             128, 128);
       }
       if (tile.isYellowStarTile()) {
         img = new BufferedImage(192, 192, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = img.createGraphics();
-        Tiles.getTileByName(TileNames.STAR_NW, Tile.ZOOM_IN).draw(g2d, 0, 0);
-        Tiles.getTileByName(TileNames.STAR_N, Tile.ZOOM_IN).draw(g2d, 64, 0);
-        Tiles.getTileByName(TileNames.STAR_NE, Tile.ZOOM_IN).draw(g2d, 128, 0);
-        Tiles.getTileByName(TileNames.STAR_W, Tile.ZOOM_IN).draw(g2d, 0, 64);
-        Tiles.getTileByName(TileNames.STAR_C, Tile.ZOOM_IN).draw(g2d, 64, 64);
-        Tiles.getTileByName(TileNames.STAR_E, Tile.ZOOM_IN).draw(g2d, 128, 64);
-        Tiles.getTileByName(TileNames.STAR_SW, Tile.ZOOM_IN).draw(g2d, 0, 128);
-        Tiles.getTileByName(TileNames.STAR_S, Tile.ZOOM_IN).draw(g2d, 64, 128);
-        Tiles.getTileByName(TileNames.STAR_SE, Tile.ZOOM_IN).draw(g2d, 128,
+        Tiles.getTileByName(TileNames.STAR_NW, Tile.ZOOM_IN2).draw(g2d, 0, 0);
+        Tiles.getTileByName(TileNames.STAR_N, Tile.ZOOM_IN2).draw(g2d, 64, 0);
+        Tiles.getTileByName(TileNames.STAR_NE, Tile.ZOOM_IN2).draw(g2d, 128, 0);
+        Tiles.getTileByName(TileNames.STAR_W, Tile.ZOOM_IN2).draw(g2d, 0, 64);
+        Tiles.getTileByName(TileNames.STAR_C, Tile.ZOOM_IN2).draw(g2d, 64, 64);
+        Tiles.getTileByName(TileNames.STAR_E, Tile.ZOOM_IN2).draw(g2d, 128, 64);
+        Tiles.getTileByName(TileNames.STAR_SW, Tile.ZOOM_IN2).draw(g2d, 0, 128);
+        Tiles.getTileByName(TileNames.STAR_S, Tile.ZOOM_IN2).draw(g2d, 64, 128);
+        Tiles.getTileByName(TileNames.STAR_SE, Tile.ZOOM_IN2).draw(g2d, 128,
             128);
       }
       if (tile.isSunTile()) {
         img = new BufferedImage(192, 192, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = img.createGraphics();
-        Tiles.getTileByName(TileNames.SUN_NW, Tile.ZOOM_IN).draw(g2d, 0, 0);
-        Tiles.getTileByName(TileNames.SUN_N, Tile.ZOOM_IN).draw(g2d, 64, 0);
-        Tiles.getTileByName(TileNames.SUN_NE, Tile.ZOOM_IN).draw(g2d, 128, 0);
-        Tiles.getTileByName(TileNames.SUN_W, Tile.ZOOM_IN).draw(g2d, 0, 64);
-        Tiles.getTileByName(TileNames.SUN_C, Tile.ZOOM_IN).draw(g2d, 64, 64);
-        Tiles.getTileByName(TileNames.SUN_E, Tile.ZOOM_IN).draw(g2d, 128, 64);
-        Tiles.getTileByName(TileNames.SUN_SW, Tile.ZOOM_IN).draw(g2d, 0, 128);
-        Tiles.getTileByName(TileNames.SUN_S, Tile.ZOOM_IN).draw(g2d, 64, 128);
-        Tiles.getTileByName(TileNames.SUN_SE, Tile.ZOOM_IN).draw(g2d, 128,
+        Tiles.getTileByName(TileNames.SUN_NW, Tile.ZOOM_IN2).draw(g2d, 0, 0);
+        Tiles.getTileByName(TileNames.SUN_N, Tile.ZOOM_IN2).draw(g2d, 64, 0);
+        Tiles.getTileByName(TileNames.SUN_NE, Tile.ZOOM_IN2).draw(g2d, 128, 0);
+        Tiles.getTileByName(TileNames.SUN_W, Tile.ZOOM_IN2).draw(g2d, 0, 64);
+        Tiles.getTileByName(TileNames.SUN_C, Tile.ZOOM_IN2).draw(g2d, 64, 64);
+        Tiles.getTileByName(TileNames.SUN_E, Tile.ZOOM_IN2).draw(g2d, 128, 64);
+        Tiles.getTileByName(TileNames.SUN_SW, Tile.ZOOM_IN2).draw(g2d, 0, 128);
+        Tiles.getTileByName(TileNames.SUN_S, Tile.ZOOM_IN2).draw(g2d, 64, 128);
+        Tiles.getTileByName(TileNames.SUN_SE, Tile.ZOOM_IN2).draw(g2d, 128,
             128);
       }
       if (tile.isBlackhole()) {
         img = new BufferedImage(192, 192, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = img.createGraphics();
-        Tiles.getTileByName(TileNames.BLACKHOLE_NW, Tile.ZOOM_IN).draw(g2d, 0,
+        Tiles.getTileByName(TileNames.BLACKHOLE_NW, Tile.ZOOM_IN2).draw(g2d, 0,
             0);
-        Tiles.getTileByName(TileNames.BLACKHOLE_N, Tile.ZOOM_IN).draw(g2d, 64,
+        Tiles.getTileByName(TileNames.BLACKHOLE_N, Tile.ZOOM_IN2).draw(g2d, 64,
             0);
-        Tiles.getTileByName(TileNames.BLACKHOLE_NE, Tile.ZOOM_IN).draw(g2d,
+        Tiles.getTileByName(TileNames.BLACKHOLE_NE, Tile.ZOOM_IN2).draw(g2d,
             128, 0);
-        Tiles.getTileByName(TileNames.BLACKHOLE_W, Tile.ZOOM_IN).draw(g2d, 0,
+        Tiles.getTileByName(TileNames.BLACKHOLE_W, Tile.ZOOM_IN2).draw(g2d, 0,
             64);
-        Tiles.getTileByName(TileNames.BLACKHOLE_C, Tile.ZOOM_IN).draw(g2d, 64,
+        Tiles.getTileByName(TileNames.BLACKHOLE_C, Tile.ZOOM_IN2).draw(g2d, 64,
             64);
-        Tiles.getTileByName(TileNames.BLACKHOLE_E, Tile.ZOOM_IN).draw(g2d, 128,
+        Tiles.getTileByName(TileNames.BLACKHOLE_E, Tile.ZOOM_IN2).draw(g2d, 128,
             64);
-        Tiles.getTileByName(TileNames.BLACKHOLE_SW, Tile.ZOOM_IN).draw(g2d, 0,
+        Tiles.getTileByName(TileNames.BLACKHOLE_SW, Tile.ZOOM_IN2).draw(g2d, 0,
             128);
-        Tiles.getTileByName(TileNames.BLACKHOLE_S, Tile.ZOOM_IN).draw(g2d, 64,
+        Tiles.getTileByName(TileNames.BLACKHOLE_S, Tile.ZOOM_IN2).draw(g2d, 64,
             128);
-        Tiles.getTileByName(TileNames.BLACKHOLE_SE, Tile.ZOOM_IN).draw(g2d,
+        Tiles.getTileByName(TileNames.BLACKHOLE_SE, Tile.ZOOM_IN2).draw(g2d,
             128, 128);
       }
     }

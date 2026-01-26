@@ -35,12 +35,22 @@ public class Tile {
   public static final int ZOOM_NORMAL = 0;
   /**
    * Zoom Level Zoom in.
+   * FIXME: Wrong value
    */
-  public static final int ZOOM_IN = 1;
+  public static final int ZOOM_IN1 = 2;
+  /**
+   * Zoom Level Zoom in.
+   */
+  public static final int ZOOM_IN2 = 1;
   /**
    * Zoom Level Zoom out 1.
    */
-  public static final int ZOOM_OUT1 = -1;
+  public static final int ZOOM_OUT2 = -1;
+  /**
+   * Zoom Level Zoom out 1.
+   * FIXME: Wrong value
+   */
+  public static final int ZOOM_OUT1 = -2;
 
   /**
    * Tile normal size;
@@ -49,11 +59,19 @@ public class Tile {
   /**
    * Tile normal zoom in;
    */
-  private static final int TILE_ZOOM_IN_SIZE = 64;
+  private static final int TILE_ZOOM_IN_SIZE1 = 48;
+  /**
+   * Tile normal zoom in;
+   */
+  private static final int TILE_ZOOM_IN_SIZE2 = 64;
   /**
    * Tile normal zoom out 1;
    */
-  private static final int TILE_ZOOM_OUT1_SIZE = 16;
+  private static final int TILE_ZOOM_OUT_SIZE1 = 24;
+  /**
+   * Tile normal zoom out 2;
+   */
+  private static final int TILE_ZOOM_OUT_SIZE2 = 16;
   /**
    * Graphical data for tile
    */
@@ -111,6 +129,19 @@ public class Tile {
     }
   }
 
+  /**
+   * Create tile from bufferedImage.
+   * @param tileImage Tile Image
+   * @param zoomLevel Zoom level
+   * @param name Tilename
+   */
+  public Tile(final BufferedImage tileImage, final int zoomLevel,
+      final String name) {
+    this.zoomLevel = zoomLevel;
+    img = tileImage;
+    this.name = name;
+    this.tileDescription = "";
+  }
 
   /**
    * Get Tile width on certain zoom level
@@ -121,11 +152,17 @@ public class Tile {
     if (zoomLevel == ZOOM_NORMAL) {
       return TILE_NORMAL_SIZE;
     }
-    if (zoomLevel == ZOOM_IN) {
-      return TILE_ZOOM_IN_SIZE;
+    if (zoomLevel == ZOOM_IN2) {
+      return TILE_ZOOM_IN_SIZE2;
+    }
+    if (zoomLevel == ZOOM_IN1) {
+      return TILE_ZOOM_IN_SIZE1;
+    }
+    if (zoomLevel == ZOOM_OUT2) {
+      return TILE_ZOOM_OUT_SIZE2;
     }
     if (zoomLevel == ZOOM_OUT1) {
-      return TILE_ZOOM_OUT1_SIZE;
+      return TILE_ZOOM_OUT_SIZE1;
     }
     return TILE_NORMAL_SIZE;
   }
@@ -138,11 +175,17 @@ public class Tile {
     if (zoomLevel == ZOOM_NORMAL) {
       return TILE_NORMAL_SIZE;
     }
-    if (zoomLevel == ZOOM_IN) {
-      return TILE_ZOOM_IN_SIZE;
+    if (zoomLevel == ZOOM_IN2) {
+      return TILE_ZOOM_IN_SIZE2;
+    }
+    if (zoomLevel == ZOOM_IN1) {
+      return TILE_ZOOM_IN_SIZE1;
+    }
+    if (zoomLevel == ZOOM_OUT2) {
+      return TILE_ZOOM_OUT_SIZE2;
     }
     if (zoomLevel == ZOOM_OUT1) {
-      return TILE_ZOOM_OUT1_SIZE;
+      return TILE_ZOOM_OUT_SIZE1;
     }
     return TILE_NORMAL_SIZE;
   }
@@ -186,7 +229,7 @@ public class Tile {
         step = 8;
       }
     }
-    if (zoomLevel == Tile.ZOOM_IN) {
+    if (zoomLevel == Tile.ZOOM_IN2) {
       if (sectorSize == 2) {
         sx = 1;
         sy = 16;
@@ -203,7 +246,7 @@ public class Tile {
         step = 16;
       }
     }
-    if (zoomLevel == Tile.ZOOM_OUT1) {
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       if (sectorSize == 2) {
         sx = 4;
         sy = 4;

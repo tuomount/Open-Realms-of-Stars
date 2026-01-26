@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.starMap.SunType;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
@@ -49,6 +50,15 @@ public final class Tiles {
   private static HashMap<String, Tile> hashOfTiles32;
 
   /**
+   * List of tiles size 24x24
+   */
+  private static ArrayList<Tile> listOfTiles24;
+  /**
+   * Hash map for tile size 24x24
+   */
+  private static HashMap<String, Tile> hashOfTiles24;
+
+  /**
    * List of tiles size 64x64
    */
   private static ArrayList<Tile> listOfTiles64;
@@ -56,6 +66,14 @@ public final class Tiles {
    * Hash map for tile size 64x64
    */
   private static HashMap<String, Tile> hashOfTiles64;
+  /**
+   * List of tiles size 48x48
+   */
+  private static ArrayList<Tile> listOfTiles48;
+  /**
+   * Hash map for tile size 48x48
+   */
+  private static HashMap<String, Tile> hashOfTiles48;
   /**
    * List of tiles size 16x16
    */
@@ -91,16 +109,24 @@ public final class Tiles {
     if (listOfTiles32 == null) {
       initTiles();
     }
-    if (index > 0 && index < listOfTiles32.size()
+    if (index >= 0 && index < listOfTiles32.size()
         && zoomLevel == Tile.ZOOM_NORMAL) {
       return listOfTiles32.get(index);
     }
-    if (index > 0 && index < listOfTiles64.size()
-        && zoomLevel == Tile.ZOOM_IN) {
+    if (index >= 0 && index < listOfTiles48.size()
+        && zoomLevel == Tile.ZOOM_IN1) {
+      return listOfTiles48.get(index);
+    }
+    if (index >= 0 && index < listOfTiles64.size()
+        && zoomLevel == Tile.ZOOM_IN2) {
       return listOfTiles64.get(index);
     }
-    if (index > 0 && index < listOfTiles16.size()
+    if (index >= 0 && index < listOfTiles24.size()
         && zoomLevel == Tile.ZOOM_OUT1) {
+      return listOfTiles24.get(index);
+    }
+    if (index >= 0 && index < listOfTiles16.size()
+        && zoomLevel == Tile.ZOOM_OUT2) {
       return listOfTiles16.get(index);
     }
     return listOfTiles32.get(0);
@@ -138,10 +164,16 @@ public final class Tiles {
     if (zoomLevel == Tile.ZOOM_NORMAL) {
       tile = hashOfTiles32.get(name);
     }
-    if (zoomLevel == Tile.ZOOM_IN) {
+    if (zoomLevel == Tile.ZOOM_IN1) {
+      tile = hashOfTiles48.get(name);
+    }
+    if (zoomLevel == Tile.ZOOM_IN2) {
       tile = hashOfTiles64.get(name);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
+      tile = hashOfTiles24.get(name);
+    }
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       tile = hashOfTiles16.get(name);
     }
     if (tile == null) {
@@ -252,9 +284,9 @@ public final class Tiles {
       final BufferedImage tilesImage16,
       final int x, final int y, final String name,
       final String description) {
-    addTile(tilesImage16, Tile.ZOOM_OUT1, x, y, name, description, -1);
+    addTile(tilesImage16, Tile.ZOOM_OUT2, x, y, name, description, -1);
     addTile(tilesImage32, Tile.ZOOM_NORMAL, x, y, name, description, -1);
-    addTile(tilesImage64, Tile.ZOOM_IN, x, y, name, description, -1);
+    addTile(tilesImage64, Tile.ZOOM_IN2, x, y, name, description, -1);
   }
 
   /**
@@ -274,11 +306,11 @@ public final class Tiles {
        final BufferedImage tilesImage16,
        final int x, final int y, final String name,
        final String description, final int animationIndex) {
-     addTile(tilesImage16, Tile.ZOOM_OUT1, x, y, name, description,
+     addTile(tilesImage16, Tile.ZOOM_OUT2, x, y, name, description,
          animationIndex);
      addTile(tilesImage32, Tile.ZOOM_NORMAL, x, y, name, description,
          animationIndex);
-     addTile(tilesImage64, Tile.ZOOM_IN, x, y, name, description,
+     addTile(tilesImage64, Tile.ZOOM_IN2, x, y, name, description,
          animationIndex);
    }
 
@@ -311,7 +343,17 @@ public final class Tiles {
         tile.setAnimationIndex(animationIndex);
       }
     }
-    if (zoomLevel == Tile.ZOOM_IN) {
+    if (zoomLevel == Tile.ZOOM_IN1) {
+      listOfTiles48.add(tile);
+      tile.setIndex(listOfTiles48.size() - 1);
+      hashOfTiles48.put(tile.getName(), tile);
+      if (animationIndex == -2) {
+        tile.setAnimationIndex(listOfTiles48.size());
+      } else if (animationIndex != -1) {
+        tile.setAnimationIndex(animationIndex);
+      }
+    }
+    if (zoomLevel == Tile.ZOOM_IN2) {
       listOfTiles64.add(tile);
       tile.setIndex(listOfTiles64.size() - 1);
       hashOfTiles64.put(tile.getName(), tile);
@@ -322,6 +364,16 @@ public final class Tiles {
       }
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
+      listOfTiles24.add(tile);
+      tile.setIndex(listOfTiles24.size() - 1);
+      hashOfTiles24.put(tile.getName(), tile);
+      if (animationIndex == -2) {
+        tile.setAnimationIndex(listOfTiles24.size());
+      } else if (animationIndex != -1) {
+        tile.setAnimationIndex(animationIndex);
+      }
+    }
+    if (zoomLevel == Tile.ZOOM_OUT2) {
       listOfTiles16.add(tile);
       tile.setIndex(listOfTiles16.size() - 1);
       hashOfTiles16.put(tile.getName(), tile);
@@ -361,10 +413,14 @@ public final class Tiles {
         .loadImage("/resources/images/maptiles_64.png");
     listOfTiles32 = new ArrayList<>();
     hashOfTiles32 = new HashMap<>();
+    listOfTiles24 = new ArrayList<>();
+    hashOfTiles24 = new HashMap<>();
     listOfTiles16 = new ArrayList<>();
     hashOfTiles16 = new HashMap<>();
     listOfTiles64 = new ArrayList<>();
     hashOfTiles64 = new HashMap<>();
+    listOfTiles48 = new ArrayList<>();
+    hashOfTiles48 = new HashMap<>();
     addTile(tilesImage32, tilesImage64, tilesImage16, 0, 0, TileNames.EMPTY,
         null);
     readSunGasPlanets(tilesImage32, tilesImage64, tilesImage16);
@@ -396,7 +452,26 @@ public final class Tiles {
         TileNames.DESTROYED_PLANET_DESCRIPTION);
     readAscensionTiles(tilesImage32, tilesImage64, tilesImage16);
     readRiftPortalTiles(tilesImage32, tilesImage64, tilesImage16);
-
+    for (int i = 0; i < getMaxTiles(); i++) {
+      Tile tile = getTileByIndex(i, Tile.ZOOM_IN2);
+      Tile newTile = new Tile(
+          GraphRoutines.scaleTile64to48(tile.getRawTile(), true),
+          Tile.ZOOM_IN1, tile.getName());
+      newTile.setDescription(tile.getDescription());
+      newTile.setIndex(tile.getIndex());
+      newTile.setAnimationIndex(tile.getAnimationIndex());
+      listOfTiles48.add(newTile);
+      hashOfTiles48.put(newTile.getName(), newTile);
+      tile = getTileByIndex(i, Tile.ZOOM_NORMAL);
+      newTile = new Tile(
+          GraphRoutines.scaleTile32to24(tile.getRawTile(), true),
+          Tile.ZOOM_OUT1, tile.getName());
+      newTile.setDescription(tile.getDescription());
+      newTile.setIndex(tile.getIndex());
+      newTile.setAnimationIndex(tile.getAnimationIndex());
+      listOfTiles24.add(newTile);
+      hashOfTiles24.put(newTile.getName(), newTile);
+    }
   }
 
   /**

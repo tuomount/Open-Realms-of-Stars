@@ -2,7 +2,7 @@ package org.openRealmOfStars.gui.mapPanel;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2025 Richard Smit
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -613,6 +613,14 @@ public class MapPanel extends JPanel {
         gr.drawImage(img, pixelX, pixelY, null);
         int offsetx = Icon16x16.MAX_WIDTH;
         int offsety = Icon16x16.MAX_HEIGHT;
+        if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+          offsetx = 8;
+          offsety = 8;
+        }
+        if (starMap.getZoomLevel() == Tile.ZOOM_IN1) {
+          offsetx = 32;
+          offsety = 32;
+        }
         if (starMap.getZoomLevel() == Tile.ZOOM_IN2) {
           offsetx = 48;
           offsety = 48;
@@ -724,6 +732,12 @@ public class MapPanel extends JPanel {
         && starMap.getZoomLevel() > Tile.ZOOM_OUT2) {
       Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
       int offset = Icon16x16.MAX_WIDTH;
+      if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+        offset = 8;
+      }
+      if (starMap.getZoomLevel() == Tile.ZOOM_IN1) {
+        offset = 28;
+      }
       if (starMap.getZoomLevel() == Tile.ZOOM_IN2) {
         offset = 40;
       }
@@ -737,6 +751,12 @@ public class MapPanel extends JPanel {
       if (starMap.getZoomLevel() > Tile.ZOOM_OUT2) {
         Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
         int offset = Icon16x16.MAX_WIDTH;
+        if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+          offset = 8;
+        }
+        if (starMap.getZoomLevel() == Tile.ZOOM_IN1) {
+          offset = 28;
+        }
         if (starMap.getZoomLevel() == Tile.ZOOM_IN2) {
           offset = 40;
         }
@@ -1212,6 +1232,14 @@ public class MapPanel extends JPanel {
           if (routeData != null && routeData[i + cx][j + cy] == 1) {
             int offsetX = 0;
             int offsetY = 0;
+            if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+              offsetX = 4;
+              offsetY = 4;
+            }
+            if (starMap.getZoomLevel() == Tile.ZOOM_IN1) {
+              offsetX = 8;
+              offsetY = 8;
+            }
             if (starMap.getZoomLevel() == Tile.ZOOM_IN2) {
               offsetX = 16;
               offsetY = 16;

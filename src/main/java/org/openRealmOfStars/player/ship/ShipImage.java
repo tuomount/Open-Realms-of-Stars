@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -549,11 +549,17 @@ public class ShipImage {
    */
   public BufferedImage getShipZoomedImage(final int index,
       final int zoomLevel) {
+    if (zoomLevel == Tile.ZOOM_IN1) {
+      return getLargerShipImage(index);
+    }
     if (zoomLevel == Tile.ZOOM_IN2) {
       return getShipImage(index);
     }
     if (zoomLevel == Tile.ZOOM_NORMAL) {
       return getNormalShipImage(index);
+    }
+    if (zoomLevel == Tile.ZOOM_OUT1) {
+      return getSmallerShipImage(index);
     }
     if (zoomLevel == Tile.ZOOM_OUT2) {
       return getSmallShipImage(index);

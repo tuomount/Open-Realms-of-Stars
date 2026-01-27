@@ -1,7 +1,7 @@
 package org.openRealmOfStars.mapTiles;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,22 +35,20 @@ public class Tile {
   public static final int ZOOM_NORMAL = 0;
   /**
    * Zoom Level Zoom in.
-   * FIXME: Wrong value
    */
-  public static final int ZOOM_IN1 = 2;
+  public static final int ZOOM_IN1 = 1;
   /**
    * Zoom Level Zoom in.
    */
-  public static final int ZOOM_IN2 = 1;
+  public static final int ZOOM_IN2 = 2;
   /**
    * Zoom Level Zoom out 1.
    */
-  public static final int ZOOM_OUT2 = -1;
+  public static final int ZOOM_OUT2 = -2;
   /**
    * Zoom Level Zoom out 1.
-   * FIXME: Wrong value
    */
-  public static final int ZOOM_OUT1 = -2;
+  public static final int ZOOM_OUT1 = -1;
 
   /**
    * Tile normal size;

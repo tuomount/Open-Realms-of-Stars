@@ -1270,6 +1270,14 @@ public class MapPanel extends JPanel {
           if (routeData != null && routeData[i + cx][j + cy] == 2) {
             int offsetX = 0;
             int offsetY = 0;
+            if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+              offsetX = 4;
+              offsetY = 4;
+            }
+            if (starMap.getZoomLevel() == Tile.ZOOM_IN1) {
+              offsetX = 8;
+              offsetY = 8;
+            }
             if (starMap.getZoomLevel() == Tile.ZOOM_IN2) {
               offsetX = 16;
               offsetY = 16;
@@ -1282,6 +1290,14 @@ public class MapPanel extends JPanel {
           if (routeData != null && routeData[i + cx][j + cy] == 3) {
             int offsetX = 0;
             int offsetY = 0;
+            if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+              offsetX = 4;
+              offsetY = 4;
+            }
+            if (starMap.getZoomLevel() == Tile.ZOOM_IN1) {
+              offsetX = 8;
+              offsetY = 8;
+            }
             if (starMap.getZoomLevel() == Tile.ZOOM_IN2) {
               offsetX = 16;
               offsetY = 16;

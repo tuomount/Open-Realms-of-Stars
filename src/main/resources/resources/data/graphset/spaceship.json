@@ -103,7 +103,11 @@
     "id": "Default",
     "path": "humanships.png",
     "monsters": false
+  },
+  {
+    "id": "Parlamek",
+    "path": "parlamekships.png",
+    "monsters": false
   }
-
 
 ]

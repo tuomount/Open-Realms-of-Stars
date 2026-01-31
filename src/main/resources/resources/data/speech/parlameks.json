@@ -1,0 +1,36 @@
+[
+  {
+    "id": "PARLAMEK",
+    "data": {
+      "TRADE": ["Good trade, affirmative?"],
+      "MOVE_FLEET": ["Sending apologies, fleet leaving zone of yours."],
+      "LIKE_GREET": ["Nice to see a friend of mine. Good Trading today?"],
+      "DEFESIVE_PACT": ["Friend of mine, shall we defensively cooperate?"],
+      "BORDER_WARS": ["A fleet of yours named %1$s has crossed borders of Parlamek! War, enemy operator!"],
+      "ASK_PROTECTION": ["Sending payment if you leave fleet of mine alone for 5 star years, good trade?"],
+      "ASK_MOVE_FLEET": ["A fleet of yours named %1$s has crossed sector of Parlamek. Requesting retreat!"],
+      "OFFER_SPY_TRADE": ["Friend of mine, shall we share spy data?"],
+      "MAKE_WAR": ["War, %1$s enemy operator"],
+      "OFFER_ACCEPTED": ["Good trade, good trade."],
+      "TRADE_EMBARGO": ["%1$s need operation embargo, affirmative?"],
+      "DECLINE_WAR": ["Unwise of yours. War, %1$s enemy operator!"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["You shall regret, enemy operator!"],
+      "NOTHING_TO_TRADE": ["Sending apologies. I thought we could engage trading operations."],
+      "NEUTRAL_GREET": ["Engage diplomacy, %1$s operator."],
+      "DECLINE_ANGER": ["Bad trade, bad trade, foolish operator!"],
+      "FRIENDS_GREET": ["Nice to see a friendly operator!"],
+      "OFFER_REJECTED": ["Send requestions of yours, trading operator."],
+      "ALLIANCE": ["Friend of mine, shall we cooperate together?"],
+      "DECLINE": ["Bad trade, cannot accept."],
+      "TRADE_ALLIANCE": ["Friend of mine, shall we engage trading cooperation?"],
+      "DISLIKE_GREET": ["Choose your words, operator."],
+      "DEMAND": ["Take or leave trading operation!"],
+      "HATE_GREET": ["Choose your words wisely, foolish operator!"],
+      "AGREE": ["Good, in thoughts of mine."],
+      "PEACE_OFFER": ["Parlameks requesting peace, operator."],
+      "INSULT_RESPOND": ["Unwise words, foolish operator!"],
+      "ASK_MOVE_SPY": ["Espionage fleet of yours named %1$s has crossed privacy of Parlameks. Requesting retreat, now!"]
+    }
+  }
+]

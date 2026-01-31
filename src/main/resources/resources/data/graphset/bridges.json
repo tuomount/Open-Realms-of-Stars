@@ -93,5 +93,10 @@
     "id": "Dwarf",
     "path": "/resources/images/alonian_bridge.png",
     "y-offset": 35
+  },
+    {
+    "id": "Parlamek",
+    "path": "/resources/images/parlamek_bridge.png",
+    "y-offset": 20
   }
 ]

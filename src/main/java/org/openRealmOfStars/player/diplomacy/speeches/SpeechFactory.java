@@ -140,7 +140,8 @@ public final class SpeechFactory {
         "homarians", "human", "lithorians", "mechions",
         "mothoids", "reborgians", "scaurians",
         "smaugirians", "space_pirate", "sporks",
-        "synthdroids", "teuthidaes", "fernids", "dwarf", "mycolians" };
+        "synthdroids", "teuthidaes", "fernids", "dwarf", "mycolians",
+        "parlameks"};
     int speechesLoaded = loader.loadAll(speechSets, basePath, files);
     files = DataSources.findJsonFilesInPath(Folders.getCustomSpeeches());
     speechesLoaded = speechesLoaded + loader.loadAll(speechSets,

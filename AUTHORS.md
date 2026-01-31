@@ -54,6 +54,12 @@ https://opengameart.org/content/spaceships-1
 Licensed under CC BY 3.0
 http://creativecommons.org/licenses/by/3.0/
 
+Parlamek ships by Stardust Philosopher
+
+Parlamek ship bridge by Tuomo Untinen
+
+Parlamek race picture by Tuomo Untinen
+
 Explosions by Csaba Felvegi aka Chabull
 
 Alonian ships by Tuomo Untinen

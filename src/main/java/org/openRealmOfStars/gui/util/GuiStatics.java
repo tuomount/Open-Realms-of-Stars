@@ -563,7 +563,8 @@ public final class GuiStatics {
       "resources/images/synthdroid_race.png",
       "resources/images/alteirian_race.png",
       "resources/images/mushroom.png",
-      "resources/images/alonian_race.png"
+      "resources/images/alonian_race.png",
+      "resources/images/parlamek_race.png"
   };
 
   /** Teuthidae race selection image */

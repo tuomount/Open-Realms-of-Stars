@@ -86,5 +86,39 @@
     "DiplomacyMusic": "Cyborg",
     "NameGenerator": "FEMALE_ROBOT",
     "Description": "Synthdroids are a race of artificial beings that are designed to resemble human females. They are often portrayed as being sleek and elegant, with graceful movements and a polished appearance. "
+  },
+   {
+    "ID": "PARLAMEKS",
+    "Name": "Parlameks",
+    "NameSingle": "Parlamek",
+    "BridgeId": "Parlamek",
+    "SpaceShipId": "Parlamek",
+    "Traits": [
+      "SLOW_LEARNERS",
+      "NATURAL_LEADERS",
+      "TOLERATE_COLD",
+      "MERCANTILE",
+      "WEAK_WAR_RESILIENCE",
+      "ROBOTIC",
+      "ENERGY_POWERED",
+      "TOLERATE_HIGH_RADIATION",
+      "CONSTRUCTED_POP",
+      "WEAK",
+      "NATURAL_CHARM",
+      "COMMUNAL",
+      "HANDY",
+      "NO_HEIRS"
+     ],
+    "Attitude": "MERCHANTICAL",
+    "Image": "resources/images/parlamek_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "MALE"
+                 ],
+    "SpeechSetId": "PARLAMEK",
+    "BridgeEffect": "WARM_WHITE",
+    "DiplomacyMusic": "Diplomacy",
+    "NameGenerator": "ROBOT",
+    "Description": "   Parlameks are a race of small humanoids with a great merchantical tendency. Small and fragile, but pragmatic and diplomatic mechanical beings.",
   }
 ]

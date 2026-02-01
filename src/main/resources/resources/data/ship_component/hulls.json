@@ -49,14 +49,14 @@
     "type": "CARGO_BAY",
     "name": "Cargo bay",
     "cost": 1,
-    "metalCost": 8,
+    "metalCost": 1,
     "energyRequirement": 0,
     "baySize": 1
   },
   {
     "type": "CARGO_BAY",
     "name": "Dimension cargo bay",
-    "cost": 8,
+    "cost": 4,
     "metalCost": 1,
     "energyRequirement": 0,
     "baySize": 2
@@ -64,8 +64,8 @@
   {
     "type": "CARGO_BAY",
     "name": "Armored cargo bay",
-    "cost": 4,
-    "metalCost": 15,
+    "cost": 2,
+    "metalCost": 5,
     "energyRequirement": 0,
     "baySize": 1,
     "defense": 4
@@ -73,8 +73,8 @@
   {
     "type": "CARGO_BAY",
     "name": "Armored dimension cargo bay",
-    "cost": 12,
-    "metalCost": 8,
+    "cost": 4,
+    "metalCost": 6,
     "energyRequirement": 0,
     "baySize": 2,
     "defense": 6

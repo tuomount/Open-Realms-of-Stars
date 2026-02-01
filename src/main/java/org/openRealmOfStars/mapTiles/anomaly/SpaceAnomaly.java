@@ -648,7 +648,7 @@ public class SpaceAnomaly {
         case TileNames.SPACE_ANOMALY_LEADER_IN_STASIS: {
           result = new SpaceAnomaly(AnomalyType.LEADER_IN_STASIS, 0);
           SpaceRace leaderRace = SpaceRaceFactory.getRandomLivingRace();
-          Gender gender = Gender.getRandom();
+          Gender gender = DiceGenerator.pickRandom(leaderRace.getGenders());
           String name = NameGenerator.generateName(
               leaderRace.getNameGeneratorType(), gender);
           String desc = leaderRace.getNameSingle();
@@ -661,6 +661,7 @@ public class SpaceAnomaly {
           Leader leader = new Leader(name);
           leader.setAge(DiceGenerator.getRandom(30, 50));
           leader.setHomeworld("Unknown");
+          leader.setGender(gender);
           leader.setLevel(DiceGenerator.getRandom(1, 3));
           leader.setRace(leaderRace);
           leader.setJob(Job.UNASSIGNED);

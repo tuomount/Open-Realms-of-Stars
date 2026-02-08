@@ -2359,14 +2359,17 @@ public class PlayerInfo {
     if (!ignoreRadiation) {
       RadiationType raceMaxRad = race.getMaxRad();
       int raceMaxRadInt = raceMaxRad.getIndex();
-      if (getTechList().isTech("Radiation dampener")) {
+      if (getTechList().isTech("Radiation dampener")
+          || planet.hasCertainBuilding("Radiation dampener")) {
         raceMaxRadInt++;
       }
-      if (getTechList().isTech("Radiation well")) {
+      if (getTechList().isTech("Radiation well")
+          || planet.hasCertainBuilding("Radiation well")) {
         raceMaxRadInt++;
       }
-      if (getTechList().isTech("Radiation shield")) {
-        raceMaxRadInt++;
+      if (getTechList().isTech("Radiation shield")
+          || planet.hasCertainBuilding("Radiation shield")) {
+        raceMaxRadInt = raceMaxRadInt + 2;
       }
       raceMaxRadInt = Math.min(RadiationType.values().length - 1,
           raceMaxRadInt);

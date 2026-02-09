@@ -462,9 +462,9 @@ public class ArtifactLists {
       }
       if (artifact.getArtifactType() == ArtifactType.ENERGY) {
         boolean techGained = false;
-        String techName = "Tachyon source Mk3";
+        String techName = "Tachyon source Mk1";
         if (!info.getTechList().hasTech(techName)) {
-          String event = generateAncientTech(info, techName, 5,
+          String event = generateAncientTech(info, techName, 7,
               TechType.Propulsion, ArtifactType.ENERGY);
           if (event != null) {
             techGained = true;
@@ -472,9 +472,75 @@ public class ArtifactLists {
           }
         }
         if (!techGained) {
+          techName = "Tachyon source Mk2";
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 9,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
+          }
+        }
+        if (!techGained) {
+          techName = "Tachyon source Mk3";
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 10,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
+          }
+        }
+        if (!techGained) {
+          techName = "Antimatter source Mk1";
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 11,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
+          }
+        }
+        if (!techGained) {
+          techName = "Antimatter source Mk2";
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 13,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
+          }
+        }
+        if (!techGained) {
           techName = "Antimatter source Mk3";
           if (!info.getTechList().hasTech(techName)) {
-            String event = generateAncientTech(info, techName, 8,
+            String event = generateAncientTech(info, techName, 14,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
+          }
+        }
+        if (!techGained) {
+          techName = "Zero-point source Mk1";
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 15,
+                TechType.Propulsion, ArtifactType.ENERGY);
+            if (event != null) {
+              techGained = true;
+              sb.append(event);
+            }
+          }
+        }
+        if (!techGained) {
+          techName = "Zero-point source Mk2";
+          if (!info.getTechList().hasTech(techName)) {
+            String event = generateAncientTech(info, techName, 16,
                 TechType.Propulsion, ArtifactType.ENERGY);
             if (event != null) {
               techGained = true;
@@ -485,7 +551,7 @@ public class ArtifactLists {
         if (!techGained) {
           techName = "Zero-point source Mk3";
           if (!info.getTechList().hasTech(techName)) {
-            String event = generateAncientTech(info, techName, 10,
+            String event = generateAncientTech(info, techName, 16,
                 TechType.Propulsion, ArtifactType.ENERGY);
             if (event != null) {
               techGained = true;

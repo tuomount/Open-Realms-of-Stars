@@ -1,7 +1,7 @@
 package org.openRealmOfStars.audio.music;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +16,8 @@ package org.openRealmOfStars.audio.music;
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
+
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /**
 *
@@ -37,6 +39,10 @@ public class MusicFileInfo {
    * Song file inside JAR
    */
   private String fileName;
+  /**
+   * Song is outside of JAR file.
+   */
+  private boolean custom;
 
   /**
    * Packet limit in OGG stream after fading out will be activated
@@ -55,8 +61,20 @@ public class MusicFileInfo {
     author = composer;
     fileName = filename;
     fadingLimit = -1;
+    custom = false;
   }
 
+  /**
+   * Constructor for custom music file info.
+   * @param filename All we know about is filename.
+   */
+  public MusicFileInfo(final String filename) {
+    songName = filename;
+    author = "unknown";
+    fileName = Folders.getCustomMusic() + "/" + filename;
+    fadingLimit = -1;
+    custom = true;
+  }
   /**
    * Constructor Music File Info
    * @param name Songname
@@ -70,6 +88,7 @@ public class MusicFileInfo {
     author = composer;
     fileName = filename;
     fadingLimit = limit;
+    custom = false;
   }
 
   /**
@@ -94,6 +113,14 @@ public class MusicFileInfo {
    */
   public String getFilename() {
     return fileName;
+  }
+
+  /**
+   * Is MusicFile custom music?
+   * @return True if custom music.
+   */
+  public boolean isCustom() {
+    return custom;
   }
 
   @Override

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.utilities.FileIo;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2024 Tuomo Untinen
+ * Copyright (C) 2024-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,6 +36,9 @@ public final class Folders {
   /** Custom space race image folder */
   private static final String CUSTOM_RACE_IMAGE_FOLDER =
       "/custom/images/spacerace";
+  /** Custom music folder */
+  private static final String CUSTOM_MUSIC_FOLDER =
+      "/custom/music";
   /** Custom space ship image folder */
   private static final String CUSTOM_SHIP_IMAGE_FOLDER =
       "/custom/images/ships";
@@ -91,6 +94,10 @@ public final class Folders {
       path = new File(userFolder + CUSTOM_RACE_IMAGE_FOLDER);
       if (!path.exists() && !path.mkdirs()) {
         return "Could not create custom space race image folder.";
+      }
+      path = new File(userFolder + CUSTOM_MUSIC_FOLDER);
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom music folder.";
       }
       path = new File(userFolder + CUSTOM_SHIP_IMAGE_FOLDER);
       if (!path.exists() && !path.mkdirs()) {
@@ -157,6 +164,17 @@ public final class Folders {
       initFolders();
     }
     return handleSeparator(userFolder + CUSTOM_RACE_IMAGE_FOLDER);
+  }
+
+  /**
+   * Get Path for Custom music path
+   * @return Path for custom music.
+   */
+  public static String getCustomMusic() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return handleSeparator(userFolder + CUSTOM_MUSIC_FOLDER);
   }
 
   /**

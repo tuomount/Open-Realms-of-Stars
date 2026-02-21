@@ -1,7 +1,7 @@
 package org.openRealmOfStars.audio.music;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2017-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,6 +18,8 @@ package org.openRealmOfStars.audio.music;
  */
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -440,7 +442,8 @@ public final class MusicPlayer {
   public static void play(final MusicFileInfo musicFile) {
     nowPlaying = musicFile;
     textDisplayed = 0;
-    play(nowPlaying.getFilename(), nowPlaying.getFadingLimit());
+    play(nowPlaying.getFilename(), nowPlaying.getFadingLimit(),
+        nowPlaying.isCustom());
   }
 
   /**
@@ -467,16 +470,22 @@ public final class MusicPlayer {
    * @param limit Fadeout limit.
    * If fadeout has been active and this limit has been reached then fading out
    * -1 can be used not for limit.
+   * @param custom If true Music file will be read outside of JAR file.
    */
   @SuppressWarnings("resource")
-  public static synchronized void play(final String musicFile,
-      final int limit) {
+  private static synchronized void play(final String musicFile,
+      final int limit, final boolean custom) {
     if (musicEnabled) {
       if (playing) {
         stop();
       }
       try {
-        InputStream is = MusicPlayer.class.getResource(musicFile).openStream();
+        InputStream is = null;
+        if (custom) {
+          is = new FileInputStream(new File(musicFile));
+        } else {
+          is = MusicPlayer.class.getResource(musicFile).openStream();
+        }
         BufferedInputStream stream = new BufferedInputStream(is);
         if (player == null) {
           player = new OggPlayer(stream, limit);
@@ -670,6 +679,7 @@ public final class MusicPlayer {
         return info;
       }
     }
-    throw new IllegalArgumentException("Unexpected music file: " + name);
+    MusicFileInfo musicFile = new MusicFileInfo(name);
+    return musicFile;
   }
 }

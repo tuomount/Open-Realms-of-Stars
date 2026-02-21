@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2024 Tuomo Untinen
+ * Copyright (C) 2024-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -155,13 +155,21 @@ public class SpaceRaceEditorView extends BlackPanel {
    */
   private ShipInteriorPanel interiorPanel2;
   /**
-   * List of built int space race images and custom one.
+   * List of built-in space race images and custom one.
    */
   private String[] raceImages;
   /**
    * Custom image index.
    */
   private int customImageIndex;
+  /**
+   * List of built-in diplomacy music and custom one.
+   */
+  private String[] diplomacyMusics;
+  /**
+   * Custom music index.
+   */
+  private int customMusicIndex;
   /**
    * Combobox for space race image
    */
@@ -170,6 +178,10 @@ public class SpaceRaceEditorView extends BlackPanel {
    * Browse button for space race image.
    */
   private SpaceButton browseButton;
+  /**
+   * Browse music button for diplomacy music.
+   */
+  private SpaceButton browseMusicButton;
   /**
    * Combobox for bridge effect.
    */
@@ -181,7 +193,7 @@ public class SpaceRaceEditorView extends BlackPanel {
   /**
    * Combobox for diplomacy music
    */
-  private SpaceComboBox<MusicFileInfo> diplomacyMusicCombo;
+  private SpaceComboBox<String> diplomacyMusicCombo;
   /**
    * Hull Image count
    */
@@ -500,6 +512,20 @@ public class SpaceRaceEditorView extends BlackPanel {
     }
     raceImages[customImageIndex] = "Custom";
   }
+
+  /**
+   * Init diplomacy music list.
+   * Gets values from MusicPlayer plus add custom one.
+   */
+  private void initDiplomacyMusics() {
+    diplomacyMusics = new String[MusicPlayer.DIPLOMACY_MUSIC_LIST.length + 1];
+    customMusicIndex = MusicPlayer.DIPLOMACY_MUSIC_LIST.length;
+    for (int i = 0; i < MusicPlayer.DIPLOMACY_MUSIC_LIST.length; i++) {
+      diplomacyMusics[i] = MusicPlayer.DIPLOMACY_MUSIC_LIST[i].getName();
+    }
+    diplomacyMusics[customMusicIndex] = "Custom";
+  }
+
   /**
    * Create Space Race appearance tab.
    * @param listener Action Listener
@@ -628,7 +654,8 @@ public class SpaceRaceEditorView extends BlackPanel {
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     infoPanel.add(label);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
-    diplomacyMusicCombo = new SpaceComboBox<>(MusicPlayer.DIPLOMACY_MUSIC_LIST);
+    initDiplomacyMusics();
+    diplomacyMusicCombo = new SpaceComboBox<>(diplomacyMusics);
     diplomacyMusicCombo.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
     diplomacyMusicCombo.setForeground(
@@ -645,6 +672,13 @@ public class SpaceRaceEditorView extends BlackPanel {
         GameCommands.COMMAND_SPACERACE_EDITOR_MUSIC_SELECT);
     infoPanel.add(diplomacyMusicCombo);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    browseMusicButton = new SpaceButton("Select Music",
+        GameCommands.COMMAND_SPACERACE_EDITOR_BROWSE_MUSIC);
+    browseMusicButton.addActionListener(listener);
+    browseMusicButton.setEnabled(false);
+    browseMusicButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    infoPanel.add(browseMusicButton);
+
     gridPanel.add(infoPanel);
 
     // third column
@@ -853,8 +887,8 @@ public class SpaceRaceEditorView extends BlackPanel {
     sb.append(tmp.toUpperCase());
     sb.append("\",\n");
     sb.append("    \"DiplomacyMusic\": \"");
-    MusicFileInfo music = (MusicFileInfo) diplomacyMusicCombo.getSelectedItem();
-    sb.append(music.getName());
+    String music = (String) diplomacyMusicCombo.getSelectedItem();
+    sb.append(music);
     sb.append("\",\n");
     sb.append("    \"NameGenerator\": \"");
     NameGeneratorType nameGen = (NameGeneratorType) nameGenCombo
@@ -914,6 +948,54 @@ public class SpaceRaceEditorView extends BlackPanel {
       spaceRaceImageCombo.setSelectedIndex(0);
     }
   }
+
+  /**
+   * Handle music selection for space race music.
+   */
+  public void handleMusicSelection() {
+    boolean imageSelected = false;
+    JFileChooser loadFileChooser = new JFileChooser(
+        new File(Folders.getCustomGovPath()));
+    loadFileChooser.setFileFilter(new FileNameExtensionFilter(
+        "OGG Music", "ogg"));
+    String fileName = "*.ogg";
+    loadFileChooser.setSelectedFile(
+        new File(Folders.getCustomMusic() + "/" + fileName));
+    loadFileChooser.setApproveButtonText("Load");
+    loadFileChooser.setDialogTitle("Load music file");
+    int returnValue = loadFileChooser.showOpenDialog(this);
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+      File file = loadFileChooser.getSelectedFile();
+      if (file.exists()) {
+        System.out.println("File: " + file.getAbsolutePath());
+        System.out.println("Folder: " + Folders.getCustomMusic());
+        if (file.getAbsolutePath().contains(
+            Folders.getCustomMusic())) {
+          String str = file.getAbsolutePath();
+          int index = str.lastIndexOf("/");
+          String osName = System.getProperty("os.name").toLowerCase();
+          if (osName.contains("windows")) {
+            index = str.lastIndexOf("\\");
+          }
+          str = str.substring(index + 1);
+          diplomacyMusics[customMusicIndex] = str;
+        } else {
+          diplomacyMusics[customMusicIndex] = file.getPath();
+        }
+        imageSelected = true;
+        SoundPlayer.playMenuSound();
+        diplomacyMusicCombo.setSelectedIndex(customMusicIndex);
+        diplomacyMusicCombo.getModel().setSelectedItem(
+            diplomacyMusics[customMusicIndex]);
+      }
+    } else {
+      SoundPlayer.playMenuDisabled();
+    }
+    if (!imageSelected) {
+      diplomacyMusicCombo.setSelectedIndex(0);
+    }
+  }
+
   /**
    * Handle actions for Government editor
    * @param arg0 ActionEvent command what player did
@@ -930,7 +1012,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_SPACERACE_EDITOR_SHIP_TIMER)) {
       hullImageCount++;
-      if (hullImageCount >= ShipImage.NUMBER_OF_IMAGES) {
+      if (hullImageCount >= 19) {
         hullImageCount = 0;
       }
       hullImage.setImage(ShipImageFactor.create(
@@ -954,8 +1036,20 @@ public class SpaceRaceEditorView extends BlackPanel {
       }
     }
     if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_SPACERACE_EDITOR_MUSIC_SELECT)) {
+      if (diplomacyMusicCombo.getSelectedIndex() == customMusicIndex) {
+        browseMusicButton.setEnabled(true);
+      } else {
+        browseMusicButton.setEnabled(false);
+      }
+    }
+    if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_SPACERACE_EDITOR_BROWSE_IMAGE)) {
       handleImageSelection();
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_SPACERACE_EDITOR_BROWSE_MUSIC)) {
+      handleMusicSelection();
     }
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE)) {
@@ -977,7 +1071,11 @@ public class SpaceRaceEditorView extends BlackPanel {
       newRace.setRaceBridgeEffect(BridgeCommandType.getByString(tmp));
       setAmbientEffect(newRace.getRaceBridgeEffect());
       interiorPanel.repaint();
-      MusicPlayer.play((MusicFileInfo) diplomacyMusicCombo.getSelectedItem());
+      String fileName = (String) diplomacyMusicCombo.getSelectedItem();
+      if (!fileName.equalsIgnoreCase("Custom")) {
+        MusicFileInfo musicFile = MusicPlayer.getByString(fileName);
+        MusicPlayer.play(musicFile);
+      }
       SoundPlayer.playMenuSound();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SAVE_SPACERACE)) {

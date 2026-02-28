@@ -116,8 +116,8 @@
                  "MALE"
                  ],
     "SpeechSetId": "PARLAMEK",
-    "BridgeEffect": "WARM_WHITE",
-    "DiplomacyMusic": "Diplomacy",
+    "BridgeEffect": "DARK_ORANGE",
+    "DiplomacyMusic": "Dino",
     "NameGenerator": "ROBOT",
     "Description": "   Parlameks are a race of small humanoids with a great merchantical tendency. Small and fragile, but pragmatic and diplomatic mechanical beings.",
   }

@@ -20,6 +20,7 @@ package org.openRealmOfStars.mapTiles.anomaly;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GuiStatics;
@@ -489,6 +490,10 @@ public class SpaceAnomaly {
           leader.setGender(gender);
           leader.setJob(Job.UNASSIGNED);
           leader.setTitle("");
+          if (name.startsWith("Dino")
+              && leaderRace.getRaceDiplomacyMusic() == MusicPlayer.DINO) {
+            leader.addPerk(Perk.ARTISTIC);
+          }
           for (int i = 0; i < leader.getLevel(); i++) {
             Perk[] newPerks = LeaderUtility.getNewPerks(leader,
                 LeaderUtility.PERK_TYPE_GOOD);

@@ -2340,7 +2340,7 @@ public final class NameGenerator {
    */
   private static String generateRobotName() {
     StringBuilder sb = new StringBuilder();
-    switch (DiceGenerator.getRandom(14)) {
+    switch (DiceGenerator.getRandom(15)) {
       default:
       case 0: sb.append("Model"); break;
       case 1: sb.append("Drone"); break;
@@ -2361,6 +2361,7 @@ public final class NameGenerator {
         sb.append(DiceGenerator.getRandom(1, 9));
         break;
       }
+      case 15: sb.append("Dino"); break;
     }
     if (DiceGenerator.getBoolean()) {
       sb.append("-");

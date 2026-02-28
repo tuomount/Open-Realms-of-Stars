@@ -233,6 +233,13 @@ public final class MusicPlayer {
           "/resources/musics/Braindead.ogg");
 
   /**
+   * Dino By Kim Lightyear CC-BY 4.0
+   */
+  public static final MusicFileInfo DINO =
+      new MusicFileInfo("Dino", "Kim Lightyear",
+          "/resources/musics/Dino.ogg");
+
+  /**
    * Techno DRIVE!!! By Centurion_of_war CC-BY 4.0
    */
   public static final MusicFileInfo TECHNODRIVE =
@@ -418,7 +425,7 @@ public final class MusicPlayer {
       OVE_MELAA_DIPLOMACY, FANTASY_CHOIR_2, PRESSURE, INTERPLANETARY_ODYSSEY,
       MALLOGA_BALLING, SET_FIRE_TO_REALITY, MENACE, BRAINDEAD,
       TECHNODRIVE, SKY_PORTAL, GUITAR_SONG, CYBORG, DARK_INTRO, SYLVAN_WALTZ,
-      DARK_AMBIENCE};
+      DARK_AMBIENCE, DINO};
 
   /**
    * What music file is currently playing

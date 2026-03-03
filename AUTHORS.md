@@ -143,6 +143,8 @@ Snowman icon by Tuomo Untinen
 
 Prison icon by Tuomo Untinen
 
+Filter icon by Tuomo Untinen
+
 Happy and Sad faces by Tuomo Untinen
 
 Space anomaly cloud tile by Vyntershtoff

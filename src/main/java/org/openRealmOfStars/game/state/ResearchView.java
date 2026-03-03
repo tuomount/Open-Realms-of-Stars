@@ -51,6 +51,7 @@ import org.openRealmOfStars.gui.list.TechTreeCellRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -171,6 +172,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         Icons.getIconByName(Icons.ICON_COMBAT_TECH),
         Icons.getIconByName(Icons.ICON_COMBAT_TECH), false,
         GameCommands.COMMAND_COMBAT_INFO, null);
+    iBtn.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_COMBAT_TECH)
+            .getIcon()));
     iBtn.addActionListener(listener);
     iBtn.setToolTipText("Show information about combat technology");
     techPane.add(iBtn);
@@ -192,6 +196,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         Icons.getIconByName(Icons.ICON_DEFENSE_TECH),
         Icons.getIconByName(Icons.ICON_DEFENSE_TECH), false,
         GameCommands.COMMAND_DEFENSE_INFO, null);
+    iBtn.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_DEFENSE_TECH)
+            .getIcon()));
     iBtn.addActionListener(listener);
     iBtn.setToolTipText("Show information about defense technology");
     techPane.add(iBtn);
@@ -213,6 +220,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         Icons.getIconByName(Icons.ICON_HULL_TECH),
         Icons.getIconByName(Icons.ICON_HULL_TECH), false,
         GameCommands.COMMAND_HULL_INFO, null);
+    iBtn.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_HULL_TECH)
+            .getIcon()));
     iBtn.setToolTipText("Show information about hull technology");
     iBtn.addActionListener(listener);
     techPane.add(iBtn);
@@ -236,6 +246,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
         Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), false,
         GameCommands.COMMAND_IMPROVEMENT_INFO, null);
+    iBtn.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH)
+            .getIcon()));
     iBtn.addActionListener(listener);
     iBtn.setToolTipText("Show information about planetary improvement "
         + "technology");
@@ -260,6 +273,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         Icons.getIconByName(Icons.ICON_PROPULSION_TECH),
         Icons.getIconByName(Icons.ICON_PROPULSION_TECH), false,
         GameCommands.COMMAND_PROPULSION_INFO, null);
+    iBtn.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_PROPULSION_TECH)
+            .getIcon()));
     iBtn.addActionListener(listener);
     iBtn.setToolTipText("Show information about propulsion technology");
     techPane.add(iBtn);
@@ -283,6 +299,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH),
         Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH), false,
         GameCommands.COMMAND_ELECTRONICS_INFO, null);
+    iBtn.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH)
+            .getIcon()));
     iBtn.addActionListener(listener);
     iBtn.setToolTipText("Show information about electronics technology");
     techPane.add(iBtn);

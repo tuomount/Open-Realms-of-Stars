@@ -287,6 +287,85 @@ public final class GraphRoutines {
   }
 
   /**
+   * Add white glow for bufferedimage.
+   * This will search border with nearest neighbor method and change those
+   * into white pixels.
+   * @param image BufferedImage
+   * @return BufferedImage
+   */
+  public static BufferedImage addGlow(final BufferedImage image) {
+    if (image == null) {
+      return null;
+    }
+    if (image.getType() != BufferedImage.TYPE_4BYTE_ABGR) {
+      return image;
+    }
+    int origWidth = image.getWidth();
+    int origHeight = image.getHeight();
+    BufferedImage transparentImg = new BufferedImage(origWidth, origHeight,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    Graphics2D gr2D = transparentImg.createGraphics();
+    for (int x = 0; x < origWidth; x++) {
+      for (int y = 0; y < origHeight; y++) {
+        int up = 0;
+        int down = 0;
+        int left = 0;
+        int right = 0;
+        int color = image.getRGB(x, y);
+        int alpha = color & 0xff000000;
+        if (alpha == 0xff000000) {
+          if (x > 0) {
+            left = image.getRGB(x - 1, y) & 0xff000000;
+          }
+          if (y > 0) {
+            up = image.getRGB(x, y - 1) & 0xff000000;
+          }
+          if (x < origWidth - 1) {
+            right = image.getRGB(x + 1, y) & 0xff000000;
+          }
+          if (y < origHeight - 1) {
+            down = image.getRGB(x, y + 1) & 0xff000000;
+          }
+          boolean empty = false;
+          boolean filled = false;
+          if (up == 0xff000000) {
+            filled = true;
+          }
+          if (down == 0xff000000) {
+            filled = true;
+          }
+          if (left == 0xff000000) {
+            filled = true;
+          }
+          if (right == 0xff000000) {
+            filled = true;
+          }
+          if (up != 0xff000000) {
+            empty = true;
+          }
+          if (down != 0xff000000) {
+            empty = true;
+          }
+          if (left != 0xff000000) {
+            empty = true;
+          }
+          if (right != 0xff000000) {
+            empty = true;
+          }
+          if (empty && filled) {
+            transparentImg.setRGB(x, y, 0xffffffff);
+          } else {
+            transparentImg.setRGB(x, y, color);
+          }
+        } else {
+          transparentImg.setRGB(x, y, 0);
+        }
+      }
+    }
+    gr2D.dispose();
+    return transparentImg;
+  }
+  /**
    * Draw black silhouette version of bufferedImage.
    * Image must be 4byte ABGR type.
    * @param image Buffered Image
@@ -310,6 +389,38 @@ public final class GraphRoutines {
         int alpha = color & 0xff000000;
         color = alpha;
         transparentImg.setRGB(x, y, color);
+      }
+    }
+    gr2D.dispose();
+    return transparentImg;
+  }
+
+  /**
+   * Draw white silhouette version of bufferedImage.
+   * Image must be 4byte ABGR type.
+   * @param image Buffered Image
+   * @return white silhouette version of image
+   */
+  public static BufferedImage whiteSilhouette(final BufferedImage image) {
+    if (image == null) {
+      return null;
+    }
+    if (image.getType() != BufferedImage.TYPE_4BYTE_ABGR) {
+      return image;
+    }
+    int origWidth = image.getWidth();
+    int origHeight = image.getHeight();
+    BufferedImage transparentImg = new BufferedImage(origWidth, origHeight,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    Graphics2D gr2D = transparentImg.createGraphics();
+    for (int x = 0; x < origWidth; x++) {
+      for (int y = 0; y < origHeight; y++) {
+        int color = image.getRGB(x, y);
+        if ((color & 0xff000000) == 0xff000000) {
+          transparentImg.setRGB(x, y, 0xffffffff);
+        } else {
+          transparentImg.setRGB(x, y, 0x00000000);
+        }
       }
     }
     gr2D.dispose();

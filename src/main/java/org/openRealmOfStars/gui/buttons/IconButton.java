@@ -57,6 +57,10 @@ public class IconButton extends JButton {
    * Icon when disabled
    */
   private BufferedImage disabledImage;
+  /**
+   * Icon when rollover
+   */
+  private BufferedImage rollOverImage;
 
   /**
    * Is Border present on button
@@ -162,6 +166,9 @@ public class IconButton extends JButton {
           }
           g.drawImage(getNotPressedImage(), x, y, null);
         }
+        if (this.isRolloverEnabled() && this.getModel().isRollover()) {
+          g.drawImage(getRollOverImage(), x, y, null);
+        }
       }
     } else {
       x = x - getPressedImage().getWidth() / 2;
@@ -251,6 +258,23 @@ public class IconButton extends JButton {
    */
   public void setDisabledImage(final BufferedImage disabledImage) {
     this.disabledImage = disabledImage;
+  }
+
+  /**
+   * Get rollover image.
+   * @return BufferedImage
+   */
+  public BufferedImage getRollOverImage() {
+    return rollOverImage;
+  }
+
+  /**
+   * Set rollover image and enabled rollover for button.
+   * @param rollOverImage BufferedImage
+   */
+  public void setRollOverImage(final BufferedImage rollOverImage) {
+    this.rollOverImage = rollOverImage;
+    this.setRolloverEnabled(true);
   }
 
 }

@@ -30,6 +30,7 @@ import javax.swing.event.ChangeListener;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -97,6 +98,8 @@ public class ResearchTechPanel extends SpaceGreyPanel {
     btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS),
         Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, actionMinus,
         this);
+    btnMinus.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_MINUS).getIcon()));
     btnMinus.addActionListener(listener);
     this.add(Box.createRigidArea(new Dimension(5, 5)));
     this.add(btnMinus);
@@ -137,6 +140,9 @@ public class ResearchTechPanel extends SpaceGreyPanel {
         this);
     btnUpgrade.setDisabledImage(
         Icons.getIconByName(Icons.ICON_ARROWUP_DISABLED).getIcon());
+    btnUpgrade.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_ARROWUP)
+            .getIcon()));
     btnUpgrade.addActionListener(listener);
     btnUpgrade.setEnabled(false);
 
@@ -144,6 +150,10 @@ public class ResearchTechPanel extends SpaceGreyPanel {
 
     btnPlus = new IconButton(Icons.getIconByName(Icons.ICON_PLUS),
         Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, actionPlus, this);
+    btnPlus.setRollOverImage(
+        GraphRoutines.addGlow(Icons.getIconByName(Icons.ICON_PLUS)
+            .getIcon()));
+
     btnPlus.addActionListener(listener);
     this.add(btnPlus);
     this.add(Box.createRigidArea(new Dimension(5, 5)));

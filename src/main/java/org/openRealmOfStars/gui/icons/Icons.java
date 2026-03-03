@@ -511,6 +511,15 @@ public final class Icons {
    * Plasma spit icon
    */
   public static final String ICON_PLASMA_SPIT = "IconPlasmaSpit";
+  /**
+   * Icon filter on Icon
+   */
+  public static final String ICON_FILTER_ON = "IconFilterOn";
+
+  /**
+   * Icon filter off Icon
+   */
+  public static final String ICON_FILTER_OFF = "IconFilterOff";
 
   /**
    * List of Icon
@@ -875,6 +884,10 @@ public final class Icons {
     icon = new Icon16x16(image, 2, 6, ICON_ARM_SPIKE);
     addIcon(icon);
     icon = new Icon16x16(image, 3, 6, ICON_PLASMA_SPIT);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 6, ICON_FILTER_ON);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 6, ICON_FILTER_OFF);
     addIcon(icon);
   }
 

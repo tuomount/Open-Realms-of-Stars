@@ -744,6 +744,16 @@ public final class GameCommands {
   public static final String COMMAND_NEXT_MSG = "NextMessage";
 
   /**
+   * Filter Message command
+   */
+  public static final String COMMAND_FILTER_MSG = "FilterMessage";
+
+  /**
+   * Show all Messages command
+   */
+  public static final String COMMAND_SHOW_MSG = "ShowAllMessages";
+
+  /**
    * Prev planet/ship command
    */
   public static final String COMMAND_PREV_TARGET = "PrevPlanet/Ship";

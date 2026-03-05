@@ -491,7 +491,15 @@ public class StarMapView extends BlackPanel {
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
-   }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHOW_MSG)) {
+      msgPanel.toggleShowAll();
+      Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
+      msgPanel.updatePanel(msg,
+          players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+          players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+      SoundPlayer.playMenuSound();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_VIEW_MINIMAP)) {
       SoundPlayer.playMenuSound();
       if (mapPanel.isShowMiniMap()) {

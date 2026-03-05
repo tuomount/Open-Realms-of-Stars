@@ -25,6 +25,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -32,7 +33,9 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
+import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.utilities.TextUtilities;
@@ -61,6 +64,16 @@ public class MessagePanel extends JPanel {
   private IconButton btnNext;
 
   /**
+   * Filter button
+   */
+  private IconButton btnFilter;
+
+  /**
+   * ShowAll button
+   */
+  private IconButton btnShowAll;
+
+  /**
    * Info Text for message
    */
   private BaseInfoTextArea msgText;
@@ -78,6 +91,11 @@ public class MessagePanel extends JPanel {
    * Focus button
    */
   private SpaceButton btnFocus;
+
+  /**
+   * Flag for Show all.
+   */
+  private boolean showAll;
 
   /**
    * Constructor for message panel
@@ -99,6 +117,15 @@ public class MessagePanel extends JPanel {
     pane.setBackground(GuiStatics.getPanelBackground());
     pane.setBorder(new SimpleBorder());
     pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
+    btnFilter = new IconButton(Icons.getIconByName(Icons.ICON_FILTER_OFF),
+        Icons.getIconByName(Icons.ICON_FILTER_OFF), false,
+        GameCommands.COMMAND_FILTER_MSG, pane);
+    btnFilter.setRollOverImage(GraphRoutines.addGlow(
+        Icons.getIconByName(Icons.ICON_FILTER_OFF).getIcon()));
+    btnFilter.addActionListener(listener);
+    pane.add(UIScale.scaledRigidArea(3, 20));
+    pane.add(btnFilter);
+    pane.add(Box.createRigidArea(new Dimension(5, 30)));
     btnPrev = new IconButton(GuiStatics.getArrowLeft(),
         GuiStatics.getArrowLeftPressed(), false, prevCommand, pane);
     btnPrev.addActionListener(listener);
@@ -118,8 +145,18 @@ public class MessagePanel extends JPanel {
         + " <br>Pressing F will show where the cursor is in the map.</html>");
     pane.add(btnFocus);
     btnNext.addActionListener(listener);
-    pane.add(btnNext);
     pane.add(Box.createRigidArea(new Dimension(5, 30)));
+    pane.add(btnNext);
+    pane.add(Box.createRigidArea(new Dimension(10, 30)));
+    btnShowAll = new IconButton(Icons.getIconByName(Icons.ICON_CLOSED),
+        Icons.getIconByName(Icons.ICON_CLOSED), false,
+        GameCommands.COMMAND_SHOW_MSG, pane);
+    btnShowAll.setRollOverImage(GraphRoutines.addGlow(
+        Icons.getIconByName(Icons.ICON_CLOSED).getIcon()));
+    btnShowAll.addActionListener(listener);
+    showAll = false;
+    pane.add(btnShowAll);
+    pane.add(UIScale.scaledRigidArea(3, 20));
     this.add(pane);
 
     msgText = new BaseInfoTextArea(2, 15);
@@ -152,6 +189,32 @@ public class MessagePanel extends JPanel {
       btnFocus.setEnabled(false);
     } else {
       btnFocus.setEnabled(true);
+    }
+  }
+
+  /**
+   * Toggle show all button.
+   */
+  public void toggleShowAll() {
+    if (showAll) {
+      showAll = false;
+      btnShowAll.setPressedImage(Icons.getIconByName(Icons.ICON_CLOSED)
+          .getIcon());
+      btnShowAll.setNotPressedImage(Icons.getIconByName(Icons.ICON_CLOSED)
+          .getIcon());
+      btnShowAll.setRollOverImage(GraphRoutines.addGlow(
+        Icons.getIconByName(Icons.ICON_CLOSED).getIcon()));
+      btnShowAll.setToolTipText("<HTML>Click to show all messages,"
+          + " including filtered</HTML>");
+    } else {
+      showAll = true;
+      btnShowAll.setPressedImage(Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN)
+          .getIcon());
+      btnShowAll.setNotPressedImage(Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN)
+          .getIcon());
+      btnShowAll.setRollOverImage(GraphRoutines.addGlow(
+        Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN).getIcon()));
+      btnShowAll.setToolTipText("<HTML>Click to hide filtered messages</HTML>");
     }
   }
 }

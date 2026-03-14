@@ -46,6 +46,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
@@ -339,7 +340,9 @@ public class StarMapView extends BlackPanel {
         GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG,
         players.getCurrentPlayerInfo().getMsgList().getMsg(),
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-        players.getCurrentPlayerInfo().getMsgList().getMaxMsg(), game);
+        players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),
+        players.getCurrentPlayerInfo().getMsgList().isFiltered(),
+        game);
     bottomPanel.add(msgPanel);
 
     bottomPanel.add(UIScale.scaledRigidArea(10, 5));
@@ -361,7 +364,8 @@ public class StarMapView extends BlackPanel {
     Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
     msgPanel.updatePanel(msg,
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-        players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+        players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),
+        players.getCurrentPlayerInfo().getMsgList().isFiltered());
     setAutoFocus(true);
   }
 
@@ -451,7 +455,8 @@ public class StarMapView extends BlackPanel {
     }
     msgPanel.updatePanel(msg,
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-        players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+        players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),
+        players.getCurrentPlayerInfo().getMsgList().isFiltered());
   }
 
   /**
@@ -490,14 +495,34 @@ public class StarMapView extends BlackPanel {
       SoundPlayer.playMenuSound();
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-          players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+          players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),
+          players.getCurrentPlayerInfo().getMsgList().isFiltered());
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHOW_MSG)) {
       msgPanel.toggleShowAll();
+      players.getCurrentPlayerInfo().getMsgList().setApplyFilter(
+          !msgPanel.isShowAll());
       Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-          players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+          players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),
+          players.getCurrentPlayerInfo().getMsgList().isFiltered());
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_FILTER_MSG)) {
+      Message msg = players.getCurrentPlayerInfo().getMsgList()
+          .getMsgIgnoreFilter();
+      MessageList msgList = players.getCurrentPlayerInfo().getMsgList();
+      if (msgList.isFilteredIgnoreApply(msg.getType())) {
+        msgList.removeFilterType(msg.getType());
+      } else {
+        msgList.addFilterType(msg.getType());
+      }
+      msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
+      msgPanel.updatePanel(msg,
+          players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+          players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),
+          players.getCurrentPlayerInfo().getMsgList().isFiltered());
       SoundPlayer.playMenuSound();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_VIEW_MINIMAP)) {
@@ -523,7 +548,8 @@ public class StarMapView extends BlackPanel {
       SoundPlayer.playMenuSound();
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-          players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+          players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),
+          players.getCurrentPlayerInfo().getMsgList().isFiltered());
       getStarMapMouseListener().hideRoutePlanning();
     }
     if (arg0.getActionCommand()

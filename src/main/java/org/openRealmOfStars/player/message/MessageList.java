@@ -36,10 +36,22 @@ public class MessageList {
       "No messages", Icons.getIconByName(Icons.ICON_EMPTY));
 
   /**
+   * No messages message if there are no messages
+   */
+  private static final Message FILTERED_MESSAGE = new Message(
+      MessageType.INFORMATION, "This message has been filtered out and will"
+          + " not be shown unless filter is removed, or show all messages is"
+          + " selected.", Icons.getIconByName(Icons.ICON_EMPTY));
+
+  /**
    * List of messages
    */
   private ArrayList<Message> list;
 
+  /**
+   * Filtered message types.
+   */
+  private ArrayList<MessageType> filterList;
   /**
    * List of message which are done in previous turn but
    * will be shown during next turn. These are not needed
@@ -53,12 +65,18 @@ public class MessageList {
   private int index;
 
   /**
+   * Flag if filter is applied.
+   */
+  private boolean applyFilter;
+  /**
    * Constructor for message list
    */
   public MessageList() {
     list = new ArrayList<>();
+    filterList = new ArrayList<>();
     upComingList = new ArrayList<>();
     index = 0;
+    setApplyFilter(true);
   }
 
   /**
@@ -68,8 +86,10 @@ public class MessageList {
    */
   public MessageList(final DataInputStream dis) throws IOException {
     list = new ArrayList<>();
+    filterList = new ArrayList<>();
     upComingList = new ArrayList<>();
     index = 0;
+    setApplyFilter(true);
     int count = dis.readInt();
     for (int i = 0; i < count; i++) {
       list.add(new Message(dis));
@@ -97,6 +117,79 @@ public class MessageList {
     index = 0;
   }
 
+  /**
+   * Add filter for certain message type. Does not add duplicates.
+   * @param filter MessageType
+   */
+  public void addFilterType(final MessageType filter) {
+    boolean found = false;
+    for (MessageType type : filterList) {
+      if (type == filter) {
+        found = true;
+      }
+    }
+    if (!found) {
+      filterList.add(filter);
+    }
+  }
+  /**
+   * Add filter for certain message type. Does not add duplicates.
+   * @param filter MessageType
+   */
+  public void removeFilterType(final MessageType filter) {
+    filterList.remove(filter);
+  }
+
+  /**
+   * Is certain message type filtered or not.
+   * This also check if filter is actually applied.
+   * @param filter MessageType to filter?
+   * @return True if filtered, otherwise false.
+   */
+  public boolean isFiltered(final MessageType filter) {
+    if (!applyFilter) {
+      return false;
+    }
+    for (MessageType type : filterList) {
+      if (type == filter) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Is certain message type filtered or not.
+   * This will NOT check if filter is actually applied.
+   * @param filter MessageType to filter?
+   * @return True if filtered, otherwise false.
+   */
+  public boolean isFilteredIgnoreApply(final MessageType filter) {
+    for (MessageType type : filterList) {
+      if (type == filter) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Is current message filtered?
+   * This will just check the type not if filter is applied.
+   * @return True if filtered
+   */
+  public boolean isFiltered() {
+    if (list.size() == 0) {
+      return false;
+    }
+    Message msg = list.get(index);
+    for (MessageType type : filterList) {
+      if (type == msg.getType()) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Add new message to list
    * @param msg Message to add to the list
@@ -141,7 +234,7 @@ public class MessageList {
     if (index < list.size() - 1) {
       index++;
     }
-    return list.get(index);
+    return getFilteredMsg();
   }
 
   /**
@@ -156,7 +249,7 @@ public class MessageList {
     if (index > 0) {
       index--;
     }
-    return list.get(index);
+    return getFilteredMsg();
   }
 
   /**
@@ -168,10 +261,32 @@ public class MessageList {
   }
 
   /**
+   * Get Filtered message. This also check applied filter.
+   * @return Message
+   */
+  private Message getFilteredMsg() {
+    Message msg = list.get(index);
+    if (isFiltered(msg.getType())) {
+      return FILTERED_MESSAGE;
+    }
+    return msg;
+  }
+  /**
    * Get message with current index
    * @return Message, never null
    */
   public Message getMsg() {
+    if (list.size() == 0) {
+      return NO_MESSAGE;
+    }
+    return getFilteredMsg();
+  }
+
+  /**
+   * Get message with current index ignoring all filters.
+   * @return Message, never null
+   */
+  public Message getMsgIgnoreFilter() {
     if (list.size() == 0) {
       return NO_MESSAGE;
     }
@@ -207,6 +322,23 @@ public class MessageList {
       addFirstMessage(msg);
     }
   }
+
+  /**
+   * Is apply filter enabled?
+   * @return boolean
+   */
+  public boolean isApplyFilter() {
+    return applyFilter;
+  }
+
+  /**
+   * Set apply filter.
+   * @param applyFilter Boolean
+   */
+  public void setApplyFilter(final boolean applyFilter) {
+    this.applyFilter = applyFilter;
+  }
+
   @Override
   public String toString() {
     return "MessageList " + (index + 1) + " / " + list.size();

@@ -105,11 +105,13 @@ public class MessagePanel extends JPanel {
    * @param msg Message to shown
    * @param index for current message
    * @param maxIndex maximum index
+   * @param filtered Message is filtered
    * @param listener Action listener
    */
   public MessagePanel(final String prevCommand, final String nextCommand,
       final String focusCommand, final Message msg, final int index,
-      final int maxIndex, final ActionListener listener) {
+      final int maxIndex, final boolean filtered,
+      final ActionListener listener) {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setBorder(new SimpleBorder());
     this.setBackground(GuiStatics.getPanelBackground());
@@ -168,7 +170,7 @@ public class MessagePanel extends JPanel {
     scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     this.add(scroll);
 
-    updatePanel(msg, index, maxIndex);
+    updatePanel(msg, index, maxIndex, filtered);
   }
 
   /**
@@ -176,8 +178,10 @@ public class MessagePanel extends JPanel {
    * @param msg Message to show
    * @param index Message index
    * @param max Maximum messages
+   * @param filtered Message has been filtered.
    */
-  public void updatePanel(final Message msg, final int index, final int max) {
+  public void updatePanel(final Message msg, final int index, final int max,
+      final boolean filtered) {
     int msgIndex = index + 1;
     countLabel.setText(msgIndex + "/" + max);
     titleLabel.setText(msg.getType().toString());
@@ -185,6 +189,23 @@ public class MessagePanel extends JPanel {
     msgText.setText(TextUtilities.removeLineChanges(msg.getMessage()));
     msgText.setCaretPosition(0);
     msgText.repaint();
+    if (filtered) {
+      btnFilter.setPressedImage(Icons.getIconByName(Icons.ICON_FILTER_ON)
+          .getIcon());
+      btnFilter.setNotPressedImage(Icons.getIconByName(Icons.ICON_FILTER_ON)
+          .getIcon());
+      btnFilter.setRollOverImage(GraphRoutines.addGlow(
+        Icons.getIconByName(Icons.ICON_FILTER_ON).getIcon()));
+      btnFilter.setToolTipText("<HTML>Click to unfilter message type</HTML>");
+    } else {
+      btnFilter.setPressedImage(Icons.getIconByName(Icons.ICON_FILTER_OFF)
+          .getIcon());
+      btnFilter.setNotPressedImage(Icons.getIconByName(Icons.ICON_FILTER_OFF)
+          .getIcon());
+      btnFilter.setRollOverImage(GraphRoutines.addGlow(
+        Icons.getIconByName(Icons.ICON_FILTER_OFF).getIcon()));
+      btnFilter.setToolTipText("<HTML>Click to filter message type</HTML>");
+    }
     if (msg.getType() == MessageType.INFORMATION) {
       btnFocus.setEnabled(false);
     } else {
@@ -216,5 +237,13 @@ public class MessagePanel extends JPanel {
         Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN).getIcon()));
       btnShowAll.setToolTipText("<HTML>Click to hide filtered messages</HTML>");
     }
+  }
+
+  /**
+   * Get if show all is set or not.
+   * @return True if show all is set.
+   */
+  public boolean isShowAll() {
+    return showAll;
   }
 }

@@ -94,10 +94,15 @@ public class MessageList {
     for (int i = 0; i < count; i++) {
       list.add(new Message(dis));
     }
+    count = dis.readInt();
+    for (int i = 0; i < count; i++) {
+      MessageType type = MessageType.getTypeByIndex(dis.readInt());
+      filterList.add(type);
+    }
   }
 
   /**
-   * Write all messages into DataOutputStream
+   * Write all messages and filters into DataOutputStream
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with DataOutputStream
    */
@@ -105,6 +110,10 @@ public class MessageList {
     dos.writeInt(list.size());
     for (int i = 0; i < list.size(); i++) {
       list.get(i).saveMessage(dos);
+    }
+    dos.writeInt(filterList.size());
+    for (int i = 0; i < filterList.size(); i++) {
+      dos.writeInt(filterList.get(i).getIndex());
     }
   }
 

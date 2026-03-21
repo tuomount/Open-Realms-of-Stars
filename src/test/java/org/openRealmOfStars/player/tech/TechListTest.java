@@ -22,7 +22,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.message.MessageList;
-import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 import junit.framework.TestCase;
@@ -341,12 +341,14 @@ public class TechListTest extends TestCase {
         2, 0);
     info.getTechList().updateResearchPointByTurn(30, info, 300, false);
     assertEquals(1, info.getTechList().getTechLevel(TechType.Combat));
-    assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
+    assertEquals(MmType.RESEARCH,
+        info.getMsgList().getMsg().getType().getMainType());
     info.getMsgList().clearMessages();
     info.getTechList().updateResearchPointByTurn(30, info, 300, true);
     info.getMsgList().clearMessages();
     info.getTechList().updateResearchPointByTurn(30, info, 300, true);
-    assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
+    assertEquals(MmType.RESEARCH,
+        info.getMsgList().getMsg().getType().getMainType());
     String msg = info.getMsgList().getMsg().getMessage();
     assertEquals(true, msg.contains("has advanced"));
     assertEquals(true, msg.contains("next level."));

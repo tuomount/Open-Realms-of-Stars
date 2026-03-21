@@ -23,6 +23,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -1029,7 +1031,8 @@ public final class RulerUtility {
       case HEIR_TO_THRONE: {
         bestLeader = getNextHeir(realm);
         if (bestLeader == null && hasTooYoungHeirs(realm)) {
-          Message msg = new Message(MessageType.LEADER,
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.GENERIC),
               realm.getEmpireName() + " has heirs but all are too young to be"
                   + " ruler. This is difficult time...",
                   Icons.getIconByName(Icons.ICON_RULER));

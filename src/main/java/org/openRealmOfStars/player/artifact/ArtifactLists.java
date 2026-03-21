@@ -30,6 +30,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
@@ -362,7 +364,8 @@ public class ArtifactLists {
       if (Game.getTutorial() != null  && info.isHuman() && tutorialEnabled) {
         String tutorialText = Game.getTutorial().showTutorialText(16);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           info.getMsgList().addNewMessage(msg);
         }
@@ -606,7 +609,8 @@ public class ArtifactLists {
             TechType.getTypeByIndex(artifact.getArtifactType().getIndex()),
             value + artifact.getOneTimeTechBonus());
       }
-      Message msg = new Message(MessageType.RESEARCH, sb.toString(),
+      Message msg = new Message(new MessageType(MmType.RESEARCH,
+          SmType.ARTIFACT), sb.toString(),
           Icons.getIconByName(Icons.ICON_RESEARCH));
       msg.setMatchByString(artifact.getName());
       info.getMsgList().addNewMessage(msg);

@@ -39,6 +39,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.tech.Tech;
@@ -2786,7 +2788,7 @@ public class DiplomaticTrade {
       Perk perk = Perk.NEGOTIATOR;
       Leader leader = info.getRuler();
       leader.addPerk(perk);
-      Message msg = new Message(MessageType.LEADER,
+      Message msg = new Message(new MessageType(MmType.LEADER, SmType.LEVELUP),
           LeaderBiography.getReasonForPerk(leader, perk),
           LeaderUtility.getIconBasedOnLeaderJob(leader));
       msg.setMatchByString("Index:" + info.getLeaderIndex(leader));

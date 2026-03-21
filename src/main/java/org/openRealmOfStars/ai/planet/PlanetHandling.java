@@ -30,7 +30,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
-import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
@@ -348,7 +348,7 @@ public final class PlanetHandling {
       ArrayList<Message> messages = info.getMsgList().getFullList();
       boolean changeConstruction = false;
       for (Message msg : messages) {
-        if (msg.getType() == MessageType.CONSTRUCTION
+        if (msg.getType().equals(MmType.CONSTRUCTION)
             && msg.getMatchByString().equals(planet.getName())) {
           changeConstruction = true;
         }

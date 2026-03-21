@@ -59,6 +59,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -1970,7 +1972,7 @@ public class StarMap {
       Research.removeUnusedAndObsoleteDesigns(info, this);
       ArrayList<Message> messages = info.getMsgList().getFullList();
       for (Message msg : messages) {
-        if (msg.getType() == MessageType.RESEARCH) {
+        if (msg.getType().equals(MmType.RESEARCH)) {
           Research.handleShipDesigns(info, this.getVotes().areNukesBanned(),
               this.getVotes().arePrivateersBanned());
           break;
@@ -1990,8 +1992,8 @@ public class StarMap {
         if (ruler != null) {
           LeaderUtility.assignLeaderAsRuler(ruler, info, this);
           if (info.getRuler() != null) {
-            Message msg = new Message(MessageType.LEADER,
-                ruler.getCallName()
+            Message msg = new Message(new MessageType(MmType.LEADER,
+                SmType.NEW_RULER), ruler.getCallName()
                     + " has selected as ruler for " + info.getEmpireName(),
                 Icons.getIconByName(Icons.ICON_RULER));
             msg.setMatchByString("Index:" + info.getLeaderIndex(ruler));
@@ -2956,7 +2958,7 @@ public class StarMap {
     Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
     SquareInfo square = tileInfo[sx][sy];
     if (tile.isSpaceAnomaly()) {
-      Message msg = new Message(MessageType.FLEET,
+      Message msg = new Message(new MessageType(MmType.FLEET, SmType.ANOMALY),
           fleet.getName() + " found space anomaly.",
             Icons.getIconByName(Icons.ICON_HULL_TECH));
       msg.setCoordinate(fleet.getCoordinate());
@@ -3012,7 +3014,7 @@ public class StarMap {
           fleet.getCommander().getStats().addOne(
               StatType.NUMBER_OF_PLANETS_EXPLORED);
         }
-        Message msg = new Message(MessageType.FLEET,
+        Message msg = new Message(new MessageType(MmType.FLEET, SmType.GENERIC),
             sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(planet.getName());
@@ -3046,7 +3048,7 @@ public class StarMap {
           fleet.getCommander().getStats().addOne(
               StatType.NUMBER_OF_PLANETS_EXPLORED);
         }
-        Message msg = new Message(MessageType.FLEET,
+        Message msg = new Message(new MessageType(MmType.FLEET, SmType.GENERIC),
             sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(planet.getName());
@@ -3060,7 +3062,7 @@ public class StarMap {
     }
     if (tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1)
         || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
-      Message msg = new Message(MessageType.FLEET,
+      Message msg = new Message(new MessageType(MmType.FLEET, SmType.GENERIC),
           fleet.getName() + " found deep space anchor.",
           Icons.getIconByName(Icons.ICON_STARBASE));
       msg.setCoordinate(new Coordinate(sx, sy));
@@ -3089,7 +3091,8 @@ public class StarMap {
       if (tile.isSpaceAnomaly()) {
         String tutorialText = Game.getTutorial().showTutorialText(30);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(new Coordinate(sx, sy));
           info.getMsgList().addNewMessage(msg);
@@ -3099,7 +3102,8 @@ public class StarMap {
       if (tile.isBlackhole()) {
         String tutorialText = Game.getTutorial().showTutorialText(31);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(new Coordinate(sx, sy));
           info.getMsgList().addNewMessage(msg);
@@ -3111,7 +3115,8 @@ public class StarMap {
         if (planet != null && planet.getPlanetPlayerInfo() != info) {
           String tutorialText = Game.getTutorial().showTutorialText(20);
           if (tutorialText != null) {
-            Message msg = new Message(MessageType.PLANETARY, tutorialText,
+            Message msg = new Message(new MessageType(MmType.PLANETARY,
+                SmType.TUTORIAL), tutorialText,
                 Icons.getIconByName(Icons.ICON_TUTORIAL));
             msg.setCoordinate(new Coordinate(sx, sy));
             msg.setMatchByString(planet.getName());
@@ -3122,7 +3127,8 @@ public class StarMap {
             // Rogue planet
             tutorialText = Game.getTutorial().showTutorialText(22);
             if (tutorialText != null) {
-              Message msg = new Message(MessageType.PLANETARY, tutorialText,
+              Message msg = new Message(new MessageType(MmType.PLANETARY,
+                  SmType.TUTORIAL), tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               msg.setCoordinate(new Coordinate(sx, sy));
               msg.setMatchByString(planet.getName());
@@ -3134,7 +3140,8 @@ public class StarMap {
             // High radiation
             tutorialText = Game.getTutorial().showTutorialText(23);
             if (tutorialText != null) {
-              Message msg = new Message(MessageType.PLANETARY, tutorialText,
+              Message msg = new Message(new MessageType(MmType.PLANETARY,
+                  SmType.TUTORIAL), tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               msg.setCoordinate(new Coordinate(sx, sy));
               msg.setMatchByString(planet.getName());
@@ -3147,7 +3154,8 @@ public class StarMap {
       if (square.getType() == SquareInfo.TYPE_GAS_PLANET) {
         String tutorialText = Game.getTutorial().showTutorialText(21);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.PLANETARY, tutorialText,
+          Message msg = new Message(new MessageType(MmType.PLANETARY,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(new Coordinate(sx, sy));
           msg.setMatchByString(planetList.get(square.getValue()).getName());
@@ -3159,7 +3167,8 @@ public class StarMap {
           || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
         String tutorialText = Game.getTutorial().showTutorialText(32);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(new Coordinate(sx, sy));
           info.getMsgList().addNewMessage(msg);
@@ -3170,7 +3179,8 @@ public class StarMap {
           || tile == Tiles.getTileByName(TileNames.WORM_HOLE2)) {
         String tutorialText = Game.getTutorial().showTutorialText(33);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(new Coordinate(sx, sy));
           info.getMsgList().addNewMessage(msg);
@@ -3209,7 +3219,7 @@ public class StarMap {
         sb.append("study ");
       }
       sb.append("on black hole reveals the tractor beam technology.");
-      Message msg = new Message(MessageType.FLEET,
+      Message msg = new Message(new MessageType(MmType.FLEET, SmType.STORY),
           sb.toString(), Icons.getIconByName(Icons.ICON_RESEARCH));
       ImageInstruction instructions = new ImageInstruction();
       instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
@@ -3240,7 +3250,7 @@ public class StarMap {
         && fleet.hasGravityRipper()
         && ascensionEvents.getAscensionActivation()
         == AscensionEvents.BLACK_HOLE_DISCOVERED) {
-      Message msg = new Message(MessageType.RESEARCH,
+      Message msg = new Message(new MessageType(MmType.RESEARCH, SmType.STORY),
           "Gravity ripper activated near the galaxy's black hole. This massive"
           + " weapon rips open ascension vein which now points to planet where"
           + " ascension portal can be built. This also changes fabric of galaxy"
@@ -3264,7 +3274,7 @@ public class StarMap {
       NewsData news = NewsFactory.makeAscensionVictoryNews(getStarYear(), this,
           info);
       getNewsCorpData().addNews(news);
-      Message msg = new Message(MessageType.PLANETARY,
+      Message msg = new Message(new MessageType(MmType.PLANETARY, SmType.STORY),
           "Fleet passes through the ascension portal. First fleet is the"
           + " pioneer and rest of the fleets follow soon it. "
               + info.getEmpireName() + " have ascended into higher beings!",

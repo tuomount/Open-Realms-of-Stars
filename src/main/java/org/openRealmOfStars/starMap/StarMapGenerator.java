@@ -34,6 +34,8 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.BackgroundStoryGenerator;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.scenario.ScenarioIds;
@@ -231,8 +233,8 @@ public class StarMapGenerator {
       planet.colonizeWithOrbital();
     }
     makeStartingTutorialTexts(playerInfo, planet);
-    Message msg = new Message(
-        MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
+    Message msg = new Message(new MessageType(MmType.PLANETARY,
+        SmType.GENERIC),  playerInfo.getEmpireName() + " starts at "
             + planet.getName() + ".",
         Icons.getIconByName(Icons.ICON_CULTURE));
     PlayerStartEvent event = new PlayerStartEvent(planet.getCoordinate(),
@@ -331,7 +333,7 @@ public class StarMapGenerator {
             fleet.setName("Scout #" + count);
           }
           makeStartingFleetTutorialTexts(playerInfo, fleet);
-          msg = new Message(MessageType.FLEET,
+          msg = new Message(new MessageType(MmType.FLEET, SmType.GENERIC),
               fleet.getName() + " is waiting for orders.",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(planet.getCoordinate());
@@ -344,7 +346,8 @@ public class StarMapGenerator {
     String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
         playerInfo, planet, starMap.getStarYear());
     playerInfo.setBackgroundStory(backgroundStory);
-    Message msgStart = new Message(MessageType.STORY, backgroundStory,
+    Message msgStart = new Message(new MessageType(MmType.STORY,
+        SmType.STORY), backgroundStory,
         Icons.getIconByName(Icons.ICON_CULTURE));
     msgStart.setCoordinate(planet.getCoordinate());
     msgStart.setMatchByString(planet.getName());
@@ -363,8 +366,8 @@ public class StarMapGenerator {
       final PlayerInfo playerInfo, final int playerIndex) {
     Coordinate startCoord = new Coordinate(x, y);
     makeStartingTutorialTextsInDeepSpace(playerInfo, startCoord);
-    Message msg = new Message(
-        MessageType.FLEET, playerInfo.getEmpireName() + " starts at "
+    Message msg = new Message(new MessageType(MmType.FLEET, SmType.STORY),
+        playerInfo.getEmpireName() + " starts at "
             + "deep space.",
         Icons.getIconByName(Icons.ICON_CULTURE));
     PlayerStartEvent event = new PlayerStartEvent(startCoord, "Deep space",
@@ -411,7 +414,7 @@ public class StarMapGenerator {
           fleet.setName("Scout #" + count);
           makeStartingFleetTutorialTexts(playerInfo, fleet);
         }
-        msg = new Message(MessageType.FLEET,
+        msg = new Message(new MessageType(MmType.FLEET, SmType.GENERIC),
             fleet.getName() + " is waiting for orders.",
             Icons.getIconByName(Icons.ICON_HULL_TECH));
         msg.setCoordinate(fleet.getCoordinate());
@@ -429,8 +432,8 @@ public class StarMapGenerator {
     String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
         playerInfo, planet, starMap.getStarYear());
     playerInfo.setBackgroundStory(backgroundStory);
-    Message msgStart = new Message(MessageType.STORY, backgroundStory,
-        Icons.getIconByName(Icons.ICON_CULTURE));
+    Message msgStart = new Message(new MessageType(MmType.STORY, SmType.STORY),
+        backgroundStory, Icons.getIconByName(Icons.ICON_CULTURE));
     msgStart.setCoordinate(startCoord);
     msgStart.setMatchByString("Colony #0");
     playerInfo.getMsgList().addNewMessage(msgStart);
@@ -1710,14 +1713,16 @@ public class StarMapGenerator {
 
     String tutorialText = Game.getTutorial().showTutorialText(0);
     if (tutorialText != null) {
-      Message msg = new Message(MessageType.INFORMATION, tutorialText,
+      Message msg = new Message(new MessageType(MmType.INFORMATION,
+          SmType.TUTORIAL), tutorialText,
           Icons.getIconByName(Icons.ICON_TUTORIAL));
       playerInfo.getMsgList().addNewMessage(msg);
     }
 
     tutorialText = Game.getTutorial().showTutorialText(1);
     if (tutorialText != null) {
-      Message msg = new Message(MessageType.PLANETARY, tutorialText,
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.TUTORIAL), tutorialText,
           Icons.getIconByName(Icons.ICON_TUTORIAL));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(planet.getName());
@@ -1726,7 +1731,8 @@ public class StarMapGenerator {
 
     tutorialText = Game.getTutorial().showTutorialText(2);
     if (tutorialText != null) {
-      Message msg = new Message(MessageType.PLANETARY, tutorialText,
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.TUTORIAL), tutorialText,
           Icons.getIconByName(Icons.ICON_TUTORIAL));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(planet.getName());
@@ -1748,14 +1754,16 @@ public class StarMapGenerator {
 
     String tutorialText = Game.getTutorial().showTutorialText(0);
     if (tutorialText != null) {
-      Message msg = new Message(MessageType.INFORMATION, tutorialText,
+      Message msg = new Message(new MessageType(MmType.INFORMATION,
+          SmType.TUTORIAL), tutorialText,
           Icons.getIconByName(Icons.ICON_TUTORIAL));
       playerInfo.getMsgList().addNewMessage(msg);
     }
 
     tutorialText = Game.getTutorial().showTutorialText(3);
     if (tutorialText != null) {
-      Message msg = new Message(MessageType.FLEET, tutorialText,
+      Message msg = new Message(new MessageType(MmType.FLEET,
+          SmType.TUTORIAL), tutorialText,
           Icons.getIconByName(Icons.ICON_TUTORIAL));
       msg.setCoordinate(coord);
       msg.setMatchByString("Colony #0");
@@ -1777,7 +1785,8 @@ public class StarMapGenerator {
           && starMap.isTutorialEnabled()) {
         String tutorialText = Game.getTutorial().showTutorialText(7);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.FLEET, tutorialText,
+          Message msg = new Message(new MessageType(MmType.FLEET,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(fleet.getCoordinate());
           msg.setMatchByString(fleet.getName());
@@ -1789,7 +1798,8 @@ public class StarMapGenerator {
           && starMap.isTutorialEnabled()) {
         String tutorialText = Game.getTutorial().showTutorialText(5);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.FLEET, tutorialText,
+          Message msg = new Message(new MessageType(MmType.FLEET,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(fleet.getCoordinate());
           msg.setMatchByString(fleet.getName());
@@ -1797,7 +1807,8 @@ public class StarMapGenerator {
         }
         tutorialText = Game.getTutorial().showTutorialText(6);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.FLEET, tutorialText,
+          Message msg = new Message(new MessageType(MmType.FLEET,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setCoordinate(fleet.getCoordinate());
           msg.setMatchByString(fleet.getName());

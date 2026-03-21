@@ -99,7 +99,10 @@ public class MessageListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNewsMessage() {
     Message msg1 = Mockito.mock(Message.class);
+    MessageType msgType = Mockito.mock(MessageType.class);
+    Mockito.when(msg1.getType()).thenReturn(msgType);
     Message msg2 = Mockito.mock(Message.class);
+    Mockito.when(msg2.getType()).thenReturn(msgType);
     MessageList list = new MessageList();
     assertEquals(0, list.getCurrentMsgIndex());
     assertEquals(1, list.getMaxMsg());

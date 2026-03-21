@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.message;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,131 +17,128 @@ package org.openRealmOfStars.player.message;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
- * Message type
+ * MessageType for combination of main message and sub message type.
  */
-public enum MessageType {
-  /**
-   * Player has researched new technology
-   */
-  RESEARCH,
-  /**
-   * Player's planet has built new construction
-   */
-  CONSTRUCTION,
-  /**
-   * Information for player, no focus
-   */
-  INFORMATION,
-  /**
-   * Population has decreased or increased on planet
-   */
-  POPULATION,
-  /**
-   * Planetary information, focus to planet
-   */
-  PLANETARY,
-  /**
-   * Fleet information, focus to fleet
-   */
-  FLEET,
-  /**
-   * GBNC has news message
-   */
-  NEWS,
-  /**
-   * Leader information, focus to leader
-   */
-  LEADER,
-  /**
-   * Story event
-   */
-  STORY;
+public class MessageType {
 
   /**
-   * Get Message type index
-   * @return int
+   * Main Type.
    */
-  public int getIndex() {
-    switch (this) {
-    case RESEARCH:
-      return 0;
-    case CONSTRUCTION:
-      return 1;
-    case INFORMATION:
-      return 2;
-    case POPULATION:
-      return 3;
-    case PLANETARY:
-      return 4;
-    case FLEET:
-      return 5;
-    case NEWS:
-      return 6;
-    case LEADER:
-      return 7;
-    case STORY:
-      return 8;
-    default:
-      return 0;
-    }
+  private MmType mainType;
+
+  /**
+   * Sub Type
+   */
+  private SmType subType;
+
+  /**
+   * Message Type, define both types.
+   * @param main MainMessageType
+   * @param sub SubMessageType
+   */
+  public MessageType(final MmType main, final SmType sub) {
+    mainType = main;
+    subType = sub;
   }
 
   /**
-   * Return Message Type by index
-   * @param index The message type index
-   * @return Tech Type
+   * Message Type, Sub type is generic
+   * @param main MainMessageType
    */
-  public static MessageType getTypeByIndex(final int index) {
-    switch (index) {
-    case 0:
-      return MessageType.RESEARCH;
-    case 1:
-      return MessageType.CONSTRUCTION;
-    case 2:
-      return MessageType.INFORMATION;
-    case 3:
-      return MessageType.POPULATION;
-    case 4:
-      return MessageType.PLANETARY;
-    case 5:
-      return MessageType.FLEET;
-    case 6:
-      return MessageType.NEWS;
-    case 7:
-      return MessageType.LEADER;
-    case 8:
-      return MessageType.STORY;
-    default:
-      return MessageType.RESEARCH;
+  public MessageType(final MmType main) {
+    mainType = main;
+    subType = SmType.GENERIC;
+  }
+
+  /**
+   * Message Type, read from data input stream
+   * @param dis DataInputStream
+   * @throws IOException if there is any problem with DataInputStream
+   */
+  public MessageType(final DataInputStream dis) throws IOException {
+    short value = dis.readShort();
+    mainType = MmType.getTypeByIndex(value);
+    value = dis.readShort();
+    subType = SmType.getTypeByIndex(value);
+  }
+
+  /**
+   * Save messageType into DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException if there is any problem with DataOutputStream
+   */
+  public void saveMessageType(final DataOutputStream dos) throws IOException {
+    dos.writeShort(mainType.getIndex());
+    dos.writeShort(subType.getIndex());
+  }
+  /**
+   * Get Main Type
+   * @return MainMessageType
+   */
+  public MmType getMainType() {
+    return mainType;
+  }
+
+  /**
+   * Get Sub Type
+   * @return SubMessageType
+   */
+  public SmType getSubType() {
+    return subType;
+  }
+
+  /**
+   * Are type messageTypes equals. This will only compare main types.
+   * @param main Another main type.
+   * @return True if equal.
+   */
+  public boolean equals(final MmType main) {
+    if (main == mainType) {
+      return true;
     }
+    return false;
+  }
+
+  /**
+   * Are type messageTypes equals. This will compare both types.
+   * @param another Another message type.
+   * @return True if equal both are equal
+   */
+  public boolean equals(final MessageType another) {
+    if (another.mainType == mainType && another.subType == subType) {
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return mainType.getIndex() * 32000 + subType.getIndex();
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    MessageType other = (MessageType) obj;
+    return mainType == other.mainType && subType == other.subType;
   }
 
   @Override
   public String toString() {
-    switch (this) {
-    case RESEARCH:
-      return "Research";
-    case CONSTRUCTION:
-      return "Construction";
-    case INFORMATION:
-      return "Information";
-    case POPULATION:
-      return "Population";
-    case PLANETARY:
-      return "Planetary";
-    case FLEET:
-      return "Fleet";
-    case NEWS:
-      return "News";
-    case LEADER:
-      return "Leader";
-    case STORY:
-      return "Story";
-    default:
-      return "Error - Unknown";
-    }
-
+    return mainType.toString() + " - " + subType.toString();
   }
 
 }

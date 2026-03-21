@@ -32,14 +32,16 @@ public class MessageList {
   /**
    * No messages message if there are no messages
    */
-  private static final Message NO_MESSAGE = new Message(MessageType.INFORMATION,
+  private static final Message NO_MESSAGE = new Message(
+      new MessageType(MmType.INFORMATION, SmType.GENERIC),
       "No messages", Icons.getIconByName(Icons.ICON_EMPTY));
 
   /**
    * No messages message if there are no messages
    */
   private static final Message FILTERED_MESSAGE = new Message(
-      MessageType.INFORMATION, "This message has been filtered out and will"
+      new MessageType(MmType.INFORMATION, SmType.GENERIC),
+      "This message has been filtered out and will"
           + " not be shown unless filter is removed, or show all messages is"
           + " selected.", Icons.getIconByName(Icons.ICON_EMPTY));
 
@@ -96,7 +98,7 @@ public class MessageList {
     }
     count = dis.readInt();
     for (int i = 0; i < count; i++) {
-      MessageType type = MessageType.getTypeByIndex(dis.readInt());
+      MessageType type = new MessageType(dis);
       filterList.add(type);
     }
   }
@@ -113,7 +115,7 @@ public class MessageList {
     }
     dos.writeInt(filterList.size());
     for (int i = 0; i < filterList.size(); i++) {
-      dos.writeInt(filterList.get(i).getIndex());
+      filterList.get(i).saveMessageType(dos);
     }
   }
 
@@ -133,7 +135,7 @@ public class MessageList {
   public void addFilterType(final MessageType filter) {
     boolean found = false;
     for (MessageType type : filterList) {
-      if (type == filter) {
+      if (type.equals(filter)) {
         found = true;
       }
     }
@@ -142,7 +144,7 @@ public class MessageList {
     }
   }
   /**
-   * Add filter for certain message type. Does not add duplicates.
+   * Remove filter for certain message type.
    * @param filter MessageType
    */
   public void removeFilterType(final MessageType filter) {
@@ -160,7 +162,7 @@ public class MessageList {
       return false;
     }
     for (MessageType type : filterList) {
-      if (type == filter) {
+      if (type.equals(filter)) {
         return true;
       }
     }
@@ -175,7 +177,7 @@ public class MessageList {
    */
   public boolean isFilteredIgnoreApply(final MessageType filter) {
     for (MessageType type : filterList) {
-      if (type == filter) {
+      if (type.equals(filter)) {
         return true;
       }
     }
@@ -193,7 +195,7 @@ public class MessageList {
     }
     Message msg = list.get(index);
     for (MessageType type : filterList) {
-      if (type == msg.getType()) {
+      if (type.equals(msg.getType())) {
         return true;
       }
     }
@@ -242,6 +244,9 @@ public class MessageList {
     }
     if (index < list.size() - 1) {
       index++;
+      if (isFiltered(list.get(index).getType())) {
+        return getNextMessage();
+      }
     }
     return getFilteredMsg();
   }
@@ -257,6 +262,9 @@ public class MessageList {
     }
     if (index > 0) {
       index--;
+      if (isFiltered(list.get(index).getType())) {
+        return getPrevMessage();
+      }
     }
     return getFilteredMsg();
   }
@@ -319,13 +327,13 @@ public class MessageList {
   public void addNewsMessage() {
     boolean newsAlreadyInList = false;
     for (Message msg : list) {
-      if (msg.getType() == MessageType.NEWS) {
+      if (msg.getType().equals(MmType.NEWS)) {
         newsAlreadyInList = true;
         break;
       }
     }
     if (!newsAlreadyInList) {
-      Message msg = new Message(MessageType.NEWS,
+      Message msg = new Message(new MessageType(MmType.NEWS, SmType.GENERIC),
           "GBNC has made news. Review it by clicking focus button.",
           Icons.getIconByName(Icons.ICON_NEWS));
       addFirstMessage(msg);

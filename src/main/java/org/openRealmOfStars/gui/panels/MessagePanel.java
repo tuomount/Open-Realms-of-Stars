@@ -37,7 +37,7 @@ import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.player.message.Message;
-import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
 import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
@@ -136,7 +136,7 @@ public class MessagePanel extends JPanel {
     countLabel = new SpaceLabel("1000/1000");
     pane.add(countLabel);
     titleLabel = new IconLabel(null, Icons.getIconByName(Icons.ICON_PEOPLE),
-        MessageType.CONSTRUCTION.toString());
+        MmType.CONSTRUCTION.toString());
     pane.add(titleLabel);
     btnNext = new IconButton(GuiStatics.getArrowRight(),
         GuiStatics.getArrowRightPressed(), false, nextCommand, pane);
@@ -184,7 +184,7 @@ public class MessagePanel extends JPanel {
       final boolean filtered) {
     int msgIndex = index + 1;
     countLabel.setText(msgIndex + "/" + max);
-    titleLabel.setText(msg.getType().toString());
+    titleLabel.setText(msg.getType().getMainType().toString());
     titleLabel.setLeftIcon(msg.getIcon());
     msgText.setText(TextUtilities.removeLineChanges(msg.getMessage()));
     msgText.setCaretPosition(0);
@@ -206,7 +206,7 @@ public class MessagePanel extends JPanel {
         Icons.getIconByName(Icons.ICON_FILTER_OFF).getIcon()));
       btnFilter.setToolTipText("<HTML>Click to filter message type</HTML>");
     }
-    if (msg.getType() == MessageType.INFORMATION) {
+    if (msg.getType().equals(MmType.INFORMATION)) {
       btnFocus.setEnabled(false);
     } else {
       btnFocus.setEnabled(true);

@@ -73,6 +73,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -2378,7 +2380,8 @@ public class AITurnView extends BlackPanel {
       if (vote.getTurnsToVote() == 1) {
         for (int i = 0;
             i < game.getStarMap().getPlayerList().getCurrentMaxRealms(); i++) {
-          Message msg = new Message(MessageType.INFORMATION,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.VOTE),
               "One turn left for voting, remember make your vote.",
               Icons.getIconByName(Icons.ICON_CULTURE));
           PlayerInfo info = game.getStarMap().getPlayerList()
@@ -2744,7 +2747,7 @@ public class AITurnView extends BlackPanel {
           + " found in %2$s possesion. Quick, angry mob kills %3$s."
           + " Assasination of %4$s fails.";
 
-      Message msg = new Message(MessageType.LEADER,
+      Message msg = new Message(new MessageType(MmType.LEADER, SmType.DEATH),
           String.format(tplXenophobicExec, realm.getEmpireName(),
               leader.getGender().getHisHer(), leader.getCallName(),
               target.getCallName()),
@@ -2754,7 +2757,7 @@ public class AITurnView extends BlackPanel {
 
       // Assassin is going to die because of treason
       leader.setJob(Job.DEAD);
-      msg = new Message(MessageType.LEADER,
+      msg = new Message(new MessageType(MmType.LEADER, SmType.DEATH),
           String.format(tplMsgTreasonExec, leader.getCallName(),
               leader.getAge(), realm.getEmpireName()),
           Icons.getIconByName(Icons.ICON_DEATH));
@@ -2779,7 +2782,8 @@ public class AITurnView extends BlackPanel {
           NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
           news));
     } else if (target.hasPerk(Perk.WEALTHY)) {
-      Message msg = new Message(MessageType.LEADER,
+      Message msg = new Message(new MessageType(MmType.LEADER,
+          SmType.PAID_TO_WIN),
           target.getCallName()
               + " has paid massive amount of credits to make "
               + target.getGender().getHisHer() + " life is"
@@ -2791,7 +2795,7 @@ public class AITurnView extends BlackPanel {
 
       // Assassin is going to die because of treason
       leader.setJob(Job.DEAD);
-      msg = new Message(MessageType.LEADER,
+      msg = new Message(new MessageType(MmType.LEADER, SmType.DEATH),
           String.format(tplMsgTreasonExec, leader.getCallName(),
               leader.getAge(), realm.getEmpireName()),
           Icons.getIconByName(Icons.ICON_DEATH));
@@ -2817,7 +2821,7 @@ public class AITurnView extends BlackPanel {
       // Leader gains experience for succeesful assasination
       leader.addExperience(50);
       leader.getStats().addOne(StatType.KILLED_ANOTHER_LEADER);
-      Message msg = new Message(MessageType.LEADER,
+      Message msg = new Message(new MessageType(MmType.LEADER, SmType.DEATH),
           target.getCallName()
               + " has died at age of " + target.getAge()
               + ". Death was caused by internal power struggle.",
@@ -2854,7 +2858,8 @@ public class AITurnView extends BlackPanel {
       }
       if (tooYoung) {
         leader.addPerk(Perk.CRUEL);
-        Message msgTooYoung = new Message(MessageType.LEADER,
+        Message msgTooYoung = new Message(new MessageType(MmType.LEADER,
+            SmType.DEATH),
             leader.getCallName()
                 + " is being accused for killing " + target.getCallName()
                 + ". Killing such a young heir is cruel task.",
@@ -2953,7 +2958,8 @@ public class AITurnView extends BlackPanel {
       prisoner.setJob(Job.UNASSIGNED);
       prisoner.setTimeInJob(0);
       prisoner.addPerk(Perk.CORRUPTED);
-      Message msg = new Message(MessageType.LEADER,
+      Message msg = new Message(new MessageType(MmType.LEADER,
+          SmType.FREE_JAIL),
           prisoner.getCallName() + " was freed from prison before "
           + prisoner.getGender().getHisHer() + " sentence was over. "
           + prisoner.getName() + " has turn into corrupted.",
@@ -3075,8 +3081,8 @@ public class AITurnView extends BlackPanel {
         LeaderUtility.assignLeaderAsRuler(ruler, realm, game.getStarMap());
         if (realm.getRuler() != null) {
           realm.getRuler().getStats().addOne(StatType.NUMBER_OF_RULER);
-          Message msg = new Message(MessageType.LEADER,
-              ruler.getCallName()
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.NEW_RULER), ruler.getCallName()
                   + " has selected as ruler for " + realm.getEmpireName(),
               Icons.getIconByName(Icons.ICON_RULER));
           msg.setMatchByString("Index:" + realm.getLeaderIndex(ruler));
@@ -3093,13 +3099,15 @@ public class AITurnView extends BlackPanel {
               && game.getStarMap().isTutorialEnabled()) {
                 String tutorialText = Game.getTutorial().showTutorialText(129);
             if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION,
+              msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL),
                   tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
               realm.getMsgList().addUpcomingMessage(msg);
             }
             tutorialText = Game.getTutorial().showTutorialText(121);
             if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION,
+              msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL),
                   tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
               realm.getMsgList().addUpcomingMessage(msg);
             }
@@ -3141,7 +3149,8 @@ public class AITurnView extends BlackPanel {
           }
           if (DiceGenerator.getRandom(100) < chance) {
             leader.addPerk(Perk.CORRUPTED);
-            Message msg = new Message(MessageType.LEADER,
+            Message msg = new Message(new MessageType(MmType.LEADER,
+                SmType.CORRUPTION),
                 leader.getCallName() + " morale has decreased. "
                 + "Some suspect that " + leader.getCallName()
                 + " might have corrupted.",
@@ -3153,7 +3162,8 @@ public class AITurnView extends BlackPanel {
                   String tutorialText = Game.getTutorial()
                       .showTutorialText(131);
               if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION,
+                msg = new Message(new MessageType(MmType.INFORMATION,
+                    SmType.TUTORIAL),
                     tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
                 realm.getMsgList().addUpcomingMessage(msg);
               }
@@ -3171,7 +3181,8 @@ public class AITurnView extends BlackPanel {
         }
         if (DiceGenerator.getRandom(100) < chance) {
           leader.addPerk(Perk.WEALTHY);
-          Message msg = new Message(MessageType.LEADER,
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.CORRUPTION),
               leader.getCallName() + " has gained massive wealth by doing "
               + leader.getGender().getHisHer() + " work. Some suspect that "
               + "this wealthy might be obtained by questionable means.",
@@ -3202,7 +3213,8 @@ public class AITurnView extends BlackPanel {
               change = " " + leader.getName()
                   + " has learned valuable lesson while in prison.";
             }
-            Message msg = new Message(MessageType.INFORMATION,
+            Message msg = new Message(new MessageType(MmType.INFORMATION,
+                SmType.GENERIC),
                 leader.getCallName() + " has done "
                 + leader.getGender().getHisHer() + " prison sentence and "
                 + " has sent free from prison. " + leader.getName()
@@ -3227,7 +3239,8 @@ public class AITurnView extends BlackPanel {
           int chance = leader.getAge() - lifeExpection;
           if (DiceGenerator.getRandom(1, 100) <= chance) {
             if (leader.hasPerk(Perk.WEALTHY)) {
-              Message msg = new Message(MessageType.LEADER,
+              Message msg = new Message(new MessageType(MmType.LEADER,
+                  SmType.PAID_TO_WIN),
                   leader.getCallName()
                       + " has paid massive amount of credits to save "
                       + leader.getGender().getHisHer() + " life. "
@@ -3243,14 +3256,16 @@ public class AITurnView extends BlackPanel {
                     String tutorialText = Game.getTutorial().showTutorialText(
                         127);
                   if (tutorialText != null) {
-                    Message msg = new Message(MessageType.INFORMATION,
+                    Message msg = new Message(new MessageType(
+                        MmType.INFORMATION, SmType.TUTORIAL),
                         tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
                     realm.getMsgList().addUpcomingMessage(msg);
                   }
               }
               Job oldJob = leader.getJob();
               leader.setJob(Job.DEAD);
-              Message msg = new Message(MessageType.LEADER,
+              Message msg = new Message(new MessageType(MmType.LEADER,
+                  SmType.DEATH),
                   leader.getCallName()
                       + " has died at age of " + leader.getAge(),
                   Icons.getIconByName(Icons.ICON_DEATH));
@@ -3314,7 +3329,8 @@ public class AITurnView extends BlackPanel {
           leader.getStats().addOne(StatType.GOVERNOR_LENGTH);
         }
         if (leader.getJob() == Job.UNASSIGNED) {
-          Message msg = new Message(MessageType.LEADER,
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.WAITING),
                   leader.getCallName() + " is unassigned!",
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
           msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
@@ -3324,7 +3340,8 @@ public class AITurnView extends BlackPanel {
                 String tutorialText = Game.getTutorial().showTutorialText(
                     130);
               if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION,
+                msg = new Message(new MessageType(MmType.INFORMATION,
+                    SmType.TUTORIAL),
                     tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
                 realm.getMsgList().addUpcomingMessage(msg);
               }
@@ -3382,7 +3399,8 @@ public class AITurnView extends BlackPanel {
                   String tutorialText = Game.getTutorial().showTutorialText(
                       126);
                 if (tutorialText != null) {
-                  Message msg = new Message(MessageType.INFORMATION,
+                  Message msg = new Message(new MessageType(MmType.INFORMATION,
+                      SmType.TUTORIAL),
                       tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
                   realm.getMsgList().addUpcomingMessage(msg);
                 }
@@ -3427,7 +3445,8 @@ public class AITurnView extends BlackPanel {
         && game.getStarMap().isTutorialEnabled()) {
           String tutorialText = Game.getTutorial().showTutorialText(124);
           if (tutorialText != null) {
-            Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Message msg = new Message(new MessageType(MmType.INFORMATION,
+                SmType.TUTORIAL), tutorialText,
                 Icons.getIconByName(Icons.ICON_TUTORIAL));
             realm.getMsgList().addUpcomingMessage(msg);
           }
@@ -3440,7 +3459,8 @@ public class AITurnView extends BlackPanel {
           sb.append(LeaderBiography.getReasonForPerk(leader, perk));
           sb.append(" ");
         }
-        Message msg = new Message(MessageType.LEADER,
+        Message msg = new Message(new MessageType(MmType.LEADER,
+            SmType.LEVELUP),
             leader.getCallName()
                 + " has reached to a new level. "
                 + sb.toString(),
@@ -3453,7 +3473,8 @@ public class AITurnView extends BlackPanel {
               && game.getStarMap().isTutorialEnabled()) {
                 String tutorialText = Game.getTutorial().showTutorialText(125);
               if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
+                msg = new Message(new MessageType(MmType.INFORMATION,
+                    SmType.TUTORIAL), tutorialText,
                     Icons.getIconByName(Icons.ICON_TUTORIAL));
                 realm.getMsgList().addUpcomingMessage(msg);
               }
@@ -3526,7 +3547,8 @@ public class AITurnView extends BlackPanel {
                   == MilitaryRank.ENSIGN) {
                 fleet.getCommander().setMilitaryRank(MilitaryRank.LIEUTENANT);
                 fleet.getCommander().addExperience(50);
-                Message msg = new Message(MessageType.LEADER,
+                Message msg = new Message(new MessageType(MmType.LEADER,
+                    SmType.LEVELUP),
                     fleet.getCommander().getCallName()
                         + " has gained military rank lieutenant. ",
                     LeaderUtility.getIconBasedOnLeaderJob(
@@ -3544,7 +3566,8 @@ public class AITurnView extends BlackPanel {
                 && game.getStarMap().getTurn() > 15) {
               String tutorialText = Game.getTutorial().showTutorialText(123);
               if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION,
+                Message msg = new Message(new MessageType(MmType.INFORMATION,
+                    SmType.TUTORIAL),
                     tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
                 info.getMsgList().addUpcomingMessage(msg);
               }
@@ -3564,8 +3587,8 @@ public class AITurnView extends BlackPanel {
 
               if (fleet.allFixed()) {
                 fleet.setRoute(null);
-                Message msg = new Message(MessageType.FLEET,
-                    fleet.getName()
+                Message msg = new Message(new MessageType(MmType.FLEET,
+                    SmType.WAITING), fleet.getName()
                         + " has been fixed and waiting for orders.",
                     Icons.getIconByName(Icons.ICON_HULL_TECH));
                 msg.setMatchByString(fleet.getName());
@@ -3602,8 +3625,8 @@ public class AITurnView extends BlackPanel {
                       && fleet.getRoute().isEndReached() && mission == null) {
                     // End is reached giving a message
                     fleet.setRoute(null);
-                    Message msg = new Message(MessageType.FLEET,
-                        fleet.getName()
+                    Message msg = new Message(new MessageType(MmType.FLEET,
+                        SmType.WAITING), fleet.getName()
                             + " has reached it's target and waiting for"
                             + " orders.",
                         Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -3616,8 +3639,8 @@ public class AITurnView extends BlackPanel {
                   if (info.getMissions().getMissionForFleet(
                       fleet.getName()) == null) {
                     // Movement was blocked, giving a message
-                    Message msg = new Message(MessageType.FLEET,
-                        fleet.getName()
+                    Message msg = new Message(new MessageType(MmType.FLEET,
+                        SmType.OBSTACLE), fleet.getName()
                         + " has encouter obstacle and waiting for more orders.",
                         Icons.getIconByName(Icons.ICON_HULL_TECH));
                     msg.setMatchByString(fleet.getName());
@@ -3630,7 +3653,8 @@ public class AITurnView extends BlackPanel {
 
           } else if (info.getMissions().getMissionForFleet(
               fleet.getName()) == null) {
-            Message msg = new Message(MessageType.FLEET,
+            Message msg = new Message(new MessageType(MmType.FLEET,
+                SmType.WAITING),
                 fleet.getName() + " is waiting for orders.",
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setMatchByString(fleet.getName());
@@ -3789,7 +3813,8 @@ public class AITurnView extends BlackPanel {
         && game.getStarMap().isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(12);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
           .addNewMessage(msg);
@@ -3854,7 +3879,8 @@ public class AITurnView extends BlackPanel {
           tutorialText = Game.getTutorial().showTutorialText(152);
         }
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           game.getStarMap().getPlayerList().getPlayerInfoByIndex(0)
           .getMsgList().addNewMessage(msg);
@@ -3977,7 +4003,8 @@ public class AITurnView extends BlackPanel {
   protected static void handleLowCreditWarning(final PlayerInfo info,
       final int creditFlow) {
     if (creditFlow < 0 && info.getTotalCredits() <= -5 * creditFlow) {
-      Message msg = new Message(MessageType.INFORMATION,
+      Message msg = new Message(new MessageType(MmType.INFORMATION,
+          SmType.CREDITS),
           "Your realm is running low on credits!",
           Icons.getIconByName(Icons.ICON_CREDIT));
       info.getMsgList().addNewMessage(msg);
@@ -4076,7 +4103,8 @@ public class AITurnView extends BlackPanel {
             info.setWarFatigue(fatigue);
             info.setTotalCredits(0);
             fatigued = true;
-            Message msg = new Message(MessageType.INFORMATION,
+            Message msg = new Message(new MessageType(MmType.INFORMATION,
+                SmType.CREDITS),
                 "Realm credits has run out. This increased unhappiness!",
                 Icons.getIconByName(Icons.ICON_CREDIT));
             info.getMsgList().addNewMessage(msg);
@@ -4091,7 +4119,8 @@ public class AITurnView extends BlackPanel {
             info.setWarFatigue(fatigue);
             if (info.getWarFatigue() >= 0) {
               info.setWarFatigue(0);
-              Message msg = new Message(MessageType.INFORMATION,
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.WAR_FATIGUE),
                   "War fatigue has ended!",
                   Icons.getIconByName(Icons.ICON_HAPPY));
               info.getMsgList().addNewMessage(msg);
@@ -4099,7 +4128,8 @@ public class AITurnView extends BlackPanel {
           } else {
             int warFatigueValueAfter = info.getTotalWarFatigue();
             if (warFatigueValueAfter < warFatigueValue) {
-              Message msg = new Message(MessageType.INFORMATION,
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.WAR_FATIGUE),
                   "People is getting more tired of war!",
                   Icons.getIconByName(Icons.ICON_SAD));
               info.getMsgList().addNewMessage(msg);
@@ -4111,7 +4141,8 @@ public class AITurnView extends BlackPanel {
             fatigue = fatigue + info.getTotalCredits();
             info.setWarFatigue(fatigue);
             info.setTotalCredits(0);
-            Message msg = new Message(MessageType.INFORMATION,
+            Message msg = new Message(new MessageType(MmType.INFORMATION,
+                SmType.CREDITS),
                 "Realm credits has run out."
                 + " This will cause building to collapse!",
                 Icons.getIconByName(Icons.ICON_CREDIT));

@@ -35,6 +35,8 @@ import org.openRealmOfStars.player.leader.MilitaryRank;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -99,7 +101,8 @@ public final class RandomEventUtility {
       ImageInstruction instructions = new ImageInstruction();
       instructions.addImage(ImageInstruction.DATALOSS);
       event.setImageInstructions(instructions.build());
-      Message message = new Message(MessageType.INFORMATION, event.getText(),
+      Message message = new Message(new MessageType(MmType.INFORMATION,
+          SmType.BAD_EVENT), event.getText(),
           Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
       message.setRandomEventPop(true);
       if (mostValuablePlanet != null) {
@@ -145,8 +148,9 @@ public final class RandomEventUtility {
               + " stress lately and got " + perk.getName().toLowerCase()
               + ". This is terrible news for whole " + info.getEmpireName()
               + ".");
-          Message message = new Message(MessageType.INFORMATION,
-              event.getText(), Icons.getIconByName(Icons.ICON_RULER));
+          Message message = new Message(new MessageType(MmType.INFORMATION,
+              SmType.BAD_EVENT), event.getText(),
+              Icons.getIconByName(Icons.ICON_RULER));
           if (mostValuablePlanet != null) {
             message.setCoordinate(mostValuablePlanet.getCoordinate());
           }
@@ -175,7 +179,8 @@ public final class RandomEventUtility {
               + " extra ordinary wealth was able to save"
               + leader.getGender().getHisHer()
               + " life. ");
-          Message message = new Message(MessageType.INFORMATION,
+          Message message = new Message(new MessageType(MmType.INFORMATION,
+              SmType.PAID_TO_WIN),
               event.getText(), Icons.getIconByName(Icons.ICON_LEADERS));
           info.getMsgList().addFirstMessage(message);
           instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -188,8 +193,9 @@ public final class RandomEventUtility {
               + "This is terrible news for whole " + info.getEmpireName()
               + ".");
           event.setNewsWorthy(true);
-          Message message = new Message(MessageType.INFORMATION,
-              event.getText(), Icons.getIconByName(Icons.ICON_LEADERS));
+          Message message = new Message(new MessageType(MmType.INFORMATION,
+              SmType.DEATH), event.getText(),
+              Icons.getIconByName(Icons.ICON_LEADERS));
           info.getMsgList().addFirstMessage(message);
           instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
           instructions.addSilhouette(leader.getRace().getNameSingle(),
@@ -234,7 +240,8 @@ public final class RandomEventUtility {
             + " has reached " + leader.getGender().getHisHer()
             + " achievements earlier and gains extra level. "
             + sb.toString());
-        Message msg = new Message(MessageType.LEADER, event.getText(),
+        Message msg = new Message(new MessageType(MmType.LEADER,
+            SmType.LEVELUP), event.getText(),
             LeaderUtility.getIconBasedOnLeaderJob(leader));
         msg.setMatchByString("Index:" + info.getLeaderIndex(leader));
         msg.setRandomEventPop(true);
@@ -285,7 +292,8 @@ public final class RandomEventUtility {
           + techName + " technology. "
           + "This will gains us to get faster new technology in "
           + techName + ".");
-      Message message = new Message(MessageType.INFORMATION, event.getText(),
+      Message message = new Message(new MessageType(MmType.INFORMATION,
+          SmType.GOOD_EVENT), event.getText(),
           Icons.getIconByName(Icons.ICON_RESEARCH));
       message.setRandomEventPop(true);
       if (mostValuablePlanet != null) {
@@ -333,7 +341,8 @@ public final class RandomEventUtility {
         event.setImageInstructions(instructions.build());
         event.setText(sb.toString());
         info.setTotalCredits(info.getTotalCredits() + value);
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.GOOD_EVENT), event.getText(),
             Icons.getIconByName(Icons.ICON_CREDIT));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
@@ -389,7 +398,8 @@ public final class RandomEventUtility {
             ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
         event.setImageInstructions(instructions.build());
         event.setText(sb.toString());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.DEATH), event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
@@ -493,7 +503,8 @@ public final class RandomEventUtility {
         instructions.addImage(ImageInstruction.TERROR);
         event.setImageInstructions(instructions.build());
         event.setText(sb.toString());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.DEATH), event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
@@ -584,7 +595,8 @@ public final class RandomEventUtility {
                   ImageInstruction instructions = new ImageInstruction();
                   instructions.addImage(ImageInstruction.ALIEN_SHIP);
                   event.setImageInstructions(instructions.build());
-                  Message message = new Message(MessageType.FLEET,
+                  Message message = new Message(new MessageType(MmType.FLEET,
+                      SmType.GOOD_EVENT),
                       event.getText(), Icons.getIconByName(
                           Icons.ICON_HULL_TECH));
                   message.setCoordinate(planet.getCoordinate());
@@ -613,6 +625,7 @@ public final class RandomEventUtility {
   public static void handleMeteorHit(final RandomEvent event,
       final StarMap map) {
     if (event.getType() == RandomEventType.METEOR_HIT) {
+      SmType smType = SmType.BAD_EVENT;
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -641,6 +654,7 @@ public final class RandomEventUtility {
           planet.setAmountMetalInGround(planet.getAmountMetalInGround()
               + DiceGenerator.getRandom(80, 500));
           icon = Icons.getIconByName(Icons.ICON_PLANETARY_TURRET);
+          smType = SmType.GOOD_EVENT;
         } else {
           planet.setMetal(planet.getMetal()
               + DiceGenerator.getRandom(80, 500));
@@ -671,8 +685,8 @@ public final class RandomEventUtility {
           }
         }
         event.setText(sb.toString());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
-            icon);
+        Message message = new Message(new MessageType(MmType.PLANETARY, smType),
+            event.getText(), icon);
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
@@ -775,8 +789,8 @@ public final class RandomEventUtility {
         Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
         event.setText(sb.toString());
         event.setNewsWorthy(true);
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
-            icon);
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.GOOD_EVENT), event.getText(), icon);
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(false);
         info.getMsgList().addFirstMessage(message);
@@ -817,7 +831,8 @@ public final class RandomEventUtility {
         instructions.addLogo(ImageInstruction.POSITION_RIGHT,
             ImageInstruction.METEOR, ImageInstruction.SIZE_FULL);
         event.setImageInstructions(instructions.build());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.GOOD_EVENT), event.getText(),
             Icons.getIconByName(Icons.ICON_METAL));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
@@ -834,6 +849,7 @@ public final class RandomEventUtility {
   public static void handleDeadlyVirusOutbreak(final RandomEvent event,
       final StarMap map) {
     if (event.getType() == RandomEventType.DEADLY_VIRUS_OUTBREAK) {
+      SmType smType = SmType.BAD_EVENT;
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -863,6 +879,7 @@ public final class RandomEventUtility {
             sb.append("Luckly planet is occupied by a robotic race which is"
                 + " immune to deadly viruses. This does not affect to"
                 + "planet in anyway.");
+            smType = SmType.GENERIC;
           } else {
             sb.append("Planet is immediately placed on guarantee to stop "
                 + "the virus spreading. Bad news is that only one population "
@@ -881,7 +898,8 @@ public final class RandomEventUtility {
           ImageInstruction instructions = new ImageInstruction();
           instructions.addImage(ImageInstruction.VIRUSES);
           event.setImageInstructions(instructions.build());
-          Message message = new Message(MessageType.PLANETARY, event.getText(),
+          Message message = new Message(new MessageType(MmType.PLANETARY,
+              smType), event.getText(),
               Icons.getIconByName(Icons.ICON_DEATH));
           message.setCoordinate(planet.getCoordinate());
           message.setRandomEventPop(true);
@@ -943,7 +961,8 @@ public final class RandomEventUtility {
       + info.getEmpireName() + " government. Cleanining and fixing"
           + " the corruption requires half of the credits in treasury."
           + rulerCorrupted + governorCorrupted);
-      Message message = new Message(MessageType.INFORMATION, event.getText(),
+      Message message = new Message(new MessageType(MmType.INFORMATION,
+          SmType.CORRUPTION), event.getText(),
           Icons.getIconByName(Icons.ICON_CULTURE));
       if (mostValuablePlanet != null) {
         message.setCoordinate(mostValuablePlanet.getCoordinate());
@@ -996,8 +1015,9 @@ public final class RandomEventUtility {
                 + " likely from intelligent source. This source should be"
                 + " studied further by making a visit in that system and"
                 + " try to locate origin of the signal.");
-            Message message = new Message(MessageType.PLANETARY,
-                event.getText(), Icons.getIconByName(Icons.ICON_SCANNER));
+            Message message = new Message(new MessageType(MmType.PLANETARY,
+                SmType.GOOD_EVENT), event.getText(),
+                Icons.getIconByName(Icons.ICON_SCANNER));
             message.setCoordinate(sun.getCenterCoordinate());
             message.setRandomEventPop(true);
             info.getMsgList().addFirstMessage(message);
@@ -1044,7 +1064,8 @@ public final class RandomEventUtility {
           instructions.addImage(ImageInstruction.SOLAR_NO_FLARES);
           event.setImageInstructions(instructions.build());
           event.setNewsWorthy(true);
-          Message message = new Message(MessageType.PLANETARY, event.getText(),
+          Message message = new Message(new MessageType(MmType.PLANETARY,
+              SmType.GOOD_EVENT), event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
           message.setRandomEventPop(true);
@@ -1092,7 +1113,8 @@ public final class RandomEventUtility {
           instructions.addImage(ImageInstruction.SOLAR_FLARES);
           event.setImageInstructions(instructions.build());
           event.setNewsWorthy(true);
-          Message message = new Message(MessageType.PLANETARY, event.getText(),
+          Message message = new Message(new MessageType(MmType.PLANETARY,
+              SmType.BAD_EVENT), event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
           message.setRandomEventPop(true);
@@ -1192,7 +1214,8 @@ public final class RandomEventUtility {
         ImageInstruction instructions = new ImageInstruction();
         instructions.addImage(ImageInstruction.SPINOSAURUS);
         event.setImageInstructions(instructions.build());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.BAD_EVENT), event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
@@ -1245,7 +1268,8 @@ public final class RandomEventUtility {
         ImageInstruction instructions = new ImageInstruction();
         instructions.addImage(ImageInstruction.PIRATE_RAIDERS);
         event.setImageInstructions(instructions.build());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.BAD_EVENT), event.getText(),
             Icons.getIconByName(Icons.ICON_HULL_TECH));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
@@ -1283,7 +1307,8 @@ public final class RandomEventUtility {
         ImageInstruction instructions = new ImageInstruction();
         instructions.addImage(ImageInstruction.MUTINY);
         event.setImageInstructions(instructions.build());
-        Message message = new Message(MessageType.FLEET, event.getText(),
+        Message message = new Message(new MessageType(MmType.FLEET,
+            SmType.BAD_EVENT), event.getText(),
             Icons.getIconByName(Icons.ICON_HULL_TECH));
         message.setCoordinate(fleet.getCoordinate());
         message.setMatchByString(fleet.getName());
@@ -1291,7 +1316,8 @@ public final class RandomEventUtility {
         info.getMsgList().addFirstMessage(message);
         if (fleet.getCommander() != null) {
           if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
-            message = new Message(MessageType.FLEET,
+            message = new Message(new MessageType(MmType.FLEET,
+                SmType.PAID_TO_WIN),
                 fleet.getCommander().getMilitaryRank().toString()
                 + " " + fleet.getCommander().getName()
                 + " has paid for crew to save "
@@ -1305,7 +1331,7 @@ public final class RandomEventUtility {
             fleet.setCommander(null);
           } else {
             fleet.getCommander().assignJob(Job.DEAD, info);
-            message = new Message(MessageType.FLEET,
+            message = new Message(new MessageType(MmType.FLEET, SmType.DEATH),
                 fleet.getCommander().getMilitaryRank().toString()
                 + " " + fleet.getCommander().getName()
                 + " died during mutiny.",

@@ -42,6 +42,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
@@ -2350,7 +2352,7 @@ public class Planet {
               + " Remnants of killed population will be reused if possible."
               + " Population is now %4$s";
         }
-        msg = new Message(MessageType.POPULATION,
+        msg = new Message(new MessageType(MmType.POPULATION, SmType.DEATH),
             String.format(tplOverpopKill, workerName, getName(),
                 planetRace.getName(), getTotalPopulation()),
             Icons.getIconByName(Icons.ICON_DEATH));
@@ -2359,7 +2361,7 @@ public class Planet {
         planetOwnerInfo.getMsgList().addNewMessage(msg);
         return true;
       }
-      msg = new Message(MessageType.POPULATION,
+      msg = new Message(new MessageType(MmType.POPULATION, SmType.DEATH),
           getName() + " has lost last population. " + getName()
               + " is now uncolonized!",
           Icons.getIconByName(Icons.ICON_DEATH));
@@ -2454,12 +2456,12 @@ public class Planet {
       if (governor != null) {
         governor.getStats().addOne(StatType.POPULATION_GROWTH);
       }
-      msg = new Message(MessageType.POPULATION,
+      msg = new Message(new MessageType(MmType.POPULATION, SmType.POP_GROW),
           getName() + " has population growth! Population is now "
               + getTotalPopulation(),
           Icons.getIconByName(Icons.ICON_PEOPLE));
       if (isFullOfPopulation()) {
-        msg = new Message(MessageType.POPULATION,
+        msg = new Message(new MessageType(MmType.POPULATION, SmType.POP_GROW),
             getName() + " has population growth! Population is now "
                 + getTotalPopulation() + ". Population limit has reached!",
             Icons.getIconByName(Icons.ICON_PEOPLE));
@@ -2472,8 +2474,9 @@ public class Planet {
           && getTotalPopulation() >= 5) {
         String tutorialText = Game.getTutorial().showTutorialText(128);
         if (tutorialText != null) {
-          msg = new Message(MessageType.INFORMATION,
-              tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
       }
@@ -2484,7 +2487,7 @@ public class Planet {
         extraFood = require;
       }
       if (getTotalPopulation() > getPopulationLimitIgnoreRadiation()) {
-        msg = new Message(MessageType.POPULATION,
+        msg = new Message(new MessageType(MmType.POPULATION, SmType.POP_GROW),
             getName() + " has population over the limit!",
             Icons.getIconByName(Icons.ICON_DEATH));
         // Over populated requires more food
@@ -2494,7 +2497,7 @@ public class Planet {
     if (extraFood < 0 && extraFood <= require) {
       extraFood = 0;
       String workerName = killWorkerPrioritzed();
-      msg = new Message(MessageType.POPULATION,
+      msg = new Message(new MessageType(MmType.POPULATION, SmType.DEATH),
           getName() + " has " + workerName + " died! "
               + "Population is now " + getTotalPopulation(),
           Icons.getIconByName(Icons.ICON_DEATH));
@@ -2528,7 +2531,7 @@ public class Planet {
                 + sb.toString() + " Statuses: "
                 + sbStat.toString());
         }
-        msg = new Message(MessageType.POPULATION,
+        msg = new Message(new MessageType(MmType.POPULATION, SmType.DEATH),
             getName() + " has lost last population. " + getName()
                 + " is now uncolonized!",
             Icons.getIconByName(Icons.ICON_DEATH));
@@ -2643,7 +2646,7 @@ public class Planet {
             + " will be built. Estimated building time is "
             + getProductionTimeAsString(underConstruction) + ".";
       }
-      msg = new Message(MessageType.CONSTRUCTION,
+      msg = new Message(new MessageType(MmType.CONSTRUCTION, SmType.POP_GROW),
           getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_PEOPLE));
@@ -2678,7 +2681,7 @@ public class Planet {
             + " will be built. Estimated building time is "
             + getProductionTimeAsString(underConstruction) + ".";
       }
-      msg = new Message(MessageType.CONSTRUCTION,
+      msg = new Message(new MessageType(MmType.CONSTRUCTION, SmType.POP_GROW),
           getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_PEOPLE));
@@ -2711,7 +2714,7 @@ public class Planet {
             + " will be built. Estimated building time is "
             + getProductionTimeAsString(underConstruction) + ".";
       }
-      msg = new Message(MessageType.CONSTRUCTION,
+      msg = new Message(new MessageType(MmType.CONSTRUCTION, SmType.POP_GROW),
           getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_PEOPLE));
@@ -2738,7 +2741,7 @@ public class Planet {
             + " will be built. Estimated building time is "
             + getProductionTimeAsString(underConstruction) + ".";
       }
-      msg = new Message(MessageType.CONSTRUCTION,
+      msg = new Message(new MessageType(MmType.CONSTRUCTION, SmType.CULTURE),
           getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_CULTURE));
@@ -2766,7 +2769,7 @@ public class Planet {
             + " will be built. Estimated building time is "
             + getProductionTimeAsString(underConstruction) + ".";
       }
-      msg = new Message(MessageType.CONSTRUCTION,
+      msg = new Message(new MessageType(MmType.CONSTRUCTION, SmType.CREDITS),
           getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_CREDIT));
@@ -2824,7 +2827,8 @@ public class Planet {
               && map.getPlayerList().getPlayerInfoByIndex(0).isHuman()) {
             String tutorialText = Game.getTutorial().showTutorialText(155);
             if (tutorialText != null) {
-              Message msgTut = new Message(MessageType.INFORMATION,
+              Message msgTut = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL),
                   tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
               map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
                   .addUpcomingMessage(msgTut);
@@ -2859,7 +2863,8 @@ public class Planet {
           if (Game.getTutorial() != null && map.isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(98);
             if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
+              msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL), tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               msg.setCoordinate(getCoordinate());
               map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
@@ -2881,7 +2886,8 @@ public class Planet {
             }
           } else {
             canBeBuilt = false;
-            msg = new Message(MessageType.CONSTRUCTION,
+            msg = new Message(new MessageType(MmType.CONSTRUCTION,
+                SmType.CANNOT_BUILD),
                 getName() + " cannot be built " + underConstruction.getName()
                     + " since there is no orbital on the planet.",
                 Icons.getIconByName(Icons.ICON_STARBASE));
@@ -2914,7 +2920,8 @@ public class Planet {
                 + " will be built. Estimated building time is "
                 + getProductionTimeAsString(underConstruction) + ".";
           }
-          msg = new Message(MessageType.CONSTRUCTION,
+          msg = new Message(new MessageType(MmType.CONSTRUCTION,
+              SmType.BUILDING),
               getName() + " built " + finishedBuilding
                   + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
@@ -2931,7 +2938,7 @@ public class Planet {
         ShipStat stat = planetOwnerInfo.getShipStatByName(
             underConstruction.getName());
         if (stat == null) {
-          msg = new Message(MessageType.CONSTRUCTION,
+          msg = new Message(new MessageType(MmType.CONSTRUCTION, SmType.SHIP),
               getName() + " cannot built ship "
                   + underConstruction.getName()
                   + " due that blue prints are missing!",
@@ -2977,7 +2984,8 @@ public class Planet {
                   + " will be built. Estimated building time is "
                   + getProductionTimeAsString(underConstruction) + ".");
             }
-            msg = new Message(MessageType.CONSTRUCTION, sb.toString(),
+            msg = new Message(new MessageType(MmType.CONSTRUCTION,
+                SmType.SHIP), sb.toString(),
                 Icons.getIconByName(Icons.ICON_STARBASE));
             msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
@@ -3119,7 +3127,8 @@ public class Planet {
                   + " will be built. Estimated building time is "
                   + getProductionTimeAsString(underConstruction) + ".";
             }
-            msg = new Message(MessageType.CONSTRUCTION,
+            msg = new Message(new MessageType(MmType.CONSTRUCTION,
+                SmType.SHIP),
                 getName() + " built " + finishedBuilding
                     + ". " + nextBuilding,
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -3158,7 +3167,8 @@ public class Planet {
                 + worst.getName() + " from the planet.";
           }
         }
-        msg = new Message(MessageType.CONSTRUCTION, getName()
+        msg = new Message(new MessageType(MmType.CONSTRUCTION,
+            SmType.BUILDING), getName()
             + " is already full of buildings! "
             + underConstruction.getName() + " cannot be complete!" + suggestion,
             Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
@@ -3166,7 +3176,8 @@ public class Planet {
         msg.setMatchByString(getName());
         planetOwnerInfo.getMsgList().addNewMessage(msg);
       } else if (underConstruction instanceof Ship && enemyOrbiting) {
-        msg = new Message(MessageType.PLANETARY, getName()
+        msg = new Message(new MessageType(MmType.PLANETARY, SmType.SHIP),
+            getName()
             + " has another Realm's fleet orbiting so ship construction of "
             + underConstruction.getName() + " cannot be complete!",
             Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -3210,7 +3221,8 @@ public class Planet {
           && map.getTurn() > 10) {
         String tutorialText = Game.getTutorial().showTutorialText(122);
         if (tutorialText != null) {
-          Message msg = new Message(MessageType.INFORMATION,
+          Message msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL),
               tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
@@ -3227,7 +3239,8 @@ public class Planet {
       if (happinessEffect.getValue() > 0) {
         final var tplProdBonus = "Population of %1$s is working harder due to"
             + " happiness. Planet's %2$s has temporarily increased by %3$d.";
-        Message message = new Message(MessageType.PLANETARY,
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.HAPPY),
             String.format(tplProdBonus, getName(), happinessType.getName(),
                 happinessEffect.getValue()),
             Icons.getIconByName(Icons.ICON_VERY_HAPPY));
@@ -3238,7 +3251,8 @@ public class Planet {
       if (happinessEffect.getValue() < 0) {
         final var tplProdMalus = "Population of %1$s is working less due to"
             + " happiness. Planet's %2$s has temporarily decreased by %3$d.";
-        Message message = new Message(MessageType.PLANETARY,
+        Message message = new Message(new MessageType(MmType.PLANETARY,
+            SmType.ANGRY),
             String.format(tplProdMalus, getName(), happinessType.getName(),
                 happinessEffect.getValue()),
             Icons.getIconByName(Icons.ICON_VERY_SAD));
@@ -3283,7 +3297,7 @@ public class Planet {
       map.generateAscensionPortal();
       map.getAscensionEvents().setAscensionActivation(
           AscensionEvents.ASCENSION_PORTAL_ACTIVATED);
-      msg = new Message(MessageType.PLANETARY,
+      msg = new Message(new MessageType(MmType.PLANETARY, SmType.STORY),
           getName() + " has opened ascension portal. This portal is now ready"
               + " to travel through.",
           Icons.getIconByName(Icons.ICON_ASCENSION_PORTAL));
@@ -3299,7 +3313,7 @@ public class Planet {
       killOneWorker("angry mob", "angry mob", map);
       final var tplAngryMob = "Population of %1$s has formed an angry mob."
           + " One population died in the riots!";
-      msg = new Message(MessageType.PLANETARY,
+      msg = new Message(new MessageType(MmType.PLANETARY, SmType.DEATH),
           String.format(tplAngryMob, getName()),
           Icons.getIconByName(Icons.ICON_DEATH));
       msg.setCoordinate(getCoordinate());
@@ -3315,7 +3329,7 @@ public class Planet {
       if (destroyed != null) {
         final var tplDestroyed = "%1$s population was so angry that"
             + " they destroyed %2$s in the riots!";
-        msg = new Message(MessageType.PLANETARY,
+        msg = new Message(new MessageType(MmType.PLANETARY, SmType.ANGRY),
             String.format(tplDestroyed, getName(), destroyed.getName()),
             Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
         msg.setCoordinate(getCoordinate());
@@ -3333,7 +3347,7 @@ public class Planet {
         final var tplCollapsed = "%1$s building %2$s collapsed"
             + " due to lack of funding!";
         planetOwnerInfo.setWarFatigue(planetOwnerInfo.getWarFatigue() + 1);
-        msg = new Message(MessageType.PLANETARY,
+        msg = new Message(new MessageType(MmType.PLANETARY, SmType.CREDITS),
             String.format(tplCollapsed, getName(), destroyed.getName()),
             Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
         msg.setCoordinate(getCoordinate());
@@ -4321,7 +4335,8 @@ public class Planet {
       } else {
         msgText.append(" Away team takes it immediately for research.");
       }
-      Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.ARTIFACT), msgText.toString(),
           Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
       msg.setCoordinate(getCoordinate());
       ImageInstruction imageInst = new ImageInstruction();
@@ -4335,7 +4350,8 @@ public class Planet {
           && isTutorialEnabled) {
         String tutorialText = Game.getTutorial().showTutorialText(15);
         if (tutorialText != null) {
-          msg = new Message(MessageType.INFORMATION, tutorialText,
+          msg = new Message(new MessageType(MmType.INFORMATION,
+              SmType.TUTORIAL), tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
           realm.getMsgList().addNewMessage(msg);
         }
@@ -4380,7 +4396,8 @@ public class Planet {
         msgText.append(". Building must be left on planet waiting"
             + " for colonization.");
       }
-      Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.BUILDING), msgText.toString(),
           Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
       msg.setCoordinate(getCoordinate());
       if (imageInst != null) {
@@ -4677,7 +4694,8 @@ public class Planet {
     if (getTotalPopulation() == 0
         && getGovernor() != null) {
       if (getGovernor().hasPerk(Perk.WEALTHY)) {
-        Message msg = new Message(MessageType.LEADER,
+        Message msg = new Message(new MessageType(MmType.LEADER,
+            SmType.PAID_TO_WIN),
             getGovernor().getCallName()
                 + " has paid massive amount of credits to save "
                 + getGovernor().getGender().getHisHer() + " life."
@@ -4692,7 +4710,7 @@ public class Planet {
         setGovernor(null);
       } else {
         getGovernor().setJob(Job.DEAD);
-        Message msg = new Message(MessageType.LEADER,
+        Message msg = new Message(new MessageType(MmType.LEADER, SmType.DEATH),
             getGovernor().getCallName()
                 + " has died at " + attackType + " of " + getName() + ". ",
             Icons.getIconByName(Icons.ICON_DEATH));
@@ -5094,7 +5112,8 @@ public class Planet {
         sb.append(exp);
         sb.append(" experience points by doing away mission.");
       }
-      Message msg = new Message(MessageType.PLANETARY, sb.toString(),
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.LEVELUP), sb.toString(),
           Icons.getIconByName(Icons.ICON_PLANET));
       msg.setMatchByString(getName());
       msg.setCoordinate(getCoordinate());
@@ -5165,8 +5184,8 @@ public class Planet {
       ImageInstruction imageInst = new ImageInstruction();
       imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
       imageInst.addImage(ImageInstruction.CITY_IN_FIRE);
-      Message msg = new Message(MessageType.PLANETARY,
-          sb.toString(),
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.DEATH), sb.toString(),
           Icons.getIconByName(Icons.ICON_DEATH));
       msg.setImageInstructions(imageInst.build());
       msg.setMatchByString(getName());
@@ -5197,8 +5216,8 @@ public class Planet {
           getPlanetType().getImageInstructions(),
           ImageInstruction.SIZE_FULL);
       map.setTile(getX(), getY(), getPlanetType().getTileIndex());
-      Message msg = new Message(MessageType.PLANETARY,
-          sb.toString(),
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.DEATH), sb.toString(),
           Icons.getIconByName(Icons.ICON_DEATH));
       msg.setMatchByString(getName());
       msg.setCoordinate(getCoordinate());
@@ -5224,8 +5243,8 @@ public class Planet {
           getPlanetType().getImageInstructions(),
           ImageInstruction.SIZE_FULL);
       map.setTile(getX(), getY(), getPlanetType().getTileIndex());
-      Message msg = new Message(MessageType.PLANETARY,
-          sb.toString(),
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.DEATH), sb.toString(),
           Icons.getIconByName(Icons.ICON_DEATH));
       msg.setMatchByString(getName());
       msg.setCoordinate(getCoordinate());
@@ -5251,8 +5270,8 @@ public class Planet {
           getPlanetType().getImageInstructions(),
           ImageInstruction.SIZE_FULL);
       map.setTile(getX(), getY(), getPlanetType().getTileIndex());
-      Message msg = new Message(MessageType.PLANETARY,
-          sb.toString(),
+      Message msg = new Message(new MessageType(MmType.PLANETARY,
+          SmType.DEATH), sb.toString(),
           Icons.getIconByName(Icons.ICON_DEATH));
       msg.setMatchByString(getName());
       msg.setCoordinate(getCoordinate());

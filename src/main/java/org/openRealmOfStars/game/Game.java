@@ -124,6 +124,8 @@ import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
@@ -1392,7 +1394,7 @@ public class Game implements ActionListener {
    */
   public void showResearch(final Message focusMsg) {
     String focusTech = null;
-    if (focusMsg != null && focusMsg.getType() == MessageType.RESEARCH
+    if (focusMsg != null && focusMsg.getType().equals(MmType.RESEARCH)
         && focusMsg.getMatchByString() != null) {
       focusTech = focusMsg.getMatchByString();
     }
@@ -2616,16 +2618,16 @@ public class Game implements ActionListener {
    */
   public void focusOnMessage(final boolean mapOnly) {
     Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
-    if (msg.getType() == MessageType.RESEARCH && !mapOnly) {
+    if (msg.getType().equals(MmType.RESEARCH) && !mapOnly) {
       changeGameState(GameState.RESEARCHVIEW, msg);
     }
-    if (msg.getType() == MessageType.NEWS && !mapOnly) {
+    if (msg.getType().equals(MmType.NEWS) && !mapOnly) {
       changeGameState(GameState.NEWS_CORP_VIEW);
     }
-    if (msg.getType() == MessageType.STORY && !mapOnly) {
+    if (msg.getType().equals(MmType.STORY) && !mapOnly) {
       changeGameState(GameState.STORY_VIEW);
     }
-    if (msg.getType() == MessageType.PLANETARY) {
+    if (msg.getType().equals(MmType.PLANETARY)) {
       starMap.setCursorPos(msg.getX(), msg.getY());
       starMap.setDrawPos(msg.getX(), msg.getY());
       Planet planet = starMap.getPlanetByCoordinate(msg.getX(), msg.getY());
@@ -2636,8 +2638,8 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       }
     }
-    if ((msg.getType() == MessageType.POPULATION
-        || msg.getType() == MessageType.CONSTRUCTION) && mapOnly) {
+    if ((msg.getType().equals(MmType.POPULATION)
+        || msg.getType().equals(MmType.CONSTRUCTION)) && mapOnly) {
       starMap.setCursorPos(msg.getX(), msg.getY());
       starMap.setDrawPos(msg.getX(), msg.getY());
       Planet planet = starMap.getPlanetByCoordinate(msg.getX(), msg.getY());
@@ -2648,7 +2650,7 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       }
     }
-    if (msg.getType() == MessageType.FLEET) {
+    if (msg.getType().equals(MmType.FLEET)) {
       starMap.setCursorPos(msg.getX(), msg.getY());
       starMap.setDrawPos(msg.getX(), msg.getY());
       Fleet fleet = players.getCurrentPlayerInfo().getFleets()
@@ -2660,9 +2662,9 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
       }
     }
-    if ((msg.getType() == MessageType.FLEET
-        || msg.getType() == MessageType.PLANETARY
-        || msg.getType() == MessageType.INFORMATION)
+    if ((msg.getType().equals(MmType.FLEET)
+        || msg.getType().equals(MmType.PLANETARY)
+        || msg.getType().equals(MmType.INFORMATION))
         && players.getCurrentPlayerInfo().getRandomEventOccured() != null
         && !players.getCurrentPlayerInfo().getRandomEventOccured()
             .isPopupShown()
@@ -2674,7 +2676,7 @@ public class Game implements ActionListener {
           true);
       msg.setRandomEventPop(false);
     }
-    if (msg.getType() == MessageType.PLANETARY && !msg.isRandomEventPop()
+    if (msg.getType().equals(MmType.PLANETARY) && !msg.isRandomEventPop()
         && msg.getImageInstruction() != null) {
       PopupPanel popupPanel = new PopupPanel(msg.getMessage(),
           "Planetary event");
@@ -2683,7 +2685,7 @@ public class Game implements ActionListener {
       popupPanel.setImageFromInstruction(imageInst);
       starMapView.setPopup(popupPanel);
     }
-    if (msg.getType() == MessageType.FLEET && msg.isRandomEventPop()
+    if (msg.getType().equals(MmType.FLEET) && msg.isRandomEventPop()
         && msg.getImageInstruction() != null) {
       PopupPanel popupPanel = new PopupPanel(msg.getMessage(),
           "Fleet event");
@@ -2696,11 +2698,11 @@ public class Game implements ActionListener {
     if (mapOnly) {
       starMapView.setCursorFocus(20);
     }
-    if ((msg.getType() == MessageType.CONSTRUCTION
-        || msg.getType() == MessageType.POPULATION) && !mapOnly) {
+    if ((msg.getType().equals(MmType.CONSTRUCTION)
+        || msg.getType().equals(MmType.POPULATION)) && !mapOnly) {
       changeGameState(GameState.PLANETVIEW, msg);
     }
-    if (msg.getType() == MessageType.LEADER && !mapOnly) {
+    if (msg.getType().equals(MmType.LEADER) && !mapOnly) {
       changeGameState(GameState.LEADER_VIEW, msg);
     }
   }
@@ -3731,7 +3733,8 @@ public class Game implements ActionListener {
             && starMap.isTutorialEnabled()) {
           String tutorialText = Game.getTutorial().showTutorialText(85);
           if (tutorialText != null) {
-            Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Message msg = new Message(new MessageType(MmType.INFORMATION,
+                SmType.TUTORIAL), tutorialText,
                 Icons.getIconByName(Icons.ICON_TUTORIAL));
             players.getCurrentPlayerInfo().getMsgList().addNewMessage(msg);
           }

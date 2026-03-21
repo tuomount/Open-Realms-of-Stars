@@ -71,6 +71,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -1468,7 +1470,8 @@ public class DiplomacyView extends BlackPanel {
     if (Game.getTutorial() != null && starMap.isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(tutorialIndex);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         if (meetingPlace instanceof Planet) {
           Planet planet = (Planet) meetingPlace;
@@ -1601,7 +1604,7 @@ public class DiplomacyView extends BlackPanel {
     }
     if (speechType == SpeechType.MOVE_FLEET) {
       updatePanel(SpeechType.OFFER_ACCEPTED);
-      Message msg = new Message(MessageType.FLEET,
+      Message msg = new Message(new MessageType(MmType.FLEET, SmType.PROMISE),
           "Your fleet has crossed the borders! You have promised to move"
           + " it away.", Icons.getIconByName(Icons.ICON_HULL_TECH));
       if (meetingPlace != null && meetingPlace instanceof Fleet) {

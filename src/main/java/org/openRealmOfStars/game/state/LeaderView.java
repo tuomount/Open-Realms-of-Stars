@@ -62,6 +62,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.RecruitableLeader;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -622,7 +624,8 @@ public class LeaderView extends BlackPanel
         } else {
           player.setTotalCredits(player.getTotalCredits() - leaderCost);
           realm.setTotalCredits(realm.getTotalCredits() + leaderCost);
-          Message msg = new Message(MessageType.LEADER, player.getEmpireName()
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.GENERIC), player.getEmpireName()
               + " hire leader called " + leader.getCallName() + " from "
               + realm.getEmpireName() + " with " + leaderCost + " credits."
               + " This leader is from " + leader.getHomeworld() + ".",

@@ -37,6 +37,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.SmType;
+import org.openRealmOfStars.player.message.MmType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
@@ -821,7 +823,8 @@ public final class EspionageHandling {
 
     planet.setUnderConstruction(null);
 
-    Message msgPort = new Message(MessageType.PLANETARY,
+    Message msgPort = new Message(new MessageType(
+        MmType.PLANETARY, SmType.STARPORT_DESTRUCTION),
         String.format(tplSpaceportDestroyed, planet.getName()),
         Icons.getIconByName(Icons.ICON_HULL_TECH));
     msgPort.setCoordinate(planet.getCoordinate());
@@ -1064,8 +1067,8 @@ public final class EspionageHandling {
 
       msgText = String.format(tplFalseFlagVictim, ship.getName(), spyEmpireName,
           planetEmpireName, planet.getName());
-      msg = new Message(MessageType.PLANETARY, msgText,
-          Icons.getIconByName(Icons.ICON_DEATH));
+      msg = new Message(new MessageType(MmType.PLANETARY, SmType.ESPIONAGE),
+          msgText, Icons.getIconByName(Icons.ICON_DEATH));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(planet.getName());
       planetPlayer.getMsgList().addUpcomingMessage(msg);
@@ -1105,7 +1108,7 @@ public final class EspionageHandling {
 
   /**
    * Creates and SUBMITS new espionage-related message, about a leader
-   * @param info PlayerInfo who recieves the message
+   * @param info PlayerInfo who receives the message
    * @param spy Leader who is the message about
    * @param planet Planet where the report happened
    * @param text Message's text
@@ -1113,8 +1116,8 @@ public final class EspionageHandling {
    */
   private static Message makeSpyReportMessage(final PlayerInfo info,
       final Leader spy, final Planet planet, final String text) {
-    Message msg = new Message(MessageType.LEADER, text,
-        Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+    Message msg = new Message(new MessageType(MmType.LEADER, SmType.ESPIONAGE),
+        text, Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
     msg.setCoordinate(planet.getCoordinate());
     msg.setMatchByString(spy.getName());
     info.getMsgList().addUpcomingMessage(msg);

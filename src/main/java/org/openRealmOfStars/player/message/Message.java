@@ -91,7 +91,7 @@ public class Message {
    * @throws IOException if there is any problem with DataInputStream
    */
   public Message(final DataInputStream dis) throws IOException {
-    this.type = MessageType.getTypeByIndex(dis.readInt());
+    this.type = new MessageType(dis);
     this.index = dis.readInt();
     this.coordinate = new Coordinate(dis.readInt(), dis.readInt());
     message = IOUtilities.readString(dis);
@@ -109,7 +109,7 @@ public class Message {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveMessage(final DataOutputStream dos) throws IOException {
-    dos.writeInt(type.getIndex());
+    type.saveMessageType(dos);
     dos.writeInt(index);
     dos.writeInt(coordinate.getX());
     dos.writeInt(coordinate.getY());

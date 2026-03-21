@@ -36,6 +36,8 @@ import org.openRealmOfStars.player.government.trait.GovTraitIds;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.SocialSystem;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -238,7 +240,8 @@ public final class LeaderUtility {
         } else {
           info.setTotalCredits(info.getTotalCredits() - leaderCost);
           realm.setTotalCredits(realm.getTotalCredits() + leaderCost);
-          Message msg = new Message(MessageType.LEADER, info.getEmpireName()
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.RECRUIT), info.getEmpireName()
               + " hire leader called " + leader.getCallName() + " from "
               + realm.getEmpireName() + " with " + leaderCost + " credits."
               + " This leader is from " + leader.getHomeworld() + ".",
@@ -900,7 +903,7 @@ public final class LeaderUtility {
   }
 
   /**
-   * Handle leader release from espionage missage.
+   * Handle leader release from espionage mission.
    * Leader was caught but realm decided to release leader.
    * @param info Realm who was trying espionage
    * @param planet Planet where espionage was tried
@@ -911,8 +914,8 @@ public final class LeaderUtility {
   public static void handleLeaderReleased(final PlayerInfo info,
       final Planet planet, final Fleet fleet, final String message,
       final StarMap starMap) {
-    Message msg = new Message(MessageType.LEADER, message,
-        Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+    Message msg = new Message(new MessageType(MmType.LEADER, SmType.ESPIONAGE),
+        message, Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
     msg.setCoordinate(planet.getCoordinate());
     msg.setMatchByString(fleet.getCommander().getName());
     info.getMsgList().addUpcomingMessage(msg);
@@ -938,7 +941,8 @@ public final class LeaderUtility {
       final String killedMsg, final Game game) {
     if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
       fleet.getCommander().useWealth();
-      Message msg = new Message(MessageType.LEADER, escapedMsg,
+      Message msg = new Message(new MessageType(MmType.LEADER,
+          SmType.PAID_TO_WIN), escapedMsg,
           Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
@@ -948,8 +952,8 @@ public final class LeaderUtility {
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     } else {
-      Message msg = new Message(MessageType.LEADER, killedMsg,
-          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      Message msg = new Message(new MessageType(MmType.LEADER, SmType.DEATH),
+          killedMsg, Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
@@ -990,7 +994,8 @@ public final class LeaderUtility {
       final Game game) {
     if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
       fleet.getCommander().useWealth();
-      Message msg = new Message(MessageType.LEADER, escapedMsg,
+      Message msg = new Message(new MessageType(MmType.LEADER,
+          SmType.PAID_TO_WIN), escapedMsg,
           Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
@@ -999,8 +1004,8 @@ public final class LeaderUtility {
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     } else {
-      Message msg = new Message(MessageType.LEADER, prisonMsg,
-          Icons.getIconByName(Icons.ICON_PRISON));
+      Message msg = new Message(new MessageType(MmType.LEADER, SmType.JAIL),
+          prisonMsg, Icons.getIconByName(Icons.ICON_PRISON));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);

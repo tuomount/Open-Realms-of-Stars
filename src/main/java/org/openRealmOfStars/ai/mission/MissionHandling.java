@@ -48,6 +48,8 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -1660,7 +1662,8 @@ public final class MissionHandling {
       if (playerIndex != -1
           && info.getDiplomacy().getDiplomaticRelation(playerIndex).equals(
               Diplomacy.WAR)) {
-        Message msg = new Message(MessageType.FLEET,
+        Message msg = new Message(new MessageType(MmType.FLEET,
+            SmType.TRADE_STOP),
             fleet.getName() + " has stopped trade due war and returning to"
                 + " home planet.", Icons.getIconByName(Icons.ICON_TROOPS));
         msg.setCoordinate(fleet.getCoordinate());
@@ -2423,7 +2426,8 @@ public final class MissionHandling {
                 somethingHappened = true;
               }
               if (!somethingHappened) {
-                Message msg = new Message(MessageType.LEADER,
+                Message msg = new Message(new MessageType(MmType.LEADER,
+                    SmType.ESPIONAGE),
                     fleet.getCommander().getCallName()
                     + " failed during espionage mission against "
                     + planet.getPlanetPlayerInfo().getEmpireName()
@@ -2609,7 +2613,8 @@ public final class MissionHandling {
     if (Game.getTutorial() != null && game.getStarMap().isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(tutorialIndex);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         if (meetingPlace instanceof Planet) {
           Planet planet = (Planet) meetingPlace;
@@ -2954,7 +2959,8 @@ public final class MissionHandling {
       if (infoAtTarget != null) {
         int index = map.getPlayerList().getIndex(infoAtTarget);
         if (infoAtTarget.isHuman() && fleetAtTarget != null) {
-          Message msg = new Message(MessageType.FLEET,
+          Message msg = new Message(new MessageType(MmType.FLEET,
+              SmType.EVASION),
               "Fleet " + fleetAtTarget.getName() + " evaded bumping in FTL with"
                   + " fleet " + fleet.getName() + "!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -2971,7 +2977,8 @@ public final class MissionHandling {
           }
         } else if (info.getMissions().getMissionForFleet(fleet.getName())
             == null) {
-          Message msg = new Message(MessageType.FLEET,
+          Message msg = new Message(new MessageType(MmType.FLEET,
+              SmType.ENCOUNTER),
               "Fleet encounter another fleet while moving in FTL!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleet.getCoordinate());

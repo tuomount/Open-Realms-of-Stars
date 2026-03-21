@@ -35,10 +35,11 @@ public class MessageTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMessage() {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Message message = new Message(MessageType.CONSTRUCTION,
+    Message message = new Message(new MessageType(MmType.CONSTRUCTION,
+        SmType.GENERIC),
         "New construction is done!", icon);
     assertEquals(false, message.isRandomEventPop());
-    assertEquals(MessageType.CONSTRUCTION, message.getType());
+    assertEquals(MmType.CONSTRUCTION, message.getType().getMainType());
     assertEquals(-1, message.getIndex());
     assertEquals(-1, message.getX());
     assertEquals(-1, message.getY());
@@ -57,9 +58,9 @@ public class MessageTest {
     assertEquals(6, message.getY());
     message.setMessage("Foobar");
     assertEquals("Foobar", message.getMessage());
-    message.setType(MessageType.INFORMATION);
-    assertEquals(MessageType.INFORMATION, message.getType());
-    assertEquals("Information - Foobar", message.toString());
+    message.setType(new MessageType(MmType.INFORMATION, SmType.GENERIC));
+    assertEquals(MmType.INFORMATION, message.getType().getMainType());
+    assertEquals("Information - Generic - Foobar", message.toString());
     message.setRandomEventPop(true);
     assertEquals(true, message.isRandomEventPop());
   }
@@ -68,7 +69,8 @@ public class MessageTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testLongMessage() {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Message message = new Message(MessageType.CONSTRUCTION,
+    Message message = new Message(new MessageType(MmType.CONSTRUCTION,
+        SmType.GENERIC),
         "", icon);
     message.setMessage("New construction is done! This construction is about very very"
         + " long text for message. This will test text wrapping for"
@@ -86,7 +88,8 @@ public class MessageTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testLongMessageWithImageInstruction() {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Message message = new Message(MessageType.CONSTRUCTION,
+    Message message = new Message(new MessageType(MmType.CONSTRUCTION,
+        SmType.GENERIC),
         "Blaa blaa|image(cool image)", icon);
     assertEquals(message.getImageInstruction(), "image(cool image)");
     message.setMessage("New construction is done! This construction is about very very"
@@ -106,7 +109,8 @@ public class MessageTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMessageCopy() {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Message message = new Message(MessageType.CONSTRUCTION,
+    Message message = new Message(new MessageType(MmType.CONSTRUCTION,
+        SmType.GENERIC),
         "New construction is done!", icon);
     Coordinate coordinate = Mockito.mock(Coordinate.class);
     Mockito.when(coordinate.getX()).thenReturn(5);
@@ -116,7 +120,7 @@ public class MessageTest {
     message.setMatchByString("Should match");
     message.setRandomEventPop(true);
     Message msg = message.copy();
-    assertEquals(MessageType.CONSTRUCTION, msg.getType());
+    assertEquals(MmType.CONSTRUCTION, msg.getType().getMainType());
     assertEquals("Should match", msg.getMatchByString());
     assertEquals(5, msg.getX());
     assertEquals(6, msg.getY());
@@ -130,10 +134,11 @@ public class MessageTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMessageWithImageInstructionsDirectAssignment() {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Message message = new Message(MessageType.CONSTRUCTION,
+    Message message = new Message(new MessageType(MmType.CONSTRUCTION,
+        SmType.GENERIC),
         "New construction is done!|image(draw box)", icon);
     assertEquals(false, message.isRandomEventPop());
-    assertEquals(MessageType.CONSTRUCTION, message.getType());
+    assertEquals(MmType.CONSTRUCTION, message.getType().getMainType());
     assertEquals(-1, message.getIndex());
     assertEquals(-1, message.getX());
     assertEquals(-1, message.getY());
@@ -149,11 +154,13 @@ public class MessageTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMessageWithImageInstructions() {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Message message = new Message(MessageType.CONSTRUCTION,
+    Message message = new Message(new MessageType(MmType.CONSTRUCTION,
+        SmType.GENERIC),
         "New construction is done!", icon);
     message.setImageInstructions("image(draw box)");
     assertEquals(false, message.isRandomEventPop());
-    assertEquals(MessageType.CONSTRUCTION, message.getType());
+    assertEquals(MmType.CONSTRUCTION, message.getType().getMainType());
+    assertEquals(SmType.GENERIC, message.getType().getSubType());
     assertEquals(-1, message.getIndex());
     assertEquals(-1, message.getX());
     assertEquals(-1, message.getY());

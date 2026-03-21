@@ -39,6 +39,8 @@ import org.openRealmOfStars.player.leader.NameGenerator;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
@@ -226,13 +228,15 @@ public class SpaceAnomaly {
         && map.isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(15);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         info.getMsgList().addNewMessage(msg);
       }
       tutorialText = Game.getTutorial().showTutorialText(35);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         info.getMsgList().addNewMessage(msg);
       }
@@ -261,13 +265,15 @@ public class SpaceAnomaly {
         && map.isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(15);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         info.getMsgList().addNewMessage(msg);
       }
       tutorialText = Game.getTutorial().showTutorialText(37);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         info.getMsgList().addNewMessage(msg);
       }
@@ -385,7 +391,8 @@ public class SpaceAnomaly {
               && map.isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(36);
             if (tutorialText != null) {
-              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL), tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               info.getMsgList().addNewMessage(msg);
             }
@@ -463,51 +470,8 @@ public class SpaceAnomaly {
           break;
         }
         case TileNames.SPACE_ANOMALY_MECHION: {
-          final var leaderRace = SpaceRaceFactory.getRandomRoboticRace();
-          if (leaderRace == null) {
-            ErrorLogger.debug("Could not get any robotic race for anomaly!");
-            // Result is already here null.
-            break;
-          }
-
-          result = new SpaceAnomaly(AnomalyType.ANCIENT_ROBOT, 0);
-          final var gender = DiceGenerator.pickRandom(leaderRace.getGenders());
-          String name = NameGenerator.generateName(
-              leaderRace.getNameGeneratorType(), gender);
-          String capitalDesc = "Ancient " + leaderRace.getNameSingle();
-          String desc = leaderRace.getNameSingle();
-          result.setText(capitalDesc + " was in long lasting stasis in "
-              + "ancient ship floating in vastness of space. When entering "
-              + "the ship " + desc + " wakes and is willing to join your "
-              + "realm.");
-          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP));
-          map.setTile(fleet.getX(), fleet.getY(), empty);
-          Leader leader = new Leader(name);
-          leader.setAge(DiceGenerator.getRandom(300, 1500));
-          leader.setHomeworld("Unknown");
-          leader.setLevel(DiceGenerator.getRandom(2, 5));
-          leader.setRace(leaderRace);
-          leader.setGender(gender);
-          leader.setJob(Job.UNASSIGNED);
-          leader.setTitle("");
-          if (name.startsWith("Dino")
-              && leaderRace.getRaceDiplomacyMusic() == MusicPlayer.DINO) {
-            leader.addPerk(Perk.ARTISTIC);
-          }
-          for (int i = 0; i < leader.getLevel(); i++) {
-            Perk[] newPerks = LeaderUtility.getNewPerks(leader,
-                LeaderUtility.PERK_TYPE_GOOD);
-            var newPerk = DiceGenerator.pickRandom(newPerks);
-            leader.addPerk(newPerk);
-            if (DiceGenerator.getRandom(99) < 10) {
-              newPerks = LeaderUtility.getNewPerks(leader,
-                  LeaderUtility.PERK_TYPE_BAD);
-              newPerk = DiceGenerator.pickRandom(newPerks);
-              leader.addPerk(newPerk);
-            }
-          }
+          result = createRoboticLeader(map, info, fleet);
           addExp = 30;
-          info.getLeaderPool().add(leader);
           break;
         }
         case TileNames.SPACE_ANOMALY_TIME_WARP: {
@@ -595,7 +559,8 @@ public class SpaceAnomaly {
                 && map.isTutorialEnabled()) {
               String tutorialText = Game.getTutorial().showTutorialText(14);
               if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                Message msg = new Message(new MessageType(MmType.INFORMATION,
+                    SmType.TUTORIAL), tutorialText,
                     Icons.getIconByName(Icons.ICON_TUTORIAL));
                 info.getMsgList().addNewMessage(msg);
               }
@@ -623,7 +588,8 @@ public class SpaceAnomaly {
               && map.isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(15);
             if (tutorialText != null) {
-              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL), tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               info.getMsgList().addNewMessage(msg);
             }
@@ -728,7 +694,8 @@ public class SpaceAnomaly {
               && map.isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(15);
             if (tutorialText != null) {
-              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL), tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               info.getMsgList().addNewMessage(msg);
             }
@@ -765,7 +732,8 @@ public class SpaceAnomaly {
               && map.isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(36);
             if (tutorialText != null) {
-              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL), tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               info.getMsgList().addNewMessage(msg);
             }
@@ -788,6 +756,60 @@ public class SpaceAnomaly {
     return result;
   }
 
+  /**
+   * Create robotic leader
+   * @param map StarMap
+   * @param info PlayerInfo
+   * @param fleet Fleet making the discovery.
+   * @return SpaceAnomaly.
+   */
+  private static SpaceAnomaly createRoboticLeader(final StarMap map,
+     final PlayerInfo info, final Fleet fleet) {
+    final var leaderRace = SpaceRaceFactory.getRandomRoboticRace();
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    if (leaderRace == null) {
+      ErrorLogger.debug("Could not get any robotic race for anomaly!");
+      return null;
+    }
+    SpaceAnomaly result = new SpaceAnomaly(AnomalyType.ANCIENT_ROBOT, 0);
+    final var gender = DiceGenerator.pickRandom(leaderRace.getGenders());
+    String name = NameGenerator.generateName(
+        leaderRace.getNameGeneratorType(), gender);
+    String capitalDesc = "Ancient " + leaderRace.getNameSingle();
+    String desc = leaderRace.getNameSingle();
+    result.setText(capitalDesc + " was in long lasting stasis in "
+        + "ancient ship floating in vastness of space. When entering "
+        + "the ship " + desc + " wakes and is willing to join your "
+        + "realm.");
+    result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP));
+    map.setTile(fleet.getX(), fleet.getY(), empty);
+    Leader leader = new Leader(name);
+    leader.setAge(DiceGenerator.getRandom(300, 1500));
+    leader.setHomeworld("Unknown");
+    leader.setLevel(DiceGenerator.getRandom(2, 5));
+    leader.setRace(leaderRace);
+    leader.setGender(gender);
+    leader.setJob(Job.UNASSIGNED);
+    leader.setTitle("");
+    if (name.startsWith("Dino")
+        && leaderRace.getRaceDiplomacyMusic() == MusicPlayer.DINO) {
+      leader.addPerk(Perk.ARTISTIC);
+    }
+    for (int i = 0; i < leader.getLevel(); i++) {
+      Perk[] newPerks = LeaderUtility.getNewPerks(leader,
+          LeaderUtility.PERK_TYPE_GOOD);
+      var newPerk = DiceGenerator.pickRandom(newPerks);
+      leader.addPerk(newPerk);
+      if (DiceGenerator.getRandom(99) < 10) {
+        newPerks = LeaderUtility.getNewPerks(leader,
+            LeaderUtility.PERK_TYPE_BAD);
+        newPerk = DiceGenerator.pickRandom(newPerks);
+        leader.addPerk(newPerk);
+      }
+    }
+    info.getLeaderPool().add(leader);
+    return result;
+  }
   /**
    * Create credits anomaly.
    * @param map StarMap

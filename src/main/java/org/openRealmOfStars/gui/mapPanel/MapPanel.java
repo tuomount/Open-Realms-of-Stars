@@ -53,6 +53,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -591,14 +593,16 @@ public class MapPanel extends JPanel {
             && starMap.isTutorialEnabled() && info.isHuman()) {
           String tutorialText = Game.getTutorial().showTutorialText(50);
           if (tutorialText != null) {
-            Message msg = new Message(MessageType.INFORMATION,
+            Message msg = new Message(new MessageType(MmType.INFORMATION,
+                SmType.TUTORIAL),
                 tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
             msg.setCoordinate(new Coordinate(i + cx, j + cy));
             info.getMsgList().addNewMessage(msg);
           }
           tutorialText = Game.getTutorial().showTutorialText(90);
           if (tutorialText != null) {
-            Message msg = new Message(MessageType.INFORMATION,
+            Message msg = new Message(new MessageType(MmType.INFORMATION,
+                SmType.TUTORIAL),
                 tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
             msg.setCoordinate(new Coordinate(i + cx, j + cy));
             info.getMsgList().addNewMessage(msg);

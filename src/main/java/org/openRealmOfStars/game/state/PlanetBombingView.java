@@ -62,6 +62,8 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -628,7 +630,8 @@ public class PlanetBombingView extends BlackPanel {
     if (governor.hasPerk(Perk.WEALTHY)) {
       final var tplEscape = "%1$s has paid massive amount of credits"
           + " to save %2$s life. Private shuttle was used to save %3$s.";
-      Message msg = new Message(MessageType.LEADER,
+      Message msg = new Message(new MessageType(MmType.LEADER,
+          SmType.PAID_TO_WIN),
           String.format(tplEscape, governor.getCallName(),
               governor.getGender().getHisHer(), governor.getName()),
           Icons.getIconByName(Icons.ICON_DEATH));
@@ -652,7 +655,7 @@ public class PlanetBombingView extends BlackPanel {
       governor.setJob(Job.DEAD);
 
       final var tplDied = "%1$s has died at %2$s of %3$s.";
-      Message msg = new Message(MessageType.LEADER,
+      Message msg = new Message(new MessageType(MmType.LEADER, SmType.DEATH),
           String.format(tplDied, governor.getCallName(), attackType,
               planet.getName()),
           Icons.getIconByName(Icons.ICON_DEATH));
@@ -949,7 +952,8 @@ public class PlanetBombingView extends BlackPanel {
         attacker.getTechList().addTech(tech);
         final var tplStolenTech = "%1$s has stolen %2$s technology"
             + "from %3$s. This was gained via %4$s special ability.";
-        Message msg = new Message(MessageType.RESEARCH,
+        Message msg = new Message(new MessageType(MmType.RESEARCH,
+            SmType.ASSIMILATION),
             String.format(tplStolenTech, attacker.getEmpireName(),
                 tech.getName(),
                 planet.getPlanetPlayerInfo().getEmpireName(),
@@ -1030,7 +1034,8 @@ public class PlanetBombingView extends BlackPanel {
         attacker.getTechList().addTech(tech);
         final var tplStolenTech = "%1$s has stolen %2$s technology"
             + "from %3$s. This was gained via %4$s special ability.";
-        Message msg = new Message(MessageType.RESEARCH,
+        Message msg = new Message(new MessageType(MmType.RESEARCH,
+            SmType.ASSIMILATION),
             String.format(tplStolenTech, attacker.getEmpireName(),
                 tech.getName(),
                 planet.getPlanetPlayerInfo().getEmpireName(),

@@ -29,6 +29,8 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
@@ -1015,7 +1017,8 @@ public class TechList {
     if (isTechListForLevelFull(tech.getType(), tech.getLevel())) {
       sb.append(String.format(tplHasAdvanced, techFieldName));
     }
-    Message msg = new Message(MessageType.RESEARCH, sb.toString(),
+    Message msg = new Message(new MessageType(MmType.RESEARCH, SmType.GENERIC),
+        sb.toString(),
         Icons.getIconByName(Icons.ICON_RESEARCH));
     msg.setMatchByString(tech.getName());
     info.getMsgList().addNewMessage(msg);
@@ -1239,7 +1242,8 @@ public class TechList {
       final PlayerInfo info) {
     var tutorialText = Game.getTutorial().showTutorialText(tutorialIdx);
     if (tutorialText != null) {
-      var msg = new Message(MessageType.INFORMATION, tutorialText,
+      var msg = new Message(new MessageType(MmType.INFORMATION,
+          SmType.TUTORIAL), tutorialText,
           Icons.getIconByName(Icons.ICON_TUTORIAL));
       info.getMsgList().addNewMessage(msg);
     }

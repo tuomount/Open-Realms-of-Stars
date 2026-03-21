@@ -32,6 +32,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -712,12 +714,13 @@ public final class StarMapUtilities {
             TechFactory.createImprovementTech("Deadly virus", 4));
         sb.append("Genetic code of virus is saved and stored carefully.");
       }
-      Message message = new Message(MessageType.PLANETARY, sb.toString(),
+      Message message = new Message(new MessageType(MmType.PLANETARY,
+          SmType.DEATH), sb.toString(),
           Icons.getIconByName(Icons.ICON_DEATH));
       message.setCoordinate(planet.getCoordinate());
       info.getMsgList().addUpcomingMessage(message);
-      message = new Message(MessageType.PLANETARY, sb.toString(),
-          Icons.getIconByName(Icons.ICON_DEATH));
+      message = new Message(new MessageType(MmType.PLANETARY, SmType.DEATH),
+          sb.toString(), Icons.getIconByName(Icons.ICON_DEATH));
       message.setCoordinate(planet.getCoordinate());
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(message);
     }
@@ -764,7 +767,8 @@ public final class StarMapUtilities {
         planet.getPlanetPlayerInfo().setTotalCredits(
             planet.getPlanetPlayerInfo().getTotalCredits()
             + credits);
-        Message msg = new Message(MessageType.PLANETARY,
+        Message msg = new Message(new MessageType(MmType.PLANETARY,
+            SmType.TRADE),
             fleet.getName() + " made trade with " + planet.getName()
             + ". Each party gained " + credits + " credits.",
             Icons.getIconByName(Icons.ICON_CREDIT));
@@ -804,7 +808,8 @@ public final class StarMapUtilities {
           fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_TRADES);
         }
         info.setTotalCredits(info.getTotalCredits() + credits);
-        Message msg = new Message(MessageType.PLANETARY,
+        Message msg = new Message(new MessageType(MmType.PLANETARY,
+            SmType.TRADE),
             fleet.getName() + " came back to homeworld "
             + planet.getName() + " with " + credits + " credits.",
             Icons.getIconByName(Icons.ICON_CREDIT));

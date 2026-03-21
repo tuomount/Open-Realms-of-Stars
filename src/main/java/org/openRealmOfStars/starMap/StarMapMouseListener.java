@@ -35,6 +35,8 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
@@ -424,7 +426,8 @@ public class StarMapMouseListener extends MouseAdapter {
                 && Game.getTutorial() != null && starMap.isTutorialEnabled()) {
                 String tutorialText = Game.getTutorial().showTutorialText(8);
               if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION,
+                Message msg = new Message(new MessageType(MmType.INFORMATION,
+                    SmType.TUTORIAL),
                     tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
                 starMap.getCurrentPlayerInfo().getMsgList()
                    .addNewMessage(msg);
@@ -510,8 +513,9 @@ public class StarMapMouseListener extends MouseAdapter {
                 && Game.getTutorial() != null && starMap.isTutorialEnabled()) {
                 String tutorialText = Game.getTutorial().showTutorialText(8);
               if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION,
-                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                Message msg = new Message(new MessageType(MmType.INFORMATION,
+                    SmType.TUTORIAL), tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
                 starMap.getCurrentPlayerInfo().getMsgList()
                    .addNewMessage(msg);
               }

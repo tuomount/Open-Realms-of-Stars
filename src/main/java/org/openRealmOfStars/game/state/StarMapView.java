@@ -48,6 +48,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -388,7 +390,8 @@ public class StarMapView extends BlackPanel {
         && Game.getTutorial() != null && map.isTutorialEnabled()) {
         String tutorialText = Game.getTutorial().showTutorialText(8);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL),
             tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
         map.getCurrentPlayerInfo().getMsgList()
            .addNewMessage(msg);
@@ -407,7 +410,8 @@ public class StarMapView extends BlackPanel {
         && Game.getTutorial() != null && map.isTutorialEnabled()) {
         String tutorialText = Game.getTutorial().showTutorialText(8);
       if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION,
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL),
             tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
         map.getCurrentPlayerInfo().getMsgList()
            .addNewMessage(msg);

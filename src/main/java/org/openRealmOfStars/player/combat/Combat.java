@@ -39,6 +39,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.message.MmType;
+import org.openRealmOfStars.player.message.SmType;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -794,7 +796,8 @@ public boolean launchIntercept(final int distance,
         info.getTechList().addTech(
             TechFactory.createDefenseTech(organicArmorTech, level));
         leader.addExperience(level * 10);
-        Message msg = new Message(MessageType.RESEARCH,
+        Message msg = new Message(new MessageType(MmType.RESEARCH,
+            SmType.MONSTER),
             "Commander " + leader.getCallName() + " has discovered "
             + organicArmorTech + " when fighting against space monster.",
             Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
@@ -811,7 +814,7 @@ public boolean launchIntercept(final int distance,
     if (orbitalInCombat && planet != null
         && ship.getShip() == planet.getOrbital()) {
       planet.setOrbital(null);
-      Message msg = new Message(MessageType.PLANETARY,
+      Message msg = new Message(new MessageType(MmType.PLANETARY, SmType.DEATH),
           ship.getShip().getName()
               + " has been destroyed at " + planet.getName()
               + " in combat.",
@@ -847,7 +850,8 @@ public boolean launchIntercept(final int distance,
       if (attackerFleet.getNumberOfShip() == 0
           && attackerFleet.getCommander() != null) {
         if (attackerFleet.getCommander().hasPerk(Perk.WEALTHY)) {
-          Message msg = new Message(MessageType.LEADER,
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.PAID_TO_WIN),
               attackerFleet.getCommander().getCallName()
                   + " has paid massive amount of credits to save "
                   + attackerFleet.getCommander().getGender().getHisHer()
@@ -885,7 +889,8 @@ public boolean launchIntercept(final int distance,
       if (defenderFleet.getNumberOfShip() == 0
           && defenderFleet.getCommander() != null) {
         if (defenderFleet.getCommander().hasPerk(Perk.WEALTHY)) {
-          Message msg = new Message(MessageType.LEADER,
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.PAID_TO_WIN),
               defenderFleet.getCommander().getCallName()
                   + " has paid massive amount of credits to save "
                   + defenderFleet.getCommander().getGender().getHisHer()
@@ -921,7 +926,8 @@ public boolean launchIntercept(final int distance,
       if (starbaseFleet.getNumberOfShip() == 0
           && starbaseFleet.getCommander() != null) {
         if (starbaseFleet.getCommander().hasPerk(Perk.WEALTHY)) {
-          Message msg = new Message(MessageType.LEADER,
+          Message msg = new Message(new MessageType(MmType.LEADER,
+              SmType.PAID_TO_WIN),
               starbaseFleet.getCommander().getCallName()
                   + " has paid massive amount of credits to save "
                   + starbaseFleet.getCommander().getGender().getHisHer()
@@ -1378,7 +1384,8 @@ public boolean launchIntercept(final int distance,
           leader.addExperience(defenderMilitaryValue);
           if (worthOfWarHero && !leader.hasPerk(Perk.WAR_HERO)) {
             leader.addPerk(Perk.WAR_HERO);
-            Message msg = new Message(MessageType.LEADER,
+            Message msg = new Message(new MessageType(MmType.LEADER,
+                SmType.LEVELUP),
                 LeaderBiography.getReasonForPerk(leader, Perk.WAR_HERO),
                 LeaderUtility.getIconBasedOnLeaderJob(leader));
             msg.setMatchByString("Index:"
@@ -1407,7 +1414,8 @@ public boolean launchIntercept(final int distance,
           leader.addExperience(attackerMilitaryValue);
           if (worthOfWarHero && !leader.hasPerk(Perk.WAR_HERO)) {
             leader.addPerk(Perk.WAR_HERO);
-            Message msg = new Message(MessageType.LEADER,
+            Message msg = new Message(new MessageType(MmType.LEADER,
+                SmType.LEVELUP),
                 LeaderBiography.getReasonForPerk(leader, Perk.WAR_HERO),
                 LeaderUtility.getIconBasedOnLeaderJob(leader));
             msg.setMatchByString("Index:"
@@ -1443,7 +1451,8 @@ public boolean launchIntercept(final int distance,
       if (loserEscaped && isWinnerAttacker) {
         if (escapePosition != null) {
           // Fleet escaped!!
-          Message msg = new Message(MessageType.FLEET,
+          Message msg = new Message(new MessageType(MmType.FLEET,
+              SmType.COMBAT),
               looserFleet.getName() + " escaped from combat!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(looserFleet.getCoordinate());
@@ -1452,7 +1461,7 @@ public boolean launchIntercept(final int distance,
         } else {
           // There is no position to defender escape so fleet is going
           // to be destroyed
-          Message msg = new Message(MessageType.FLEET,
+          Message msg = new Message(new MessageType(MmType.FLEET, SmType.DEATH),
               looserFleet.getName() + " tried to escape but failed."
               + " Fleet was destroyed!",
               Icons.getIconByName(Icons.ICON_DEATH));

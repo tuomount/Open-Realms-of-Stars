@@ -1464,12 +1464,13 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("TRADER TO " + planet.getName().toUpperCase());
+        instructions.addText("TRADER TO ");
+        instructions.addText(planet.getName().toUpperCase());
         break;
       }
       case 2: {
-        instructions.addText("MERCHANT FROM "
-            + trader.getEmpireName().toUpperCase());
+        instructions.addText("MERCHANT FROM ");
+        instructions.addText(trader.getEmpireName().toUpperCase());
         break;
       }
     }
@@ -1532,13 +1533,13 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("GALACTIC OLYMPICS AT "
-            + planet.getName().toUpperCase());
+        instructions.addText("GALACTIC OLYMPICS AT ");
+        instructions.addText(planet.getName().toUpperCase());
         break;
       }
       case 2: {
-        instructions.addText("GALACTIC OLYMPICS WON BY "
-            + athletes[0].getRealm().getEmpireName());
+        instructions.addText("GALACTIC OLYMPICS WON BY ");
+        instructions.addText(athletes[0].getRealm().getEmpireName());
         break;
       }
     }
@@ -2804,12 +2805,13 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("DEVASTATION ON "
-            + planet.getName().toUpperCase() + "!");
+        instructions.addText("DEVASTATION ON ");
+        instructions.addText(planet.getName().toUpperCase() + "!");
         break;
       }
       case 2: {
-        instructions.addText(planet.getName().toUpperCase() + " IS BOMBED!");
+        instructions.addText(planet.getName().toUpperCase());
+        instructions.addText("IS BOMBED!");
         break;
       }
     }
@@ -2902,12 +2904,13 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("DESTRUCTION ON "
-            + planet.getName().toUpperCase() + "!");
+        instructions.addText("DESTRUCTION ON ");
+        instructions.addText(planet.getName().toUpperCase() + "!");
         break;
       }
       case 2: {
-        instructions.addText(planet.getName().toUpperCase() + " IS DESTROYED!");
+        instructions.addText(planet.getName().toUpperCase());
+        instructions.addText("IS DESTROYED!");
         break;
       }
     }
@@ -4506,8 +4509,8 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText(building.getName().toUpperCase() + " TO "
-              + planet.getName().toUpperCase());
+        instructions.addText(building.getName().toUpperCase() + " TO ");
+        instructions.addText(planet.getName().toUpperCase());
         break;
       }
       case 2: {

@@ -1614,13 +1614,13 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("GALACTIC SPORTS AT "
-            + planet.getName().toUpperCase());
+        instructions.addText("GALACTIC SPORTS AT ");
+        instructions.addText(planet.getName().toUpperCase());
         break;
       }
       case 2: {
-        instructions.addText("GALACTIC SPORTS EVENT BY "
-            + builder.getEmpireName().toUpperCase());
+        instructions.addText("GALACTIC SPORTS EVENT BY ");
+        instructions.addText(builder.getEmpireName().toUpperCase());
         break;
       }
     }

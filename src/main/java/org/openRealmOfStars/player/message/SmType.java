@@ -172,7 +172,15 @@ public enum SmType {
   /**
    * Trade
    */
-  TRADE;
+  TRADE,
+  /**
+   * Found planet
+   */
+  FOUND_PLANET,
+  /**
+   * Found gas giant
+   */
+  FOUND_GAS_GIANT;
 
 
 
@@ -257,6 +265,10 @@ public enum SmType {
       return 35;
     case TRADE:
       return 36;
+    case FOUND_PLANET:
+      return 37;
+    case FOUND_GAS_GIANT:
+      return 38;
     default:
       return 0;
     }
@@ -343,6 +355,10 @@ public enum SmType {
       return ANOMALY;
     case 36:
       return TRADE;
+    case 37:
+      return FOUND_PLANET;
+    case 38:
+      return FOUND_GAS_GIANT;
     default:
       return GENERIC;
     }
@@ -425,6 +441,10 @@ public enum SmType {
       return "Anomaly";
     case TRADE:
       return "Trade";
+    case FOUND_PLANET:
+      return "Found planet";
+    case FOUND_GAS_GIANT:
+      return "Found gas giant";
     default:
       return "Error - Unknown";
     }

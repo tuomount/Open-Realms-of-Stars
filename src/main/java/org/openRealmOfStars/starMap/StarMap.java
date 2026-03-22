@@ -3014,8 +3014,9 @@ public class StarMap {
           fleet.getCommander().getStats().addOne(
               StatType.NUMBER_OF_PLANETS_EXPLORED);
         }
-        Message msg = new Message(new MessageType(MmType.FLEET, SmType.GENERIC),
-            sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
+        Message msg = new Message(new MessageType(MmType.FLEET,
+            SmType.FOUND_PLANET), sb.toString(),
+            Icons.getIconByName(Icons.ICON_PLANET));
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(planet.getName());
         if (aiOrAutomateTakingMoves) {
@@ -3048,8 +3049,9 @@ public class StarMap {
           fleet.getCommander().getStats().addOne(
               StatType.NUMBER_OF_PLANETS_EXPLORED);
         }
-        Message msg = new Message(new MessageType(MmType.FLEET, SmType.GENERIC),
-            sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
+        Message msg = new Message(new MessageType(MmType.FLEET,
+            SmType.FOUND_GAS_GIANT), sb.toString(),
+            Icons.getIconByName(Icons.ICON_PLANET));
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(planet.getName());
         if (aiOrAutomateTakingMoves) {

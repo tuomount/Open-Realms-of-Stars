@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2024 Tuomo Untinen
+ * Copyright (C) 2024-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +38,6 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.HyperLabel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.PlayerColorListRenderer;
@@ -134,13 +133,13 @@ public class RealmSetupView extends BlackPanel {
   private int realmIndex;
 
   /** Info text for space race. */
-  private HyperLabel spaceRaceInfo;
+  private SpaceLabel spaceRaceInfo;
   /**
    * Info panel for Space race.
    */
   private InfoPanel infoPanelForSpaceRace;
   /** Info text for government. */
-  private HyperLabel governmentInfo;
+  private SpaceLabel governmentInfo;
 
   /**
    * Full panel with title
@@ -538,7 +537,7 @@ public class RealmSetupView extends BlackPanel {
         600));
     infoPanelForSpaceRace.setMaximumSize(UIScale.scaledDimension(800, 800));
     JScrollPane scroll = new JScrollPane(infoPanelForSpaceRace);
-    spaceRaceInfo = new HyperLabel(
+    spaceRaceInfo = new SpaceLabel(
         SpaceRaceFactory.getRandomRace().getFullDescription(false, false));
     spaceRaceInfo.setFont(GuiFonts.getFontCubellanSmaller());
     infoPanelForSpaceRace.add(spaceRaceInfo, BorderLayout.CENTER);
@@ -549,7 +548,7 @@ public class RealmSetupView extends BlackPanel {
     info.setMinimumSize(UIScale.scaledDimension(400, 200));
     info.setPreferredSize(UIScale.scaledDimension(minWidth, 600));
     info.setMaximumSize(UIScale.scaledDimension(600, 500));
-    governmentInfo = new HyperLabel(
+    governmentInfo = new SpaceLabel(
         GovernmentFactory.getRandomGovernment().getDescription(false));
     governmentInfo.setFont(GuiFonts.getFontCubellanSmaller());
     info.add(governmentInfo, BorderLayout.CENTER);

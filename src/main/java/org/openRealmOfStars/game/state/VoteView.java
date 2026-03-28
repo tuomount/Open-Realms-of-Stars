@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019-2022 Tuomo Untinen
+ * Copyright (C) 2019-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -260,7 +260,7 @@ public class VoteView extends BlackPanel {
         voteTitle.setText("Participate to " + vote.getType().getDescription());
       } else {
         voteTitle.setText("<html>Vote for " + vote.getDescription(map)
-            + "</htlm>");
+            + "</html>");
       }
       if (vote.getTurnsToVote() != 1) {
         votingTime.setText("Voting time: " + vote.getTurnsToVote()

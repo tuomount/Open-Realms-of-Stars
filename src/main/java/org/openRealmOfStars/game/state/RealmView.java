@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2021 Tuomo Untinen
+ * Copyright (C) 2018-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@ import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.HyperLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.util.GuiStatics;
@@ -61,15 +61,15 @@ public class RealmView extends BlackPanel {
   /**
    * Race Description to show.
    */
-  private HyperLabel raceDescription;
+  private SpaceLabel raceDescription;
   /**
    * Race Description to show.
    */
-  private HyperLabel leaderDescription;
+  private SpaceLabel leaderDescription;
   /**
    * Goverment description to show.
    */
-  private HyperLabel governmentDescription;
+  private SpaceLabel governmentDescription;
   /**
    * Realm view constructor
    * @param realm Realm which is being shown
@@ -108,17 +108,17 @@ public class RealmView extends BlackPanel {
     InfoPanel info = new InfoPanel();
     info.setTitle("Racial information");
     info.setLayout(new BorderLayout());
-    raceDescription = new HyperLabel(
+    raceDescription = new SpaceLabel(
         realm.getRace().getFullDescription(false, false));
     info.add(raceDescription, BorderLayout.CENTER);
     panelX.add(info);
     info = new InfoPanel();
     info.setTitle("Government information");
     info.setLayout(new GridLayout(0, 1));
-    governmentDescription = new HyperLabel(
+    governmentDescription = new SpaceLabel(
         realm.getGovernment().getDescription(false));
     info.add(governmentDescription, BorderLayout.CENTER);
-    leaderDescription = new HyperLabel(generateRulerDescriptionText(
+    leaderDescription = new SpaceLabel(generateRulerDescriptionText(
         knowledgeBonus, meetings));
     info.add(leaderDescription);
     panelX.add(info);

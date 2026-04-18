@@ -3611,7 +3611,8 @@ public class AITurnView extends BlackPanel {
                     && !game.getStarMap().isBlocked(fleet.getRoute().getX(),
                     fleet.getRoute().getY())
                     && !game.getStarMap().isDangerous(fleet.getRoute().getX(),
-                        fleet.getRoute().getY())) {
+                        fleet.getRoute().getY(),
+                        fleet.getRoute().isEndReached())) {
                   // Not blocked so fleet is moving
                   MissionHandling.moveFleetFTL(game, fleet.getRoute().getX(),
                       fleet.getRoute().getY(), info, fleet);

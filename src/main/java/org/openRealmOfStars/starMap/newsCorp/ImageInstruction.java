@@ -512,6 +512,10 @@ public class ImageInstruction {
    */
   public static final String BLACK_HOLE_TRANSPARENT = "BlackHoleTransparent";
   /**
+   * Instructions for black hole
+   */
+  public static final String BLACK_HOLE = "BlackHole";
+  /**
    * Instructions for molten lava
    */
   public static final String MOLTEN_LAVA = "MoltenLava";
@@ -527,6 +531,24 @@ public class ImageInstruction {
    * Instructions for Artifact on planet
    */
   public static final String ARTIFACT_ON_PLANET = "ArtifactOnPlanet";
+  /** Instruction for destroyed planet image */
+  public static final String DESTROYED_PLANET = "DestroyedPlanet";
+  /** Instruction for asteroids image */
+  public static final String ASTEROIDS = "Asteroids";
+  /** Instruction for old probe */
+  public static final String OLD_PROBE = "OldProbe";
+  /** Instruction for Deep Space Anchor */
+  public static final String DSA = "DSA";
+  /** Instruction for Pirate Lair */
+  public static final String PIRATE_LAIR = "PirateLair";
+  /** Instruction for Time warp */
+  public static final String TIME_WARP = "TimeWarp";
+  /** Instruction for Rare tech */
+  public static final String RARE_TECH = "RareTech";
+  /** Instruction for Artifact1 */
+  public static final String ARTIFACT1 = "Artifact1";
+  /** Instruction for Artifact2 */
+  public static final String ARTIFACT2 = "Artifact2";
 
   /** Instruction to draw image */
   private static final String IMAGE = "image";
@@ -716,6 +738,18 @@ public class ImageInstruction {
         && !CORVETTE.equals(image)
         && !CRUISER.equals(image)
         && !MUTINY.equals(image)
+        && !ASTEROIDS.equals(image)
+        && !SHIP.equals(image)
+        && !PIRATE_LAIR.equals(image)
+        && !DSA.equals(image)
+        && !STASIS.equals(image)
+        && !TIME_WARP.equals(image)
+        && !BLACK_HOLE.equals(image)
+        && !RARE_TECH.equals(image)
+        && !ARTIFACT1.equals(image)
+        && !ARTIFACT2.equals(image)
+        && !OLD_PROBE.equals(image)
+        && !DESTROYED_PLANET.equals(image)
         && !DATALOSS.equals(image)
         && !NEWSTATION.equals(image)
         && !OLD_SHIP.equals(image)
@@ -1344,6 +1378,39 @@ public class ImageInstruction {
     }
     if (ALIEN_SHIP.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ALIEN_SHIP);
+    }
+    if (ASTEROIDS.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ASTEROIDS;
+    }
+    if (OLD_PROBE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_OLD_PROBE;
+    }
+    if (DSA.equals(image)) {
+      drawImg = GuiStatics.IMAGE_DSA;
+    }
+    if (BLACK_HOLE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BLACKHOLE;
+    }
+    if (TIME_WARP.equals(image)) {
+      drawImg = GuiStatics.IMAGE_TIME_WARP;
+    }
+    if (RARE_TECH.equals(image)) {
+      drawImg = GuiStatics.IMAGE_RARE_TECH;
+    }
+    if (ARTIFACT1.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ARTIFACT1;
+    }
+    if (ARTIFACT2.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ARTIFACT2;
+    }
+    if (PIRATE_LAIR.equals(image)) {
+      drawImg = GuiStatics.IMAGE_PIRATE_LAIR;
+    }
+    if (SHIP.equals(image)) {
+      drawImg = GuiStatics.IMAGE_SPACE_SHIP;
+    }
+    if (DESTROYED_PLANET.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DESTROYED_PLANET);
     }
     if (DESERT.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DESERT);

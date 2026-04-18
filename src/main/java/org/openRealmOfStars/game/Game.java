@@ -956,6 +956,22 @@ public class Game implements ActionListener {
         if (anomaly != null && fleet.getCommander() != null) {
           fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_ANOMALY);
         }
+        if (anomaly != null && starMapView == null) {
+          Message msg = new Message(new MessageType(MmType.FLEET,
+                SmType.ANOMALY), fleet.getName()
+              + " explored a space anomaly: " + anomaly.getText(),
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setMatchByString(fleet.getName());
+          msg.setCoordinate(fleet.getCoordinate());
+          msg.setRandomEventPop(true);
+          if (anomaly.getImageInstruction() == null) {
+            ErrorLogger.log("Anomaly missing image instructions: "
+                + anomaly.getType().name());
+          } else {
+            msg.setImageInstructions(anomaly.getImageInstruction().build());
+          }
+          info.getMsgList().addNewMessage(msg);
+        }
         if (anomaly != null && starMapView != null && info.isHuman()) {
           if (MusicPlayer.getNowPlaying() != MusicPlayer.MYSTERIOUS_ANOMALY) {
             MusicPlayer.play(MusicPlayer.MYSTERIOUS_ANOMALY);
@@ -1722,6 +1738,7 @@ public class Game implements ActionListener {
     }
     switch (gameState) {
     case AITURN:
+      starMapView = null;
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showAITurnView();
       break;

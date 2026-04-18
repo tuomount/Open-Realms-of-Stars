@@ -77,6 +77,10 @@ public class SpaceAnomaly {
    * Textual description what found or happened
    */
   private String text;
+  /**
+   * Textual description of the image to show.
+   */
+  private ImageInstruction imageInstruction;
 
   /**
    * Image of Space anomaly
@@ -143,6 +147,7 @@ public class SpaceAnomaly {
     this.text = null;
     this.image = null;
     this.combat = null;
+    this.setImageInstruction(null);
   }
 
   /**
@@ -210,6 +215,22 @@ public class SpaceAnomaly {
   }
 
   /**
+   * Get Image Instruction.
+   * @return Image Instruction
+   */
+  public ImageInstruction getImageInstruction() {
+    return imageInstruction;
+  }
+
+  /**
+   * Set image instruction.
+   * @param imageInstruction Image instruction
+   */
+  public void setImageInstruction(final ImageInstruction imageInstruction) {
+    this.imageInstruction = imageInstruction;
+  }
+
+  /**
    * Create News Station Space anomaly and handle space anomaly tile
    * @param map StarMap
    * @param info Player who found the anomaly
@@ -221,6 +242,10 @@ public class SpaceAnomaly {
     SpaceAnomaly result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
     result.setText(NEWS_STATION_TEXT);
     result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    inst.addImage(ImageInstruction.NEWSTATION);
+    result.setImageInstruction(inst);
     info.getArtifactLists().addDiscoveredArtifact(
         ArtifactFactory.createArtifact(
             ArtifactFactory.BROADCASTING_ELETRONIC));
@@ -258,6 +283,10 @@ public class SpaceAnomaly {
     result.setText(DESTROYED_PLANET_TEXT);
     result.setImage(IOUtilities.loadImage(
         GuiStatics.IMAGE_DESTROYED_PLANET));
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    inst.addImage(ImageInstruction.DESTROYED_PLANET);
+    result.setImageInstruction(inst);
     info.getArtifactLists().addDiscoveredArtifact(
         ArtifactFactory.createArtifact(
             ArtifactFactory.DESTROYED_PLANET_ARTIFACT));
@@ -308,6 +337,10 @@ public class SpaceAnomaly {
               + " explored near by space. Explored data was added your"
               + " realm's exploration data.");
           result.setImage(GuiStatics.IMAGE_OLD_PROBE);
+          ImageInstruction inst = new ImageInstruction();
+          inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          inst.addImage(ImageInstruction.OLD_PROBE);
+          result.setImageInstruction(inst);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           addExp = 40;
           for (int x = -3; x < 4; x++) {
@@ -336,6 +369,10 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.DEEP_SPACE_ANCHOR, 0);
           result.setText("Deep Space Anchor was found behind the nebulae.");
           result.setImage(GuiStatics.IMAGE_DSA);
+          ImageInstruction inst = new ImageInstruction();
+          inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          inst.addImage(ImageInstruction.DSA);
+          result.setImageInstruction(inst);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
           addExp = 40;
@@ -346,6 +383,10 @@ public class SpaceAnomaly {
           result.setText("Pirate station was found on the deep space anchor."
               + " Battle begins...");
           result.setImage(GuiStatics.IMAGE_PIRATE_LAIR);
+          ImageInstruction inst = new ImageInstruction();
+          inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          inst.addImage(ImageInstruction.PIRATE_LAIR);
+          result.setImageInstruction(inst);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
@@ -368,6 +409,10 @@ public class SpaceAnomaly {
           result.setText("Pirate ship was found in the nebulae."
               + " Battle begins...");
           result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_PILOT));
+          ImageInstruction inst = new ImageInstruction();
+          inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          inst.addImage(ImageInstruction.PIRATE_PILOT);
+          result.setImageInstruction(inst);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet pirate = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
@@ -381,6 +426,10 @@ public class SpaceAnomaly {
         case TileNames.SPACE_ANOMALY_MONSTER: {
           result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
           result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_KRAKEN));
+          ImageInstruction inst = new ImageInstruction();
+          inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          inst.addImage(ImageInstruction.KRAKEN);
+          result.setImageInstruction(inst);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           PlayerInfo board = map.getPlayerList().getSpaceMonsterPlayer();
           Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
@@ -427,6 +476,10 @@ public class SpaceAnomaly {
             result.setText("Ship was found in the nebulae and"
                 + " it crew decides to join your forces...");
             result.setImage(GuiStatics.IMAGE_SPACE_SHIP);
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.SHIP);
+            result.setImageInstruction(inst);
             map.setTile(fleet.getX(), fleet.getY(), empty);
             info.getFleets().add(newFleet);
             addExp = 30;
@@ -436,6 +489,10 @@ public class SpaceAnomaly {
                 + "the asteroid field..."
                 + " There isn't anything useful to find...");
             result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.ASTEROIDS);
+            result.setImageInstruction(inst);
             map.setTile(fleet.getX(), fleet.getY(), empty);
           }
           break;
@@ -448,6 +505,10 @@ public class SpaceAnomaly {
                 + " schematics of " + tech.getName() + ". This invention"
                 + " is immediately taken to use.");
             result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP));
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.OLD_SHIP);
+            result.setImageInstruction(inst);
             addExp = 40;
           } else {
             result = null;
@@ -460,6 +521,10 @@ public class SpaceAnomaly {
           result.setText("Wormhole discovered and it drags"
               + " your ship through it...");
           result.setImage(GuiStatics.IMAGE_BLACKHOLE);
+          ImageInstruction inst = new ImageInstruction();
+          inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          inst.addImage(ImageInstruction.BLACK_HOLE);
+          result.setImageInstruction(inst);
           Tile anchor = Tiles.getTileByName(TileNames.WORM_HOLE1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
           Coordinate coord = map.getFreeRandomSpot();
@@ -475,73 +540,8 @@ public class SpaceAnomaly {
           break;
         }
         case TileNames.SPACE_ANOMALY_TIME_WARP: {
-          result = new SpaceAnomaly(AnomalyType.TIME_WARP,
-              DiceGenerator.getRandom(20, 80));
-          StringBuilder sb = new StringBuilder();
-          sb.append("Space nebulae contained warpped time. Entering"
-              + " it has immediately increase time in this sector. Sector time"
-              + " has increased ");
-          sb.append(result.getValue());
-          sb.append(" star years. After this"
-              + " time returns normal in sector. Your fleet ships have"
-              + " taken damage due the passing time.");
-          if (fleet.getCommander() != null) {
-            sb.append(" Fleet leader has also got older due the time warp. ");
-            fleet.getCommander().setAge(fleet.getCommander().getAge()
-                + result.value);
-            int rp = result.getValue() / 2;
-            int multiplier = 1;
-            if (fleet.getCommander().hasPerk(Perk.ACADEMIC)
-                || fleet.getCommander().hasPerk(Perk.SCIENTIST)
-                || fleet.getCommander().hasPerk(Perk.FTL_ENGINEER)) {
-              rp = rp * 2;
-              multiplier = multiplier * 2;
-            }
-            if (fleet.getCommander().hasPerk(Perk.STUPID)
-                || fleet.getCommander().hasPerk(Perk.SLOW_LEARNER)) {
-              rp = rp / 2;
-              multiplier = multiplier / 2;
-            }
-            switch (multiplier) {
-              case 2: {
-                sb.append(fleet.getCommander().getCallName());
-                sb.append(" was able to research event and propulsion research "
-                    + " rushes forward!");
-                break;
-              }
-              default:
-              case 1: {
-                sb.append(fleet.getCommander().getCallName());
-                sb.append(" was able to study event and propulsion research "
-                    + " moves forward!");
-                break;
-              }
-              case 0: {
-                sb.append(fleet.getCommander().getCallName());
-                sb.append(" was trying to learn the event but"
-                    + " results were not great. Propulsion research got some "
-                    + " new ideas.");
-                break;
-              }
-            }
-            info.getTechList().setTechResearchPoints(TechType.Propulsion,
-                info.getTechList().getTechResearchPoints(TechType.Propulsion)
-                + rp);
-          }
+          result = createTimeWarp(map, info, fleet);
           addExp = 90;
-          map.setTile(fleet.getX(), fleet.getY(), empty);
-          for (Ship ship : fleet.getShips()) {
-            int damage = ship.getHull().getSlotHull()
-                * ship.getHull().getMaxSlot() / 2;
-            ShipDamage shipDamage = new ShipDamage(1, "Time wears the ship.");
-            while (damage > 0) {
-              damage = ship.damageComponent(damage, shipDamage);
-            }
-            sb.append(" ");
-            sb.append(shipDamage.getMessage());
-          }
-          result.setText(sb.toString());
-          result.setImage(GuiStatics.IMAGE_TIME_WARP);
           break;
         }
         case TileNames.SPACE_ANOMALY_RARE_TECH: {
@@ -554,6 +554,10 @@ public class SpaceAnomaly {
                 + ". This seems to be unusual piece of technology."
                 + " This invention is immediately taken to use.");
             result.setImage(GuiStatics.IMAGE_RARE_TECH);
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.RARE_TECH);
+            result.setImageInstruction(inst);
             info.getTechList().addTech(tech);
             if (Game.getTutorial() != null  && info.isHuman()
                 && map.isTutorialEnabled()) {
@@ -579,8 +583,16 @@ public class SpaceAnomaly {
               + " This finding requires some research time.");
           if (DiceGenerator.getBoolean()) {
             result.setImage(GuiStatics.IMAGE_ARTIFACT1);
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.ARTIFACT1);
+            result.setImageInstruction(inst);
           } else {
             result.setImage(GuiStatics.IMAGE_ARTIFACT2);
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.ARTIFACT2);
+            result.setImageInstruction(inst);
           }
           info.getArtifactLists().addDiscoveredArtifact(
               ArtifactFactory.getRandomNonFacility());
@@ -613,6 +625,10 @@ public class SpaceAnomaly {
             result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
             result.setText(NEWS_STATION_VISITED_TEXT);
             result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.NEWSTATION);
+            result.setImageInstruction(inst);
           }
           break;
         }
@@ -628,6 +644,10 @@ public class SpaceAnomaly {
               + "the ship " + desc + " wakes and is willing to join your "
               + "realm because of rescuing " + gender.getHisHer() + " life.");
           result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_STASIS));
+          ImageInstruction inst = new ImageInstruction();
+          inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          inst.addImage(ImageInstruction.STASIS);
+          result.setImageInstruction(inst);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           Leader leader = new Leader(name);
           leader.setAge(DiceGenerator.getRandom(30, 50));
@@ -668,6 +688,10 @@ public class SpaceAnomaly {
             result.setText(DESTROYED_VISITED_TEXT);
             result.setImage(IOUtilities.loadImage(
                 GuiStatics.IMAGE_DESTROYED_PLANET));
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.DESTROYED_PLANET);
+            result.setImageInstruction(inst);
           }
           break;
         }
@@ -684,8 +708,16 @@ public class SpaceAnomaly {
               + " This finding requires some research time.");
           if (DiceGenerator.getBoolean()) {
             result.setImage(GuiStatics.IMAGE_ARTIFACT1);
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.ARTIFACT1);
+            result.setImageInstruction(inst);
           } else {
             result.setImage(GuiStatics.IMAGE_ARTIFACT2);
+            ImageInstruction inst = new ImageInstruction();
+            inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            inst.addImage(ImageInstruction.ARTIFACT2);
+            result.setImageInstruction(inst);
           }
           info.getArtifactLists().addDiscoveredArtifact(
               ArtifactFactory.getRandomArtifactFromRiftPortal(
@@ -715,6 +747,7 @@ public class SpaceAnomaly {
               ImageInstruction.RIFT_PORTAL, ImageInstruction.SIZE_FULL);
           instructions.addLogo(ImageInstruction.POSITION_CENTER,
               ImageInstruction.DEVOURER, ImageInstruction.SIZE_FULL);
+          result.setImageInstruction(instructions);
           BufferedImage image = new BufferedImage(900, 600,
               BufferedImage.TYPE_4BYTE_ABGR);
           image = ImageInstruction.parseImageInstructions(image,
@@ -757,6 +790,88 @@ public class SpaceAnomaly {
   }
 
   /**
+   * Create time warp anomaly
+   * @param map StarMap
+   * @param info PlayerInfo
+   * @param fleet Fleet making the discovery.
+   * @return SpaceAnomaly.
+   */
+  private static SpaceAnomaly createTimeWarp(final StarMap map,
+      final PlayerInfo info, final Fleet fleet) {
+    SpaceAnomaly result = new SpaceAnomaly(AnomalyType.TIME_WARP,
+        DiceGenerator.getRandom(20, 80));
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    StringBuilder sb = new StringBuilder();
+    sb.append("Space nebulae contained warpped time. Entering"
+        + " it has immediately increase time in this sector. Sector time"
+        + " has increased ");
+    sb.append(result.getValue());
+    sb.append(" star years. After this"
+        + " time returns normal in sector. Your fleet ships have"
+        + " taken damage due the passing time.");
+    if (fleet.getCommander() != null) {
+      sb.append(" Fleet leader has also got older due the time warp. ");
+      fleet.getCommander().setAge(fleet.getCommander().getAge()
+          + result.value);
+      int rp = result.getValue() / 2;
+      int multiplier = 1;
+      if (fleet.getCommander().hasPerk(Perk.ACADEMIC)
+          || fleet.getCommander().hasPerk(Perk.SCIENTIST)
+          || fleet.getCommander().hasPerk(Perk.FTL_ENGINEER)) {
+        rp = rp * 2;
+        multiplier = multiplier * 2;
+      }
+      if (fleet.getCommander().hasPerk(Perk.STUPID)
+          || fleet.getCommander().hasPerk(Perk.SLOW_LEARNER)) {
+        rp = rp / 2;
+        multiplier = multiplier / 2;
+      }
+      switch (multiplier) {
+        case 2: {
+          sb.append(fleet.getCommander().getCallName());
+          sb.append(" was able to research event and propulsion research "
+              + " rushes forward!");
+          break;
+        }
+        default:
+        case 1: {
+          sb.append(fleet.getCommander().getCallName());
+          sb.append(" was able to study event and propulsion research "
+              + " moves forward!");
+          break;
+        }
+        case 0: {
+          sb.append(fleet.getCommander().getCallName());
+          sb.append(" was trying to learn the event but"
+              + " results were not great. Propulsion research got some "
+              + " new ideas.");
+          break;
+        }
+      }
+      info.getTechList().setTechResearchPoints(TechType.Propulsion,
+          info.getTechList().getTechResearchPoints(TechType.Propulsion)
+          + rp);
+    }
+    map.setTile(fleet.getX(), fleet.getY(), empty);
+    for (Ship ship : fleet.getShips()) {
+      int damage = ship.getHull().getSlotHull()
+          * ship.getHull().getMaxSlot() / 2;
+      ShipDamage shipDamage = new ShipDamage(1, "Time wears the ship.");
+      while (damage > 0) {
+        damage = ship.damageComponent(damage, shipDamage);
+      }
+      sb.append(" ");
+      sb.append(shipDamage.getMessage());
+    }
+    result.setText(sb.toString());
+    result.setImage(GuiStatics.IMAGE_TIME_WARP);
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    inst.addImage(ImageInstruction.TIME_WARP);
+    result.setImageInstruction(inst);
+    return result;
+  }
+  /**
    * Create robotic leader
    * @param map StarMap
    * @param info PlayerInfo
@@ -782,6 +897,10 @@ public class SpaceAnomaly {
         + "the ship " + desc + " wakes and is willing to join your "
         + "realm.");
     result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP));
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    inst.addImage(ImageInstruction.OLD_SHIP);
+    result.setImageInstruction(inst);
     map.setTile(fleet.getX(), fleet.getY(), empty);
     Leader leader = new Leader(name);
     leader.setAge(DiceGenerator.getRandom(300, 1500));
@@ -827,6 +946,10 @@ public class SpaceAnomaly {
         + " asteroids. Cache contained " + result.getValue()
         + " credits.");
     result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+    ImageInstruction inst = new ImageInstruction();
+    inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    inst.addImage(ImageInstruction.ASTEROIDS);
+    result.setImageInstruction(inst);
     info.setTotalCredits(info.getTotalCredits() + result.value);
     map.setTile(fleet.getX(), fleet.getY(), empty);
     return result;

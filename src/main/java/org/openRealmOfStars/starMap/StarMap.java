@@ -3685,6 +3685,27 @@ public class StarMap {
   }
 
   /**
+   * Is tile dangerous or not
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @param lastMove is Last move on route
+   * @return true if tile is dangerous otherwise false. Also if
+   * coordinate is out of map then true is returned.
+   */
+  public boolean isDangerous(final int x, final int y,
+      final boolean lastMove) {
+    if (lastMove) {
+      // Last move is never dangerous and will be done on purpose.
+      return false;
+    }
+    Tile tile = getTile(x, y);
+    if (tile != null) {
+      return tile.isDangerous();
+    }
+    return true;
+  }
+
+  /**
    * Is tile blocked or not
    * @param x X coordinate
    * @param y Y Coordinate

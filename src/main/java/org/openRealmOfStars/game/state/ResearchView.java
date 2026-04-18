@@ -364,6 +364,7 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
 
     DefaultMutableTreeNode currentNode =
         (DefaultMutableTreeNode) techList.getModel().getRoot();
+    techList.setSelectionPath(new TreePath(currentNode.getPath()));
     do {
         if (currentNode.getLevel() == 2) {
           techList.expandPath(new TreePath(currentNode.getPath()));
@@ -688,11 +689,32 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
   }
 
   /**
+   * Show research help.
+   */
+  public void updateResearchHelp() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Research Help\n\n");
+    sb.append("Right hand side slider allows you to pick which technology "
+        + "field you want to focus. Default focus level is 20% for combat and "
+        + "rest of the fields are in 16%. At end of the slider is up arrow, "
+        + "which can be used to move next level on that technology and skip "
+        + "rest of undiscovered technologies on that particular level. "
+        + "You can only skip when you have discoverd at least 50% of all "
+        + "technologies on that level. You can see this easily, since "
+        + "up arrow turns green when you can skip.\n\n");
+    sb.append("You can see name of techologies you are missing, by click "
+        + "small icon at begining of the slider or selecting technology "
+        + "type from the research tree on left hand side.");
+    infoText.setText(sb.toString());
+    infoText.repaint();
+    infoText.setLineWrap(true);
+    infoText.setCharacterWidth(7);
+  }
+  /**
    * Get Technology description and missing tech list to info text.
    * @param type TechType
    */
   public void updateTechInfo(final TechType type) {
-    techList.clearSelection();
     StringBuilder sb = new StringBuilder(type.getDescription());
     int level = player.getTechList().getTechLevel(type);
     Tech[] missingTechs = player.getTechList().getListMissingTech(type, level);
@@ -744,28 +766,41 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
           .getLastSelectedPathComponent();
       if (node.getUserObject() instanceof String) {
         String str = (String) node.getUserObject();
+        boolean textSet = false;
+        if (str.startsWith("Research Technology")) {
+          updateResearchHelp();
+          textSet = true;
+        }
         if (str.startsWith("Combat")) {
           updateTechInfo(TechType.Combat);
+          textSet = true;
         }
         if (str.startsWith("Defense")) {
           updateTechInfo(TechType.Defense);
+          textSet = true;
         }
         if (str.startsWith("Hull")) {
           updateTechInfo(TechType.Hulls);
+          textSet = true;
         }
         if (str.startsWith("Planetary")) {
           updateTechInfo(TechType.Improvements);
+          textSet = true;
         }
         if (str.startsWith("Propulsion")) {
           updateTechInfo(TechType.Propulsion);
+          textSet = true;
         }
         if (str.startsWith("Electronic")) {
           updateTechInfo(TechType.Combat);
+          textSet = true;
         }
 
-        infoText.setLineWrap(false);
-        infoText.setText(str);
-        infoText.repaint();
+        if (!textSet) {
+          infoText.setLineWrap(false);
+          infoText.setText(str);
+          infoText.repaint();
+        }
       }
       if (node.getUserObject() instanceof Tech) {
         Tech tech = (Tech) node.getUserObject();

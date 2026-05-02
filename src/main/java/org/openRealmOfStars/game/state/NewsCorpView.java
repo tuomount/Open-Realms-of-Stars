@@ -19,7 +19,6 @@ package org.openRealmOfStars.game.state;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -33,12 +32,12 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.ImagePanel;
+import org.openRealmOfStars.gui.panels.NewsImagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
@@ -57,26 +56,7 @@ public class NewsCorpView extends BlackPanel {
   /**
    * News image
    */
-  private ImagePanel newsImage;
-
-  /**
-   * Image of NewsReader
-   */
-  private BufferedImage newsReader;
-  /**
-   * News text
-   */
-  private InfoTextArea textArea;
-
-  /**
-   * Animation framing
-   */
-  private int animation;
-
-  /**
-   * News reader image panel
-   */
-  private ImagePanel newsReaderPanel;
+  private NewsImagePanel newsImage;
 
   /**
    * List of news
@@ -121,39 +101,26 @@ public class NewsCorpView extends BlackPanel {
     }
     base.setLayout(new BorderLayout());
     base.setTitle("Galactic Broadcasting News Company");
-    newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_SCAURIAN_RACE);
-    int heightNewsReader = 700;
     widthHeadLine = 800;
     heightHeadLine = 400;
     if (listener instanceof Game) {
       Game game = (Game) listener;
-      heightNewsReader = game.getHeight() - 50;
-      widthHeadLine = game.getWidth() - 220;
+      heightHeadLine = game.getHeight() - UIScale.scale(100);
+      widthHeadLine = game.getWidth() - 4;
     }
-    newsReader = new BufferedImage(196, heightNewsReader,
-        BufferedImage.TYPE_4BYTE_ABGR);
-    animation = 0;
-    newsReaderPanel.setImage(newsReader);
-    base.add(newsReaderPanel, BorderLayout.WEST);
-    InfoPanel newsPanel = new InfoPanel();
-    newsPanel.setLayout(new BoxLayout(newsPanel, BoxLayout.Y_AXIS));
-    newsPanel.setTitle("News headline");
-    BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
-        BufferedImage.TYPE_4BYTE_ABGR);
+    newsImage = new NewsImagePanel(widthHeadLine, heightHeadLine);
+    BufferedImage image = new BufferedImage(newsImage.getNewsImageWidth(),
+        newsImage.getNewsImageHeight(), BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image,
         news[0].getImageInstructions());
-    newsImage = new ImagePanel(image);
-    newsPanel.add(newsImage, BorderLayout.WEST);
-    newsPanel.add(Box.createRigidArea(new Dimension(15, 10)));
-    textArea = new InfoTextArea();
-    textArea.setCharacterWidth(9);
-    textArea.setText(news[0].getNewsText());
-    textArea.setLineWrap(true);
-    textArea.setEditable(false);
-    newsPanel.add(textArea);
+    newsImage.setNewsImage(image);
+    newsImage.setText(newsList[newsIndex].getNewsText());
+    base.add(newsImage, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+    panel.add(Box.createRigidArea(new Dimension(widthHeadLine / 2 - 160 / 2,
+        5)));
     IconButton iBtn = new IconButton(GuiStatics.getArrowLeft(),
         GuiStatics.getArrowLeftPressed(), false,
         GameCommands.COMMAND_PREV_TARGET, this);
@@ -168,9 +135,7 @@ public class NewsCorpView extends BlackPanel {
         GameCommands.COMMAND_NEXT_TARGET, this);
     iBtn.addActionListener(listener);
     panel.add(iBtn);
-    newsPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    newsPanel.add(panel);
-    base.add(newsPanel, BorderLayout.CENTER);
+    base.add(panel, BorderLayout.SOUTH);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -188,58 +153,27 @@ public class NewsCorpView extends BlackPanel {
    * @param arg0 ActionEvent
    */
   public void handleAction(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
-        && animation < 180) {
-      Graphics2D g = (Graphics2D) newsReader.getGraphics();
-      g.drawImage(GuiStatics.getStarField(), -10 - animation,
-          -200 + animation, null);
-      if (animation < 64) {
-        g.drawImage(GuiStatics.IMAGE_GBNC,
-            newsReader.getWidth() / 2 - GuiStatics.IMAGE_GBNC.getWidth() / 2,
-            -16 + animation * 2, null);
-        animation++;
-      } else {
-        g.drawImage(GuiStatics.IMAGE_GBNC,
-            newsReader.getWidth() / 2 - GuiStatics.IMAGE_GBNC.getWidth() / 2,
-            -16 + 128, null);
-        if (animation < 162) {
-          g.drawImage(GuiStatics.IMAGE_NEWSREADER,
-              newsReader.getWidth() / 2
-              - GuiStatics.IMAGE_NEWSREADER.getWidth() / 2,
-              newsReader.getHeight() - (animation - 64) * 2, null);
-          animation++;
-        } else {
-          g.drawImage(GuiStatics.IMAGE_NEWSREADER,
-              newsReader.getWidth() / 2
-              - GuiStatics.IMAGE_NEWSREADER.getWidth() / 2,
-              newsReader.getHeight() - (162 - 64) * 2, null);
-          animation++;
-        }
-
-      }
-      newsReaderPanel.repaint();
-    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)
         && newsIndex < newsList.length - 1) {
       newsIndex++;
-      BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
-          BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage image = new BufferedImage(newsImage.getNewsImageWidth(),
+          newsImage.getNewsImageHeight(), BufferedImage.TYPE_4BYTE_ABGR);
       image = ImageInstruction.parseImageInstructions(image,
           newsList[newsIndex].getImageInstructions());
-      newsImage.setImage(image);
-      textArea.setText(newsList[newsIndex].getNewsText());
+      newsImage.setNewsImage(image);
+      newsImage.setText(newsList[newsIndex].getNewsText());
       newsLabel.setText(newsIndex + 1 + "/" + newsList.length);
       repaint();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)
         && newsIndex > 0) {
       newsIndex--;
-      BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
-          BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage image = new BufferedImage(newsImage.getNewsImageWidth(),
+          newsImage.getNewsImageHeight(), BufferedImage.TYPE_4BYTE_ABGR);
       image = ImageInstruction.parseImageInstructions(image,
           newsList[newsIndex].getImageInstructions());
-      newsImage.setImage(image);
-      textArea.setText(newsList[newsIndex].getNewsText());
+      newsImage.setNewsImage(image);
+      newsImage.setText(newsList[newsIndex].getNewsText());
       newsLabel.setText(newsIndex + 1 + "/" + newsList.length);
       repaint();
     }

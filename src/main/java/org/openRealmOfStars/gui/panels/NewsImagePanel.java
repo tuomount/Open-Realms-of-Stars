@@ -180,8 +180,8 @@ public class NewsImagePanel extends JPanel {
 
     g2d.setPaint(gradient);
     g.fillRect(0, 0, this.getWidth(), this.getHeight());
-    int offsetX = (image.getWidth() - backgroundImage.getWidth()) / 2;
-    int offsetY = (image.getHeight() - backgroundImage.getHeight()) / 2;
+    int offsetX = (this.getWidth() - backgroundImage.getWidth()) / 2;
+    int offsetY = (this.getHeight() - backgroundImage.getHeight()) / 2;
     g2d.drawImage(backgroundImage, offsetX, offsetY, null);
     if (newsImage != null) {
       g2d.drawImage(newsImage, offsetX + newsImageX, offsetY + newsImageY,
@@ -200,7 +200,7 @@ public class NewsImagePanel extends JPanel {
       if (defaultCharWidth < 1) {
         defaultCharWidth = UIScale.scale(6);
       }
-      int maxRowLen = newsImageWidth / defaultCharWidth;
+      int maxRowLen = (newsImageWidth - UIScale.scale(5)) / defaultCharWidth;
       StringBuilder sb = new StringBuilder(this.getText());
       for (int i = 0; i < sb.length(); i++) {
         if (sb.charAt(i) == ' ') {
@@ -212,7 +212,7 @@ public class NewsImagePanel extends JPanel {
         } else {
           rowLen++;
         }
-        if (rowLen > maxRowLen) {
+        if (rowLen >= maxRowLen) {
           if (lastSpace != -1) {
             sb.setCharAt(lastSpace, '\n');
             rowLen = i - lastSpace;
@@ -226,7 +226,7 @@ public class NewsImagePanel extends JPanel {
       }
       String[] texts = sb.toString().split("\n");
       for (int i = 0; i < texts.length; i++) {
-        int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]);
+        int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]) + 2;
         g2d.drawString(texts[i], sx, sy + i * yHeight + yHeight);
       }
     }

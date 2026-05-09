@@ -187,7 +187,7 @@ public final class IOUtilities {
       } else {
         rowLen++;
       }
-      if (rowLen > lineWidth && lastSpace != -1) {
+      if (rowLen >= lineWidth && lastSpace != -1) {
         sb.setCharAt(lastSpace, '\n');
         rowLen = i - lastSpace;
         lastSpace = -1;

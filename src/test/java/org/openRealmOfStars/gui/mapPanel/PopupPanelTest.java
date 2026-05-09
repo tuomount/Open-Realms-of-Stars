@@ -69,9 +69,9 @@ public class PopupPanelTest {
         "Test title");
     String[] rows = panel.splitText(400, 10);
     assertEquals(13, rows.length);
-    assertEquals("This is just text to try out popup panel", rows[0]);
-    assertEquals("text drawing capabilities. There are no", rows[1]);
-    assertEquals("line changes here at all. Popup panel", rows[2]);
+    assertEquals("This is just text to try out popup", rows[0]);
+    assertEquals("panel text drawing capabilities. There", rows[1]);
+    assertEquals("are no line changes here at all. Popup", rows[2]);
   }
 
   @Test

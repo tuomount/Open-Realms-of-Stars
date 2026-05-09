@@ -143,7 +143,7 @@ public class SpaceLabel extends JLabel {
        } else {
          rowLen++;
        }
-       if (rowLen > maxRowLen) {
+       if (rowLen >= maxRowLen) {
          if (lastSpace != -1) {
            sb.setCharAt(lastSpace, '\n');
            rowLen = i - lastSpace;

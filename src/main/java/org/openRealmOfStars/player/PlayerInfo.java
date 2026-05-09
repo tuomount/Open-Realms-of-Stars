@@ -2532,4 +2532,22 @@ public class PlayerInfo {
     }
     return null;
   }
+
+  /**
+   * Returns the total number of combats across all ship stats in the list.
+   *
+   * This method iterates through each {@link ShipStat} in the
+   * {@code shipStatList} and sums up their respective combat counts using
+   * the {@link #getNumberOfCombats()} method.
+   * The result is returned as an integer value.
+   *
+   * @return the total number of combats
+   */
+  public int getTotalNumberOfCombats() {
+    int count = 0;
+    for (ShipStat stat : shipStatList) {
+      count = count + stat.getNumberOfCombats();
+    }
+    return count;
+  }
 }

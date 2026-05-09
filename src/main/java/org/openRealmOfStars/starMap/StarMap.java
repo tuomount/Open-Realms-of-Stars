@@ -5076,4 +5076,21 @@ public class StarMap {
   public void setGenerateFullGame(final boolean generateFullGame) {
     this.generateFullGame = generateFullGame;
   }
+
+  /**
+   * Returns the number of planets that belong to a specific realm.
+   *
+   * @param info The {@link PlayerInfo} object representing the player's
+   *             information.
+   * @return The number of planets associated with the specified player's realm.
+   */
+  public int getNumberOfPlanetsForRealm(final PlayerInfo info) {
+    int count = 0;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetPlayerInfo() == info) {
+        count++;
+      }
+    }
+    return count;
+  }
 }

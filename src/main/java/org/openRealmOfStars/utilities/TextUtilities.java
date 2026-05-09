@@ -32,6 +32,22 @@ public final class TextUtilities {
   }
 
   /**
+   * Converts an integer between 0 and 15 to its textual representation.
+   *
+   * @param number The number to be converted (between 0 and 15)
+   * @return A string containing the textual representation of the input number
+   */
+  public static String numToText(final int number) {
+    if (number < 0 || number > 15) {
+        return Integer.toString(number);
+    }
+    String[] ones = {"zero", "one", "two", "three", "four", "five",
+              "six", "seven", "eight", "nine", "ten", "eleven",
+              "twelve", "thirteen", "fourteen", "fifteen"};
+    return ones[number];
+  }
+
+  /**
    * Get integer as ordering text
    * @param number Integer to convert ordering text
    * @return Ordering text

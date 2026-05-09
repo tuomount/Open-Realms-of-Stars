@@ -809,11 +809,12 @@ public class NewsFactoryTest {
     PlayerList list = Mockito.mock(PlayerList.class);
     Mockito.when(list.getSpacePiratePlayer()).thenReturn(info);
     Mockito.when(map.getPlayerList()).thenReturn(list);
-
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(0);
     NewsData news = NewsFactory.makeSpacePiratesNews(map);
     assertEquals(true, news.getImageInstructions().contains(
-        "SPACE PIRATES"));
-    assertEquals(true, news.getNewsText().contains("space pirates"));
+        "PIRATES"));
   }
 
   @Test

@@ -3740,29 +3740,171 @@ public final class NewsFactory {
     StringBuilder sb = new StringBuilder();
     PlayerInfo pirates = map.getPlayerList().getSpacePiratePlayer();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-    int value = DiceGenerator.getRandom(2);
-    switch (value) {
-      case 0: {
-        instructions.addText("SPACE PIRATES SEEN!");
-        break;
+    int numberOfFleets = pirates.getFleets().getNumberOfFleets();
+    int combats = pirates.getTotalNumberOfCombats();
+    int planets = map.getNumberOfPlanetsForRealm(pirates);
+    int lairs = 0;
+    int fleets = 0;
+    for (int i = 0; i < numberOfFleets; i++) {
+      Fleet fleet = pirates.getFleets().getByIndex(i);
+      if (fleet != null) {
+        if (fleet.isStarBaseDeployed()) {
+          lairs++;
+        } else {
+          fleets++;
+        }
       }
-      case 1: {
-        instructions.addText("SPACE PIRATES SPOTTED IN GALAXY!");
-        break;
+    }
+    if (combats == 0) {
+      int value = DiceGenerator.getRandom(3);
+      switch (value) {
+        default:
+        case 0: {
+          instructions.addText("RUMORS ABOUT SPACE PIRATES!");
+          break;
+        }
+        case 1: {
+          instructions.addText("SPACE PIRATES! FACT OR FICTION?");
+          break;
+        }
+        case 2: {
+          instructions.addText("PIRATES IN THE GALAXY?");
+          break;
+        }
+        case 3: {
+          instructions.addText("SPACE PIRATES SPOTTED?");
+          break;
+        }
       }
-      case 2: {
-        instructions.addText("YARR! SPACE PIRATES!");
-        break;
+      value = DiceGenerator.getRandom(2);
+      switch (value) {
+        default:
+        case 0: {
+          sb.append("There are rumors that space pirates would be roaming "
+              + "in the galaxy. Actual evidence is still very vague.");
+          break;
+        }
+        case 1: {
+          sb.append("Rumors of space piracy have been circulating "
+              + "throughout the galaxy, but concrete evidence "
+              + "remains elusive and shrouded in mystery.");
+          break;
+        }
+        case 2: {
+          sb.append("Whispers of space piracy have been echoing through the"
+              + " galaxy, but despite numerous investigations and probes,"
+              + " concrete proof remains stubbornly out of reach.");
+          break;
+        }
       }
-      default: {
-        instructions.addText("SPACE PIRATES SEEN!");
-        break;
+    } else if (combats < 4) {
+      int value = DiceGenerator.getRandom(3);
+      switch (value) {
+        default:
+        case 0: {
+          instructions.addText("SPACE PIRATES ARE TRUE!");
+          break;
+        }
+        case 1: {
+          instructions.addText("SPACE PIRATES UNCOVERED");
+          break;
+        }
+        case 2: {
+          instructions.addText("PIRATES IN SPACE");
+          break;
+        }
+        case 3: {
+          instructions.addText("SPACE PIRACY IS REAL");
+          break;
+        }
+      }
+      if (fleets > 2) {
+        sb.append("Space pirates have been making headlines with a "
+            + "series of daring attacks on ships across the "
+            + "galaxy. While still relatively rare, these incidents "
+            + "have seen pirate vessels targeting unsuspecting "
+            + "cargo haulers and civilian transports before "
+            + "melting back into space.");
+      } else if (fleets == 0 && lairs > 0) {
+        sb.append("An ongoing campaign by brave military vessels has "
+            + "successfully cleared out notorious space pirate strongholds "
+            + "from the galaxy, leaving no signs of rogue pirate activity "
+            + "for now. Despite previous concerns about roaming pirate "
+            + "ships, current reconnaissance suggests that their presence "
+            + "is minimal and largely contained.");
+      } else if (fleets == 1 || fleets == 2) {
+        sb.append("There are only a handful of notorious space pirate fleets "
+            + "marauding through the galaxy, and it's hoped that their "
+            + "numbers remain relatively small to prevent a scourge of "
+            + "piracy from spreading across the cosmos.");
+      } else {
+        sb.append("Space piracy has all but disappeared from the galaxy, "
+            + "a testament to the effectiveness of recent efforts to "
+            + "eradicate the scourge.");
+      }
+    } else {
+      int value = DiceGenerator.getRandom(5);
+      switch (value) {
+        default:
+        case 0: {
+          instructions.addText("GALAXY UNDER PIRATE ATTACK");
+          break;
+        }
+        case 1: {
+          instructions.addText("GALACTIC PIRACY SOARS");
+          break;
+        }
+        case 2: {
+          instructions.addText("GALACTIC PIRACY EPIDEMIC");
+          break;
+        }
+        case 3: {
+          instructions.addText("SPACE PIRATES ON THE RISE");
+          break;
+        }
+        case 4: {
+          instructions.addText("PIRATES OF THE GALAXY");
+          break;
+        }
+        case 5: {
+          instructions.addText("COSMIC BANDITS STRIKE BACK");
+          break;
+        }
+      }
+      if (planets > 0) {
+        sb.append("Space pirates have acquired ");
+        sb.append(TextUtilities.numToText(planets));
+        sb.append(" planet");
+        if (planets != 1) {
+          sb.append("s");
+        }
+        sb.append(", granting them unparalleled resources and manufacturing "
+            + "capabilities. With their newfound base of operations, "
+            + "they're able to construct new ships at an alarming rate, "
+            + "wreaking havoc throughout the galaxy. ");
+      }
+      if (lairs > 0) {
+        sb.append("Space pirates have built ");
+        sb.append(TextUtilities.numToText(lairs));
+        sb.append(" secret hideout");
+        if (lairs != 1) {
+          sb.append("s");
+        }
+        sb.append(" across the galaxy, where they can plan and carry "
+            + "out their illegal activities. ");
+      }
+      if (fleets > 15) {
+        sb.append("The number of space pirate fleets has reached alarmingly"
+            + " high levels, posing a significant threat to the galaxy. ");
+      } else if (fleets < 5) {
+        sb.append("The number of space pirate fleets is at its lowest level,"
+            + " with only a few scattered vessels remaining.");
+      } else {
+          sb.append("The number of space pirate fleets has stabilized at a "
+              + "moderate level, posing a manageable threat to the galaxy.");
       }
     }
     instructions.addImage(pirates.getRace().getNameSingle());
-    sb.append("More and more space pirates are seen in galaxy attacking"
-        + " on cargo ships and destroying star bases. Where are privateers"
-        + " coming from?");
     news.setImageInstructions(instructions.build());
     news.setNewsText(sb.toString());
     return news;

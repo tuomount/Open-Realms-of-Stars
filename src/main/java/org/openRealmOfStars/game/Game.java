@@ -929,7 +929,9 @@ public class Game implements ActionListener {
           }
         }
         if (combat.isHumanPlayer()) {
-          starMapView.setReadyToMove(false);
+          if (starMapView != null) {
+            starMapView.setReadyToMove(false);
+          }
           changeGameState(GameState.COMBAT, combat);
         } else {
           combat.doFastCombat();

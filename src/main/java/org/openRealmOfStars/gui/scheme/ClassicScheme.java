@@ -71,7 +71,10 @@ public class ClassicScheme extends BaseScheme {
    */
   public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
 
-
+  /**
+   * Bright Blue news corp text
+   */
+  public static final Color COLOR_NEWS_CORP_TEXT = new Color(60, 103, 255, 255);
   /**
    * Deep space purple
    */
@@ -365,4 +368,8 @@ public class ClassicScheme extends BaseScheme {
     return COLOR_RED_WARNING_SHADOW;
   }
 
+  @Override
+  public Color getNewsCorpTextColor() {
+    return COLOR_NEWS_CORP_TEXT;
+  }
 }

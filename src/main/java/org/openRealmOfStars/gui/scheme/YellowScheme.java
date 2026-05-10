@@ -360,5 +360,9 @@ public class YellowScheme extends BaseScheme {
   public Color getWarningColorShadow() {
     return COLOR_ORANGE_WARNING_SHADOW;
   }
+  @Override
+  public Color getNewsCorpTextColor() {
+    return COLOR_GREEN_TEXT;
+  }
 
 }

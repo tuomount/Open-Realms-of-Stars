@@ -177,4 +177,10 @@ public abstract class BaseScheme {
    */
   public abstract Color getWarningColorShadow();
 
+  /**
+   * Get news corp text color
+   * @return Color
+   */
+  public abstract Color getNewsCorpTextColor();
+
 }

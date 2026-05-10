@@ -170,6 +170,24 @@ public class NewsImagePanel extends JPanel {
   public BufferedImage getImage() {
     return newsImage;
   }
+
+  /**
+   * Draw String with black border.
+   * @param g2d Graphics2D
+   * @param output Text to draw
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   */
+  private void drawString(final Graphics2D g2d, final String output,
+      final int x, final int y) {
+    g2d.setColor(Color.BLACK);
+    g2d.drawString(output, x, y - 1);
+    g2d.drawString(output, x, y + 1);
+    g2d.drawString(output, x - 1, y);
+    g2d.drawString(output, x + 1, y);
+    g2d.setColor(GuiStatics.getNewsCorpTextColor());
+    g2d.drawString(output, x, y);
+  }
   @Override
   protected void paintComponent(final Graphics g) {
     GradientPaint gradient = new GradientPaint(this.getWidth() / 2, 0,
@@ -194,40 +212,43 @@ public class NewsImagePanel extends JPanel {
       g2d.setColor(GuiStatics.COLOR_DAMAGE_ALMOST_DESTROYED);
 
       int lastSpace = -1;
-      int rowLen = 0;
       // Use actual font metrics to determine character width
-      int defaultCharWidth = GuiStatics.getTextWidth(getFont(), "M");
+      int defaultCharWidth = GuiStatics.getTextWidth(
+          g2d.getFont(), "M");
       if (defaultCharWidth < 1) {
         defaultCharWidth = UIScale.scale(6);
       }
-      int maxRowLen = (newsImageWidth - UIScale.scale(5)) / defaultCharWidth;
+      int maxRowPixelLen = newsImageWidth - UIScale.scale(5);
       StringBuilder sb = new StringBuilder(this.getText());
+      StringBuilder singleRow = new StringBuilder();
       for (int i = 0; i < sb.length(); i++) {
         if (sb.charAt(i) == ' ') {
           lastSpace = i;
         }
         if (sb.charAt(i) == '\n') {
+          singleRow = new StringBuilder();
           lastSpace = -1;
-          rowLen = 0;
         } else {
-          rowLen++;
+          singleRow.append(sb.charAt(i));
         }
-        if (rowLen >= maxRowLen) {
+        int rowLenPixels = GuiStatics.getTextWidth(g2d.getFont(),
+            singleRow.toString());
+        if (rowLenPixels >= maxRowPixelLen) {
           if (lastSpace != -1) {
             sb.setCharAt(lastSpace, '\n');
-            rowLen = i - lastSpace;
+            singleRow = new StringBuilder(sb.substring(lastSpace, i));
             lastSpace = -1;
           } else {
             sb.setCharAt(i, '\n');
             lastSpace = -1;
-            rowLen = 0;
+            singleRow = new StringBuilder();
           }
         }
       }
       String[] texts = sb.toString().split("\n");
       for (int i = 0; i < texts.length; i++) {
-        int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]) + 2;
-        g2d.drawString(texts[i], sx, sy + i * yHeight + yHeight);
+        int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]) + 4;
+        drawString(g2d, texts[i], sx, sy + i * yHeight + yHeight);
       }
     }
   }

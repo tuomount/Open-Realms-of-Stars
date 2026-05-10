@@ -66,6 +66,11 @@ public class GreyScheme extends BaseScheme {
    */
   public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 120, 255);
   /**
+   * Bright Green news corp text
+   */
+  public static final Color COLOR_NEWS_CORP_TEXT = new Color(103, 255, 60, 255);
+
+  /**
    * Green text dark one
    */
   public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 40, 255);
@@ -357,4 +362,8 @@ public class GreyScheme extends BaseScheme {
     return COLOR_RED_WARNING_SHADOW;
   }
 
+  @Override
+  public Color getNewsCorpTextColor() {
+    return COLOR_NEWS_CORP_TEXT;
+  }
 }

@@ -1080,6 +1080,14 @@ public final class GuiStatics {
   }
 
   /**
+   * Get news corp text color.
+   * @return Color
+   */
+  public static Color getNewsCorpTextColor() {
+    return schemeType.getNewsCorpTextColor();
+  }
+
+  /**
    * Get Cool Space Color Dark
    * @return Color
    */

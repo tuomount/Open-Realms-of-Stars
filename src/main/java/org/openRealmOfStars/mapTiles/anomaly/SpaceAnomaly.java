@@ -336,7 +336,7 @@ public class SpaceAnomaly {
           result.setText("There was floating very old probe. Probe had"
               + " explored near by space. Explored data was added your"
               + " realm's exploration data.");
-          result.setImage(GuiStatics.IMAGE_OLD_PROBE);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_PROBE));
           ImageInstruction inst = new ImageInstruction();
           inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           inst.addImage(ImageInstruction.OLD_PROBE);
@@ -368,7 +368,7 @@ public class SpaceAnomaly {
         case TileNames.SPACE_ANOMALY_DSA: {
           result = new SpaceAnomaly(AnomalyType.DEEP_SPACE_ANCHOR, 0);
           result.setText("Deep Space Anchor was found behind the nebulae.");
-          result.setImage(GuiStatics.IMAGE_DSA);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_DSA));
           ImageInstruction inst = new ImageInstruction();
           inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           inst.addImage(ImageInstruction.DSA);
@@ -382,7 +382,7 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.LAIR, 0);
           result.setText("Pirate station was found on the deep space anchor."
               + " Battle begins...");
-          result.setImage(GuiStatics.IMAGE_PIRATE_LAIR);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_LAIR));
           ImageInstruction inst = new ImageInstruction();
           inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           inst.addImage(ImageInstruction.PIRATE_LAIR);
@@ -475,7 +475,7 @@ public class SpaceAnomaly {
             result = new SpaceAnomaly(AnomalyType.SHIP, 0);
             result.setText("Ship was found in the nebulae and"
                 + " it crew decides to join your forces...");
-            result.setImage(GuiStatics.IMAGE_SPACE_SHIP);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_SPACE_SHIP));
             ImageInstruction inst = new ImageInstruction();
             inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             inst.addImage(ImageInstruction.SHIP);
@@ -520,7 +520,7 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.WORMHOLE, 0);
           result.setText("Wormhole discovered and it drags"
               + " your ship through it...");
-          result.setImage(GuiStatics.IMAGE_BLACKHOLE);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_BLACKHOLE));
           ImageInstruction inst = new ImageInstruction();
           inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           inst.addImage(ImageInstruction.BLACK_HOLE);
@@ -553,7 +553,7 @@ public class SpaceAnomaly {
                 + " contained schematics of " + tech.getName()
                 + ". This seems to be unusual piece of technology."
                 + " This invention is immediately taken to use.");
-            result.setImage(GuiStatics.IMAGE_RARE_TECH);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_RARE_TECH));
             ImageInstruction inst = new ImageInstruction();
             inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             inst.addImage(ImageInstruction.RARE_TECH);
@@ -582,13 +582,13 @@ public class SpaceAnomaly {
               + ". This seems to be unusual piece of history."
               + " This finding requires some research time.");
           if (DiceGenerator.getBoolean()) {
-            result.setImage(GuiStatics.IMAGE_ARTIFACT1);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT1));
             ImageInstruction inst = new ImageInstruction();
             inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             inst.addImage(ImageInstruction.ARTIFACT1);
             result.setImageInstruction(inst);
           } else {
-            result.setImage(GuiStatics.IMAGE_ARTIFACT2);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT2));
             ImageInstruction inst = new ImageInstruction();
             inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             inst.addImage(ImageInstruction.ARTIFACT2);
@@ -707,13 +707,13 @@ public class SpaceAnomaly {
               + " wanted this to be found."
               + " This finding requires some research time.");
           if (DiceGenerator.getBoolean()) {
-            result.setImage(GuiStatics.IMAGE_ARTIFACT1);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT1));
             ImageInstruction inst = new ImageInstruction();
             inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             inst.addImage(ImageInstruction.ARTIFACT1);
             result.setImageInstruction(inst);
           } else {
-            result.setImage(GuiStatics.IMAGE_ARTIFACT2);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT2));
             ImageInstruction inst = new ImageInstruction();
             inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             inst.addImage(ImageInstruction.ARTIFACT2);
@@ -864,7 +864,7 @@ public class SpaceAnomaly {
       sb.append(shipDamage.getMessage());
     }
     result.setText(sb.toString());
-    result.setImage(GuiStatics.IMAGE_TIME_WARP);
+    result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_TIME_WARP));
     ImageInstruction inst = new ImageInstruction();
     inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
     inst.addImage(ImageInstruction.TIME_WARP);

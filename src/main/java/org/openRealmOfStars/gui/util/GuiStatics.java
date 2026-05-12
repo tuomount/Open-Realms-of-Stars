@@ -678,23 +678,23 @@ public final class GuiStatics {
   public static final String IMAGE_SHUTTLE = "/resources/images/shuttle.png";
 
   /** Blackhole pilot */
-  public static final BufferedImage IMAGE_BLACKHOLE = IOUtilities
-      .loadImage("/resources/images/blackhole.png");
+  public static final String IMAGE_BLACKHOLE =
+      "/resources/images/blackhole.png";
 
   /** Old probe */
-  public static final BufferedImage IMAGE_OLD_PROBE = IOUtilities
-      .loadImage("/resources/images/oldprobe.png");
+  public static final String IMAGE_OLD_PROBE =
+      "/resources/images/oldprobe.png";
 
   /** Rare tech */
-  public static final BufferedImage IMAGE_RARE_TECH = IOUtilities
-      .loadImage("/resources/images/raretech.png");
+  public static final String IMAGE_RARE_TECH =
+      "/resources/images/raretech.png";
 
   /** Artifact 1 */
-  public static final BufferedImage IMAGE_ARTIFACT1 = IOUtilities
-      .loadImage("/resources/images/artifact1.png");
+  public static final String IMAGE_ARTIFACT1 =
+      "/resources/images/artifact1.png";
   /** Artifact 2 */
-  public static final BufferedImage IMAGE_ARTIFACT2 = IOUtilities
-      .loadImage("/resources/images/artifact2.png");
+  public static final String IMAGE_ARTIFACT2 =
+      "/resources/images/artifact2.png";
 
   /** Old Ship */
   public static final String IMAGE_OLD_SHIP = "/resources/images/oldship.png";
@@ -703,19 +703,19 @@ public final class GuiStatics {
   public static final String IMAGE_ALIEN_SHIP =
       "/resources/images/alienship.png";
   /** Time Warp */
-  public static final BufferedImage IMAGE_TIME_WARP = IOUtilities
-      .loadImage("/resources/images/timewarp.png");
+  public static final String IMAGE_TIME_WARP =
+      "/resources/images/timewarp.png";
   /** Factory */
   public static final String IMAGE_FACTORY = "/resources/images/factory.png";
   /** Pirate lair */
-  public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities
-      .loadImage("/resources/images/piratelair.png");
+  public static final String IMAGE_PIRATE_LAIR =
+      "/resources/images/piratelair.png";
   /** Electron nebula */
-  public static final BufferedImage IMAGE_DSA = IOUtilities
-      .loadImage("/resources/images/electron nebula.png");
+  public static final String IMAGE_DSA =
+      "/resources/images/electron nebula.png";
   /** Space ship */
-  public static final BufferedImage IMAGE_SPACE_SHIP = IOUtilities
-      .loadImage("/resources/images/spaceship_final.png");
+  public static final String IMAGE_SPACE_SHIP =
+      "/resources/images/spaceship_final.png";
   /** Trade Space ship 1 */
   public static final String IMAGE_TRADE_SHIP =
       "/resources/images/tradeship-learmarch.png";

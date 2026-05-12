@@ -1,7 +1,7 @@
 package org.openRealmOfStars.mapTiles.anomaly;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2024 Tuomo Untinen
+ * Copyright (C) 2018-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -99,7 +99,6 @@ public class SpaceAnomalyTest {
     Mockito.when(map.isValidCoordinate(Mockito.anyInt(), Mockito.anyInt())).thenReturn(true);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.MAP, anomaly.getType());
-    assertEquals(GuiStatics.IMAGE_OLD_PROBE, anomaly.getImage());
     assertEquals(7, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertEquals(null, anomaly.getCombat());
@@ -157,7 +156,6 @@ public class SpaceAnomalyTest {
     Mockito.when(map.getTile(5, 6)).thenReturn(tile);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.DEEP_SPACE_ANCHOR, anomaly.getType());
-    assertEquals(GuiStatics.IMAGE_DSA, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertEquals(null, anomaly.getCombat());
@@ -177,7 +175,6 @@ public class SpaceAnomalyTest {
     Mockito.when(map.getFreeRandomSpot()).thenReturn(new Coordinate(8, 9));
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.WORMHOLE, anomaly.getType());
-    assertEquals(GuiStatics.IMAGE_BLACKHOLE, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertEquals(null, anomaly.getCombat());
@@ -209,7 +206,6 @@ public class SpaceAnomalyTest {
     Mockito.when(playerList.getSpacePiratePlayer()).thenReturn(board);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.LAIR, anomaly.getType());
-    assertEquals(GuiStatics.IMAGE_PIRATE_LAIR, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertNotNull(anomaly.getCombat());
@@ -334,7 +330,6 @@ public class SpaceAnomalyTest {
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.SHIP, anomaly.getType());
-    assertEquals(GuiStatics.IMAGE_SPACE_SHIP, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertNull(anomaly.getCombat());

@@ -1383,31 +1383,31 @@ public class ImageInstruction {
       drawImg = GuiStatics.IMAGE_ASTEROIDS;
     }
     if (OLD_PROBE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_OLD_PROBE;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_OLD_PROBE);
     }
     if (DSA.equals(image)) {
-      drawImg = GuiStatics.IMAGE_DSA;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DSA);
     }
     if (BLACK_HOLE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_BLACKHOLE;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACKHOLE);
     }
     if (TIME_WARP.equals(image)) {
-      drawImg = GuiStatics.IMAGE_TIME_WARP;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_TIME_WARP);
     }
     if (RARE_TECH.equals(image)) {
-      drawImg = GuiStatics.IMAGE_RARE_TECH;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_RARE_TECH);
     }
     if (ARTIFACT1.equals(image)) {
-      drawImg = GuiStatics.IMAGE_ARTIFACT1;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT1);
     }
     if (ARTIFACT2.equals(image)) {
-      drawImg = GuiStatics.IMAGE_ARTIFACT2;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT2);
     }
     if (PIRATE_LAIR.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PIRATE_LAIR;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_LAIR);
     }
     if (SHIP.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SPACE_SHIP;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SPACE_SHIP);
     }
     if (DESTROYED_PLANET.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DESTROYED_PLANET);

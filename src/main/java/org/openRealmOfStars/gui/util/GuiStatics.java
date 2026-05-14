@@ -628,16 +628,16 @@ public final class GuiStatics {
       .loadImage("/resources/images/privateer_race.png");
 
   /** Newsreader image for GBNC */
-  public static final BufferedImage IMAGE_NEWSREADER = IOUtilities
-      .loadImage("/resources/images/newsreader.png");
+  public static final String IMAGE_NEWSREADER =
+      "/resources/images/newsreader.png";
 
   /** GBNC logo */
-  public static final BufferedImage IMAGE_GBNC = IOUtilities
-      .loadImage("/resources/images/gbnc-logo.png");
+  public static final String IMAGE_GBNC =
+      "/resources/images/gbnc-logo.png";
 
   /** ASTEROIDS */
-  public static final BufferedImage IMAGE_ASTEROIDS = IOUtilities
-      .loadImage("/resources/images/asteroids.png");
+  public static final String IMAGE_ASTEROIDS =
+      "/resources/images/asteroids.png";
 
   /** Pirate pilot */
   public static final String IMAGE_PIRATE_PILOT =

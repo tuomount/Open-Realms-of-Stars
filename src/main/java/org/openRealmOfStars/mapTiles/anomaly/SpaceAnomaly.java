@@ -488,7 +488,7 @@ public class SpaceAnomaly {
             result.setText("Ship pieces were found in "
                 + "the asteroid field..."
                 + " There isn't anything useful to find...");
-            result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_ASTEROIDS));
             ImageInstruction inst = new ImageInstruction();
             inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             inst.addImage(ImageInstruction.ASTEROIDS);
@@ -945,7 +945,7 @@ public class SpaceAnomaly {
     result.setText("There was hidden cache of credits hidden in"
         + " asteroids. Cache contained " + result.getValue()
         + " credits.");
-    result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+    result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_ASTEROIDS));
     ImageInstruction inst = new ImageInstruction();
     inst.addBackground(ImageInstruction.BACKGROUND_BLACK);
     inst.addImage(ImageInstruction.ASTEROIDS);

@@ -22,6 +22,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -102,6 +103,11 @@ public class HistoryView extends BlackPanel {
   private Coordinate targetCoordinate;
 
   /**
+   * Image for news reader.
+   */
+  private BufferedImage newsReader;
+
+  /**
    * Constructor for history view
    * @param starMap StarMap containing the history
    * @param listener ActionListener
@@ -111,6 +117,7 @@ public class HistoryView extends BlackPanel {
     turnNumber = 0;
     eventNumber = 0;
     targetCoordinate = null;
+    newsReader = IOUtilities.loadImage(GuiStatics.IMAGE_NEWSREADER);
     this.setLayout(new BorderLayout());
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setLayout(new BorderLayout());
@@ -322,13 +329,13 @@ public class HistoryView extends BlackPanel {
         textArea.getText());
     if (event.getType() == EventType.GALACTIC_NEWS) {
       if (infos.length == 1) {
-        mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
+        mapPanel.setLeftSpaceImage(newsReader);
         mapPanel.setRightSpaceImage(GuiStatics.getRaceImg(infos[0].getRace()));
       } else if (infos.length >= 2) {
         mapPanel.setLeftSpaceImage(GuiStatics.getRaceImg(infos[0].getRace()));
         mapPanel.setRightSpaceImage(GuiStatics.getRaceImg(infos[1].getRace()));
       } else {
-        mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
+        mapPanel.setLeftSpaceImage(newsReader);
         mapPanel.setRightSpaceImage(null);
       }
     } else if (event.getType() == EventType.RIFT_PORTAL) {

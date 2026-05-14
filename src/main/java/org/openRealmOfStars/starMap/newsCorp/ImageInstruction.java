@@ -1323,7 +1323,7 @@ public class ImageInstruction {
           SpaceRaceFactory.SPACE_PIRATE));
     }
     if (LOGO.equals(image)) {
-      drawImg = GuiStatics.IMAGE_GBNC;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_GBNC);
     }
     if (BIG_BAN.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_BAN_ICON);
@@ -1380,7 +1380,7 @@ public class ImageInstruction {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ALIEN_SHIP);
     }
     if (ASTEROIDS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_ASTEROIDS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ASTEROIDS);
     }
     if (OLD_PROBE.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_OLD_PROBE);

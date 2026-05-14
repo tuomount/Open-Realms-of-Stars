@@ -4113,8 +4113,8 @@ public final class NewsFactory {
       }
       case 1: {
         if (building != null) {
-          instructions.addText("SCIENTIFIC ACHIEVEMENT TO "
-              + planet.getName().toUpperCase());
+          instructions.addText("SCIENTIFIC ACHIEVEMENT TO ");
+          instructions.addText(planet.getName().toUpperCase());
         } else {
           instructions.addText(planet.getName().toUpperCase() + "!");
         }

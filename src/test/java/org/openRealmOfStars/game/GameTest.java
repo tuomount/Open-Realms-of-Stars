@@ -32,10 +32,12 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.event.karmaEvents.KarmaType;
 import org.openRealmOfStars.starMap.history.HistoryTurn;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
@@ -96,6 +98,7 @@ public class GameTest {
     int militaryPower[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int tradeShips[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int spies[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int artefacts[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     for (Planet planet : game.getStarMap().getPlanetList()) {
       if (planet.getPlanetOwnerIndex() != -1) {
         planets[planet.getPlanetOwnerIndex()]++;
@@ -163,12 +166,32 @@ public class GameTest {
         }
       }
     }
+    StringBuilder sbAscension = new StringBuilder();
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       int tech = 0;
+      TechList techList =  game.getPlayers().getPlayerInfoByIndex(i)
+          .getTechList();
+      if (techList.hasTech("Gravity ripper Mk1")
+          || techList.hasTech("Gravity ripper Mk2")
+          || techList.hasTech("Gravity ripper Mk3")) {
+        sbAscension.append(game.getPlayers().getPlayerInfoByIndex(i)
+            .getEmpireName());
+        sbAscension.append(" has gravity ripper tech.\n");
+      }
+      if (techList.hasTech("Orbital ascension portal")
+          || techList.hasTech("Planetary ascension portal")) {
+        sbAscension.append(game.getPlayers().getPlayerInfoByIndex(i)
+            .getEmpireName());
+        sbAscension.append(" has ascension portal tech.\n");
+      }
       for (TechType techtype : TechType.values()) {
         tech = tech + game.getPlayers().getPlayerInfoByIndex(i)
             .getTechList().getTechLevel(techtype);
       }
+      artefacts[i] = game.getPlayers().getPlayerInfoByIndex(i)
+          .getArtifactLists().getDiscoveredArtifacts().length
+          + game.getPlayers().getPlayerInfoByIndex(i)
+          .getArtifactLists().getResearchedArtifacts().length;
       tech = tech * 5 / 6;
       String scenario = game.getPlayers().getPlayerInfoByIndex(i)
           .getStartingScenario().getName();
@@ -190,6 +213,7 @@ public class GameTest {
       sb.append(addEmptySpace("Max Prod: " + maxProd[i], 15));
       sb.append(addEmptySpace("Trade: " + tradeShips[i], 15));
       sb.append(addEmptySpace("Spies: " + spies[i], 15));
+      sb.append(addEmptySpace("Artefacts: " + artefacts[i], 15));
       sb.append("\n");
       sb.append("Scenario: ");
       sb.append(scenario);
@@ -202,6 +226,31 @@ public class GameTest {
     System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
     if (newsData != null && newsData.length > 0) {
       System.out.println(newsData[newsData.length - 1].getNewsText());
+    }
+    switch (game.getStarMap().getAscensionEvents().getAscensionActivation()) {
+      case AscensionEvents.NO_ACTIVATIO:
+      default:  {
+        break;
+      }
+      case AscensionEvents.BLACK_HOLE_DISCOVERED: {
+        System.out.println("Ascension: Blackhole discovered");
+        break;
+      }
+      case AscensionEvents.ASCENSION_VEIN_ACTIVATED: {
+        System.out.println("Ascension: Ascension veins activated");
+        break;
+      }
+      case AscensionEvents.ASCENSION_PORTAL_ACTIVATED: {
+        System.out.println("Ascension: Ascension portal activated");
+        break;
+      }
+      case AscensionEvents.TRAVEL_THROUGH_ASCENSION_PORTAL: {
+        System.out.println("Ascension: Travel through portal");
+        break;
+      }
+    }
+    if (sbAscension.toString().length() > 0) {
+      System.out.println(sbAscension.toString());
     }
     System.out.println("---- End of " + testGameName + " ----");
 

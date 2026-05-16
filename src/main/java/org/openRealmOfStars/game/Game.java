@@ -771,12 +771,19 @@ public class Game implements ActionListener {
       fleetTile = fleetTiles[nx][ny];
       int playerIndex = fleetTile.getPlayerIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+      final boolean war = info.getDiplomacy().isWar(playerIndex);
+      if (war) {
+        return null;
+      }
       if (info2 == null) {
         Planet planet = getStarMap().getPlanetList().get(
             fleetTile.getPlanetIndex());
         if (planet != null
             && planet.getPlanetPlayerInfo() != null
             && info != planet.getPlanetPlayerInfo()) {
+          if (info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+            return null;
+          }
           return planet.getPlanetPlayerInfo();
         }
       } else {
@@ -839,6 +846,9 @@ public class Game implements ActionListener {
         if (planet != null && planet.getOrbital() != null
           && planet.getPlanetPlayerInfo() != null
           && info != planet.getPlanetPlayerInfo()) {
+          if (info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+            return null;
+          }
           Fleet orbitalFleet = new Fleet(planet.getOrbital(), planet.getX(),
               planet.getY());
           orbitalFleet.setName("Orbital-" + planet.getName()

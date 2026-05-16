@@ -2,9 +2,20 @@
 
 * Technology level now goes up to 20. Previous maximum was 10.
 * New UI scaling for HiDPI displays.
+* Starmap view has two new zoom levels, total of 5 different zoom levels.
+* News Corporation view has been redesigned.
+* Research view shows help when opened without any focus on technology.
+* Research view has white glow on small technology buttons, so those should be easier to spot.
+* New Space Race called: Parlameks, robotic race with diplomatic and trading focus.
 * Ship hulls and ship components are now loaded from JSON.
+* Custom races may now have custom diplomatic music.
+* AI should try to win with ascension victory.
 
 - Bugfixes -
+* Most of the images are now loaded when actually needed, not at start. This should lower the memory requirements a bit.
+* Fixed news titles: Some of these were too long to actually fit in news screen.
+* Fleets never moved over space anomaly when using automated move.
+
 
 # Open Realm of Stars 0.28.2
 

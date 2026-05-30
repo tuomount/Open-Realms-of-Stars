@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -172,7 +172,8 @@ public class ShipDesignTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     info.getTechList().addTech(TechFactory.createCombatTech("Plasma cannon Mk1", 2));
     info.getTechList().addTech(TechFactory.createDefenseTech("Solar armor Mk1", 3));
-    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL, false, false);
+    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL,
+        false, false, (byte) 0);
     boolean plasmaCannon = false;
     boolean solarArmor = false;
     for (ShipComponent comp : design.getComponentList()) {

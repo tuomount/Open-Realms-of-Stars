@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.research;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2025 Tuomo Untinen
+ * Copyright (C) 2017-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,12 +78,12 @@ public class ResearchTest extends TestCase {
   public void testShipDesignHandlingHuman() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(2, info.getShipStatList().length);
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     int amount = info.getShipStatList().length;
     info.getTechList().addTech(TechFactory.createHullTech("Small freighter Mk1", 2));
     info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
     info.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     assertEquals(amount + 4, info.getShipStatList().length);
   }
 
@@ -92,11 +92,11 @@ public class ResearchTest extends TestCase {
   public void testShipDesignHandlingObsoleteStarbases() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("CHIRALOIDS"));
     info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     assertEquals(true, info.getShipStatList().length >= 4);
     assertEquals(false, info.getShipStatList()[3].isObsolete());
     info.getTechList().addTech(TechFactory.createHullTech("Medium starbase Mk1", 4));
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     assertEquals(true, info.getShipStatList().length >= 5);
     boolean oneSmallStarbase = false;
     for (ShipStat stat : info.getShipStatList()) {
@@ -107,7 +107,7 @@ public class ResearchTest extends TestCase {
       }
     }
     assertEquals(true, oneSmallStarbase);
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     boolean noSmallStarbases = false;
     for (ShipStat stat : info.getShipStatList()) {
       if (stat.getDesign().getHull().getHullType() == ShipHullType.STARBASE
@@ -125,11 +125,11 @@ public class ResearchTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setAttitude(Attitude.BACKSTABBING);
     assertEquals(2, info.getShipStatList().length);
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     int amount = info.getShipStatList().length;
     info.getTechList().addTech(TechFactory.createHullTech("Probe", 2));
     info.getTechList().addTech(TechFactory.createElectronicsTech("Espionage module Mk1", 2));
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     assertEquals(amount + 1, info.getShipStatList().length);
   }
 
@@ -139,10 +139,10 @@ public class ResearchTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"));
     info.setAttitude(Attitude.BACKSTABBING);
     assertEquals(2, info.getShipStatList().length);
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     int amount = info.getShipStatList().length;
     info.getTechList().addTech(TechFactory.createHullTech("Privateer Mk1", 5));
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     assertEquals(amount + 1, info.getShipStatList().length);
   }
 
@@ -173,10 +173,10 @@ public class ResearchTest extends TestCase {
     StarMapGenerator generator = new StarMapGenerator();
     StarMap map = generator.generateStarMap(config, list);
     assertEquals(2, info.getShipStatList().length);
-    Research.handleShipDesigns(info);
+    Research.handleShipDesigns(info, (byte) 0);
     int amount = info.getShipStatList().length;
     ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL,
-        false, false);
+        false, false, (byte) 0);
     ShipStat stat = new ShipStat(design);
     info.addShipStat(stat);
     assertEquals(amount + 1, info.getShipStatList().length);

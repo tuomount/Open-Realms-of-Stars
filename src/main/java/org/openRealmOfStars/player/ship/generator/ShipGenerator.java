@@ -20,6 +20,7 @@ package org.openRealmOfStars.player.ship.generator;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
@@ -36,6 +37,7 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
@@ -69,10 +71,12 @@ public final class ShipGenerator {
    * @param design Design for ship
    * @param player Player doing the ship
    * @param components Component list available
+   * @param ascension Ascension activation level
    * @return array of scores
    */
   private static int[] scoreComponents(final ShipDesign design,
-      final PlayerInfo player, final ArrayList<ShipComponent> components) {
+      final PlayerInfo player, final ArrayList<ShipComponent> components,
+      final byte ascension) {
     int[] scores = new int[components.size()];
     Attitude attitude = player.getAiAttitude();
     for (int i = 0; i < components.size(); i++) {
@@ -300,9 +304,22 @@ public final class ShipGenerator {
         break;
       }
       case PLASMA_SPIT:
-      case PLASMA_CANNON: // These two should get slight better value.
+      case PLASMA_CANNON: { // These two should get slight better value.
+        scores[i] = scores[i] + comp.getDamage() * 5 + 1;
+        break;
+      }
       case GRAVITY_RIPPER: {
         scores[i] = scores[i] + comp.getDamage() * 5 + 1;
+        if (!player.isHuman()
+            && player.getStrategy() == WinningStrategy.ASCENSION
+            && ascension < AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+          if (design.getHull().getHullType() == ShipHullType.NORMAL) {
+            scores[i] = scores[i] + 50;
+          }
+          if (design.getHull().getHullType() == ShipHullType.PRIVATEER) {
+            scores[i] = scores[i] + 60;
+          }
+        }
         break;
       }
       default: {
@@ -390,10 +407,12 @@ public final class ShipGenerator {
    * @param shipType SHIP_TYPE_REGULAR, SHIP_TYPE_BOMBER
    *        or SHIP_TYPE_PRIVATEER}
    * @param banNukes Are nucleare weapons banned?
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   private static ShipDesign createMilitaryShip(final PlayerInfo player,
-      final ShipSize size, final int shipType, final boolean banNukes) {
+      final ShipSize size, final int shipType, final boolean banNukes,
+      final byte ascension) {
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
     ShipHullType hullType = ShipHullType.NORMAL;
@@ -415,7 +434,7 @@ public final class ShipGenerator {
         }
       }
     }
-    return createMilitaryShip(player, hull, shipType, banNukes);
+    return createMilitaryShip(player, hull, shipType, banNukes, ascension);
   }
 
   /**
@@ -426,10 +445,12 @@ public final class ShipGenerator {
    * @param shipType SHIP_TYPE_REGULAR, SHIP_TYPE_BOMBER
    *        or SHIP_TYPE_PRIVATEER}
    * @param banNukes Are nucleare weapons banned?
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createMilitaryShip(final PlayerInfo player,
-      final ShipHull hull, final int shipType, final boolean banNukes) {
+      final ShipHull hull, final int shipType, final boolean banNukes,
+      final byte ascension) {
     ShipDesign result = null;
     boolean bomber = false;
     ShipHullType hullType = ShipHullType.NORMAL;
@@ -472,7 +493,16 @@ public final class ShipGenerator {
           player.getTechList().getBestEnergySource().getComponent());
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());
-      result.addComponent(weapon);
+      Tech ripper = player.getTechList()
+          .getBestWeapon(ShipComponentType.GRAVITY_RIPPER);
+      if (ripper != null
+          && player.getStrategy() == WinningStrategy.ASCENSION
+          && ascension < AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+        result.addComponent(ShipComponentFactory.createByName(
+            ripper.getComponent()));
+      } else {
+        result.addComponent(weapon);
+      }
       if (result.getFreeEnergy() < 0) {
         result.addComponent(power);
       }
@@ -695,7 +725,8 @@ public final class ShipGenerator {
       int safetyCount = 500;
       while (result.getFreeSlots() > 0 && safetyCount > 0) {
         safetyCount--;
-        componentScores = scoreComponents(result, player, components);
+        componentScores = scoreComponents(result, player, components,
+            ascension);
         int sum = 0;
         for (int i = 0; i < componentScores.length; i++) {
           if (componentScores[i] > 0) {
@@ -734,25 +765,31 @@ public final class ShipGenerator {
    * @param size Ship Size
    * @param bomber Create bomber battle ship
    * @param banNukes Are nuclear weapons banned?
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createBattleShip(final PlayerInfo player,
-      final ShipSize size, final boolean bomber, final boolean banNukes) {
+      final ShipSize size, final boolean bomber, final boolean banNukes,
+      final byte ascension) {
     if (bomber) {
-      return createMilitaryShip(player, size, SHIP_TYPE_BOMBER, banNukes);
+      return createMilitaryShip(player, size, SHIP_TYPE_BOMBER, banNukes,
+          ascension);
     }
-    return createMilitaryShip(player, size, SHIP_TYPE_REGULAR, banNukes);
+    return createMilitaryShip(player, size, SHIP_TYPE_REGULAR, banNukes,
+        ascension);
   }
 
   /**
    * Design new privateer ship for certain size
    * @param player Player doing the design
    * @param size Ship Size
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createPrivateerShip(final PlayerInfo player,
-      final ShipSize size) {
-    return createMilitaryShip(player, size, SHIP_TYPE_PRIVATEER, false);
+      final ShipSize size, final byte ascension) {
+    return createMilitaryShip(player, size, SHIP_TYPE_PRIVATEER, false,
+        ascension);
   }
 
   /**
@@ -1430,10 +1467,11 @@ public final class ShipGenerator {
    * Design new Starbase for certain size
    * @param player Player doing the design
    * @param size Ship Size
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createStarbase(final PlayerInfo player,
-      final ShipSize size) {
+      final ShipSize size, final byte ascension) {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
@@ -1454,7 +1492,7 @@ public final class ShipGenerator {
       }
     }
     if (hull != null) {
-      result = createStarbase(player, hull);
+      result = createStarbase(player, hull, ascension);
     }
     return result;
   }
@@ -1463,10 +1501,11 @@ public final class ShipGenerator {
    * Design new Starbase for certain size
    * @param player Player doing the design
    * @param hull ShipHull used in design.
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createStarbase(final PlayerInfo player,
-      final ShipHull hull) {
+      final ShipHull hull, final byte ascension) {
     ShipDesign result = null;
     if (hull != null) {
       result = new ShipDesign(hull);
@@ -1640,7 +1679,8 @@ public final class ShipGenerator {
       int safetyCount = 500;
       while (result.getFreeSlots() > 0 && safetyCount > 0) {
         safetyCount--;
-        componentScores = scoreComponents(result, player, components);
+        componentScores = scoreComponents(result, player, components,
+            ascension);
         int sum = 0;
         for (int i = 0; i < componentScores.length; i++) {
           if (componentScores[i] > 0) {
@@ -1677,10 +1717,11 @@ public final class ShipGenerator {
    * Design new Orbital for certain size
    * @param player Player doing the design
    * @param size Ship Size
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createOrbital(final PlayerInfo player,
-      final ShipSize size) {
+      final ShipSize size, final byte ascension) {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
@@ -1702,7 +1743,7 @@ public final class ShipGenerator {
       }
     }
     if (hull != null) {
-      result = createOrbital(player, hull);
+      result = createOrbital(player, hull, ascension);
     }
     return result;
   }
@@ -1711,10 +1752,11 @@ public final class ShipGenerator {
    * Design new Orbital for certain size
    * @param player Player doing the design
    * @param hull ShipHull used in design.
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createOrbital(final PlayerInfo player,
-      final ShipHull hull) {
+      final ShipHull hull, final byte ascension) {
     ShipDesign result = null;
     boolean military = false;
     if (hull != null) {
@@ -1887,7 +1929,8 @@ public final class ShipGenerator {
       int safetyCount = 500;
       while (result.getFreeSlots() > 0 && safetyCount > 0) {
         safetyCount--;
-        componentScores = scoreComponents(result, player, components);
+        componentScores = scoreComponents(result, player, components,
+            ascension);
         int sum = 0;
         for (int i = 0; i < componentScores.length; i++) {
           if (componentScores[i] > 0) {
@@ -1924,10 +1967,11 @@ public final class ShipGenerator {
    * Design new Orbital for certain size
    * @param player Player doing the design
    * @param size Ship Size
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createAscensionOrbital(final PlayerInfo player,
-      final ShipSize size) {
+      final ShipSize size, final byte ascension) {
     if (!player.getTechList().hasTech("Orbital ascension portal")) {
       return null;
     }
@@ -1952,7 +1996,7 @@ public final class ShipGenerator {
       }
     }
     if (hull != null) {
-      result = createAscensionOrbital(player, hull);
+      result = createAscensionOrbital(player, hull, ascension);
     }
     return result;
   }
@@ -1961,10 +2005,11 @@ public final class ShipGenerator {
    * Design new ascension orbital for certain size
    * @param player Player doing the design
    * @param hull ShipHull used in design.
+   * @param ascension Ascension activation level
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createAscensionOrbital(final PlayerInfo player,
-      final ShipHull hull) {
+      final ShipHull hull, final byte ascension) {
     if (!player.getTechList().hasTech("Orbital ascension portal")) {
       return null;
     }
@@ -2143,7 +2188,8 @@ public final class ShipGenerator {
       int safetyCount = 500;
       while (result.getFreeSlots() > 0 && safetyCount > 0) {
         safetyCount--;
-        componentScores = scoreComponents(result, player, components);
+        componentScores = scoreComponents(result, player, components,
+            ascension);
         int sum = 0;
         for (int i = 0; i < componentScores.length; i++) {
           if (componentScores[i] > 0) {
@@ -2234,7 +2280,7 @@ public final class ShipGenerator {
     if (DiceGenerator.getBoolean()) {
       size = ShipSize.MEDIUM;
     }
-    ShipDesign design = ShipGenerator.createOrbital(info, size);
+    ShipDesign design = ShipGenerator.createOrbital(info, size, (byte) 0);
     if (design != null) {
       return new Ship(design);
     }

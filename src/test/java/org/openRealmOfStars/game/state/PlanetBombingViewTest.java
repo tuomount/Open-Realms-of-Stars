@@ -92,7 +92,7 @@ public class PlanetBombingViewTest {
     int loop = 0;
     do {
       ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-          ShipSize.MEDIUM, true, false);
+          ShipSize.MEDIUM, true, false, (byte) 0);
       ship = new Ship(design);
       loop++;
       // There should be a bomber on first try
@@ -129,7 +129,7 @@ public class PlanetBombingViewTest {
     int loop = 0;
     do {
       ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-          ShipSize.MEDIUM, true, false);
+          ShipSize.MEDIUM, true, false, (byte) 0);
       ship = new Ship(design);
       loop++;
       // There should be a bomber on first try
@@ -173,7 +173,7 @@ public class PlanetBombingViewTest {
     Ship ship = null;
     do {
       ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-          ShipSize.MEDIUM, true, false);
+          ShipSize.MEDIUM, true, false, (byte) 0);
       ship = new Ship(design);
     } while (!ship.hasBombs());
     Fleet fleet = new Fleet(ship, 5, 5);
@@ -213,7 +213,7 @@ public class PlanetBombingViewTest {
     Ship ship = null;
     do {
       ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-          ShipSize.MEDIUM, true, false);
+          ShipSize.MEDIUM, true, false, (byte) 0);
       ship = new Ship(design);
     } while (!ship.hasBombs());
     Fleet fleet = new Fleet(ship, 5, 5);
@@ -260,7 +260,7 @@ public class PlanetBombingViewTest {
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
         "Small freighter", 2));
     ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-        ShipSize.MEDIUM, false, false);
+        ShipSize.MEDIUM, false, false, (byte) 0);
     Ship ship = new Ship(design);
     Fleet fleet = new Fleet(ship, 5, 5);
     int attackerPlayerIndex = 0;

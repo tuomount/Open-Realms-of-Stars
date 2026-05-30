@@ -2949,6 +2949,10 @@ public class Planet {
         } else {
           // We need to create here a new instance
           Ship ship = new Ship(stat.getDesign());
+          if (ship.hasGravityRipper()) {
+            System.err.println("Ship with Gravity ripper built by "
+                + planetOwnerInfo.getEmpireName());
+          }
           stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
           stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
           if (stat.getDesign().getTotalMilitaryPower() > 0) {
@@ -2999,6 +3003,10 @@ public class Planet {
             if (planetOwnerInfo.getMissions() != null) {
               Mission mission = planetOwnerInfo.getMissions()
                   .getMissionForPlanet(getName(), MissionPhase.BUILDING);
+              if (mission == null && ship.hasGravityRipper()) {
+                mission = planetOwnerInfo.getMissions().getMission(
+                    MissionType.REVEAL_VEINS, MissionPhase.PLANNING);
+              }
               if (mission != null) {
                 if (mission.getFleetName() == null) {
                   if (mission.getType() == MissionType.COLONIZE) {
@@ -3010,6 +3018,12 @@ public class Planet {
                     fleet.setName(planetOwnerInfo.getFleets()
                         .generateUniqueName("Spore"));
                     mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.REVEAL_VEINS) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Scout"));
+                    mission.setFleetName(fleet.getName());
+                    mission.setPhase(MissionPhase.TREKKING);
                   }
                   if (mission.getType() == MissionType.DEPLOY_STARBASE
                       && fleet.getStarbaseShip() != null) {

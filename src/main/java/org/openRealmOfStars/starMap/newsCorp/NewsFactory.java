@@ -3686,7 +3686,7 @@ public final class NewsFactory {
     } else {
       sb.append("journeyed ");
     }
-    sb.append("through the Ascension Portal.");
+    sb.append("through the Ascension Portal. ");
     int value = DiceGenerator.getRandom(2);
     if (value == 0) {
       sb.append("This portal allows ");

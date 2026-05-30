@@ -597,6 +597,10 @@ public final class PlanetHandling {
           constructionSelected = true;
           if (cons instanceof Ship) {
             Ship ship = (Ship) cons;
+            if (ship.hasGravityRipper()) {
+              System.err.println("Ship with gravity ripper built by "
+                  + info.getEmpireName() + "!");
+            }
             if (ship.isPrivateeringShip()) {
               // Privateering ship show not assign any planned missions
               break;
@@ -619,6 +623,13 @@ public final class PlanetHandling {
             mission = info.getMissions().getMission(
                 MissionType.SPORE_COLONY, MissionPhase.PLANNING);
             if (mission != null && ship.isSporeShip()) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+              break;
+            }
+            mission = info.getMissions().getMission(
+                MissionType.REVEAL_VEINS, MissionPhase.PLANNING);
+            if (mission != null && ship.hasGravityRipper()) {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
               break;

@@ -104,6 +104,11 @@ public final class DefaultScoring {
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];
         int score = scoreShip(ship, map.getGameLengthState(), planet);
+        if (ship.hasGravityRipper()
+            && info.getStrategy() == WinningStrategy.ASCENSION
+            && map.getAscensionEvents().getAscensionActivation() < 2) {
+          score = score + 100;
+        }
         int time = planet.getProductionTime(constructions[i]);
         if (ship.getTotalMilitaryPower() > 0) {
           if (info.getDiplomacy().getNumberOfWar() > 0) {
@@ -116,6 +121,14 @@ public final class DefaultScoring {
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
           Mission attackMission = info.getMissions().getMission(
               MissionType.GATHER, MissionPhase.PLANNING);
+          Mission ripperMission = info.getMissions().getMission(
+              MissionType.REVEAL_VEINS, MissionPhase.PLANNING);
+          if (ripperMission != null) {
+            score = score + 50;
+            if (time < 10) {
+              score = score + 25;
+            }
+          }
           if (defendMission != null) {
             if (defendMission.getPhase() == MissionPhase.PLANNING) {
               score = score + ship.getTotalMilitaryPower() * 2;

@@ -1505,6 +1505,9 @@ private int increaseHitChanceByComponent() {
    * @return True, if it has.
    */
   public boolean hasGravityRipper() {
+    if (isStarBaseOrOrbital()) {
+      return false;
+    }
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0

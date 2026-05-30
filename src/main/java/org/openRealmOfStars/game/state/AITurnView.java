@@ -324,6 +324,7 @@ public class AITurnView extends BlackPanel {
         MissionHandling.handleSporeColony(mission, fleet, info, game);
         break;
       case EXPLORE:
+      case REVEAL_VEINS:
         MissionHandling.handleExploring(mission, fleet, info, game);
         break;
       case DEFEND:
@@ -1406,16 +1407,61 @@ public class AITurnView extends BlackPanel {
           >= AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
         return;
       }
+      if (!info.getTechList().hasTechForMk("Gravity ripper Mk")) {
+        // No gravity ripper yet
+        return;
+      }
+      if (info.getMissions().getMission(MissionType.REVEAL_VEINS,
+          MissionPhase.TREKKING) != null) {
+        // Already mission for revealing veins.
+        return;
+      }
       int centerx = map.getMaxX() / 2;
       int centery = map.getMaxY() / 2;
       Coordinate center = new Coordinate(centerx, centery);
       int closest = -1;
       double distance = 9999.0;
+      boolean missionAdded = false;
       for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
         Fleet fleet = info.getFleets().getByIndex(i);
         Mission miss = info.getMissions().getMissionForFleet(fleet.getName());
         if (miss != null && miss.getType() == MissionType.EXPLORE) {
           double value = fleet.getCoordinate().calculateDistance(center);
+          if (value < distance && fleet.hasGravityRipper()) {
+            closest = i;
+            distance = value;
+          }
+        }
+        if (miss != null && miss.getType() == MissionType.DEFEND) {
+          double value = fleet.getCoordinate().calculateDistance(center) + 3;
+          if (value < distance && fleet.hasGravityRipper()) {
+            closest = i;
+            distance = value;
+          }
+        }
+        if (miss != null && miss.getType() == MissionType.GATHER) {
+          double value = fleet.getCoordinate().calculateDistance(center) + 5;
+          if (value < distance && fleet.hasGravityRipper()) {
+            closest = i;
+            distance = value;
+          }
+        }
+        if (miss != null && miss.getType() == MissionType.ATTACK) {
+          double value = fleet.getCoordinate().calculateDistance(center) + 6;
+          if (value < distance && fleet.hasGravityRipper()) {
+            closest = i;
+            distance = value;
+          }
+        }
+        if (miss != null && miss.getType() == MissionType.DESTROY_STARBASE) {
+          double value = fleet.getCoordinate().calculateDistance(center) + 2;
+          if (value < distance && fleet.hasGravityRipper()) {
+            closest = i;
+            distance = value;
+          }
+        }
+        if (miss != null && miss.getType() == MissionType.DESTROY_FLEET) {
+          double value = fleet.getCoordinate().calculateDistance(center) + 1;
           if (value < distance && fleet.hasGravityRipper()) {
             closest = i;
             distance = value;
@@ -1428,13 +1474,29 @@ public class AITurnView extends BlackPanel {
             fleet.getName());
         if (mission != null) {
           mission.setTarget(center);
-          mission.setType(MissionType.MOVE);
+          mission.setType(MissionType.REVEAL_VEINS);
           mission.setPhase(MissionPhase.TREKKING);
+          System.err.println("Mission for ripping:" + info.getEmpireName());
+          missionAdded = true;
         } else {
-          mission = new Mission(MissionType.MOVE, MissionPhase.TREKKING,
+          mission = new Mission(MissionType.REVEAL_VEINS, MissionPhase.TREKKING,
               center);
           mission.setFleetName(fleet.getName());
           info.getMissions().add(mission);
+          System.err.println("Mission for ripping:" + info.getEmpireName());
+          missionAdded = true;
+        }
+      }
+      if (!missionAdded) {
+        Mission planned = info.getMissions().getMission(
+            MissionType.REVEAL_VEINS, MissionPhase.PLANNING);
+        Mission building = info.getMissions().getMission(
+            MissionType.REVEAL_VEINS, MissionPhase.BUILDING);
+        if (planned == null && building == null) {
+          Mission mission = new Mission(MissionType.REVEAL_VEINS,
+              MissionPhase.PLANNING, center);
+          info.getMissions().add(mission);
+          System.err.println("Mission for ripping:" + info.getEmpireName());
         }
       }
     }
@@ -1995,7 +2057,7 @@ public class AITurnView extends BlackPanel {
     updateSinglePirateTech(pirates, difficulty, TechType.Improvements);
     updateSinglePirateTech(pirates, difficulty, TechType.Hulls);
     updateSinglePirateTech(pirates, difficulty, TechType.Electrics);
-    Research.handleShipDesigns(pirates);
+    Research.handleShipDesigns(pirates, (byte) 0);
     int chanceForArtifact = 10;
     if (difficulty == PirateDifficultLevel.VERY_EASY) {
       chanceForArtifact = chanceForArtifact - 5;

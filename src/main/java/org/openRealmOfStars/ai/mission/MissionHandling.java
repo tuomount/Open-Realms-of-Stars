@@ -677,7 +677,14 @@ public final class MissionHandling {
    */
   public static void handleExploring(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
-    if (mission != null && mission.getType() == MissionType.EXPLORE) {
+    if (mission != null && (mission.getType() == MissionType.EXPLORE
+        || mission.getType() == MissionType.REVEAL_VEINS)) {
+      if (mission.getType() == MissionType.REVEAL_VEINS
+        && mission.getPhase() == MissionPhase.TREKKING) {
+          System.err.println("Fleet nearing blackhole: "
+              + info.getEmpireName() + " X: " + fleet.getX()
+              + " Y: " + fleet.getY());
+      }
       if (mission.getPhase() == MissionPhase.LOADING) {
         findSunToExplore(mission, fleet, info, game);
         return;
@@ -726,6 +733,17 @@ public final class MissionHandling {
           planet.handleTimedStatusForAwayTeam(game.getStarMap(),
               fleet.getCommander(), info);
 
+        }
+        Tile tile = game.getStarMap().getTile(mission.getX(), mission.getY());
+        if (tile != null && tile.isBlackhole()) {
+          double distance = fleet.getCoordinate().calculateDistance(
+              new Coordinate(mission.getX(), mission.getY()));
+          if (distance  < 3) {
+            System.err.println("Black hole reached!");
+            mission.setType(MissionType.EXPLORE);
+            findSunToExplore(mission, fleet, info, game);
+            return;
+          }
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING) {

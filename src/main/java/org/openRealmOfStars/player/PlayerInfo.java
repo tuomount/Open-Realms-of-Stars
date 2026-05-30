@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2025 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  * Copyright (C) 2024 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -421,7 +421,7 @@ public class PlayerInfo {
       addShipStat(new ShipStat(design));
     }
 
-    design = ShipGenerator.createStarbase(this, ShipSize.SMALL);
+    design = ShipGenerator.createStarbase(this, ShipSize.SMALL, (byte) 0);
     if (design != null) {
       addShipStat(new ShipStat(design));
     }

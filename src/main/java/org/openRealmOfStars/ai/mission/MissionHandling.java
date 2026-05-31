@@ -60,6 +60,7 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -680,9 +681,17 @@ public final class MissionHandling {
     if (mission != null && (mission.getType() == MissionType.EXPLORE
         || mission.getType() == MissionType.REVEAL_VEINS)) {
       if (mission.getType() == MissionType.REVEAL_VEINS
+          && game.getStarMap().getAscensionEvents().getAscensionActivation()
+          >= AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+        mission.setType(MissionType.EXPLORE);
+        findSunToExplore(mission, fleet, info, game);
+        mission.setPhase(MissionPhase.TREKKING);
+        mission.setMissionTime(0);
+      }
+      if (mission.getType() == MissionType.REVEAL_VEINS
         && mission.getPhase() == MissionPhase.TREKKING) {
-          System.err.println("Fleet nearing blackhole: "
-              + info.getEmpireName() + " X: " + fleet.getX()
+          System.err.println("Fleet nearing blackhole: " + fleet.getName()
+              + "/" + info.getEmpireName() + " X: " + fleet.getX()
               + " Y: " + fleet.getY());
       }
       if (mission.getPhase() == MissionPhase.LOADING) {

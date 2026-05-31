@@ -3261,6 +3261,8 @@ public class StarMap {
           Icons.getIconByName(Icons.ICON_RESEARCH));
       msg.setCoordinate(new Coordinate(sx, sy));
       info.getMsgList().addNewMessage(msg);
+      System.err.println("Gravity ripper activate " + getStarYear() + " by "
+          + info.getEmpireName());
       ascensionEvents.eventHappens(AscensionEventType.ACTIVATE_GRAVITY_RIPPER);
       generateAscensionVeins(getAscensionPlanetCoordinate().getX(),
           getAscensionPlanetCoordinate().getY());
@@ -4236,7 +4238,8 @@ public class StarMap {
           maxX - 2);
       int sy = DiceGenerator.getRandom(1,
           maxY - 2);
-      if (!isBlocked(sx, sy) && isBlockedByFleet(sx, sy) == null) {
+      if (!isBlocked(sx, sy) && isBlockedByFleet(sx, sy) == null
+          && getPlanetByCoordinate(sx, sy) == null) {
         return new Coordinate(sx, sy);
       }
     }

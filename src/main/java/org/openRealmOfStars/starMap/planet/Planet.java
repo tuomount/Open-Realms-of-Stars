@@ -2949,10 +2949,6 @@ public class Planet {
         } else {
           // We need to create here a new instance
           Ship ship = new Ship(stat.getDesign());
-          if (ship.hasGravityRipper()) {
-            System.err.println("Ship with Gravity ripper built by "
-                + planetOwnerInfo.getEmpireName());
-          }
           stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
           stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
           if (stat.getDesign().getTotalMilitaryPower() > 0) {
@@ -3350,8 +3346,6 @@ public class Planet {
           getName() + " has opened ascension portal. This portal is now ready"
               + " to travel through.",
           Icons.getIconByName(Icons.ICON_ASCENSION_PORTAL));
-      System.err.println("Portal activated " + map.getStarYear()
-          + " by " + getPlanetPlayerInfo().getEmpireName());
       msg.setCoordinate(getCoordinate());
       msg.setMatchByString(getName());
       planetOwnerInfo.getMsgList().addNewMessage(msg);

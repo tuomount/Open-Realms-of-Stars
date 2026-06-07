@@ -214,9 +214,6 @@ public final class Research {
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
             Ship replace = new Ship(design);
-            if (replace.hasGravityRipper()) {
-              System.err.println("Design has gravity ripper!");
-            }
             updateObsoleteDesigns(info, map, stat.getDesign().getName(),
                 replace);
             break;
@@ -225,10 +222,6 @@ public final class Research {
       }
       if (notFound) {
         ShipStat ship = new ShipStat(design);
-        Ship replace = new Ship(design);
-        if (replace.hasGravityRipper()) {
-          System.err.println("Design has gravity ripper!");
-        }
         info.addShipStat(ship);
       }
     }

@@ -2572,12 +2572,12 @@ public class Game implements ActionListener {
     for (int i = 0; i < files.length; i++) {
       Game game = new Game(false);
       if (!game.loadSavedGame(files[i].getName())) {
-        System.err.println("Failed upgrade save file: "
+        ErrorLogger.log("Failed upgrade save file: "
             + files[i].getName());
       } else {
         repository.saveGame(Folders.getSavegamePath(),
             files[i].getName(), game.getStarMap());
-        System.out.println(files[i].getName() + " saved!");
+        ErrorLogger.debug(files[i].getName() + " saved!");
       }
     }
   }

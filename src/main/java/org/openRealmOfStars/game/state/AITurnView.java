@@ -1476,14 +1476,12 @@ public class AITurnView extends BlackPanel {
           mission.setTarget(center);
           mission.setType(MissionType.REVEAL_VEINS);
           mission.setPhase(MissionPhase.TREKKING);
-          System.err.println("Mission for ripping:" + info.getEmpireName());
           missionAdded = true;
         } else {
           mission = new Mission(MissionType.REVEAL_VEINS, MissionPhase.TREKKING,
               center);
           mission.setFleetName(fleet.getName());
           info.getMissions().add(mission);
-          System.err.println("Mission for ripping:" + info.getEmpireName());
           missionAdded = true;
         }
       }
@@ -1496,7 +1494,6 @@ public class AITurnView extends BlackPanel {
           Mission mission = new Mission(MissionType.REVEAL_VEINS,
               MissionPhase.PLANNING, center);
           info.getMissions().add(mission);
-          System.err.println("Mission for ripping:" + info.getEmpireName());
         }
       }
     }

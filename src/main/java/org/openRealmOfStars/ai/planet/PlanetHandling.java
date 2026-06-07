@@ -597,10 +597,6 @@ public final class PlanetHandling {
           constructionSelected = true;
           if (cons instanceof Ship) {
             Ship ship = (Ship) cons;
-            if (ship.hasGravityRipper()) {
-              System.err.println("Ship with gravity ripper built by "
-                  + info.getEmpireName() + "!");
-            }
             if (ship.isPrivateeringShip()) {
               // Privateering ship show not assign any planned missions
               break;

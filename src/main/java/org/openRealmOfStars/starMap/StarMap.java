@@ -3261,8 +3261,6 @@ public class StarMap {
           Icons.getIconByName(Icons.ICON_RESEARCH));
       msg.setCoordinate(new Coordinate(sx, sy));
       info.getMsgList().addNewMessage(msg);
-      System.err.println("Gravity ripper activate " + getStarYear() + " by "
-          + info.getEmpireName());
       ascensionEvents.eventHappens(AscensionEventType.ACTIVATE_GRAVITY_RIPPER);
       generateAscensionVeins(getAscensionPlanetCoordinate().getX(),
           getAscensionPlanetCoordinate().getY());

@@ -688,12 +688,6 @@ public final class MissionHandling {
         mission.setPhase(MissionPhase.TREKKING);
         mission.setMissionTime(0);
       }
-      if (mission.getType() == MissionType.REVEAL_VEINS
-        && mission.getPhase() == MissionPhase.TREKKING) {
-          System.err.println("Fleet nearing blackhole: " + fleet.getName()
-              + "/" + info.getEmpireName() + " X: " + fleet.getX()
-              + " Y: " + fleet.getY());
-      }
       if (mission.getPhase() == MissionPhase.LOADING) {
         findSunToExplore(mission, fleet, info, game);
         return;
@@ -748,7 +742,6 @@ public final class MissionHandling {
           double distance = fleet.getCoordinate().calculateDistance(
               new Coordinate(mission.getX(), mission.getY()));
           if (distance  < 3) {
-            System.err.println("Black hole reached!");
             mission.setType(MissionType.EXPLORE);
             findSunToExplore(mission, fleet, info, game);
             return;

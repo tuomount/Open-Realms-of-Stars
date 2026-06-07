@@ -1,7 +1,7 @@
 package org.openRealmOfStars.utilities.repository;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -111,6 +111,8 @@ public class MissionRepository {
       return MissionType.SPORE_COLONY;
     case 18:
       return MissionType.DEVOURER_ROAM;
+    case 19:
+      return MissionType.REVEAL_VEINS;
     default:
       ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

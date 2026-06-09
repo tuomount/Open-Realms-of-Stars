@@ -144,7 +144,7 @@ public class AiTurnViewTest {
     human.getTechList().addTech(TechFactory.createHullTech("Cruiser", 5));
     human.getTechList().addTech(TechFactory.createCombatTech("Orbital nuke", 4));
     human.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
-    Research.handleShipDesigns(human, false, false);
+    Research.handleShipDesigns(human, false, false, (byte) 0, null);
     boolean privateer = false;
     boolean nukeBomber = false;
     for (ShipStat stat : human.getShipStatList()) {

@@ -1974,7 +1974,8 @@ public class StarMap {
       for (Message msg : messages) {
         if (msg.getType().equals(MmType.RESEARCH)) {
           Research.handleShipDesigns(info, this.getVotes().areNukesBanned(),
-              this.getVotes().arePrivateersBanned());
+              this.getVotes().arePrivateersBanned(),
+              getAscensionEvents().getAscensionActivation(), this);
           break;
         }
       }
@@ -4235,7 +4236,8 @@ public class StarMap {
           maxX - 2);
       int sy = DiceGenerator.getRandom(1,
           maxY - 2);
-      if (!isBlocked(sx, sy) && isBlockedByFleet(sx, sy) == null) {
+      if (!isBlocked(sx, sy) && isBlockedByFleet(sx, sy) == null
+          && getPlanetByCoordinate(sx, sy) == null) {
         return new Coordinate(sx, sy);
       }
     }
@@ -4577,8 +4579,22 @@ public class StarMap {
         if (getPlayerByIndex(i).isHuman()) {
           continue;
         }
-        if (getPlayerByIndex(i).getTechList().hasTech(TechType.Improvements,
-            "United Galaxy Tower") && getScoreDiplomacy() > 0
+        if (getPlayerByIndex(i).getTechList().hasTechForMk("Gravity ripper Mk")
+            && (getPlayerByIndex(i).getTechList().
+                hasTech("Orbital ascension portal")
+                || getPlayerByIndex(i).getTechList().
+                hasTech("Planetary ascension portal"))) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.ASCENSION);
+        } else if (getAscensionEvents().getAscensionActivation()
+            >= AscensionEvents.ASCENSION_VEIN_ACTIVATED
+            && (getPlayerByIndex(i).getTechList().
+                hasTech("Orbital ascension portal")
+                || getPlayerByIndex(i).getTechList().
+                hasTech("Planetary ascension portal"))) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.ASCENSION);
+        } else if (getPlayerByIndex(i).getTechList().hasTech(
+            TechType.Improvements, "United Galaxy Tower")
+            && getScoreDiplomacy() > 0
             && StarMapUtilities.getNumberOfAdmires(i, getPlayerList()) > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.DIPLOMATIC);
         } else if (getNewsCorpData().getResearch().getPosition(i) < 3
@@ -4586,6 +4602,11 @@ public class StarMap {
             && getPlayerByIndex(i).getTechList()
                .getNumberOfScientificAchievements() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.SCIENCE);
+        } else if (getPlayerByIndex(i).getArtifactLists()
+            .getDiscoveredArtifacts().length > 3
+            && getPlayerByIndex(i).getArtifactLists()
+            .getResearchedArtifacts().length > 1) {
+              getPlayerByIndex(i).setStrategy(WinningStrategy.ASCENSION);
         } else if (getNewsCorpData().getCultural().getPosition(i) < 3
             && getScoreCulture() > -1
             &&  StarMapUtilities.getNumberOfAdmires(i, getPlayerList()) > 0) {

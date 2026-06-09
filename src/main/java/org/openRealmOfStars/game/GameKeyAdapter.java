@@ -26,6 +26,7 @@ import org.openRealmOfStars.ai.mission.MissionList;
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -194,6 +195,11 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         System.out.println("Cursor X: " + game.getStarMap().getCursorX()
             + " Y: " + game.getStarMap().getCursorY());
+        Tile tile = game.getStarMap().getTile(game.getStarMap().getCursorX(),
+            game.getStarMap().getCursorY());
+        if (tile != null) {
+          System.out.println("Tile:" + tile.getName());
+        }
         return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_U

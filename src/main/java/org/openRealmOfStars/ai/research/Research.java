@@ -19,8 +19,10 @@ package org.openRealmOfStars.ai.research;
 
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -30,6 +32,7 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -87,44 +90,56 @@ public final class Research {
    * @param info PlayerInfo
    * @param banNukes Are nuclear weapons banned?
    * @param banPrivateer Are privateer ships banned?
+   * @param ascension Ascension activation level
+   * @param map StarMap optional can be null
    */
   public static void handleShipDesigns(final PlayerInfo info,
-      final boolean banNukes, final boolean banPrivateer) {
-    handleBattleShipDesign(info, ShipSize.SMALL, false, banNukes);
-    handleBattleShipDesign(info, ShipSize.MEDIUM, false, banNukes);
-    handleBattleShipDesign(info, ShipSize.LARGE, false, banNukes);
-    handleBattleShipDesign(info, ShipSize.HUGE, false, banNukes);
-    handleBattleShipDesign(info, ShipSize.MEDIUM, true, banNukes);
-    handleBattleShipDesign(info, ShipSize.LARGE, true, banNukes);
-    handleBattleShipDesign(info, ShipSize.HUGE, true, banNukes);
-    handleStarbaseDesign(info, ShipSize.SMALL);
-    handleStarbaseDesign(info, ShipSize.MEDIUM);
-    handleStarbaseDesign(info, ShipSize.LARGE);
-    handleStarbaseDesign(info, ShipSize.HUGE);
-    handleMinorOrbitalDesign(info);
-    handleOrbitalDesign(info, ShipSize.SMALL);
-    handleOrbitalDesign(info, ShipSize.MEDIUM);
-    handleOrbitalDesign(info, ShipSize.LARGE);
-    handleOrbitalDesign(info, ShipSize.HUGE);
-    handleAscensionOrbitalDesign(info, ShipSize.SMALL);
-    handleAscensionOrbitalDesign(info, ShipSize.MEDIUM);
-    handleAscensionOrbitalDesign(info, ShipSize.LARGE);
-    handleAscensionOrbitalDesign(info, ShipSize.HUGE);
-    handleTrooperShipDesign(info);
-    handleColonyShipDesign(info);
-    handleFreighterShipDesign(info);
+      final boolean banNukes, final boolean banPrivateer,
+      final byte ascension, final StarMap map) {
+    handleBattleShipDesign(info, ShipSize.SMALL, false, banNukes, ascension,
+        map);
+    handleBattleShipDesign(info, ShipSize.MEDIUM, false, banNukes, ascension,
+        map);
+    handleBattleShipDesign(info, ShipSize.LARGE, false, banNukes, ascension,
+        map);
+    handleBattleShipDesign(info, ShipSize.HUGE, false, banNukes, ascension,
+        map);
+    handleBattleShipDesign(info, ShipSize.MEDIUM, true, banNukes, ascension,
+        map);
+    handleBattleShipDesign(info, ShipSize.LARGE, true, banNukes, ascension,
+        map);
+    handleBattleShipDesign(info, ShipSize.HUGE, true, banNukes, ascension,
+        map);
+    handleStarbaseDesign(info, ShipSize.SMALL, ascension, map);
+    handleStarbaseDesign(info, ShipSize.MEDIUM, ascension, map);
+    handleStarbaseDesign(info, ShipSize.LARGE, ascension, map);
+    handleStarbaseDesign(info, ShipSize.HUGE, ascension, map);
+    handleMinorOrbitalDesign(info, map);
+    handleOrbitalDesign(info, ShipSize.SMALL, ascension, map);
+    handleOrbitalDesign(info, ShipSize.MEDIUM, ascension, map);
+    handleOrbitalDesign(info, ShipSize.LARGE, ascension, map);
+    handleOrbitalDesign(info, ShipSize.HUGE, ascension, map);
+    handleAscensionOrbitalDesign(info, ShipSize.SMALL, ascension, map);
+    handleAscensionOrbitalDesign(info, ShipSize.MEDIUM, ascension, map);
+    handleAscensionOrbitalDesign(info, ShipSize.LARGE, ascension, map);
+    handleAscensionOrbitalDesign(info, ShipSize.HUGE, ascension, map);
+    handleTrooperShipDesign(info, map);
+    handleColonyShipDesign(info, map);
+    handleFreighterShipDesign(info, map);
     if (!banPrivateer) {
-      handlePrivateerShipDesign(info);
+      handlePrivateerShipDesign(info, ascension, map);
     }
-    handleSpyShipDesign(info);
+    handleSpyShipDesign(info, map);
   }
 
   /**
    * Handle new ship designs for AI. Nukes or privateers are not banned.
    * @param info PlayerInfo
+   * @param ascension Ascension activation level
    */
-  public static void handleShipDesigns(final PlayerInfo info) {
-    handleShipDesigns(info, false, false);
+  public static void handleShipDesigns(final PlayerInfo info,
+      final byte ascension) {
+    handleShipDesigns(info, false, false, ascension, null);
   }
 
   /**
@@ -148,16 +163,42 @@ public final class Research {
   }
 
   /**
+   * Go through all planet and update obsolete designs from planet
+   * @param info PlayerInfo updating design
+   * @param map StarMap if null does nothing
+   * @param obsolete Ship name which is being obsolete
+   * @param replace Ship which is going to replace obsolete ship
+   */
+  private static void updateObsoleteDesigns(final PlayerInfo info,
+      final StarMap map, final String obsolete, final Ship replace) {
+    if (map == null) {
+      return;
+    }
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == info
+          && planet.getUnderConstruction() != null
+          && planet.getUnderConstruction() instanceof Ship) {
+        Ship construction = (Ship) planet.getUnderConstruction();
+        if (construction.getName().equals(obsolete)) {
+          planet.setUnderConstruction(replace);
+        }
+      }
+    }
+  }
+  /**
    * Handle Battle ship design for AI for certain size
    * @param info Player
    * @param size ShipSize to handle
    * @param bomber Force bomber ship design
    * @param banNukes Are nuclear weapons banned?
+   * @param ascension Ascension activation level
+   * @param map StarMap optional
    */
   private static void handleBattleShipDesign(final PlayerInfo info,
-      final ShipSize size, final boolean bomber, final boolean banNukes) {
+      final ShipSize size, final boolean bomber, final boolean banNukes,
+      final byte ascension, final StarMap map) {
     ShipDesign design = ShipGenerator.createBattleShip(info, size, bomber,
-        banNukes);
+        banNukes, ascension);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;
@@ -172,6 +213,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -187,12 +231,15 @@ public final class Research {
   /**
    * Handle Privateer ship design for AI
    * @param info Player
+   * @param ascension Ascension activation level
+   * @param map StarMap optional
    */
-  private static void handlePrivateerShipDesign(final PlayerInfo info) {
+  private static void handlePrivateerShipDesign(final PlayerInfo info,
+      final byte ascension, final StarMap map) {
     ShipDesign designMedium = ShipGenerator.createPrivateerShip(info,
-        ShipSize.MEDIUM);
+        ShipSize.MEDIUM, ascension);
     ShipDesign designLarge = ShipGenerator.createPrivateerShip(info,
-        ShipSize.LARGE);
+        ShipSize.LARGE, ascension);
     ShipDesign design = null;
     if (designLarge != null) {
       design = designLarge;
@@ -211,6 +258,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -226,8 +276,10 @@ public final class Research {
   /**
    * Handle Trooper ship design for AI
    * @param info Player
+   * @param map StarMap optional
    */
-  private static void handleTrooperShipDesign(final PlayerInfo info) {
+  private static void handleTrooperShipDesign(final PlayerInfo info,
+      final StarMap map) {
     ShipDesign design = ShipGenerator.createColony(info, true);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
@@ -243,6 +295,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -258,8 +313,10 @@ public final class Research {
   /**
    * Handle Spy ship design for AI
    * @param info Player
+   * @param map StarMap optional
    */
-  private static void handleSpyShipDesign(final PlayerInfo info) {
+  private static void handleSpyShipDesign(final PlayerInfo info,
+      final StarMap map) {
     ShipDesign design = ShipGenerator.createSpy(info);
     if (design != null && info.researchSpyShips()) {
       ShipStat[] stats = info.getShipStatList();
@@ -275,6 +332,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -289,8 +349,10 @@ public final class Research {
   /**
    * Handle Trooper ship design for AI
    * @param info Player
+   * @param map StarMap optional
    */
-  private static void handleColonyShipDesign(final PlayerInfo info) {
+  private static void handleColonyShipDesign(final PlayerInfo info,
+      final StarMap map) {
     ShipDesign design = ShipGenerator.createColony(info, false);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
@@ -306,6 +368,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -319,6 +384,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -334,8 +402,10 @@ public final class Research {
   /**
    * Handle Freighter ship design for AI
    * @param info Player
+   * @param map StarMap optional
    */
-  private static void handleFreighterShipDesign(final PlayerInfo info) {
+  private static void handleFreighterShipDesign(final PlayerInfo info,
+      final StarMap map) {
     ShipDesign design = ShipGenerator.createFreighter(info);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
@@ -353,6 +423,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -369,9 +442,11 @@ public final class Research {
    * Handle Starbase design for AI for certain size
    * @param info Player
    * @param size ShipSize to handle
+   * @param ascension Ascension activation level
+   * @param map StarMap optional
    */
   private static void handleStarbaseDesign(final PlayerInfo info,
-      final ShipSize size) {
+      final ShipSize size, final byte ascension, final StarMap map) {
     if (size == ShipSize.SMALL && info.isBiggerStarbases()) {
       ShipStat[] stats = info.getShipStatList();
       for (ShipStat stat : stats) {
@@ -384,7 +459,7 @@ public final class Research {
       }
       return;
     }
-    ShipDesign design = ShipGenerator.createStarbase(info, size);
+    ShipDesign design = ShipGenerator.createStarbase(info, size, ascension);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;
@@ -399,6 +474,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
           if (design.getTotalMilitaryPower() == stat.getDesign()
@@ -407,6 +485,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -423,10 +504,12 @@ public final class Research {
    * Handle Orbital design for AI for certain size
    * @param info Player
    * @param size ShipSize to handle
+   * @param ascension Ascension activation level
+   * @param map StarMap optional
    */
   private static void handleOrbitalDesign(final PlayerInfo info,
-      final ShipSize size) {
-    ShipDesign design = ShipGenerator.createOrbital(info, size);
+      final ShipSize size, final byte ascension, final StarMap map) {
+    ShipDesign design = ShipGenerator.createOrbital(info, size, ascension);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;
@@ -442,6 +525,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
           if (design.getTotalMilitaryPower() == stat.getDesign()
@@ -450,6 +536,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -466,10 +555,13 @@ public final class Research {
    * Handle Orbital design for AI for certain size
    * @param info Player
    * @param size ShipSize to handle
+   * @param ascension Ascension activation level
+   * @param map StarMap optional
    */
   private static void handleAscensionOrbitalDesign(final PlayerInfo info,
-      final ShipSize size) {
-    ShipDesign design = ShipGenerator.createAscensionOrbital(info, size);
+      final ShipSize size, final byte ascension, final StarMap map) {
+    ShipDesign design = ShipGenerator.createAscensionOrbital(info, size,
+        ascension);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       int designCost = design.getCost() + design.getMetalCost();
@@ -497,6 +589,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -512,8 +607,10 @@ public final class Research {
   /**
    * Handle Minor Orbital design for AI
    * @param info Player
+   * @param map StarMap optional
    */
-  private static void handleMinorOrbitalDesign(final PlayerInfo info) {
+  private static void handleMinorOrbitalDesign(final PlayerInfo info,
+      final StarMap map) {
     ShipDesign design = ShipGenerator.createMinorOrbital(info);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
@@ -527,6 +624,9 @@ public final class Research {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
             break;
           }
         }
@@ -950,6 +1050,28 @@ public final class Research {
       if (info.getRace().getResearchSpeed() == 50) {
         info.getTechList().setTechFocus(TechType.Improvements, 60 + extra);
       }
+    } else if (info.getStrategy() == WinningStrategy.ASCENSION
+        && !info.getTechList().hasTechForMk("Gravity ripper Mk")) {
+      info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+      info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
+      info.getTechList().setTechFocus(TechType.Propulsion,
+          DEFAULT_FOCUS_LEVEL);
+      if (!info.getTechList().hasTech("Planetary ascension portal")) {
+        info.getTechList().setTechFocus(TechType.Improvements,
+            HIGH_FOCUS_LEVEL);
+      } else {
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
+      }
+      if (!info.getTechList().hasTech("Orbital ascension portal")) {
+        info.getTechList().setTechFocus(TechType.Electrics,
+            HIGH_FOCUS_LEVEL);
+      } else {
+        info.getTechList().setTechFocus(TechType.Electrics,
+            DEFAULT_FOCUS_LEVEL);
+      }
+      info.getTechList().setTechFocus(TechType.Combat,
+          VERY_HIGH_FOCUS_LEVEL);
     } else {
       switch (info.getAiAttitude()) {
       case LOGICAL: {

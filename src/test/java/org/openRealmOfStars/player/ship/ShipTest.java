@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2025 Tuomo Untinen
+ * Copyright (C) 2017-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -789,11 +789,12 @@ public class ShipTest {
     info.getTechList().addTech(TechFactory.createDefenseTech("Armor Mk1", 1));
     info.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
     info.getTechList().addTech(TechFactory.createImprovementTech("Starbase lab", 5));
-    ShipDesign design = ShipGenerator.createStarbase(info, ShipSize.MEDIUM);
+    ShipDesign design = ShipGenerator.createStarbase(info, ShipSize.MEDIUM,
+        (byte) 0);
     assertNotEquals(null, design);
     Ship ship = new Ship(design);
     assertNotEquals(null, ship);
-    design = ShipGenerator.createStarbase(info, ShipSize.LARGE);
+    design = ShipGenerator.createStarbase(info, ShipSize.LARGE, (byte) 0);
     assertNotEquals(null, design);
     ship = new Ship(design);
     assertNotEquals(null, ship);

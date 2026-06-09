@@ -106,7 +106,12 @@ public enum MissionType {
    * Space monster devourer roam. These will target both
    * fleets and planets.
    */
-  DEVOURER_ROAM;
+  DEVOURER_ROAM,
+  /**
+   * Mission for reveal ascension veins, aka going to black hole with
+   * gravity ripper.
+   */
+  REVEAL_VEINS;
 
   /**
    * Get Mission type with index
@@ -152,6 +157,8 @@ public enum MissionType {
       return 17;
     case DEVOURER_ROAM:
       return 18;
+    case REVEAL_VEINS:
+      return 19;
     default:
       return 0;
     }
@@ -198,6 +205,8 @@ public enum MissionType {
       return "Spore colony";
     case DEVOURER_ROAM:
       return "Devourer roam";
+    case REVEAL_VEINS:
+      return "Reveal veins";
     default:
       return "Unknown";
     }

@@ -60,6 +60,7 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.ascensionEvents.AscensionEvents;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -677,7 +678,16 @@ public final class MissionHandling {
    */
   public static void handleExploring(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
-    if (mission != null && mission.getType() == MissionType.EXPLORE) {
+    if (mission != null && (mission.getType() == MissionType.EXPLORE
+        || mission.getType() == MissionType.REVEAL_VEINS)) {
+      if (mission.getType() == MissionType.REVEAL_VEINS
+          && game.getStarMap().getAscensionEvents().getAscensionActivation()
+          >= AscensionEvents.ASCENSION_VEIN_ACTIVATED) {
+        mission.setType(MissionType.EXPLORE);
+        findSunToExplore(mission, fleet, info, game);
+        mission.setPhase(MissionPhase.TREKKING);
+        mission.setMissionTime(0);
+      }
       if (mission.getPhase() == MissionPhase.LOADING) {
         findSunToExplore(mission, fleet, info, game);
         return;
@@ -726,6 +736,16 @@ public final class MissionHandling {
           planet.handleTimedStatusForAwayTeam(game.getStarMap(),
               fleet.getCommander(), info);
 
+        }
+        Tile tile = game.getStarMap().getTile(mission.getX(), mission.getY());
+        if (tile != null && tile.isBlackhole()) {
+          double distance = fleet.getCoordinate().calculateDistance(
+              new Coordinate(mission.getX(), mission.getY()));
+          if (distance  < 3) {
+            mission.setType(MissionType.EXPLORE);
+            findSunToExplore(mission, fleet, info, game);
+            return;
+          }
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING) {

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.event.karmaEvents;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019-2024 Tuomo Untinen
+ * Copyright (C) 2019-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -561,7 +561,7 @@ public final class RandomEventUtility {
         for (int i = 0; i < numberOfTechs; i++) {
           extraPlayer.getTechList().addNewRandomTech(extraPlayer);
         }
-        Research.handleShipDesigns(extraPlayer);
+        Research.handleShipDesigns(extraPlayer, (byte) 0);
         ShipStat[] shipStats = extraPlayer.getShipStatList();
         ArrayList<ShipStat> ships = new ArrayList<>();
         for (ShipStat stat : shipStats) {

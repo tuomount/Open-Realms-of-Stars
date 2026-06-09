@@ -99,8 +99,14 @@ public class GameTest {
     int tradeShips[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int spies[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int artefacts[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int pops[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int ships[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int maxPops = 0;
     for (Planet planet : game.getStarMap().getPlanetList()) {
       if (planet.getPlanetOwnerIndex() != -1) {
+        pops[planet.getPlanetOwnerIndex()] =
+            pops[planet.getPlanetOwnerIndex()] + planet.getTotalPopulation();
+        maxPops = maxPops + planet.getTotalPopulation();
         planets[planet.getPlanetOwnerIndex()]++;
         int prod = 0;
         prod = prod + planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
@@ -132,6 +138,7 @@ public class GameTest {
       }
       charted[j] = charting * 100 / maxSectors;
       PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(j);
+      ships[j] = info.getFleets().getNumberOfFleets();
       for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
         Fleet fleet = info.getFleets().getByIndex(k);
         militaryPower[j] = militaryPower[j] + fleet.getMilitaryValue();
@@ -211,19 +218,33 @@ public class GameTest {
       sb.append(addEmptySpace("Conquest: " + conquest[i], 15));
       sb.append(addEmptySpace("Tech: " + tech, 10));
       sb.append(addEmptySpace("Max Prod: " + maxProd[i], 15));
-      sb.append(addEmptySpace("Trade: " + tradeShips[i], 15));
-      sb.append(addEmptySpace("Spies: " + spies[i], 15));
+      sb.append(addEmptySpace("Trade: " + tradeShips[i], 12));
+      sb.append(addEmptySpace("Spies: " + spies[i], 12));
       sb.append(addEmptySpace("Artefacts: " + artefacts[i], 15));
+      sb.append(addEmptySpace("Pops: " + pops[i] + "/" + maxPops, 15));
+      sb.append(addEmptySpace("Fleets: " + ships[i], 15));
+      sb.append("\n");
+      sb.append("Strategy: ");
+      sb.append(game.getPlayers().getPlayerInfoByIndex(i).getStrategy().toString());
       sb.append("\n");
       sb.append("Scenario: ");
       sb.append(scenario);
       if (game.getPlayers().getPlayerInfoByIndex(i).isElderRealm()) {
         sb.append(" - Elder");
       }
-      System.out.println(sb.toString());
+      System.out.println(sb.toString()+"\n");
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
     System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    if (game.getStarMap().getAscensionEvents().getAscensionActivation()
+        == AscensionEvents.TRAVEL_THROUGH_ASCENSION_PORTAL) {
+      NewsData[] upcoming = game.getStarMap().getNewsCorpData().getUpcomingNews();
+      if (upcoming != null && upcoming.length > 0) {
+        System.out.println(upcoming[upcoming.length - 1].getNewsText());
+      } else {
+        System.out.println("Ascension victory!");
+      }
+    }
     if (newsData != null && newsData.length > 0) {
       System.out.println(newsData[newsData.length - 1].getNewsText());
     }
@@ -358,7 +379,7 @@ public class GameTest {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
+        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
       if (turn != game.getStarMap().getTurn()) {
         turn = game.getStarMap().getTurn();
@@ -402,7 +423,7 @@ public class GameTest {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
+        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
       if (turn != game.getStarMap().getTurn()) {
         turn = game.getStarMap().getTurn();
@@ -452,7 +473,7 @@ public class GameTest {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
       do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
+        singleTurnEnd = game.getAITurnView().handleAiTurn();
       } while (!singleTurnEnd);
       if (turn != game.getStarMap().getTurn()) {
         turn = game.getStarMap().getTurn();

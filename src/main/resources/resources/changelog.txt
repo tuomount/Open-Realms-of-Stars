@@ -10,11 +10,13 @@
 * Ship hulls and ship components are now loaded from JSON.
 * Custom races may now have custom diplomatic music.
 * AI should try to win with ascension victory.
+* Possibility to skip certain type of messages in star map view.
 
 - Bugfixes -
 * Most of the images are now loaded when actually needed, not at start. This should lower the memory requirements a bit.
 * Fixed news titles: Some of these were too long to actually fit in news screen.
 * Fleets never moved over space anomaly when using automated move.
+* Fixed bug where too many lines were print on bombing view.
 
 
 # Open Realm of Stars 0.28.2

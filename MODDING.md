@@ -78,6 +78,11 @@ than one choice then one of them is picked and used during diplomacy. ``%1$s`` i
 Custom space race images are looked from following folder `~/.oros/custom/images/spacerace`.
 Images need to be PNG format and around size of 115-130 pixels wide and around 190-200 pixels high. Height is more important than wide, since bridge images have Y coordinate offset and it should not be much different than 200 pixels. Color mode needs to be ARGB.
 
+### Custom Space Race diplomacy music
+
+Custom space race musics are looked from following folder `~/.oros/custom/music/`.
+Music needs to be an ogg file.
+
 ### Custom Space Ship Images
 
 Custom space ship images consist two files: PNG image file and JSON file.

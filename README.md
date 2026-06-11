@@ -52,7 +52,7 @@ See more [screenshots](ArtModification/screenshots)
 ### Features
 
  * Randomized galaxy with three different starting placements
- * 17 different space races to play
+ * 18 different space races to play
  * 22 different government types to play
  * 17 different starting scenarios to play
  * Any realm can start as an elder realm even human player
@@ -70,7 +70,7 @@ See more [screenshots](ArtModification/screenshots)
  * Possibility to fake military power in the galactic news (Can be lower or higher)
  * Espionage ships and espionage missions with leaders
  * Leaders acting as rulers, governors and commanders
- * 6 Different technology branches each with 10 levels
+ * 6 Different technology branches each with 20 levels
  * Each new technology will give either new ship component, ship hull or planetary improvement.
  * All ships are designed based on currently available technology
  * AI does not cheat and each AI is trying to make their own realm as strong as possible

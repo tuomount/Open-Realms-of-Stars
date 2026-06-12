@@ -736,6 +736,7 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         sb.append("\n");
       }
     }
+    SoundPlayer.playMenuSound();
     infoText.setText(sb.toString());
     infoText.repaint();
     infoText.setLineWrap(true);
@@ -752,6 +753,7 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         infoText.setLineWrap(true);
         infoText.setText(strTmp);
         infoText.repaint();
+        SoundPlayer.playMenuSound();
       }
     }
   }
@@ -800,6 +802,7 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
           infoText.setLineWrap(false);
           infoText.setText(str);
           infoText.repaint();
+          SoundPlayer.playMenuSound();
         }
       }
       if (node.getUserObject() instanceof Tech) {
@@ -809,6 +812,7 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
           infoText.setLineWrap(false);
           infoText.setText(strTmp);
           infoText.repaint();
+          SoundPlayer.playMenuSound();
         }
       }
     }

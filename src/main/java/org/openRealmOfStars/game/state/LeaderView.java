@@ -145,6 +145,11 @@ public class LeaderView extends BlackPanel
    */
   private boolean standardLeaderSelected;
   /**
+   * Count for weird double sound in list.
+   */
+  private int waitForSound = 0;
+
+  /**
    * View Leader view.
    * @param info Player info
    * @param starMap Star map data
@@ -581,6 +586,10 @@ public class LeaderView extends BlackPanel
    * @param arg0 Action event to handle
    */
   public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
+        && waitForSound > 0) {
+      waitForSound--;
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
       boolean soundPlayed = false;
       Leader leader = getSelectedLeaderFromTree();
@@ -648,11 +657,19 @@ public class LeaderView extends BlackPanel
   public void valueChanged(final TreeSelectionEvent e) {
     standardLeaderSelected = true;
     updatePanel();
+    if (waitForSound == 0) {
+      SoundPlayer.playMenuSound();
+      waitForSound = 3;
+    }
   }
 
   @Override
   public void valueChanged(final ListSelectionEvent e) {
     standardLeaderSelected = false;
     updatePanel();
+    if (waitForSound == 0) {
+      SoundPlayer.playMenuSound();
+      waitForSound = 3;
+    }
   }
 }

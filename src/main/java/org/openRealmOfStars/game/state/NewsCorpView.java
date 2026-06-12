@@ -27,6 +27,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.audio.music.MusicPlayer;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.IconButton;
@@ -154,6 +155,9 @@ public class NewsCorpView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)
+        && newsIndex == newsList.length - 1) {
+      SoundPlayer.playMenuDisabled();
+    } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)
         && newsIndex < newsList.length - 1) {
       newsIndex++;
       BufferedImage image = new BufferedImage(newsImage.getNewsImageWidth(),
@@ -163,9 +167,13 @@ public class NewsCorpView extends BlackPanel {
       newsImage.setNewsImage(image);
       newsImage.setText(newsList[newsIndex].getNewsText());
       newsLabel.setText(newsIndex + 1 + "/" + newsList.length);
+      SoundPlayer.playMenuSound();
       repaint();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)
+        && newsIndex == 0) {
+      SoundPlayer.playMenuDisabled();
+    } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)
         && newsIndex > 0) {
       newsIndex--;
       BufferedImage image = new BufferedImage(newsImage.getNewsImageWidth(),
@@ -175,6 +183,7 @@ public class NewsCorpView extends BlackPanel {
       newsImage.setNewsImage(image);
       newsImage.setText(newsList[newsIndex].getNewsText());
       newsLabel.setText(newsIndex + 1 + "/" + newsList.length);
+      SoundPlayer.playMenuSound();
       repaint();
     }
   }

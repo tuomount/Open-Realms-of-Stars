@@ -194,6 +194,7 @@ public class ShipView extends BlackPanel {
           }
           infoText.setText(stat.toString());
           shipImage.setImage(stat.getDesign().getHull().getImage());
+          SoundPlayer.playMenuSound();
           this.repaint();
         }
       } else {

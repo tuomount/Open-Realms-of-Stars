@@ -18,6 +18,7 @@
 * Fleets never moved over space anomaly when using automated move.
 * Fixed bug where too many lines were print on bombing view.
 * Add missing menu clicks news view, research view, leaders view and ship view.
+* Fixes issue where next level of rare technology could not be researched.
 
 
 # Open Realm of Stars 0.28.2

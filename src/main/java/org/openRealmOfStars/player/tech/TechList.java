@@ -1053,7 +1053,7 @@ public class TechList {
       if (namePart.length == 2) {
         String[] names = TechFactory.getAllRareTechNames(techType, level);
         for (String name : names) {
-          if (namePart[0].contains(name)) {
+          if (name.startsWith(namePart[0])) {
             Tech rareTech = TechFactory.createTech(techType, level, name);
             if (rareTech != null && !isOnList(techs, rareTech)) {
               list.add(rareTech);

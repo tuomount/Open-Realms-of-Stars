@@ -17,6 +17,7 @@
 * Fixed news titles: Some of these were too long to actually fit in news screen.
 * Fleets never moved over space anomaly when using automated move.
 * Fixed bug where too many lines were print on bombing view.
+* Add missing menu clicks news view, research view, leaders view and ship view.
 
 
 # Open Realm of Stars 0.28.2

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,11 +20,10 @@ package org.openRealmOfStars.gui.list;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.gui.labels.RenderLabel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
@@ -37,17 +36,13 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
 public class SpeechLineRenderer implements ListCellRenderer<SpeechLine> {
 
   /**
-   * Default list cell renderer
+   * Reusable label for rendering
    */
-  private DefaultListCellRenderer defaultRenderer
-      = new DefaultListCellRenderer();
-
+  private RenderLabel renderer = new RenderLabel();
   @Override
   public Component getListCellRendererComponent(
       final JList<? extends SpeechLine> list, final SpeechLine value,
       final int index, final boolean isSelected, final boolean cellHasFocus) {
-    JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
-        list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiFonts.getFontCubellan());
     renderer.setText(value.getLine());
     if (isSelected) {

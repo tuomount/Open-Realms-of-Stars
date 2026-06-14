@@ -19,15 +19,12 @@ package org.openRealmOfStars.gui.list;
  */
 
 import java.awt.Component;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 
-import javax.swing.Icon;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.labels.RenderLabel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -39,45 +36,11 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
  */
 public class ProductionListRenderer implements ListCellRenderer<Construction> {
 
-  /**
-   * Custom JLabel for list cell rendering that properly handles painting
-   */
-  private static class ProductionLabel extends JLabel {
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    protected void paintComponent(final Graphics g) {
-      // Fill background first (since we're opaque)
-      g.setColor(getBackground());
-      g.fillRect(0, 0, getWidth(), getHeight());
-      // Draw icon if present
-      int textX = 5;
-      Icon icon = getIcon();
-      if (icon != null) {
-        int iconY = (getHeight() - icon.getIconHeight()) / 2;
-        icon.paintIcon(this, g, 5, iconY);
-        textX = 5 + icon.getIconWidth() + 5;
-      }
-
-      // Early exit if no text to draw
-      String text = getText();
-      if (text == null || text.isEmpty()) {
-        return;
-      }
-
-      // Draw text
-      g.setFont(getFont());
-      g.setColor(getForeground());
-      FontMetrics metrics = g.getFontMetrics(getFont());
-      int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
-      g.drawString(text, textX, y);
-    }
-  }
 
   /**
    * Reusable label for rendering
    */
-  private ProductionLabel label = new ProductionLabel();
+  private RenderLabel label = new RenderLabel();
 
   @Override
   public Component getListCellRendererComponent(

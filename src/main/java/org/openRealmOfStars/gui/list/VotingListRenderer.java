@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2022 Tuomo Untinen
+ * Copyright (C) 2022-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,11 +20,10 @@ package org.openRealmOfStars.gui.list;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.gui.labels.RenderLabel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.starMap.StarMap;
@@ -38,10 +37,9 @@ import org.openRealmOfStars.starMap.vote.Vote;
 public class VotingListRenderer implements ListCellRenderer<Vote> {
 
   /**
-   * Default list cell renderer
+   * Reusable label for rendering
    */
-  private DefaultListCellRenderer defaultRenderer
-      = new DefaultListCellRenderer();
+  private RenderLabel renderer = new RenderLabel();
 
   /**
    * Starmap for getting enough information for voting.
@@ -55,12 +53,11 @@ public class VotingListRenderer implements ListCellRenderer<Vote> {
   public void setStarMap(final StarMap starMap) {
     map = starMap;
   }
+
   @Override
   public Component getListCellRendererComponent(
       final JList<? extends Vote> list, final Vote value, final int index,
       final boolean isSelected, final boolean cellHasFocus) {
-    JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
-        list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiFonts.getFontCubellan());
     renderer.setText(value.getDescription(map));
     if (isSelected) {

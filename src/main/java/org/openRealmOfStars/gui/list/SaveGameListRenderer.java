@@ -2,7 +2,7 @@ package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2025 Richard Smit
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,14 +20,12 @@ package org.openRealmOfStars.gui.list;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.FontMetrics;
 
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.game.SavedGame;
+import org.openRealmOfStars.gui.labels.RenderLabel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
@@ -39,37 +37,9 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
 
   /**
-   * Custom JLabel for list cell rendering that properly handles painting
-   */
-  private static class SaveGameLabel extends JLabel {
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    protected void paintComponent(final Graphics g) {
-      // Fill background first (since we're opaque)
-      g.setColor(getBackground());
-      g.fillRect(0, 0, getWidth(), getHeight());
-
-      // Early exit if no text to draw
-      String text = getText();
-      if (text == null || text.isEmpty()) {
-        return;
-      }
-
-      // Draw text
-      int x = 5;
-      g.setFont(getFont());
-      g.setColor(getForeground());
-      FontMetrics metrics = g.getFontMetrics(getFont());
-      int y = (getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
-      g.drawString(text, x, y);
-    }
-  }
-
-  /**
    * Reusable label for rendering
    */
-  private SaveGameLabel label = new SaveGameLabel();
+  private RenderLabel label = new RenderLabel();
 
   @Override
   public Component getListCellRendererComponent(

@@ -44,6 +44,7 @@ public class TechListRenderer implements ListCellRenderer<Tech> {
   public Component getListCellRendererComponent(
       final JList<? extends Tech> list, final Tech value, final int index,
       final boolean isSelected, final boolean cellHasFocus) {
+    renderer.setText(value.getName());
     renderer.setFont(GuiFonts.getFontCubellan());
     renderer.setIcon(value.getIcon().getAsIcon());
     if (isSelected) {

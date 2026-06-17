@@ -113,6 +113,7 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.fleet.TradeRoute;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.government.trait.GovTrait;
 import org.openRealmOfStars.player.government.trait.GovTraitFactory;
@@ -2516,7 +2517,7 @@ public class Game implements ActionListener {
   public static String printRaceWiki() {
     StringBuilder sb = new StringBuilder();
     sb.append("# Space races");
-    sb.append("![spaceraces]"
+    sb.append("\n![spaceraces]"
         + "(https://github.com/tuomount/Open-Realms-of-Stars/assets/"
         + "15839156/2ea934aa-5092-4cbc-a7c8-e8348939ace4)");
     sb.append("\n");
@@ -2526,7 +2527,25 @@ public class Game implements ActionListener {
     }
     return sb.toString();
   }
+
   /**
+   * Print whole government wiki page contain all information about governments
+   * @return Government wiki page as a String
+   */
+  public static String printGovWiki() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("# Governments");
+    sb.append("\nGovernments are rewrite for 0.26.0 release."
+        + " They should be more balanced and at least have equal"
+        + " amount trait points. Now each space race can pick any government.");
+    sb.append("\n");
+    for (Government gov : GovernmentFactory.getValues()) {
+      sb.append("\n");
+      sb.append(gov.getDescription(true));
+    }
+    return sb.toString();
+  }
+/**
    * Print whole race trait page contain all information about space race traits
    * @return Race trait wiki page as a String
    */
@@ -2595,6 +2614,8 @@ public class Game implements ActionListener {
       System.out.println(printRareTechWiki());
     } else if (args.length > 0 && args[0].equals("--wiki-race")) {
       System.out.println(printRaceWiki());
+    } else if (args.length > 0 && args[0].equals("--wiki-gov")) {
+      System.out.println(printGovWiki());
     } else if (args.length > 0 && args[0].equals("--wiki-race-trait")) {
       System.out.println(printRaceTraitWiki());
     } else if (args.length > 0 && args[0].equals("--wiki-gov-trait")) {

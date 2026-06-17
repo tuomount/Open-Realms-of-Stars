@@ -1313,7 +1313,9 @@ public final class TechFactory {
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.SPORE_COLONIZATION));
         } else if (techName.startsWith("Cargo bay")
-            || techName.startsWith("Armored cargo bay")) {
+            || techName.startsWith("Armored cargo bay")
+            || techName.startsWith("Dimension cargo bay")
+            || techName.startsWith("Armored dimension cargo bay")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_CLOSED));
         } else if (techName.startsWith("Fighter bay Mk")) {

@@ -462,7 +462,7 @@ public final class TechFactory {
    * Hull tech names for level 16
    */
   public static final String[] HULL_TECH_LEVEL16_NAMES = {"Massive orbital Mk1",
-      "Massive freigher Mk2", "Battle cruiser Mk3"};
+      "Massive freighter Mk2", "Battle cruiser Mk3"};
   /**
    * Hull tech names for level 17
    */
@@ -476,7 +476,7 @@ public final class TechFactory {
   /**
    * Hull tech names for level 19
    */
-  public static final String[] HULL_TECH_LEVEL19_NAMES = {"Death Moon",
+  public static final String[] HULL_TECH_LEVEL19_NAMES = {"Death moon",
       "Massive starbase Mk2"};
   /**
    * Hull tech names for level 20

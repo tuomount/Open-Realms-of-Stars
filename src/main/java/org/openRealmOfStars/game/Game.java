@@ -2274,7 +2274,7 @@ public class Game implements ActionListener {
         sb.append(i + 1);
         sb.append(". ");
         if (hull == null) {
-          ErrorLogger.log("Hull not found:" + tech.getImprovement());
+          ErrorLogger.log("Hull not found:" + tech.getName());
         }
         sb.append(hull.toString());
         sb.append("\n\n");
@@ -2327,6 +2327,26 @@ public class Game implements ActionListener {
         TechType.Combat, 9));
     sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL10_NAMES,
         TechType.Combat, 10));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL11_NAMES,
+        TechType.Combat, 11));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL12_NAMES,
+        TechType.Combat, 12));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL13_NAMES,
+        TechType.Combat, 13));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL14_NAMES,
+        TechType.Combat, 14));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL15_NAMES,
+        TechType.Combat, 15));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL16_NAMES,
+        TechType.Combat, 16));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL17_NAMES,
+        TechType.Combat, 17));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL18_NAMES,
+        TechType.Combat, 18));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL19_NAMES,
+        TechType.Combat, 19));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL20_NAMES,
+        TechType.Combat, 20));
     sb.append("## Defense technology\n\n");
     sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL1_NAMES,
         TechType.Defense, 1));
@@ -2348,6 +2368,26 @@ public class Game implements ActionListener {
         TechType.Defense, 9));
     sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL10_NAMES,
         TechType.Defense, 10));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL11_NAMES,
+        TechType.Defense, 11));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL12_NAMES,
+        TechType.Defense, 12));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL13_NAMES,
+        TechType.Defense, 13));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL14_NAMES,
+        TechType.Defense, 14));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL15_NAMES,
+        TechType.Defense, 15));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL16_NAMES,
+        TechType.Defense, 16));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL17_NAMES,
+        TechType.Defense, 17));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL18_NAMES,
+        TechType.Defense, 18));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL19_NAMES,
+        TechType.Defense, 19));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL20_NAMES,
+        TechType.Defense, 20));
     sb.append("## Hull technology\n\n");
     sb.append(printTech(TechFactory.HULL_TECH_LEVEL1_NAMES,
         TechType.Hulls, 1));
@@ -2369,6 +2409,26 @@ public class Game implements ActionListener {
         TechType.Hulls, 9));
     sb.append(printTech(TechFactory.HULL_TECH_LEVEL10_NAMES,
         TechType.Hulls, 10));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL11_NAMES,
+        TechType.Hulls, 11));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL12_NAMES,
+        TechType.Hulls, 12));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL13_NAMES,
+        TechType.Hulls, 13));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL14_NAMES,
+        TechType.Hulls, 14));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL15_NAMES,
+        TechType.Hulls, 15));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL16_NAMES,
+        TechType.Hulls, 16));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL17_NAMES,
+        TechType.Hulls, 17));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL18_NAMES,
+        TechType.Hulls, 18));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL19_NAMES,
+        TechType.Hulls, 19));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL20_NAMES,
+        TechType.Hulls, 20));
     sb.append("## Planetary Improvement technology\n\n");
     sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL1_NAMES,
         TechType.Improvements, 1));
@@ -2390,6 +2450,26 @@ public class Game implements ActionListener {
         TechType.Improvements, 9));
     sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL10_NAMES,
         TechType.Improvements, 10));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL11_NAMES,
+        TechType.Improvements, 11));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL12_NAMES,
+        TechType.Improvements, 12));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL13_NAMES,
+        TechType.Improvements, 13));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL14_NAMES,
+        TechType.Improvements, 14));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL15_NAMES,
+        TechType.Improvements, 15));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL16_NAMES,
+        TechType.Improvements, 16));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL17_NAMES,
+        TechType.Improvements, 17));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL18_NAMES,
+        TechType.Improvements, 18));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL19_NAMES,
+        TechType.Improvements, 19));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL20_NAMES,
+        TechType.Improvements, 20));
     sb.append("## Propulsion technology\n\n");
     sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL1_NAMES,
         TechType.Propulsion, 1));
@@ -2411,6 +2491,26 @@ public class Game implements ActionListener {
         TechType.Propulsion, 9));
     sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL10_NAMES,
         TechType.Propulsion, 10));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL11_NAMES,
+        TechType.Propulsion, 11));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL12_NAMES,
+        TechType.Propulsion, 12));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL13_NAMES,
+        TechType.Propulsion, 13));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL14_NAMES,
+        TechType.Propulsion, 14));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL15_NAMES,
+        TechType.Propulsion, 15));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL16_NAMES,
+        TechType.Propulsion, 16));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL17_NAMES,
+        TechType.Propulsion, 17));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL18_NAMES,
+        TechType.Propulsion, 18));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL19_NAMES,
+        TechType.Propulsion, 19));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL20_NAMES,
+        TechType.Propulsion, 20));
     sb.append("## Electronics technology\n\n");
     sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL1_NAMES,
         TechType.Electrics, 1));
@@ -2432,6 +2532,26 @@ public class Game implements ActionListener {
         TechType.Electrics, 9));
     sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL10_NAMES,
         TechType.Electrics, 10));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL11_NAMES,
+        TechType.Electrics, 11));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL12_NAMES,
+        TechType.Electrics, 12));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL13_NAMES,
+        TechType.Electrics, 13));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL14_NAMES,
+        TechType.Electrics, 14));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL15_NAMES,
+        TechType.Electrics, 15));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL16_NAMES,
+        TechType.Electrics, 16));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL17_NAMES,
+        TechType.Electrics, 17));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL18_NAMES,
+        TechType.Electrics, 18));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL19_NAMES,
+        TechType.Electrics, 19));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL20_NAMES,
+        TechType.Electrics, 20));
     return sb.toString();
   }
 

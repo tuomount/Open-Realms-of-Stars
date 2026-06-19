@@ -1833,6 +1833,15 @@ public class Game implements ActionListener {
       showNewsCorpView();
       break;
     }
+    case NEWS_SCREEN_VIEW: {
+      if (dataObject instanceof NewsData[]) {
+        setBridgeCommand(BridgeCommandType.WARM_WHITE);
+        NewsData[] news = (NewsData[]) dataObject;
+        newsCorpView = new NewsCorpView(news, this);
+        this.updateDisplay(newsCorpView);
+      }
+      break;
+    }
     case ESPIONAGE_VIEW: {
       setBridgeCommand(BridgeCommandType.SPACE_CONSOLE2);
       showEspionageView();
@@ -2747,6 +2756,15 @@ public class Game implements ActionListener {
       MusicPlayer.setMusicEnabled(false);
       Game game = new Game(true);
       game.changeGameState(GameState.TEXT_SCREEN_VIEW, args[1]);
+    } else if (args.length > 1 && args[0].equals("--news")) {
+      System.out.println("Disabling the music...");
+      MusicPlayer.setMusicEnabled(false);
+      Game game = new Game(true);
+      NewsData[] news = new NewsData[1];
+      news[0] = new NewsData();
+      news[0].setNewsText(args[1]);
+      news[0].setImageInstructions(args[2]);
+      game.changeGameState(GameState.NEWS_SCREEN_VIEW, news);
     } else {
       if (args.length > 0 && args[0].equals("--no-music")) {
         System.out.println("Disabling the music...");

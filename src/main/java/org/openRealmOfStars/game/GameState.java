@@ -184,5 +184,10 @@ public enum GameState {
   /** View for government editor */
   GOVERNMENT_EDITOR,
   /** View for space race editor */
-  SPACERACE_EDITOR;
+  SPACERACE_EDITOR,
+  /**
+   * News corp view to show text and pictures
+   */
+  NEWS_SCREEN_VIEW;
+
 }

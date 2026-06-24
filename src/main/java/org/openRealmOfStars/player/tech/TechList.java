@@ -1040,6 +1040,22 @@ public class TechList {
   }
 
   /**
+   * Checks if certain tech is on arraylist.
+   * @param techs Techs in arraylist.
+   * @param tech Technology for check
+   * @return True if tech is in the arraylist.
+   */
+  private static boolean isOnList(final ArrayList<Tech> techs,
+      final Tech tech) {
+    for (Tech comp : techs) {
+      if (tech.getName().equals(comp.getName())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Check possible rare techs on tree
    * @param techType Tech Type
    * @param level Which level tech should be
@@ -1055,7 +1071,8 @@ public class TechList {
         for (String name : names) {
           if (name.startsWith(namePart[0])) {
             Tech rareTech = TechFactory.createTech(techType, level, name);
-            if (rareTech != null && !isOnList(techs, rareTech)) {
+            if (rareTech != null && !isOnList(techs, rareTech)
+                && !isOnList(list, rareTech)) {
               list.add(rareTech);
             }
           }

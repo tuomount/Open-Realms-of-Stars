@@ -428,7 +428,7 @@ https://opengameart.org/content/robotic-mechanic-step-sounds
 https://opengameart.org/content/9-sci-fi-computer-sounds-and-beeps
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
-Ship repair sound
+Ship repair sound/install/remove component
 Adaptation by Tuomo Untinen, original sounds by
 Lee Barkovich
 http://www.archive.org/details/Berklee44Barkovich http://www.lbarkovich.com/

@@ -160,6 +160,18 @@ public final class SoundPlayer {
   public static final String REPAIR = "/resources/sounds/repair.wav";
 
   /**
+   * Sound effect for install component
+   */
+  public static final String INSTALL_COMPONENT =
+      "/resources/sounds/install_component.wav";
+
+  /**
+   * Sound effect for remove component
+   */
+  public static final String REMOVE_COMPONENT =
+      "/resources/sounds/remove_component.wav";
+
+  /**
    * Sound effect for escaping via blackhole
    */
   public static final String TELEPORT = "/resources/sounds/teleport.wav";

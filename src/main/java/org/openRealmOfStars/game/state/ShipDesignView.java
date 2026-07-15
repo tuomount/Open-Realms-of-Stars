@@ -678,12 +678,12 @@ public class ShipDesignView extends BlackPanel {
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_VARIANT_SELECTED)) {
-      SoundPlayer.playMenuSound();
+
       updatePanels(true);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_AUTODESIGN)) {
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.DISASSEMBLE);
       ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
       String selected = (String) variantSelection.getSelectedItem();
       if (hull != null) {
@@ -747,7 +747,7 @@ public class ShipDesignView extends BlackPanel {
         hullInfoText.setText(design.getDesignInfo());
         hullInfoText.repaint();
       }
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.REPAIR);
       updatePanels(true);
     }
     if (arg0.getActionCommand()
@@ -758,7 +758,7 @@ public class ShipDesignView extends BlackPanel {
       design.setName(designNameText.getText());
       hullInfoText.setText(design.getDesignInfo());
       hullInfoText.repaint();
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.INSTALL_COMPONENT);
       updatePanels(false);
     }
     if (arg0.getActionCommand()
@@ -769,7 +769,7 @@ public class ShipDesignView extends BlackPanel {
       design.setName(designNameText.getText());
       hullInfoText.setText(design.getDesignInfo());
       hullInfoText.repaint();
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.REMOVE_COMPONENT);
       updatePanels(false);
     }
     if (arg0.getActionCommand()

@@ -337,7 +337,6 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SEARCH_FORWARDS)) {
       if (!searchText.getText().isEmpty()) {
-        SoundPlayer.playMenuSound();
         applySearch(true);
       } else {
         SoundPlayer.playMenuDisabled();
@@ -346,7 +345,6 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_SEARCH_BACKWARDS)) {
       if (!searchText.getText().isEmpty()) {
-        SoundPlayer.playMenuSound();
         applySearch(false);
       } else {
         SoundPlayer.playMenuDisabled();

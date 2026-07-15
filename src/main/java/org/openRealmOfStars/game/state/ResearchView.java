@@ -736,7 +736,6 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         sb.append("\n");
       }
     }
-    SoundPlayer.playMenuSound();
     infoText.setText(sb.toString());
     infoText.repaint();
     infoText.setLineWrap(true);

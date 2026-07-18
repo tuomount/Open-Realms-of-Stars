@@ -1976,67 +1976,7 @@ private int increaseHitChanceByComponent() {
    * @return Theoretical military power
    */
   public int getTheoreticalMilitaryPower() {
-    double power = 0;
-    boolean militaryShip = false;
-    power = getHull().getSlotHull() * getHull().getMaxSlot();
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
-      if (comp.isDestructiveWeapon()) {
-        militaryShip = true;
-        power = power + comp.getDamage();
-      }
-      if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
-        power = power + comp.getDamage() / 2.0;
-      }
-      if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD
-              || comp.getType() == ShipComponentType.CARGO_BAY
-          || comp.getType() == ShipComponentType.REPAIR_MODULE
-          || comp.getType() == ShipComponentType.SOLAR_ARMOR
-          || comp.getType() == ShipComponentType.SHADOW_ARMOR
-          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
-        power = power + comp.getDefenseValue();
-      }
-      if (comp.getType() == ShipComponentType.ENGINE
-          && getHull().getHullType() != ShipHullType.STARBASE) {
-        power = power + comp.getTacticSpeed() - 1;
-      }
-      if (comp.getType() == ShipComponentType.SPACE_FIN
-          && getHull().getHullType() != ShipHullType.STARBASE) {
-        power = power + comp.getTacticSpeed() - 1;
-      }
-      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER) {
-        power = power + comp.getDamage() / 10.0;
-      }
-      if (comp.getType() == ShipComponentType.JAMMER) {
-        power = power + comp.getDefenseValue() / 10.0;
-      }
-      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
-        power = power + comp.getDefenseValue();
-        power = power + comp.getDamage() / 10;
-      }
-      if (comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
-        power = power + comp.getDefenseValue();
-        power = power + comp.getDamage() / 5;
-      }
-      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
-        power = power + comp.getDefenseValue() * 2;
-      }
-      if (comp.getType() == ShipComponentType.FIGHTER_BAY) {
-        power = power + comp.getBaySize();
-      }
-      if (comp.getType() == ShipComponentType.TRACTOR_BEAM) {
-        power = power + 1;
-      }
-    }
-    if (isStarBase() && !getFlag(FLAG_STARBASE_DEPLOYED)) {
-      // Only deployed starbases should have military power
-      power = 0;
-    }
-    if (!militaryShip) {
-      power = 0;
-    }
-    return (int) Math.round(power);
+    return getTotalMilitaryPower(true);
   }
   /**
    * Is ship a smuggler ship?
@@ -2054,64 +1994,78 @@ private int increaseHitChanceByComponent() {
    * @return Military power
    */
   public int getTotalMilitaryPower() {
+    return getTotalMilitaryPower(false);
+  }
+
+  /**
+   * Calculate military power of design. Design needs to have at least single
+   * weapon to be a military ship
+   * @param theoretical If true calculate theoretical military value.
+   * @return Military power
+   */
+  private int getTotalMilitaryPower(final boolean theoretical) {
     double power = 0;
     boolean militaryShip = false;
     power = getHull().getSlotHull() * getHull().getMaxSlot();
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.isDestructiveWeapon() && componentIsWorking(i)) {
+      if (comp.isDestructiveWeapon()
+          && (theoretical || componentIsWorking(i))) {
         militaryShip = true;
         power = power + comp.getDamage();
       }
       if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getDamage() / 2.0;
       }
-      if (comp.getType() == ShipComponentType.ARMOR
+      if ((comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
           || comp.getType() == ShipComponentType.CARGO_BAY
           || comp.getType() == ShipComponentType.REPAIR_MODULE
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
           || comp.getType() == ShipComponentType.SHADOW_ARMOR
-          || comp.getType() == ShipComponentType.SHADOW_SHIELD) {
+          || comp.getType() == ShipComponentType.SHADOW_SHIELD)
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
           && getHull().getHullType() != ShipHullType.STARBASE
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getTacticSpeed() - 1;
       }
       if (comp.getType() == ShipComponentType.SPACE_FIN
           && getHull().getHullType() != ShipHullType.STARBASE
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getTacticSpeed() - 1;
       }
       if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getDamage() / 10.0;
       }
-      if (comp.getType() == ShipComponentType.JAMMER && componentIsWorking(i)) {
+      if (comp.getType() == ShipComponentType.JAMMER
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getDefenseValue() / 10.0;
       }
       if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getDefenseValue();
         power = power + comp.getDamage() / 10;
       }
       if (comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getDefenseValue();
         power = power + comp.getDamage() / 10;
       }
       if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getDefenseValue() * 2;
       }
       if (comp.getType() == ShipComponentType.FIGHTER_BAY
-          && componentIsWorking(i)) {
+          && (theoretical || componentIsWorking(i))) {
         power = power + comp.getBaySize();
       }
-      if (comp.getType() == ShipComponentType.TRACTOR_BEAM) {
+      if (comp.getType() == ShipComponentType.TRACTOR_BEAM
+          && (theoretical || componentIsWorking(i))) {
         power = power + 1;
       }
     }
@@ -2124,7 +2078,6 @@ private int increaseHitChanceByComponent() {
     }
     return (int) Math.round(power);
   }
-
   /**
    * Get Ship's experience
    * @return Experience value

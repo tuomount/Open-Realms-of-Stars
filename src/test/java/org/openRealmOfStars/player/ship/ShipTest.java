@@ -254,6 +254,37 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMilitaryValue() {
+    ShipHull hull = ShipHullFactory.createByName("Cruiser Mk1",
+        SpaceRaceFactory.createOne("HUMANS"));
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk8");
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
+    ShipComponent shield = ShipComponentFactory.createByName("Shield Mk10");
+    ShipComponent jammer = ShipComponentFactory.createByName("Distortion shield Mk3");
+    ShipComponent targetingComp = ShipComponentFactory.createByName("Targeting computer Mk1");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(armor);
+    design.addComponent(weapon);
+    design.addComponent(shield);
+    design.addComponent(jammer);
+    design.addComponent(targetingComp);
+    Ship ship = new Ship(design);
+
+    assertEquals(48, ship.getTotalMilitaryPower());
+    assertEquals(48, ship.getTheoreticalMilitaryPower());
+    ship.setArmor(5);
+    ship.setShield(0);
+    ShipDamage damage = ship.damageBy(weapon, 0);
+    assertEquals(48, ship.getTheoreticalMilitaryPower());
+    assertTrue(ship.getTheoreticalMilitaryPower() > ship.getTotalMilitaryPower());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTopPrivateeringShip3() {
     ShipHull hull = ShipHullFactory.createByName("Privateer Mk3",
         SpaceRaceFactory.createOne("HUMANS"));

@@ -4184,6 +4184,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
+        researchView = null;
         return;
       }
       researchView.handleAction(arg0);

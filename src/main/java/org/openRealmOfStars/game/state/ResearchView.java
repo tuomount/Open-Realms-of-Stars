@@ -135,6 +135,11 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
    * 1 Play sound
    */
   private int playSoundFromSliders = -1;
+
+  /**
+   * Flag if init is still on going.
+   */
+  private boolean doingInit = true;
   /**
    * Create new research for player
    * @param player whom clicked research button
@@ -146,6 +151,7 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
   public ResearchView(final PlayerInfo player, final int totalResearch,
       final String focusTech, final int gameLength,
       final ActionListener listener) {
+    doingInit = true;
     this.player = player;
     this.totalResearch = totalResearch;
     maximumGameLength = gameLength;
@@ -393,10 +399,10 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
 
     playSoundFromSliders = -1;
     updatePanel();
-    playSoundFromSliders = 1;
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
-
+    doingInit = false;
+    playSoundFromSliders = 1;
   }
 
   /**
@@ -587,8 +593,10 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
       value = value + TechList.FINE_TUNE_VALUE;
       player.getTechList().setTechFocus(techType, value);
       updateTechInfo(techType);
-      SoundPlayer.playMenuSound();
-      playSoundFromSliders = 0;
+      if (!doingInit) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
   }
@@ -604,8 +612,10 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
       value = value - TechList.FINE_TUNE_VALUE;
       player.getTechList().setTechFocus(techType, value);
       updateTechInfo(techType);
-      SoundPlayer.playMenuSound();
-      playSoundFromSliders = 0;
+      if (!doingInit) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
   }
@@ -624,7 +634,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
     player.getTechList().setTechLevel(techType, lvl);
     panel.setEnableUpgradeButton(false);
     updateTechInfo(techType);
-    SoundPlayer.playMenuSound();
+    if (!doingInit) {
+      SoundPlayer.playMenuSound();
+    }
     updatePanel();
   }
 
@@ -752,7 +764,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
         infoText.setLineWrap(true);
         infoText.setText(strTmp);
         infoText.repaint();
-        SoundPlayer.playMenuSound();
+        if (!doingInit) {
+          SoundPlayer.playMenuSound();
+        }
       }
     }
   }
@@ -801,6 +815,8 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
           infoText.setLineWrap(false);
           infoText.setText(str);
           infoText.repaint();
+        }
+        if (!doingInit) {
           SoundPlayer.playMenuSound();
         }
       }
@@ -811,7 +827,9 @@ public class ResearchView extends BlackPanel implements TreeSelectionListener,
           infoText.setLineWrap(false);
           infoText.setText(strTmp);
           infoText.repaint();
-          SoundPlayer.playMenuSound();
+          if (!doingInit) {
+            SoundPlayer.playMenuSound();
+          }
         }
       }
     }

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2024 Tuomo Untinen
+ * Copyright (C) 2018-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,6 +60,7 @@ public class TradeRouteTest extends TestCase {
     assertEquals("Origin <-> Test I 7 credits", tradeRoute.toString());
     assertEquals(originWorld, tradeRoute.getOriginWorld());
     assertEquals(tradeWorld, tradeRoute.getTradeWorld());
+    assertEquals(false, tradeRoute.isMetalCarry());
   }
 
   @Test
@@ -88,6 +89,37 @@ public class TradeRouteTest extends TestCase {
     assertEquals("Origin <-> Test I 7 credits", tradeRoute.toString());
     assertEquals(originWorld, tradeRoute.getOriginWorld());
     assertEquals(tradeWorld, tradeRoute.getTradeWorld());
+    assertEquals(false, tradeRoute.isMetalCarry());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMetalCarry() {
+    Planet originWorld = Mockito.mock(Planet.class);
+    Mockito.when(originWorld.getName()).thenReturn("Origin");
+    Planet tradeWorld = Mockito.mock(Planet.class);
+    Mockito.when(tradeWorld.getName()).thenReturn("Test I");
+    Coordinate coordinate = Mockito.mock(Coordinate.class);
+    Coordinate coordinate2 = Mockito.mock(Coordinate.class);
+    Mockito.when(coordinate2.sameAs(coordinate2)).thenReturn(true);
+    Mockito.when(originWorld.getCoordinate()).thenReturn(coordinate);
+    Mockito.when(tradeWorld.getCoordinate()).thenReturn(coordinate2);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coordinate2);
+    Mockito.when(fleet.calculateTrade(coordinate)).thenReturn(10);
+    Mockito.when(coordinate2.calculateDistance(coordinate)).thenReturn(25.0);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HIVEMIND"));
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "SCAURIANS"));
+    TradeRoute tradeRoute = new TradeRoute(originWorld, tradeWorld, info, fleet);
+    tradeRoute.setMetalCarry(true);
+    assertEquals(7, tradeRoute.getTradeValue());
+    assertEquals("Origin -> Test I freight metal", tradeRoute.toString());
+    assertEquals(originWorld, tradeRoute.getOriginWorld());
+    assertEquals(tradeWorld, tradeRoute.getTradeWorld());
+    assertEquals(true, tradeRoute.isMetalCarry());
   }
 
 }

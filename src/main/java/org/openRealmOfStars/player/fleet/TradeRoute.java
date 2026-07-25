@@ -47,6 +47,11 @@ public class TradeRoute {
   private int tradeValue;
 
   /**
+   * Flag for carrying metal from own/neutral planets to another own planet.
+   */
+  private boolean metalCarry;
+
+  /**
    * Trade route for estimating trade route values
    * @param originWorld Origin world where fleet left
    * @param tradeWorld Trade world where trade is about to happen
@@ -58,6 +63,7 @@ public class TradeRoute {
     this.originWorld = originWorld;
     this.tradeWorld = tradeWorld;
     this.trader = trader;
+    metalCarry = false;
     tradeValue = 0;
     final var traderRace = this.trader.getRace();
     final var traderGovernment = this.trader.getGovernment();
@@ -98,17 +104,40 @@ public class TradeRoute {
     return tradeValue;
   }
 
+  /**
+   * Is metal carry freighting only?
+   * @return boolean
+   */
+  public boolean isMetalCarry() {
+    return metalCarry;
+  }
+
+  /**
+   * Set metal carry flag.
+   * @param metalCarry boolean
+   */
+  public void setMetalCarry(final boolean metalCarry) {
+    this.metalCarry = metalCarry;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(originWorld.getName());
-    sb.append(" <-> ");
-    sb.append(tradeWorld.getName());
-    sb.append(" ");
-    sb.append(tradeValue);
-    sb.append(" credit");
-    if (tradeValue > 1) {
-      sb.append("s");
+    if (!metalCarry) {
+      sb.append(originWorld.getName());
+      sb.append(" <-> ");
+      sb.append(tradeWorld.getName());
+      sb.append(" ");
+      sb.append(tradeValue);
+      sb.append(" credit");
+      if (tradeValue > 1) {
+        sb.append("s");
+      }
+    } else {
+      sb.append(originWorld.getName());
+      sb.append(" -> ");
+      sb.append(tradeWorld.getName());
+      sb.append(" freight metal");
     }
     return sb.toString();
   }

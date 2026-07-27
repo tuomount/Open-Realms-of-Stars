@@ -1746,6 +1746,123 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle Trade mission
+   * @param mission Trade mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleMetalFreighting(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.METAL_FREIGHTING) {
+      Planet previousTarget = game.getStarMap()
+          .getPlanetByCoordinate(mission.getX(), mission.getY());
+      int playerIndex = previousTarget.getPlanetOwnerIndex();
+      if (playerIndex != -1
+          && info.getDiplomacy().getDiplomaticRelation(playerIndex).equals(
+              Diplomacy.WAR)) {
+        Message msg = new Message(new MessageType(MmType.FLEET,
+            SmType.TRADE_STOP),
+            fleet.getName() + " has stopped metal freighting due war"
+                + " and returning to home planet.",
+                Icons.getIconByName(Icons.ICON_TROOPS));
+        msg.setCoordinate(fleet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        info.getMissions().remove(mission);
+        // Make fleet return to home
+        Planet homePlanet = game.getStarMap().getClosestHomePort(info,
+            fleet.getCoordinate());
+        if (homePlanet != null) {
+          Mission moveBack = new Mission(MissionType.MOVE,
+              MissionPhase.TREKKING, homePlanet.getCoordinate());
+          moveBack.setPlanetBuilding(homePlanet.getName());
+          moveBack.setTargetPlanet(homePlanet.getName());
+          moveBack.setFleetName(fleet.getName());
+          info.getMissions().add(moveBack);
+        }
+        return;
+      }
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+        Planet homePlanet = game.getStarMap().getPlanetByCoordinate(
+            fleet.getX(), fleet.getY());
+        if (homePlanet != null && homePlanet.getPlanetPlayerInfo() == info
+            && homePlanet.getName().equals(mission.getPlanetBuilding())) {
+          int freeSpace = fleet.getFreeSpaceForMetal();
+          int metalOnPlanet = homePlanet.getMetal();
+          int numberOfTakes = 0;
+          if (metalOnPlanet >= freeSpace) {
+            numberOfTakes = freeSpace / 10;
+          } else {
+            numberOfTakes = metalOnPlanet / 10;
+          }
+          if (numberOfTakes > 0) {
+            for (int i = 0; i < numberOfTakes; i++) {
+              fleet.addMetal();
+            }
+            homePlanet.setMetal(homePlanet.getMetal() - numberOfTakes * 10);
+          }
+          Message msg = new Message(new MessageType(MmType.FLEET,
+              SmType.METAL_LOAD),
+              fleet.getName() + " takes "
+              + fleet.getTotalCargoMetal() + " metals from "
+              + homePlanet.getName() + " and now heading back to "
+              + mission.getTargetPlanet(),
+              Icons.getIconByName(Icons.ICON_METAL));
+          msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
+          info.getMsgList().addUpcomingMessage(msg);
+        }
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(targetCoord) <= 1) {
+        // Target acquired, let's do trade
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        previousTarget = game.getStarMap()
+            .getPlanetByCoordinate(mission.getX(), mission.getY());
+        PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
+        if (mission.getTargetPlanet().equals(previousTarget.getName())) {
+          Planet homePlanet = game.getStarMap().getPlanetByName(
+              mission.getPlanetBuilding());
+          mission.setTarget(homePlanet.getCoordinate());
+          if (info == ownerInfo && fleet.getTotalCargoMetal() > 0) {
+            Message msg = new Message(new MessageType(MmType.FLEET,
+                SmType.METAL_UNLOAD),
+                fleet.getName() + " has delivered "
+                + fleet.getTotalCargoMetal() + " metals to "
+                + previousTarget.getName() + " and now heading back to "
+                + mission.getPlanetBuilding(),
+                Icons.getIconByName(Icons.ICON_METAL));
+            msg.setCoordinate(fleet.getCoordinate());
+            msg.setMatchByString(fleet.getName());
+            info.getMsgList().addUpcomingMessage(msg);
+            while (fleet.getTotalCargoMetal() > 0) {
+              fleet.removeMetal();
+              previousTarget.setMetal(previousTarget.getMetal() + 10);
+            }
+          }
+        } else if (mission.getPlanetBuilding().equals(
+            previousTarget.getName())) {
+          Planet targetPlanet = game.getStarMap().getPlanetByName(
+              mission.getTargetPlanet());
+          mission.setTarget(targetPlanet.getCoordinate());
+        }
+        mission.setPhase(MissionPhase.LOADING);
+      }
+    } // End of trade
+  }
+
+  /**
    * Handle diplomatic mission
    * @param mission Diplomatic mission, does nothing if type is wrong
    * @param fleet Fleet on mission

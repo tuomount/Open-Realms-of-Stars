@@ -3805,14 +3805,25 @@ public class Game implements ActionListener {
           && fleetTradeView.getTradeRoute() != null) {
         SoundPlayer.playMenuSound();
         TradeRoute route = fleetTradeView.getTradeRoute();
-        Mission mission = new Mission(MissionType.TRADE_FLEET,
-            MissionPhase.LOADING, route.getTradeWorld().getCoordinate());
-        mission.setPlanetBuilding(route.getOriginWorld().getName());
-        mission.setTargetPlanet(route.getTradeWorld().getName());
-        mission.setFleetName(fleetTradeView.getFleet().getName());
-        fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
-            fleetTradeView.getFleet().getName());
-        fleetTradeView.getPlayerInfo().getMissions().add(mission);
+        if (route.isMetalCarry()) {
+          Mission mission = new Mission(MissionType.METAL_FREIGHTING,
+              MissionPhase.LOADING, route.getTradeWorld().getCoordinate());
+          mission.setPlanetBuilding(route.getOriginWorld().getName());
+          mission.setTargetPlanet(route.getTradeWorld().getName());
+          mission.setFleetName(fleetTradeView.getFleet().getName());
+          fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
+              fleetTradeView.getFleet().getName());
+          fleetTradeView.getPlayerInfo().getMissions().add(mission);
+        } else {
+          Mission mission = new Mission(MissionType.TRADE_FLEET,
+              MissionPhase.LOADING, route.getTradeWorld().getCoordinate());
+          mission.setPlanetBuilding(route.getOriginWorld().getName());
+          mission.setTargetPlanet(route.getTradeWorld().getName());
+          mission.setFleetName(fleetTradeView.getFleet().getName());
+          fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
+              fleetTradeView.getFleet().getName());
+          fleetTradeView.getPlayerInfo().getMissions().add(mission);
+        }
         fleetTradeView =  null;
         changeGameState(GameState.STARMAP);
         return;

@@ -295,6 +295,26 @@ public class FleetTradeView extends BlackPanel
               list.add(route);
             }
           }
+          if (targetOwner == info && target != planet) {
+            // Own planet, so metal freighting is possible
+            TradeRoute route = new TradeRoute(planet, target, info, fleet);
+            route.setMetalCarry(true);
+            list.add(route);
+          }
+        }
+      }
+    } else if (planet.getPlanetPlayerInfo() == null) {
+      // Uncolonized planet, so metal freighting is possible
+      for (Planet target : starMap.getPlanetList()) {
+        if (info.getSectorVisibility(target.getCoordinate())
+            > PlayerInfo.UNCHARTED) {
+          PlayerInfo targetOwner = target.getPlanetPlayerInfo();
+          if (targetOwner == info && target != planet) {
+            // Own planet, so metal freighting is possible
+            TradeRoute route = new TradeRoute(planet, target, info, fleet);
+            route.setMetalCarry(true);
+            list.add(route);
+          }
         }
       }
     } else if (planet.getPlanetPlayerInfo() != null) {

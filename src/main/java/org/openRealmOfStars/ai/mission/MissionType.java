@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.mission;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -111,7 +111,11 @@ public enum MissionType {
    * Mission for reveal ascension veins, aka going to black hole with
    * gravity ripper.
    */
-  REVEAL_VEINS;
+  REVEAL_VEINS,
+  /**
+   * Mission for metal freighting between own planets or uncolonized planet.
+   */
+  METAL_FREIGHTING;
 
   /**
    * Get Mission type with index
@@ -159,6 +163,8 @@ public enum MissionType {
       return 18;
     case REVEAL_VEINS:
       return 19;
+    case METAL_FREIGHTING:
+      return 20;
     default:
       return 0;
     }
@@ -207,6 +213,8 @@ public enum MissionType {
       return "Devourer roam";
     case REVEAL_VEINS:
       return "Reveal veins";
+    case METAL_FREIGHTING:
+      return "Metal freighting";
     default:
       return "Unknown";
     }

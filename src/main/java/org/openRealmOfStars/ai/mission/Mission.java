@@ -238,7 +238,8 @@ public class Mission {
       sb.append(getTargetPlanet());
     }
     if (type == MissionType.TRADE_FLEET
-        || type == MissionType.SPY_MISSION) {
+        || type == MissionType.SPY_MISSION
+        || type == MissionType.METAL_FREIGHTING) {
       sb.append("\nTarget planet:");
       sb.append(getTargetPlanet());
     }

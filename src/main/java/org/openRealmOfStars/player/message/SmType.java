@@ -180,7 +180,15 @@ public enum SmType {
   /**
    * Found gas giant
    */
-  FOUND_GAS_GIANT;
+  FOUND_GAS_GIANT,
+  /**
+   * Metal unloaded
+   */
+  METAL_UNLOAD,
+  /**
+   * Metal loaded
+   */
+  METAL_LOAD;
 
 
 

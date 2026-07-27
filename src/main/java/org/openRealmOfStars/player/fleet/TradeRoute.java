@@ -149,7 +149,12 @@ public class TradeRoute {
    */
   public String getMoreInfo() {
     StringBuilder sb = new StringBuilder();
-    if (originWorld.getPlanetPlayerInfo() != null
+    if (isMetalCarry()) {
+      sb.append("Metal: ");
+      sb.append(originWorld.getMetal());
+      sb.append(" -> Metal: ");
+      sb.append(tradeWorld.getMetal());
+    } else if (originWorld.getPlanetPlayerInfo() != null
         && tradeWorld.getPlanetPlayerInfo() != null) {
       sb.append(originWorld.getPlanetPlayerInfo().getEmpireName());
       sb.append(" <-> ");

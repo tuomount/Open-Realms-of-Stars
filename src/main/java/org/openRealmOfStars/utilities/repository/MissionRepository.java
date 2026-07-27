@@ -113,6 +113,8 @@ public class MissionRepository {
       return MissionType.DEVOURER_ROAM;
     case 19:
       return MissionType.REVEAL_VEINS;
+    case 20:
+      return MissionType.METAL_FREIGHTING;
     default:
       ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

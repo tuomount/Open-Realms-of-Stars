@@ -295,19 +295,19 @@ public class ShipDesignTest extends TestCase {
   public void testFreighter() {
     for (int i = 0; i < 10; i++) {
       PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
-      ShipDesign design = ShipGenerator.createFreighter(info);
+      ShipDesign design = ShipGenerator.createFreighter(info, false);
       assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
       assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
       info = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"), 2, 0);
-      design = ShipGenerator.createFreighter(info);
+      design = ShipGenerator.createFreighter(info, false);
       assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
       assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
       info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 2, 0);
-      design = ShipGenerator.createFreighter(info);
+      design = ShipGenerator.createFreighter(info, false);
       assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
       assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
       info = new PlayerInfo(SpaceRaceFactory.createOne("TEUTHIDAES"), 2, 0);
-      design = ShipGenerator.createFreighter(info);
+      design = ShipGenerator.createFreighter(info, false);
       assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
       assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
       assertEquals(false, design.isBomberShip());

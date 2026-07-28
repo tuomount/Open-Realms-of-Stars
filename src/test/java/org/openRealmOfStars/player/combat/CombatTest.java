@@ -303,7 +303,7 @@ public class CombatTest {
         "Nuclear drive Mk2", 3));
     ShipDesign design1 = ShipGenerator.createPrivateerShip(
         info1, ShipSize.MEDIUM, (byte) 0);
-    ShipDesign design2 = ShipGenerator.createFreighter(info2);
+    ShipDesign design2 = ShipGenerator.createFreighter(info2, false);
     Ship privateer1 = new Ship(design1);
     Ship colony = new Ship(design2);
     colony.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, true);
@@ -335,7 +335,7 @@ public class CombatTest {
         "Nuclear drive Mk2", 3));
     ShipDesign design1 = ShipGenerator.createPrivateerShip(
         info1, ShipSize.MEDIUM, (byte) 0);
-    ShipDesign design2 = ShipGenerator.createFreighter(info2);
+    ShipDesign design2 = ShipGenerator.createFreighter(info2, false);
     ShipDesign design3 = ShipGenerator.createBattleShip(
         info2, ShipSize.SMALL, false, false, (byte) 0);
     Ship privateer1 = new Ship(design1);

@@ -406,7 +406,7 @@ public final class Research {
    */
   private static void handleFreighterShipDesign(final PlayerInfo info,
       final StarMap map) {
-    ShipDesign design = ShipGenerator.createFreighter(info);
+    ShipDesign design = ShipGenerator.createFreighter(info, false);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;

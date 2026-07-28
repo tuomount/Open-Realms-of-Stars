@@ -1317,9 +1317,11 @@ public final class ShipGenerator {
    * Create freighter ship with best possible technology. This is used
    * for  AI every time they design new freighter ship.
    * @param player whom is designing the new ship
+   * @param carrier Flag for carrier design
    * @return ShipDesign or null if fails
    */
-  public static ShipDesign createFreighter(final PlayerInfo player) {
+  public static ShipDesign createFreighter(final PlayerInfo player,
+      final boolean carrier) {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     int value = -1;
@@ -1347,7 +1349,7 @@ public final class ShipGenerator {
     if (hullTech != null) {
       ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
           player.getRace());
-      result = createFreighter(player, hull);
+      result = createFreighter(player, hull, carrier);
     }
     return result;
   }
@@ -1357,15 +1359,21 @@ public final class ShipGenerator {
    * for  AI every time they design new freighter ship.
    * @param player whom is designing the new ship
    * @param hull ShipHull used in design
+   * @param carrier If true then make carrier variant
    * @return ShipDesign or null if fails
    */
   public static ShipDesign createFreighter(final PlayerInfo player,
-      final ShipHull hull) {
+      final ShipHull hull, final boolean carrier) {
     Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);
     ShipDesign result = null;
     result = new ShipDesign(hull);
-    result.setName("Freighter Mk"
-          + (player.getShipStatHighestNumber("Freighter Mk") + 1));
+    if (carrier) {
+      result.setName("Freighter Mk"
+            + (player.getShipStatHighestNumber("Freighter Mk") + 1));
+    } else {
+      result.setName("Carrier Mk"
+          + (player.getShipStatHighestNumber("Carrier Mk") + 1));
+    }
     ShipComponent engine = ShipComponentFactory
         .createByName(player.getTechList().getFastestFtlEngine()
             .getComponent());
@@ -1424,7 +1432,8 @@ public final class ShipGenerator {
         }
       }
     } // Every one else is keeping freighter as empty as possible
-    if (result.getFreeSlots() > 2 && (attitude == Attitude.AGGRESSIVE
+    if (!carrier && result.getFreeSlots() > 2
+        && (attitude == Attitude.AGGRESSIVE
         || attitude == Attitude.MILITARISTIC
         || attitude == Attitude.BACKSTABBING
         || attitude == Attitude.LOGICAL)) {
@@ -1443,22 +1452,38 @@ public final class ShipGenerator {
     }
     Tech[] hullTechs = player.getTechList()
         .getListForType(TechType.Hulls);
-    Tech cargoTech = TechList.getBestTech(hullTechs,
-        "Armored dimension cargo bay");
-    if (cargoTech == null) {
-      cargoTech = TechList.getBestTech(hullTechs, "Dimension cargo bay");
-    }
-    if (cargoTech == null) {
-      cargoTech = TechList.getBestTech(hullTechs, "Armored cargo bay");
-    }
-    if (cargoTech == null) {
-      cargoTech = TechList.getBestTech(hullTechs, "Cargo bay");
-    }
-    if (cargoTech != null) {
-      while (result.getFreeSlots() > 0) {
-        result.addComponent(ShipComponentFactory.createByName(
-                cargoTech.getComponent()));
+    boolean actualCarrier = false;
+    if (!carrier) {
+      Tech cargoTech = TechList.getBestTech(hullTechs,
+          "Armored dimension cargo bay");
+      if (cargoTech == null) {
+        cargoTech = TechList.getBestTech(hullTechs, "Dimension cargo bay");
       }
+      if (cargoTech == null) {
+        cargoTech = TechList.getBestTech(hullTechs, "Armored cargo bay");
+      }
+      if (cargoTech == null) {
+        cargoTech = TechList.getBestTech(hullTechs, "Cargo bay");
+      }
+      if (cargoTech != null) {
+        while (result.getFreeSlots() > 0) {
+          result.addComponent(ShipComponentFactory.createByName(
+                  cargoTech.getComponent()));
+        }
+      }
+    } else {
+      Tech carrierTech = TechList.getBestTech(hullTechs,
+          "Fighter bay");
+      if (carrierTech != null) {
+        while (result.getFreeSlots() > 0) {
+          actualCarrier = true;
+          result.addComponent(ShipComponentFactory.createByName(
+                  carrierTech.getComponent()));
+        }
+      }
+    }
+    if (carrier && !actualCarrier) {
+      return null;
     }
     return result;
   }

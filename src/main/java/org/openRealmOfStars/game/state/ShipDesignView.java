@@ -179,6 +179,10 @@ public class ShipDesignView extends BlackPanel {
    */
   private static final String VARIANT_TROOPER = "Trooper";
   /**
+   * Variant Carrier
+   */
+  private static final String VARIANT_CARRIER = "Carrier";
+  /**
    * List of military variants
    */
   private static final  String[] MILITARY_VARIANTS = {VARIANT_MILITARY,
@@ -191,7 +195,7 @@ public class ShipDesignView extends BlackPanel {
    * List of freighter variants
    */
   private static final  String[] FREIGHTER_VARIANTS = {VARIANT_FREIGHTER,
-      VARIANT_COLONY, VARIANT_TROOPER};
+      VARIANT_COLONY, VARIANT_TROOPER, VARIANT_CARRIER};
   /**
    * Constructor for ShipDesignView
    * @param player Player whom is design the new ship design
@@ -701,8 +705,10 @@ public class ShipDesignView extends BlackPanel {
             design = ShipGenerator.createColony(player, hull, false);
           } else if (selected.equals(VARIANT_TROOPER)) {
             design = ShipGenerator.createColony(player, hull, true);
+          } else if (selected.equals(VARIANT_CARRIER)) {
+            design = ShipGenerator.createFreighter(player, hull, true);
           } else {
-            design = ShipGenerator.createFreighter(player, hull);
+            design = ShipGenerator.createFreighter(player, hull, false);
           }
         } else if (hull.getHullType() == ShipHullType.STARBASE) {
           design = ShipGenerator.createStarbase(player, hull, (byte) 0);

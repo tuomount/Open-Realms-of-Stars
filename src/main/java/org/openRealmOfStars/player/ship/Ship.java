@@ -2318,6 +2318,27 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Get mining bonus for the ship.
+   * Ship will mine this amount of metal per star year.
+   * @return Mining bonus
+   */
+  public int getMiningBonus() {
+    int value = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.REMOTE_MINER
+          && hasComponentEnergy(i)) {
+        value = value + comp.getDamage();
+      }
+    }
+    if (value > 0 && getHull().getRace().isLithovorian()) {
+      value = value + 1;
+    }
+    return value;
+  }
+
+  /**
    * Calculate Trader credits for single ship. Does not
    * have any kind of sanity check. Only two coordinates
    * and calculates distance between those two.

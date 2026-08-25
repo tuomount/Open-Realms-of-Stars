@@ -522,6 +522,11 @@ public final class Icons {
   public static final String ICON_FILTER_OFF = "IconFilterOff";
 
   /**
+   * Icon Drill
+   */
+  public static final String ICON_DRILL = "IconDrill";
+
+  /**
    * List of Icon
    */
   private static ArrayList<Icon16x16> listOfIcons;
@@ -888,6 +893,8 @@ public final class Icons {
     icon = new Icon16x16(image, 4, 6, ICON_FILTER_ON);
     addIcon(icon);
     icon = new Icon16x16(image, 5, 6, ICON_FILTER_OFF);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 6, ICON_DRILL);
     addIcon(icon);
   }
 

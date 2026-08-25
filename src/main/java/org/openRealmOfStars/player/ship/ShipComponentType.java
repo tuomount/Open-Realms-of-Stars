@@ -211,7 +211,11 @@ public enum ShipComponentType {
   /**
    * Cargo bay adds cargo space and hull point(s).
    */
-  CARGO_BAY;
+  CARGO_BAY,
+  /**
+   * Remote miner for mine metal from uncolonized planets.
+   */
+  REMOTE_MINER;
 
 
 
@@ -326,6 +330,8 @@ public enum ShipComponentType {
       return "Plasma spit";
     case CARGO_BAY:
       return "Cargo bay";
+    case REMOTE_MINER:
+      return "Remote miner";
     default:
       return "Error - Unknown";
     }
@@ -426,6 +432,8 @@ public enum ShipComponentType {
     case CARGO_BAY:
       // TODO: Change icon
       return Icons.ICON_ARMOR;
+    case REMOTE_MINER:
+      return Icons.ICON_DRILL;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

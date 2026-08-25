@@ -296,4 +296,45 @@
     "metalCost": 40,
     "energyRequirement": 8,
   },
+  {
+    "type": "REMOTE_MINER",
+    "name": "Robo miner Mk1",
+    "cost": 4,
+    "metalCost": 6,
+    "energyRequirement": 3,
+    "damage": 1
+  },
+  {
+    "type": "REMOTE_MINER",
+    "name": "Robo miner Mk2",
+    "cost": 6,
+    "metalCost": 10,
+    "energyRequirement": 3,
+    "damage": 2
+  },
+  {
+    "type": "REMOTE_MINER",
+    "name": "Robo miner Mk3",
+    "cost": 8,
+    "metalCost": 14,
+    "energyRequirement": 2,
+    "damage": 3
+  },
+  {
+    "type": "REMOTE_MINER",
+    "name": "Robo miner Mk4",
+    "cost": 12,
+    "metalCost": 18,
+    "energyRequirement": 3,
+    "damage": 4
+  },
+  {
+    "type": "REMOTE_MINER",
+    "name": "Robo miner Mk5",
+    "cost": 12,
+    "metalCost": 22,
+    "energyRequirement": 3,
+    "damage": 6
+  },
+
 ]

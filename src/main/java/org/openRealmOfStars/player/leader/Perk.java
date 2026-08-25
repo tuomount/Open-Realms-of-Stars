@@ -50,8 +50,10 @@ public enum Perk {
   /**
    * Governor perk for mining.
    * +1 Metal production when leader is governor
+   * +1 Metal remote mining when leader is commander
    */
-  MINER(4, "Miner", "+1 Metal production when leader is governor"),
+  MINER(4, "Miner", "+1 Metal production when leader is governor."
+      + " +1 Metal remote mining when leader is commander"),
   /**
    * Governor perk for industrial.
    * +1 Production production when leader is governor

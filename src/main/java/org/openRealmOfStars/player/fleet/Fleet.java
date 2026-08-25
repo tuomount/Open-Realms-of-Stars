@@ -1190,6 +1190,22 @@ public class Fleet {
   }
 
   /**
+   * Get total mining bonus for fleet.
+   * This should be used when orbiting uncolonized planet.
+   * @return Number metal per year to mine.
+   */
+  public int getMiningBonus() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result + ship.getMiningBonus();
+    }
+    if (commander != null
+        && commander.hasPerk(Perk.MINER)) {
+      result = result + 1;
+    }
+    return result;
+  }
+  /**
    * Calculate trade worth between fleet coordinate and
    * target coordinate. This does not check that coordinates contain
    * planets or diplomacy of realms.

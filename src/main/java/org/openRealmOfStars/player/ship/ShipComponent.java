@@ -976,6 +976,16 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case REMOTE_MINER: {
+      sb.append("Remote miner: +");
+      sb.append(getDamage());
+      sb.append(" metal per star year");
+      sb.append("\n\n");
+      sb.append("Remote miner orbiting uncolonized planet\n"
+          + "will miner metal to surface of that planet.");
+      sb.append("\n");
+      break;
+    }
     default:
       // Do nothing
     }

@@ -2327,7 +2327,7 @@ private int increaseHitChanceByComponent() {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
-          && comp.getType() == ShipComponentType.REMOTE_MINER
+          && comp.getType() == ShipComponentType.ROBOT_MINER
           && hasComponentEnergy(i)) {
         value = value + comp.getDamage();
       }

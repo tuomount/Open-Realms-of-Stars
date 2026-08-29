@@ -976,7 +976,7 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
-    case REMOTE_MINER: {
+    case ROBOT_MINER: {
       sb.append("Remote miner: +");
       sb.append(getDamage());
       sb.append(" metal per star year");

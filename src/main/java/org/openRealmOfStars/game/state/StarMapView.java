@@ -26,6 +26,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
@@ -579,6 +582,24 @@ public class StarMapView extends BlackPanel {
           fleet.getY(), Route.ROUTE_FIX));
       infoPanel.updatePanel(map.isDebug());
       getStarMapMouseListener().hideRoutePlanning();
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_MINE)
+        && getStarMapMouseListener().getLastClickedFleet() != null
+        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
+      if (fleet.getMovesLeft() > 0) {
+        SoundPlayer.playMenuSound();
+        Mission mission = new Mission(MissionType.MINING,
+            MissionPhase.EXECUTING, fleet.getCoordinate());
+        mission.setFleetName(fleet.getName());
+        fleet.setMovesLeft(0);
+        Mission oldMission = players.getCurrentPlayerInfo().getMissions()
+            .getMissionForFleet(fleet.getName());
+        if (oldMission != null) {
+          players.getCurrentPlayerInfo().getMissions().remove(oldMission);
+        }
+        players.getCurrentPlayerInfo().getMissions().add(mission);
+      }
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_EXPLORE)
         && getStarMapMouseListener().getLastClickedFleet() != null

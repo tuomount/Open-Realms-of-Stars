@@ -268,6 +268,29 @@ public class StarMapMouseListener extends MouseAdapter {
       } else {
         mapInfoPanel.disableFixTradeBtn();
       }
+    } else if (fleet.getMiningBonus() > 0) {
+      Planet nearByPlanet = starMap.getPlanetNextToCoordinate(
+          fleet.getCoordinate());
+      boolean explore = false;
+      if (fleet.getCommander() != null) {
+        if (nearByPlanet != null
+            && nearByPlanet.getPlanetPlayerInfo() == null
+            && nearByPlanet.getPlanetaryEvent() != PlanetaryEvent.NONE
+            && !nearByPlanet.isEventActivated()) {
+          mapInfoPanel.setExploreBtn();
+          explore = true;
+        } else if (nearByPlanet != null
+            && nearByPlanet.getPlanetPlayerInfo() == null
+            && nearByPlanet.hasStatusForAwayTeam()
+            && !nearByPlanet.isEventActivated()) {
+          mapInfoPanel.setExploreBtn();
+          explore = true;
+        }
+      }
+      if (!explore && nearByPlanet != null
+          && nearByPlanet.getPlanetPlayerInfo() == null) {
+        mapInfoPanel.setMineBtn();
+      }
     } else if (fleet.getCommander() != null) {
       Planet nearByPlanet = starMap.getPlanetNextToCoordinate(
           fleet.getCoordinate());

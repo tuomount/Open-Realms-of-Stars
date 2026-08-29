@@ -545,6 +545,16 @@ public class MapInfoPanel extends InfoPanel {
     fixTradeFleetBtn.setToolTipText("Trade with nearby planet");
     fixTradeFleetBtn.setEnabled(true);
   }
+
+  /**
+   * Set Mine button. Button is always enabled after this.
+   */
+  public void setMineBtn() {
+    fixTradeFleetBtn.setText("Mine");
+    fixTradeFleetBtn.setActionCommand(GameCommands.COMMAND_MINE);
+    fixTradeFleetBtn.setToolTipText("Start mining planet with robots.");
+    fixTradeFleetBtn.setEnabled(true);
+  }
   /**
    * Set Explore button. Button is always enabled after this.
    */

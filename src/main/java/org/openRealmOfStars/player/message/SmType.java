@@ -188,7 +188,11 @@ public enum SmType {
   /**
    * Metal loaded
    */
-  METAL_LOAD;
+  METAL_LOAD,
+  /**
+   * Metal Mined
+   */
+  METAL_MINED;
 
 
 
@@ -277,6 +281,12 @@ public enum SmType {
       return 37;
     case FOUND_GAS_GIANT:
       return 38;
+    case METAL_UNLOAD:
+      return 39;
+    case METAL_LOAD:
+      return 40;
+    case METAL_MINED:
+      return 41;
     default:
       return 0;
     }
@@ -367,6 +377,12 @@ public enum SmType {
       return FOUND_PLANET;
     case 38:
       return FOUND_GAS_GIANT;
+    case 39:
+      return METAL_UNLOAD;
+    case 40:
+      return METAL_LOAD;
+    case 41:
+      return METAL_MINED;
     default:
       return GENERIC;
     }
@@ -453,6 +469,12 @@ public enum SmType {
       return "Found planet";
     case FOUND_GAS_GIANT:
       return "Found gas giant";
+    case METAL_UNLOAD:
+      return "Metal freighting: Unload";
+    case METAL_LOAD:
+      return "Metal freighting: Load";
+    case METAL_MINED:
+      return "Metal mined";
     default:
       return "Error - Unknown";
     }

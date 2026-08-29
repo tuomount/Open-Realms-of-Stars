@@ -200,6 +200,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_TRADE_FLEET = "TradeFleetCommand";
   /**
+   * Mine  command
+   */
+  public static final String COMMAND_MINE = "MineCommand";
+  /**
    * Explore command
    */
   public static final String COMMAND_EXPLORE = "ExploreCommand";

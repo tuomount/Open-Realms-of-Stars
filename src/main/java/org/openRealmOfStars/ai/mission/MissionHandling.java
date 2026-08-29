@@ -1746,7 +1746,7 @@ public final class MissionHandling {
   }
 
   /**
-   * Handle Trade mission
+   * Handle metal freighting mission
    * @param mission Trade mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
@@ -1859,7 +1859,104 @@ public final class MissionHandling {
         }
         mission.setPhase(MissionPhase.LOADING);
       }
-    } // End of trade
+    } // End of metal freighting
+  }
+
+  /**
+   * Handle metal mining mission
+   * @param mission miing mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleMetalMining(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.MINING) {
+      Planet previousTarget = game.getStarMap()
+          .getPlanetByCoordinate(mission.getX(), mission.getY());
+      int playerIndex = previousTarget.getPlanetOwnerIndex();
+      if (playerIndex != -1) {
+        Message msg = new Message(new MessageType(MmType.FLEET,
+            SmType.TRADE_STOP),
+            fleet.getName() + " has stopped metal mining due planet"
+                + " colonization and returning to home planet.",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msg.setCoordinate(fleet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        info.getMissions().remove(mission);
+        // Make fleet return to home
+        Planet homePlanet = game.getStarMap().getClosestHomePort(info,
+            fleet.getCoordinate());
+        if (homePlanet != null) {
+          Mission moveBack = new Mission(MissionType.MOVE,
+              MissionPhase.TREKKING, homePlanet.getCoordinate());
+          moveBack.setPlanetBuilding(homePlanet.getName());
+          moveBack.setTargetPlanet(homePlanet.getName());
+          moveBack.setFleetName(fleet.getName());
+          info.getMissions().add(moveBack);
+        }
+        return;
+      }
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(targetCoord) == 0) {
+        // Target acquired, let's do trade
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        previousTarget = game.getStarMap()
+            .getPlanetByCoordinate(fleet.getX(), fleet.getY());
+        PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
+        if (mission.getTargetPlanet().equals(previousTarget.getName())) {
+          if (ownerInfo == null) {
+            Message msg = new Message(new MessageType(MmType.FLEET,
+                SmType.METAL_MINED),
+                fleet.getName() + " has mined "
+                + fleet.getMiningBonus() + " metals during this star year.",
+                Icons.getIconByName(Icons.ICON_METAL));
+            msg.setCoordinate(fleet.getCoordinate());
+            msg.setMatchByString(fleet.getName());
+            info.getMsgList().addUpcomingMessage(msg);
+          } else {
+            Message msg = new Message(new MessageType(MmType.FLEET,
+                SmType.METAL_MINED),
+                fleet.getName() + " cannot mine "
+                + previousTarget.getName()
+                + " since it has been colonized by "
+                + previousTarget.getPlanetPlayerInfo().getEmpireName()
+                + ".",
+                Icons.getIconByName(Icons.ICON_METAL));
+            msg.setCoordinate(fleet.getCoordinate());
+            msg.setMatchByString(fleet.getName());
+            info.getMsgList().addUpcomingMessage(msg);
+            info.getMissions().remove(mission);
+            // Make fleet return to home
+            Planet homePlanet = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            if (homePlanet != null) {
+              Mission moveBack = new Mission(MissionType.MOVE,
+                  MissionPhase.TREKKING, homePlanet.getCoordinate());
+              moveBack.setPlanetBuilding(homePlanet.getName());
+              moveBack.setTargetPlanet(homePlanet.getName());
+              moveBack.setFleetName(fleet.getName());
+              info.getMissions().add(moveBack);
+            }
+          }
+        } else  {
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+      }
+    } // End of mining
   }
 
   /**

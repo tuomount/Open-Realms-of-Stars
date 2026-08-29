@@ -375,6 +375,9 @@ public class AITurnView extends BlackPanel {
       case METAL_FREIGHTING:
         MissionHandling.handleMetalFreighting(mission, fleet, info, game);
         break;
+      case MINING:
+        MissionHandling.handleMetalMining(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }

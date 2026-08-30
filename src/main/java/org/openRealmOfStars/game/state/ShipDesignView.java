@@ -558,7 +558,8 @@ public class ShipDesignView extends BlackPanel {
                 || comp.getType() == ShipComponentType.JAMMER
                 || comp.getType() == ShipComponentType.SHIELD_GENERATOR
                 || comp.getType() == ShipComponentType.TARGETING_COMPUTER
-                || comp.getType() == ShipComponentType.ESPIONAGE_MODULE)) {
+                || comp.getType() == ShipComponentType.ESPIONAGE_MODULE
+                || comp.getType() == ShipComponentType.ROBOT_MINER)) {
           components.add(comp);
           continue;
         }
@@ -576,7 +577,8 @@ public class ShipDesignView extends BlackPanel {
                 || comp.getType() == ShipComponentType.SCANNER
                 || comp.getType() == ShipComponentType.PRIVATEERING_MODULE
                 || comp.getType() == ShipComponentType.COLONY_MODULE
-                || comp.getType() == ShipComponentType.SPORE_MODULE)) {
+                || comp.getType() == ShipComponentType.SPORE_MODULE
+                || comp.getType() == ShipComponentType.ROBOT_MINER)) {
           components.add(comp);
           continue;
         }

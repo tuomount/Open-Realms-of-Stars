@@ -331,7 +331,7 @@ public enum ShipComponentType {
     case CARGO_BAY:
       return "Cargo bay";
     case ROBOT_MINER:
-      return "Remote miner";
+      return "Robot miner";
     default:
       return "Error - Unknown";
     }

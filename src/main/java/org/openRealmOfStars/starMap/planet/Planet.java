@@ -3244,6 +3244,25 @@ public class Planet {
   }
 
   /**
+   * Method for making robotical mining on planet. This will also do the mining
+   * for the planet.
+   * @param mineBonus Amount of metal robots will mine.
+   * @return Amount metal robots actually mined.
+   */
+  public int roboticalMining(final int mineBonus) {
+    int minedMetal = mineBonus;
+    if (minedMetal <= amountMetalInGround && minedMetal >= 0) {
+      amountMetalInGround = amountMetalInGround - minedMetal;
+      metal = metal + minedMetal;
+    } else if (minedMetal > 0) {
+      minedMetal = amountMetalInGround;
+      metal = metal + amountMetalInGround;
+      amountMetalInGround = 0;
+    }
+    return minedMetal;
+  }
+
+  /**
    * Update planet for one turn
    * @param enemyOrbiting if true it means that other player,
    *        has fleet orbiting on planet.

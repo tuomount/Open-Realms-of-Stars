@@ -1919,14 +1919,20 @@ public final class MissionHandling {
         PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
           if (ownerInfo == null) {
-            Message msg = new Message(new MessageType(MmType.FLEET,
-                SmType.METAL_MINED),
-                fleet.getName() + " has mined "
-                + fleet.getMiningBonus() + " metals during this star year.",
-                Icons.getIconByName(Icons.ICON_METAL));
-            msg.setCoordinate(fleet.getCoordinate());
-            msg.setMatchByString(fleet.getName());
-            info.getMsgList().addUpcomingMessage(msg);
+            int metalMined = previousTarget.roboticalMining(
+                fleet.getMiningBonus());
+            if (metalMined > 0) {
+              Message msg = new Message(new MessageType(MmType.FLEET,
+                  SmType.METAL_MINED),
+                  fleet.getName() + " has mined "
+                  + metalMined + " metals during this star year on "
+                  + previousTarget.getName() + ".",
+                  Icons.getIconByName(Icons.ICON_METAL));
+              msg.setCoordinate(fleet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              info.getMsgList().addUpcomingMessage(msg);
+            }
+            //TODO: Resend miner to another planet if planet has been depleted
           } else {
             Message msg = new Message(new MessageType(MmType.FLEET,
                 SmType.METAL_MINED),
@@ -1941,6 +1947,8 @@ public final class MissionHandling {
             info.getMsgList().addUpcomingMessage(msg);
             info.getMissions().remove(mission);
             // Make fleet return to home
+            //TODO: Resend miner to another planet directly at least on
+            //      high difficulty.
             Planet homePlanet = game.getStarMap().getClosestHomePort(info,
                 fleet.getCoordinate());
             if (homePlanet != null) {

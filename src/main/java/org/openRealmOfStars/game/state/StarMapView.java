@@ -587,11 +587,13 @@ public class StarMapView extends BlackPanel {
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
-      if (fleet.getMovesLeft() > 0) {
+      Planet target = map.getPlanetByCoordinate(fleet.getX(), fleet.getY());
+      if (fleet.getMovesLeft() > 0 && target != null) {
         SoundPlayer.playMenuSound();
         Mission mission = new Mission(MissionType.MINING,
             MissionPhase.EXECUTING, fleet.getCoordinate());
         mission.setFleetName(fleet.getName());
+        mission.setTargetPlanet(target.getName());
         fleet.setMovesLeft(0);
         Mission oldMission = players.getCurrentPlayerInfo().getMissions()
             .getMissionForFleet(fleet.getName());

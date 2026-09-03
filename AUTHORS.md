@@ -416,6 +416,10 @@ Radio call sound by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Robot miner by
+Tuomo Untinen
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 Engine sounds by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/

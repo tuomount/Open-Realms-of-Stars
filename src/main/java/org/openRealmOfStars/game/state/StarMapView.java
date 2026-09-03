@@ -590,6 +590,7 @@ public class StarMapView extends BlackPanel {
       Planet target = map.getPlanetByCoordinate(fleet.getX(), fleet.getY());
       if (fleet.getMovesLeft() > 0 && target != null) {
         SoundPlayer.playMenuSound();
+        SoundPlayer.playSound(SoundPlayer.ROBOT_MINER);
         Mission mission = new Mission(MissionType.MINING,
             MissionPhase.EXECUTING, fleet.getCoordinate());
         mission.setFleetName(fleet.getName());
@@ -601,6 +602,9 @@ public class StarMapView extends BlackPanel {
           players.getCurrentPlayerInfo().getMissions().remove(oldMission);
         }
         players.getCurrentPlayerInfo().getMissions().add(mission);
+        infoPanel.updatePanel(map.isDebug());
+      } else {
+        SoundPlayer.playMenuDisabled();
       }
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_EXPLORE)

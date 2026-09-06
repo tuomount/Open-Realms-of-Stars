@@ -490,6 +490,40 @@ public class TechList {
   }
 
   /**
+   * Retrieves the Tech object representing the best miner based on damage
+   * value.
+   * <p>
+   * This method evaluates all Tech entries of type {@link TechType.Electrics},
+   * creates corresponding {@link ShipComponent} instances, and identifies
+   * the miner with the highest damage value. If multiple miners have the same
+   * maximum damage, the first encountered Tech is returned. If no valid
+   * miners are found, returns {@code null}.
+   * </p>
+   *
+   * @return The Tech object with the highest damage value among miners,
+   *         or {@code null} if none are found.
+   *
+   * @see TechType
+   * @see ShipComponent
+   * @see ShipComponentType
+   */
+  public Tech getBestMiner() {
+    Tech best = null;
+    int bestValue = -1;
+    Tech[] list = getListForType(TechType.Electrics);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
+      if (comp != null && comp.getType() == ShipComponentType.ROBOT_MINER
+          && comp.getDamage() > bestValue) {
+        best = tech;
+        bestValue = comp.getDamage();
+      }
+    }
+    return best;
+  }
+
+  /**
    * Get best possible engine with most enery and FTL speed.
    * @return Tech
    */

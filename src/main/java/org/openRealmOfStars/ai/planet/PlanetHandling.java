@@ -35,6 +35,7 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -624,6 +625,17 @@ public final class PlanetHandling {
               break;
             }
             mission = info.getMissions().getMission(
+                MissionType.MINING, MissionPhase.PLANNING);
+            if (mission != null && ship.getMiningBonus() > 0) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+              Mission carryMetal = new Mission(MissionType.METAL_FREIGHTING,
+                  MissionPhase.PLANNING,
+                  new Coordinate(mission.getX(), mission.getY()));
+              info.getMissions().add(carryMetal);
+              break;
+            }
+            mission = info.getMissions().getMission(
                 MissionType.REVEAL_VEINS, MissionPhase.PLANNING);
             if (mission != null && ship.hasGravityRipper()) {
               mission.setPhase(MissionPhase.BUILDING);
@@ -699,8 +711,8 @@ public final class PlanetHandling {
               mission.setPhase(MissionPhase.BUILDING);
               break;
             }
-            mission = info.getMissions().getMission(MissionType.TRADE_FLEET,
-                MissionPhase.PLANNING);
+            mission = info.getMissions().getTradeShipMission(
+                info.getAiAttitude());
             if (mission != null && ship.isTradeShip()) {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());

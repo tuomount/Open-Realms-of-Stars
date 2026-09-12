@@ -140,6 +140,10 @@ public class AITurnView extends BlackPanel {
    */
   private static final int LIMIT_COLONIZATIONS = 6;
   /**
+   * Limit for mining missions
+   */
+  private static final int LIMIT_MININGS = 3;
+  /**
    * Text for showing human player
    */
   private SpaceLabel label;
@@ -1604,36 +1608,69 @@ public class AITurnView extends BlackPanel {
           info);
       int colonizations = info.getMissions().getNumberOfMissionTypes(
           MissionType.COLONIZE, MissionPhase.PLANNING);
+      int minings = info.getMissions().getNumberOfMissionTypes(
+          MissionType.MINING, MissionPhase.PLANNING);
       int attacks = info.getMissions().getNumberOfMissionTypes(
           MissionType.ATTACK);
+      ArrayList<Mission> miningMissions = new ArrayList<>();
       ArrayList<Mission> colonyMissions = new ArrayList<>();
       ArrayList<Planet> attackMissions = new ArrayList<>();
       ArrayList<Planet> tradeMissions = new ArrayList<>();
       for (Planet planet : planets) {
-        if (planet.isColonizeablePlanet(info)
-            && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
-            && info.getSectorVisibility(planet.getCoordinate())
+        if (planet.isGasGiant()) {
+          continue;
+        }
+        if (info.getSectorVisibility(planet.getCoordinate())
             >= PlayerInfo.VISIBLE) {
-          // New planet to colonize, adding it to mission list
-          Mission mission = new Mission(missionType,
-              MissionPhase.PLANNING, planet.getCoordinate());
-          if (info.getMissions().getColonizeMission(mission.getX(),
-              mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
-            // No colonize mission for this planet found, so adding it.
-            colonyMissions.add(mission);
+          if (planet.isColonizeablePlanet(info)
+              && planet.getPlanetPlayerInfo() == null) {
+            // New planet to colonize, adding it to mission list
+            Mission mission = new Mission(missionType,
+                MissionPhase.PLANNING, planet.getCoordinate());
+            if (info.getMissions().getColonizeMission(mission.getX(),
+                mission.getY()) == null
+                && colonizations < LIMIT_COLONIZATIONS) {
+              // No colonize mission for this planet found, so adding it.
+              colonyMissions.add(mission);
+            }
+          }
+          if (!planet.isColonizeablePlanet(info)
+              && planet.getPlanetPlayerInfo() == null
+              && planet.getAmountMetalInGround() >= 2000) {
+            // New planet to mine, adding it to mission list
+            Mission mission = new Mission(MissionType.MINING,
+                MissionPhase.PLANNING, planet.getCoordinate());
+            mission.setTargetPlanet(planet.getName());
+            if (info.getMissions().getMiningMission(mission.getX(),
+                mission.getY()) == null && minings < LIMIT_MININGS) {
+              // No mining mission for this planet found, so adding it.
+              miningMissions.add(mission);
+            }
           }
         }
-        if (planet.isColonizeablePlanet(info)
-            && !planet.isGasGiant()
-            && planet.getPlanetPlayerInfo() == null
-            && info.getSectorVisibility(planet.getCoordinate())
+        if (info.getSectorVisibility(planet.getCoordinate())
             == PlayerInfo.FOG_OF_WAR) {
-          // New planet to colonize, adding it to mission list
-          Mission mission = new Mission(missionType,
-              MissionPhase.PLANNING, planet.getCoordinate());
-          if (info.getMissions().getColonizeMission(mission.getX(),
-              mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
-            colonyMissions.add(mission);
+          if (planet.isColonizeablePlanet(info)
+              && planet.getPlanetPlayerInfo() == null) {
+            // New planet to colonize, adding it to mission list
+            Mission mission = new Mission(missionType,
+                MissionPhase.PLANNING, planet.getCoordinate());
+            if (info.getMissions().getColonizeMission(mission.getX(),
+                mission.getY()) == null
+                && colonizations < LIMIT_COLONIZATIONS) {
+              colonyMissions.add(mission);
+            }
+          }
+          if (!planet.isColonizeablePlanet(info)
+              && planet.getPlanetPlayerInfo() == null) {
+            // New planet to mine, adding it to mission list
+            Mission mission = new Mission(MissionType.MINING,
+                MissionPhase.PLANNING, planet.getCoordinate());
+            if (info.getMissions().getMiningMission(mission.getX(),
+                mission.getY()) == null && minings < LIMIT_MININGS) {
+              // No mining mission for this planet found, so adding it.
+              miningMissions.add(mission);
+            }
           }
         }
       }

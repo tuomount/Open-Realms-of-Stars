@@ -1488,6 +1488,32 @@ public final class ShipGenerator {
     return result;
   }
 
+ /**
+ * Returns the largest normal ship hull available to the player.
+ *
+ * @param player The player whose tech list is used to determine available
+ *               hulls.
+ * @return The largest normal hull, or null if none are available.
+ */
+  public static ShipHull getBiggestHull(final PlayerInfo player) {
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    int value = -1;
+    ShipHull hullTech = null;
+    for (Tech tech : hullTechs) {
+      ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
+          player.getRace());
+      if (hull == null || hull.getHullType() != ShipHullType.NORMAL) {
+        // Only normal ships are good for mining.
+        continue;
+      }
+      if (hull.getMaxSlot() > value) {
+        hullTech = hull;
+        value = hull.getMaxSlot();
+      }
+    }
+    return hullTech;
+  }
+
   /**
    * Creates a ship design for a miner based on the player's technology
    * and the specified hull. The method constructs two ship designs using
@@ -1524,8 +1550,12 @@ public final class ShipGenerator {
       }
       ShipComponent power = ShipComponentFactory.createByName(
           player.getTechList().getBestEnergySource().getComponent());
+      Tech minerTech = player.getTechList().getBestMiner();
+      if (minerTech == null) {
+        return null;
+      }
       ShipComponent miner = ShipComponentFactory.createByName(
-          player.getTechList().getBestMiner().getComponent());
+          minerTech.getComponent());
       Tech[] defenseTechs = player.getTechList().getListForType(
           TechType.Defense);
       Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
@@ -1552,7 +1582,7 @@ public final class ShipGenerator {
             break;
           }
         } while (slotsAvailable > 0);
-        if (slotsAvailable == 1) {
+        if (slotsAvailable == 1 && armorComp != null) {
           slowMiner.addComponent(armorComp);
         }
       }
@@ -1572,7 +1602,7 @@ public final class ShipGenerator {
             break;
           }
         } while (slotsAvailable > 0);
-        if (slotsAvailable == 1) {
+        if (slotsAvailable == 1 && armorComp != null) {
           fastMiner.addComponent(armorComp);
         }
       }

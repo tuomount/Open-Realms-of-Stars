@@ -3008,6 +3008,10 @@ public class Planet {
                   mission = planetOwnerInfo.getMissions().getMission(
                       MissionType.SPORE_COLONY, MissionPhase.PLANNING);
                 }
+                if (ship.getMiningBonus() > 0) {
+                  mission = planetOwnerInfo.getMissions().getMission(
+                      MissionType.MINING, MissionPhase.PLANNING);
+                }
                 if (ship.isStarBase()) {
                   mission = planetOwnerInfo.getMissions().getMission(
                       MissionType.DEPLOY_STARBASE, MissionPhase.PLANNING);
@@ -3019,6 +3023,10 @@ public class Planet {
                 if (ship.isTradeShip()) {
                   mission = planetOwnerInfo.getMissions().getMission(
                       MissionType.TRADE_FLEET, MissionPhase.PLANNING);
+                  if (mission == null) {
+                    mission = planetOwnerInfo.getMissions().getMission(
+                        MissionType.METAL_FREIGHTING, MissionPhase.PLANNING);
+                  }
                 }
                 if (mission == null && ship.isSpyShip()) {
                   mission = planetOwnerInfo.getMissions().getMission(
@@ -3044,6 +3052,11 @@ public class Planet {
                         .generateUniqueName("Spore"));
                     mission.setFleetName(fleet.getName());
                   }
+                  if (mission.getType() == MissionType.MINING) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Miner"));
+                    mission.setFleetName(fleet.getName());
+                  }
                   if (mission.getType() == MissionType.REVEAL_VEINS) {
                     fleet.setName(planetOwnerInfo.getFleets()
                         .generateUniqueName("Scout"));
@@ -3065,6 +3078,14 @@ public class Planet {
                     fleet.setName(planetOwnerInfo.getFleets()
                         .generateUniqueName(nameFleet));
                     mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.METAL_FREIGHTING) {
+                    mission.setPlanetBuilding(getName());
+                    String nameFleet = "Freighter";
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName(nameFleet));
+                    mission.setFleetName(fleet.getName());
+                    mission.setPhase(MissionPhase.TREKKING);
                   }
                   if (mission.getType() == MissionType.SPY_MISSION) {
                     mission.setPlanetBuilding(getName());
@@ -3096,6 +3117,8 @@ public class Planet {
                 } else if (mission.getType() == MissionType.COLONIZE) {
                   mission.setPhase(MissionPhase.LOADING);
                 } else if (mission.getType() == MissionType.TRADE_FLEET) {
+                  mission.setPhase(MissionPhase.LOADING);
+                } else if (mission.getType() == MissionType.MINING) {
                   mission.setPhase(MissionPhase.LOADING);
                 } else if (mission.getType() == MissionType.GATHER) {
                   if (ship.isTrooperModule()) {

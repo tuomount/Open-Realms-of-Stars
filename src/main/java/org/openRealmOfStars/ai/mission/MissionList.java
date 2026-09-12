@@ -18,11 +18,13 @@ package org.openRealmOfStars.ai.mission;
  */
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.repository.MissionRepository;
 
 import java.io.DataInputStream;
@@ -211,6 +213,23 @@ public class MissionList {
     }
     return result;
   }
+
+  /**
+   * Find a mining mission for certain planet
+   * @param x Planet X coordinate
+   * @param y Planet Y coordinate
+   * @return Mission or null if not found
+   */
+  public Mission getMiningMission(final int x, final int y) {
+    for (Mission mission : missions) {
+      if (mission.getX() == x && mission.getY() == y
+          && mission.getType() == MissionType.MINING) {
+        return mission;
+      }
+    }
+    return null;
+  }
+
   /**
    * Find a colonize/spore mission for certain planet
    * @param x Planet X coordinate
@@ -229,7 +248,6 @@ public class MissionList {
       }
     }
     return null;
-
   }
 
   /**
@@ -446,6 +464,54 @@ public class MissionList {
     return null;
   }
 
+  /**
+   * Determines the appropriate mission based on the provided attitude.
+   *
+   * <p>This method returns a specific mission depending on
+   * the given {@link Attitude}. The decision is influenced by the availability
+   * of trade and metal missions as well as the type of attitude specified.
+   * In cases where both missions are unavailable, or none of the defined
+   * attitudes match, it may return null.</p>
+   *
+   * @param attitude the attitude that influences which mission to select.
+   * @return a {@link Mission} object corresponding to either a trade fleet
+   *         or metal freighting mission based on the provided attitude;
+   *         returns {@code null} if no suitable mission is available.
+   */
+  public Mission getTradeShipMission(final Attitude attitude) {
+    Mission trade = getMission(MissionType.TRADE_FLEET, MissionPhase.PLANNING);
+    Mission metal = getMission(MissionType.METAL_FREIGHTING,
+        MissionPhase.PLANNING);
+    if (trade == null && metal != null) {
+      return metal;
+    }
+    if (trade != null && metal == null) {
+      return trade;
+    }
+    if (trade == null && metal == null) {
+      return null;
+    }
+    switch (attitude) {
+      case MERCHANTICAL:
+      case DIPLOMATIC:
+      case PEACEFUL:
+      case SCIENTIFIC:
+          return trade;
+
+      case AGGRESSIVE:
+      case MILITARISTIC:
+      case EXPANSIONIST:
+      case LOGICAL:
+          return metal;
+      case BACKSTABBING:
+      default: {
+        if (DiceGenerator.getBoolean()) {
+          return trade;
+        }
+        return metal;
+      }
+    }
+  }
   /**
    * Get diplomatic mission for certain realm
    * @param realmName Realm name to search

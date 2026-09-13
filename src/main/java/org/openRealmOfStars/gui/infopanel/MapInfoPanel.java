@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
 
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
@@ -38,6 +39,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -191,6 +193,10 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     textArea.setCharacterWidth(7);
+    JScrollPane scroll = new JScrollPane(textArea);
+    textArea.setCaretPosition(0);
+    //TODO: This preferred size should be dinamic and depend on length of text
+    textArea.setPreferredSize(UIScale.scaledDimension(75, 500));
     focusBtn = new SpaceButton("Focus", GameCommands.COMMAND_FOCUS_TARGET);
     focusBtn.addActionListener(listener);
     focusBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -215,7 +221,7 @@ public class MapInfoPanel extends InfoPanel {
     fixTradeFleetBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     fixTradeFleetBtn.setToolTipText("Fix fleet on hull point per turn.");
     fixTradeFleetBtn.setEnabled(true);
-    this.add(textArea);
+    this.add(scroll);
     viewBtn = new SpaceButton("View planet", GameCommands.COMMAND_VIEW_PLANET);
     viewBtn.addActionListener(listener);
     viewBtn.setAlignmentX(Component.CENTER_ALIGNMENT);

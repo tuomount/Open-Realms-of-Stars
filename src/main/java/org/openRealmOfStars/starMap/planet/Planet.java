@@ -2168,6 +2168,11 @@ public class Planet {
         sb.append("Metal: ");
         sb.append(getAmountMetalInGround());
         sb.append("\n");
+        if (getMetal() > 0) {
+          sb.append("Mined metal: ");
+          sb.append(getMetal());
+          sb.append("\n");
+        }
       }
       if (isHomeWorld()) {
         sb.append("Home world of\n");

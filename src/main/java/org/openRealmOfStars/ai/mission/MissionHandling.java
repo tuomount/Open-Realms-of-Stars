@@ -1297,6 +1297,18 @@ public final class MissionHandling {
                 mission.setPhase(MissionPhase.PLANNING);
                 mission.setType(MissionType.MOVE);
               }
+            } else if (game.getStarMap().isPlanetBeingMined(mission.getX(),
+                mission.getY())) {
+              // Planet is being mined so no longer colonization mission.
+              Planet homePort = game.getStarMap().getClosestHomePort(info,
+                  fleet.getCoordinate());
+              if (homePort != null) {
+                mission.setTarget(homePort.getCoordinate());
+                mission.setTargetPlanet(homePort.getName());
+                mission.setMissionTime(0);
+                mission.setPhase(MissionPhase.PLANNING);
+                mission.setType(MissionType.MOVE);
+              }
             }
           }
           makeReroute(game, fleet, info, mission);
@@ -1304,7 +1316,9 @@ public final class MissionHandling {
           if (info.getSectorVisibility(coord) >= PlayerInfo.FOG_OF_WAR) {
             Planet planet = game.getStarMap().getPlanetByCoordinate(
                 coord.getX(), coord.getY());
-            if (planet.getPlanetOwnerIndex() != -1) {
+            if (planet.getPlanetOwnerIndex() != -1
+                || game.getStarMap().isPlanetBeingMined(mission.getX(),
+                mission.getY())) {
               setNewColonyTarget(mission, fleet, info, game);
             }
           }

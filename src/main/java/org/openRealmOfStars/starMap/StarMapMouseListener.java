@@ -265,6 +265,11 @@ public class StarMapMouseListener extends MouseAdapter {
             && !list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT)) {
           mapInfoPanel.disableFixTradeBtn();
         }
+      } else if (nearByPlanet != null
+          && nearByPlanet.getPlanetPlayerInfo() == null
+          && starMap.isPlanetBeingMinedByMe(nearByPlanet.getX(),
+              nearByPlanet.getY(), owner)) {
+        mapInfoPanel.setTradeBtn();
       } else {
         mapInfoPanel.disableFixTradeBtn();
       }

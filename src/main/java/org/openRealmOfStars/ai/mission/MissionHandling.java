@@ -1795,16 +1795,22 @@ public final class MissionHandling {
           moveBack.setFleetName(fleet.getName());
           info.getMissions().add(moveBack);
         }
+        // End method early if war condition met
         return;
       }
       if (mission.getPhase() == MissionPhase.LOADING) {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
         fleet.setRoute(route);
+        // Check if home planet matches mission's building target
+        // Building planet is the one where to pick metal.
         Planet homePlanet = game.getStarMap().getPlanetByCoordinate(
             fleet.getX(), fleet.getY());
-        if (homePlanet != null && homePlanet.getPlanetPlayerInfo() == info
-            && homePlanet.getName().equals(mission.getPlanetBuilding())) {
+        if (homePlanet != null
+          && homePlanet.getName().equals(mission.getPlanetBuilding())
+          && (homePlanet.getPlanetPlayerInfo() == null
+            || homePlanet.getPlanetPlayerInfo() == info)) {
+          // Ensure the player owns or has access to the home planet
           int freeSpace = fleet.getFreeSpaceForMetal();
           int metalOnPlanet = homePlanet.getMetal();
           int numberOfTakes = 0;
@@ -1846,6 +1852,7 @@ public final class MissionHandling {
             .getPlanetByCoordinate(mission.getX(), mission.getY());
         PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
+          // Target planet where unloading happens
           Planet homePlanet = game.getStarMap().getPlanetByName(
               mission.getPlanetBuilding());
           mission.setTarget(homePlanet.getCoordinate());
@@ -1865,11 +1872,21 @@ public final class MissionHandling {
               previousTarget.setMetal(previousTarget.getMetal() + 10);
             }
           }
+          Planet buildingPlanet = game.getStarMap()
+              .getPlanetByName(mission.getPlanetBuilding());
+          if (buildingPlanet != null) {
+            mission.setTarget(buildingPlanet.getCoordinate());
+          }
+          // TODO: What to do if planet is missing?
         } else if (mission.getPlanetBuilding().equals(
             previousTarget.getName())) {
+          // Back to building/loading planet
           Planet targetPlanet = game.getStarMap().getPlanetByName(
               mission.getTargetPlanet());
-          mission.setTarget(targetPlanet.getCoordinate());
+          if (targetPlanet != null) {
+            mission.setTarget(targetPlanet.getCoordinate());
+          }
+          // TODO: What to do if planet is missing?
         }
         mission.setPhase(MissionPhase.LOADING);
       }

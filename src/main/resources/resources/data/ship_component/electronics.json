@@ -326,15 +326,15 @@
     "cost": 12,
     "metalCost": 18,
     "energyRequirement": 3,
-    "damage": 4
+    "damage": 5
   },
   {
     "type": "ROBOT_MINER",
     "name": "Robo miner Mk5",
     "cost": 12,
     "metalCost": 22,
-    "energyRequirement": 3,
-    "damage": 6
+    "energyRequirement": 4,
+    "damage": 8
   },
 
 ]

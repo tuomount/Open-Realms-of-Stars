@@ -24,6 +24,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -126,6 +127,7 @@ public final class Research {
     handleTrooperShipDesign(info, map);
     handleColonyShipDesign(info, map);
     handleFreighterShipDesign(info, map);
+    handleMinerShipDesign(info, map);
     if (!banPrivateer) {
       handlePrivateerShipDesign(info, ascension, map);
     }
@@ -436,6 +438,43 @@ public final class Research {
       }
     }
 
+  }
+
+  /**
+   * Handle Freighter ship design for AI
+   * @param info Player
+   * @param map StarMap optional
+   */
+  private static void handleMinerShipDesign(final PlayerInfo info,
+      final StarMap map) {
+    ShipHull hull = ShipGenerator.getBiggestHull(info);
+    if (hull == null) {
+      return;
+    }
+    ShipDesign design = ShipGenerator.createMiner(info, hull);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getMiningBonus() > 0
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getMiningBonus() > stat.getDesign().getMiningBonus()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            Ship replace = new Ship(design);
+            updateObsoleteDesigns(info, map, stat.getDesign().getName(),
+                replace);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
   }
 
   /**

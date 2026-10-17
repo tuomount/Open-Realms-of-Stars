@@ -5114,4 +5114,47 @@ public class StarMap {
     }
     return count;
   }
+
+  /**
+   * Checks if a planet at the specified coordinates is being mined.
+   *
+   * @param x the x-coordinate of the location to check
+   * @param y the y-coordinate of the location to check
+   * @return {@code true} if mining is active; otherwise, {@code false}
+   */
+  public boolean isPlanetBeingMined(final int x, final int y) {
+    boolean result = false;
+    Planet planet = getPlanetByCoordinate(x, y);
+    if (planet != null) {
+      Fleet fleet = getFleetByCoordinate(x, y);
+      if (fleet != null && fleet.getMiningBonus() > 0) {
+        return true;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Checks if a player is mining on a specified planet at given coordinates.
+   *
+   * @param x the x-coordinate of the target planet
+   * @param y the y-coordinate of the target planet
+   * @param info information about the player to verify mining activity
+   * @return true if the player's fleet is mining on the planet; false
+  otherwise
+   */
+  public boolean isPlanetBeingMinedByMe(final int x, final int y,
+      final PlayerInfo info) {
+    boolean result = false;
+    Planet planet = getPlanetByCoordinate(x, y);
+    if (planet != null) {
+      Fleet fleet = getFleetByCoordinate(x, y);
+      if (fleet != null && fleet.getMiningBonus() > 0
+          && getPlayerInfoByFleet(fleet) == info) {
+        return true;
+      }
+    }
+    return result;
+  }
+
 }

@@ -115,7 +115,11 @@ public enum MissionType {
   /**
    * Mission for metal freighting between own planets or uncolonized planet.
    */
-  METAL_FREIGHTING;
+  METAL_FREIGHTING,
+  /**
+   * Mission for metal mining for uncolonized planet.
+   */
+  MINING;
 
   /**
    * Get Mission type with index
@@ -165,6 +169,8 @@ public enum MissionType {
       return 19;
     case METAL_FREIGHTING:
       return 20;
+    case MINING:
+      return 21;
     default:
       return 0;
     }
@@ -215,6 +221,8 @@ public enum MissionType {
       return "Reveal veins";
     case METAL_FREIGHTING:
       return "Metal freighting";
+    case MINING:
+      return "Mining";
     default:
       return "Unknown";
     }

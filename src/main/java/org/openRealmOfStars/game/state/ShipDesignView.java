@@ -183,10 +183,14 @@ public class ShipDesignView extends BlackPanel {
    */
   private static final String VARIANT_CARRIER = "Carrier";
   /**
+   * Variant RoboMiner
+   */
+  private static final String VARIANT_ROBO_MINER = "RoboMiner";
+  /**
    * List of military variants
    */
   private static final  String[] MILITARY_VARIANTS = {VARIANT_MILITARY,
-      VARIANT_BOMBER, VARIANT_SPY};
+      VARIANT_BOMBER, VARIANT_SPY, VARIANT_ROBO_MINER};
   /**
    * No variants
    */
@@ -558,7 +562,8 @@ public class ShipDesignView extends BlackPanel {
                 || comp.getType() == ShipComponentType.JAMMER
                 || comp.getType() == ShipComponentType.SHIELD_GENERATOR
                 || comp.getType() == ShipComponentType.TARGETING_COMPUTER
-                || comp.getType() == ShipComponentType.ESPIONAGE_MODULE)) {
+                || comp.getType() == ShipComponentType.ESPIONAGE_MODULE
+                || comp.getType() == ShipComponentType.ROBOT_MINER)) {
           components.add(comp);
           continue;
         }
@@ -576,7 +581,8 @@ public class ShipDesignView extends BlackPanel {
                 || comp.getType() == ShipComponentType.SCANNER
                 || comp.getType() == ShipComponentType.PRIVATEERING_MODULE
                 || comp.getType() == ShipComponentType.COLONY_MODULE
-                || comp.getType() == ShipComponentType.SPORE_MODULE)) {
+                || comp.getType() == ShipComponentType.SPORE_MODULE
+                || comp.getType() == ShipComponentType.ROBOT_MINER)) {
           components.add(comp);
           continue;
         }
@@ -719,8 +725,12 @@ public class ShipDesignView extends BlackPanel {
             design = ShipGenerator.createOrbital(player, hull, (byte) 0);
           }
         } else {
-          design = ShipGenerator.createMilitaryShip(player, hull, shipType,
-              banNukes, (byte) 0);
+          if (selected.equals(VARIANT_ROBO_MINER)) {
+            design = ShipGenerator.createMiner(player, hull);
+          } else {
+            design = ShipGenerator.createMilitaryShip(player, hull, shipType,
+                banNukes, (byte) 0);
+          }
         }
         design.setName(designNameText.getText());
         hullInfoText.setText(design.getDesignInfo());

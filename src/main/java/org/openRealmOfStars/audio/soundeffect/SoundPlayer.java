@@ -301,6 +301,12 @@ public final class SoundPlayer {
       "/resources/sounds/gravity_ripper.wav";
 
   /**
+   * Sound effect for Robot miner
+   */
+  public static final String ROBOT_MINER =
+      "/resources/sounds/mine.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

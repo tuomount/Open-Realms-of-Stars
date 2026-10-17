@@ -300,6 +300,10 @@ public final class DefaultScoring {
             score = -1;
           }
         }
+        if (ship.getMiningBonus() > 0) {
+          // Mining ship should be built only on request
+          score = scoreMiningShip(score, ship, planet, info, map, attitude);
+        }
         if (ship.isTradeShip()) {
           // Trade ship should be built only on request
           score = scoreTradeShip(score, ship, planet, info, map, attitude);
@@ -760,6 +764,86 @@ public final class DefaultScoring {
           // Spy trade is plus if AI likes spy ships
           score = score + 10;
         }
+      } else {
+        score = -1;
+      }
+      // Handle METAL_FREIGHTING mission separately
+      Mission metalMission = info.getMissions().getMission(
+          MissionType.METAL_FREIGHTING, MissionPhase.PLANNING);
+      if (metalMission != null) {
+        Planet metalPlanet = map.getPlanetByName(
+            metalMission.getTargetPlanet());
+        if (metalPlanet != null) {
+          double distance = metalPlanet.getCoordinate().calculateDistance(
+              planet.getCoordinate());
+          score += (int) Math.round(distance / 25);
+
+          // METAL_FREIGHTING scoring logic
+          if (attitude == Attitude.MILITARISTIC
+              || attitude == Attitude.AGGRESSIVE) {
+            score += 20;  // Increased importance for military attitudes
+          } else if (attitude == Attitude.EXPANSIONIST) {
+            score += 15;
+          } else if (attitude == Attitude.LOGICAL) {
+            score += 10;
+          } else if (attitude == Attitude.SCIENTIFIC) {
+            score += 5;
+          }
+
+          if (planet.getEffectiveGovernorGuide() == Planet.MILITARY_PLANET) {
+            score += 10;
+          }
+        } else {
+          // If metal mission is present but target planet is null,
+          // invalidate score
+          score = -1;
+        }
+      }
+    }
+    return score;
+  }
+
+  /**
+   * Score trade ship. Separating this makes easier to do JUnits.
+   * @param preScore Pre score from generic ship scoring.
+   * @param ship Trade ship to score
+   * @param planet Planet about to build
+   * @param info Player who is building
+   * @param map StarMap
+   * @param attitude Attitude for AI
+   * @return score for the ship
+   */
+  protected static int scoreMiningShip(final int preScore, final Ship ship,
+      final Planet planet, final PlayerInfo info, final StarMap map,
+      final Attitude attitude) {
+    int score = preScore;
+    if (ship.getMiningBonus() > 0) {
+      // Minig ship should be built only on request
+      Mission mission = info.getMissions().getMission(
+          MissionType.MINING, MissionPhase.PLANNING);
+      if (mission != null) {
+        Planet miningPlanet = map.getPlanetByName(mission.getTargetPlanet());
+        if (miningPlanet != null) {
+          double distance = miningPlanet.getCoordinate().calculateDistance(
+              planet.getCoordinate());
+          score = score + (int) Math.round(distance / 25);
+        }
+        if (attitude == Attitude.EXPANSIONIST) {
+          score = score + 20;
+        } else if (attitude == Attitude.LOGICAL) {
+          score = score + 15;
+        } else if (attitude == Attitude.SCIENTIFIC) {
+          score = score + 10;
+        } else if (attitude == Attitude.MERCHANTICAL) {
+          score = score + 5;
+        } else if (attitude == Attitude.DIPLOMATIC
+            || attitude == Attitude.PEACEFUL) {
+          score = score - 10;
+        }
+        if (planet.getEffectiveGovernorGuide() == Planet.MILITARY_PLANET) {
+          score = score + 10;
+        }
+        score = score + 3 * ship.getMiningBonus();
       } else {
         score = -1;
       }

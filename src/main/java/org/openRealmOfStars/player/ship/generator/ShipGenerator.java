@@ -1488,6 +1488,132 @@ public final class ShipGenerator {
     return result;
   }
 
+ /**
+ * Returns the largest normal ship hull available to the player.
+ *
+ * @param player The player whose tech list is used to determine available
+ *               hulls.
+ * @return The largest normal hull, or null if none are available.
+ */
+  public static ShipHull getBiggestHull(final PlayerInfo player) {
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    int value = -1;
+    ShipHull hullTech = null;
+    for (Tech tech : hullTechs) {
+      ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
+          player.getRace());
+      if (hull == null || hull.getHullType() != ShipHullType.NORMAL) {
+        // Only normal ships are good for mining.
+        continue;
+      }
+      if (hull.getMaxSlot() > value) {
+        hullTech = hull;
+        value = hull.getMaxSlot();
+      }
+    }
+    return hullTech;
+  }
+
+  /**
+   * Creates a ship design for a miner based on the player's technology
+   * and the specified hull. The method constructs two ship designs using
+   * optimal components and selects the one with the highest mining bonus.
+   *
+   * <p>If the hull type is not NORMAL, or if the robot miner
+   *  component is unavailable, the method returns null.</p>
+   *
+   * @param player The player's information, used to retrieve the best
+   *        technology for components.
+   * @param hull The ship hull type. Must be NORMAL;
+   *        other types result in null.
+   * @return A ShipDesign representing the optimal miner ship,
+   *         or null if the hull type is invalid or the robot miner
+   *         component is unavailable.
+   */
+  public static ShipDesign createMiner(final PlayerInfo player,
+      final ShipHull hull) {
+    ShipDesign result = null;
+    if (hull.getHullType() == ShipHullType.NORMAL) {
+      ShipDesign slowMiner = new ShipDesign(hull);
+      ShipDesign fastMiner = new ShipDesign(hull);
+      ShipComponent fastEngine = null;
+      Tech fastTech = player.getTechList().getFastestFtlEngine();
+      if (fastTech != null) {
+        fastEngine = ShipComponentFactory.createByName(
+            fastTech.getComponent());
+      }
+      Tech nuclearTech = player.getTechList().getBestEngineAndPowerSource();
+      ShipComponent nuclearEngine = null;
+      if (nuclearTech != null) {
+        nuclearEngine = ShipComponentFactory.createByName(
+            nuclearTech.getComponent());
+      }
+      ShipComponent power = ShipComponentFactory.createByName(
+          player.getTechList().getBestEnergySource().getComponent());
+      Tech minerTech = player.getTechList().getBestMiner();
+      if (minerTech == null) {
+        return null;
+      }
+      ShipComponent miner = ShipComponentFactory.createByName(
+          minerTech.getComponent());
+      Tech[] defenseTechs = player.getTechList().getListForType(
+          TechType.Defense);
+      Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
+      ShipComponent armorComp = null;
+      if (armor != null) {
+        armorComp = ShipComponentFactory.createByName(armor.getComponent());
+      }
+      if (miner == null) {
+        return null;
+      }
+      int energyCost = miner.getEnergyRequirement();
+      if (nuclearEngine != null) {
+        slowMiner.addComponent(nuclearEngine);
+        int slotsAvailable = hull.getMaxSlot();
+        slotsAvailable = slotsAvailable - 1;
+        do {
+          if (slowMiner.getFreeEnergy() >= energyCost) {
+            slowMiner.addComponent(miner);
+            slotsAvailable--;
+          } else if (slotsAvailable > 1) {
+            slowMiner.addComponent(power);
+            slotsAvailable--;
+          } else {
+            break;
+          }
+        } while (slotsAvailable > 0);
+        if (slotsAvailable == 1 && armorComp != null) {
+          slowMiner.addComponent(armorComp);
+        }
+      }
+      if (fastEngine != null) {
+        fastMiner.addComponent(fastEngine);
+        fastMiner.addComponent(power);
+        int slotsAvailable = hull.getMaxSlot();
+        slotsAvailable = slotsAvailable - 2;
+        do {
+          if (fastMiner.getFreeEnergy() >= energyCost) {
+            fastMiner.addComponent(miner);
+            slotsAvailable--;
+          } else if (slotsAvailable > 1) {
+            fastMiner.addComponent(power);
+            slotsAvailable--;
+          } else {
+            break;
+          }
+        } while (slotsAvailable > 0);
+        if (slotsAvailable == 1 && armorComp != null) {
+          fastMiner.addComponent(armorComp);
+        }
+      }
+      if (slowMiner.getMiningBonus() >= fastMiner.getMiningBonus() + 3) {
+        result = slowMiner;
+      } else {
+        result = fastMiner;
+      }
+    }
+    return result;
+  }
   /**
    * Design new Starbase for certain size
    * @param player Player doing the design

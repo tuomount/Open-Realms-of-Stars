@@ -370,7 +370,7 @@ public final class TechFactory {
    * Hull tech names for level 3
    */
   public static final String[] HULL_TECH_LEVEL3_NAMES = {"Corvette Mk1",
-      "Advanced colonization", "Cargo bay"}; //, "Remote miner Mk1"}
+      "Advanced colonization", "Cargo bay"};
   /**
    * Hull rare tech names for level 3.
    */
@@ -404,7 +404,6 @@ public final class TechFactory {
    */
   public static final String[] HULL_TECH_LEVEL7_NAMES = {"Battle cruiser Mk1",
       "Privateer Mk2", "Destroyer Mk2", "Fighter bay Mk2"};
-  //, "Remote miner Mk2" };
   /**
    * Hull rare tech names for level 7.
    */
@@ -425,7 +424,6 @@ public final class TechFactory {
    */
   public static final String[] HULL_TECH_LEVEL10_NAMES = {"Large freighter Mk2",
       "Corvette Mk3", "Destroyer Mk3", "Fighter bay Mk3"};
-  //, "Remote miner Mk3" };
   /**
    * Hull tech names for level 11
    */
@@ -452,7 +450,6 @@ public final class TechFactory {
    */
   public static final String[] HULL_TECH_LEVEL14_NAMES = {"Corvette Mk3",
       "Destroyer Mk3", "Fighter bay Mk4"};
-  //, "Remote miner Mk4" };
   /**
    * Hull tech names for level 15
    */
@@ -472,7 +469,7 @@ public final class TechFactory {
    * Hull tech names for level 18
    */
   public static final String[] HULL_TECH_LEVEL18_NAMES = {"Capital ship",
-      "Massive orbital Mk2"}; //, "Remote miner Mk5"};
+      "Massive orbital Mk2"};
   /**
    * Hull tech names for level 19
    */
@@ -754,7 +751,7 @@ public final class TechFactory {
    * Electronics tech names for level 3
    */
   public static final String[] ELECTRONICS_TECH_LEVEL3_NAMES = {"Scanner Mk2",
-      "Planetary scanner Mk2", "Espionage module Mk2" };
+      "Planetary scanner Mk2", "Espionage module Mk2", "Robo miner Mk1"};
   /**
    * Rare electronics tech names for level 3.
    */
@@ -781,7 +778,7 @@ public final class TechFactory {
    * Electronics tech names for level 7
    */
   public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = {"Scanner Mk4",
-      "Espionage module Mk4"};
+      "Espionage module Mk4", "Robo miner Mk2"};
   /**
    * Electronics rare tech names for level 7
    */
@@ -802,7 +799,8 @@ public final class TechFactory {
    * Electronics tech names for level 10
    */
   public static final String[] ELECTRONICS_TECH_LEVEL10_NAMES = {
-      "Cloaking device Mk5", "Planetary scanner Mk5", "Espionage module Mk5" };
+      "Cloaking device Mk5", "Planetary scanner Mk5", "Espionage module Mk5",
+      "Robo miner Mk3"};
   /**
    * Electronics tech names for level 11
    */
@@ -822,7 +820,7 @@ public final class TechFactory {
    * Electronics tech names for level 14
    */
   public static final String[] ELECTRONICS_TECH_LEVEL14_NAMES = {
-     "Planetary scanner Mk7", "Cloaking device Mk7" };
+     "Planetary scanner Mk7", "Cloaking device Mk7", "Robo miner Mk4" };
   /**
    * Electronics tech names for level 15
    */
@@ -842,7 +840,7 @@ public final class TechFactory {
    * Electronics tech names for level 18
    */
   public static final String[] ELECTRONICS_TECH_LEVEL18_NAMES = {
-     "Planetary scanner Mk9", "Cloaking device Mk9" };
+     "Planetary scanner Mk9", "Cloaking device Mk9", "Robo miner Mk5" };
   /**
    * Electronics tech names for level 19
    */
@@ -1751,6 +1749,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ANTENNA));
         } else if (techName.startsWith("Cloaking device")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_CLOACKING_DEVICE));
+        } else if (techName.startsWith("Robo miner")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_DRILL));
         } else if (techName.startsWith("Espionage module Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
         } else {

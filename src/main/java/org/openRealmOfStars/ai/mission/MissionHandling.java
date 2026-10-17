@@ -1297,6 +1297,18 @@ public final class MissionHandling {
                 mission.setPhase(MissionPhase.PLANNING);
                 mission.setType(MissionType.MOVE);
               }
+            } else if (game.getStarMap().isPlanetBeingMined(mission.getX(),
+                mission.getY())) {
+              // Planet is being mined so no longer colonization mission.
+              Planet homePort = game.getStarMap().getClosestHomePort(info,
+                  fleet.getCoordinate());
+              if (homePort != null) {
+                mission.setTarget(homePort.getCoordinate());
+                mission.setTargetPlanet(homePort.getName());
+                mission.setMissionTime(0);
+                mission.setPhase(MissionPhase.PLANNING);
+                mission.setType(MissionType.MOVE);
+              }
             }
           }
           makeReroute(game, fleet, info, mission);
@@ -1304,7 +1316,9 @@ public final class MissionHandling {
           if (info.getSectorVisibility(coord) >= PlayerInfo.FOG_OF_WAR) {
             Planet planet = game.getStarMap().getPlanetByCoordinate(
                 coord.getX(), coord.getY());
-            if (planet.getPlanetOwnerIndex() != -1) {
+            if (planet.getPlanetOwnerIndex() != -1
+                || game.getStarMap().isPlanetBeingMined(mission.getX(),
+                mission.getY())) {
               setNewColonyTarget(mission, fleet, info, game);
             }
           }
@@ -1746,7 +1760,7 @@ public final class MissionHandling {
   }
 
   /**
-   * Handle Trade mission
+   * Handle metal freighting mission
    * @param mission Trade mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
@@ -1781,16 +1795,22 @@ public final class MissionHandling {
           moveBack.setFleetName(fleet.getName());
           info.getMissions().add(moveBack);
         }
+        // End method early if war condition met
         return;
       }
       if (mission.getPhase() == MissionPhase.LOADING) {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
         fleet.setRoute(route);
+        // Check if home planet matches mission's building target
+        // Building planet is the one where to pick metal.
         Planet homePlanet = game.getStarMap().getPlanetByCoordinate(
             fleet.getX(), fleet.getY());
-        if (homePlanet != null && homePlanet.getPlanetPlayerInfo() == info
-            && homePlanet.getName().equals(mission.getPlanetBuilding())) {
+        if (homePlanet != null
+          && homePlanet.getName().equals(mission.getPlanetBuilding())
+          && (homePlanet.getPlanetPlayerInfo() == null
+            || homePlanet.getPlanetPlayerInfo() == info)) {
+          // Ensure the player owns or has access to the home planet
           int freeSpace = fleet.getFreeSpaceForMetal();
           int metalOnPlanet = homePlanet.getMetal();
           int numberOfTakes = 0;
@@ -1832,6 +1852,7 @@ public final class MissionHandling {
             .getPlanetByCoordinate(mission.getX(), mission.getY());
         PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
+          // Target planet where unloading happens
           Planet homePlanet = game.getStarMap().getPlanetByName(
               mission.getPlanetBuilding());
           mission.setTarget(homePlanet.getCoordinate());
@@ -1851,15 +1872,130 @@ public final class MissionHandling {
               previousTarget.setMetal(previousTarget.getMetal() + 10);
             }
           }
+          Planet buildingPlanet = game.getStarMap()
+              .getPlanetByName(mission.getPlanetBuilding());
+          if (buildingPlanet != null) {
+            mission.setTarget(buildingPlanet.getCoordinate());
+          }
+          // TODO: What to do if planet is missing?
         } else if (mission.getPlanetBuilding().equals(
             previousTarget.getName())) {
+          // Back to building/loading planet
           Planet targetPlanet = game.getStarMap().getPlanetByName(
               mission.getTargetPlanet());
-          mission.setTarget(targetPlanet.getCoordinate());
+          if (targetPlanet != null) {
+            mission.setTarget(targetPlanet.getCoordinate());
+          }
+          // TODO: What to do if planet is missing?
         }
         mission.setPhase(MissionPhase.LOADING);
       }
-    } // End of trade
+    } // End of metal freighting
+  }
+
+  /**
+   * Handle metal mining mission
+   * @param mission miing mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleMetalMining(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.MINING) {
+      Planet previousTarget = game.getStarMap()
+          .getPlanetByCoordinate(mission.getX(), mission.getY());
+      int playerIndex = previousTarget.getPlanetOwnerIndex();
+      if (playerIndex != -1) {
+        Message msg = new Message(new MessageType(MmType.FLEET,
+            SmType.TRADE_STOP),
+            fleet.getName() + " has stopped metal mining due planet"
+                + " colonization and returning to home planet.",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msg.setCoordinate(fleet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        info.getMissions().remove(mission);
+        // Make fleet return to home
+        Planet homePlanet = game.getStarMap().getClosestHomePort(info,
+            fleet.getCoordinate());
+        if (homePlanet != null) {
+          Mission moveBack = new Mission(MissionType.MOVE,
+              MissionPhase.TREKKING, homePlanet.getCoordinate());
+          moveBack.setPlanetBuilding(homePlanet.getName());
+          moveBack.setTargetPlanet(homePlanet.getName());
+          moveBack.setFleetName(fleet.getName());
+          info.getMissions().add(moveBack);
+        }
+        return;
+      }
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(targetCoord) == 0) {
+        // Target acquired, let's do trade
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        previousTarget = game.getStarMap()
+            .getPlanetByCoordinate(fleet.getX(), fleet.getY());
+        PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
+        if (mission.getTargetPlanet().equals(previousTarget.getName())) {
+          if (ownerInfo == null) {
+            int metalMined = previousTarget.roboticalMining(
+                fleet.getMiningBonus());
+            if (metalMined > 0) {
+              Message msg = new Message(new MessageType(MmType.FLEET,
+                  SmType.METAL_MINED),
+                  fleet.getName() + " has mined "
+                  + metalMined + " metals during this star year on "
+                  + previousTarget.getName() + ".",
+                  Icons.getIconByName(Icons.ICON_METAL));
+              msg.setCoordinate(fleet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              info.getMsgList().addUpcomingMessage(msg);
+            }
+            //TODO: Resend miner to another planet if planet has been depleted
+          } else {
+            Message msg = new Message(new MessageType(MmType.FLEET,
+                SmType.METAL_MINED),
+                fleet.getName() + " cannot mine "
+                + previousTarget.getName()
+                + " since it has been colonized by "
+                + previousTarget.getPlanetPlayerInfo().getEmpireName()
+                + ".",
+                Icons.getIconByName(Icons.ICON_METAL));
+            msg.setCoordinate(fleet.getCoordinate());
+            msg.setMatchByString(fleet.getName());
+            info.getMsgList().addUpcomingMessage(msg);
+            info.getMissions().remove(mission);
+            // Make fleet return to home
+            //TODO: Resend miner to another planet directly at least on
+            //      high difficulty.
+            Planet homePlanet = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            if (homePlanet != null) {
+              Mission moveBack = new Mission(MissionType.MOVE,
+                  MissionPhase.TREKKING, homePlanet.getCoordinate());
+              moveBack.setPlanetBuilding(homePlanet.getName());
+              moveBack.setTargetPlanet(homePlanet.getName());
+              moveBack.setFleetName(fleet.getName());
+              info.getMissions().add(moveBack);
+            }
+          }
+        } else  {
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+      }
+    } // End of mining
   }
 
   /**

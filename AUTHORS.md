@@ -348,7 +348,13 @@ Victorian desk by philbgarner(CC0).
 Cobwebs done by SkyshipDev with CC-BY 4.0 license.
 All other included textures are under CC0.
 
-Ancient Temple by Tuomo Untinen with Stable Diffusion
+Ancient Temple by Tuomo Untinen.
+Licensed Under CC0. All textures used are CC0.
+2D spider webs by Christina Lee (https://electronsandsuch.com)
+Waypoint circle by Paul Wortmann.
+Star from https://opengameart.org/content/medieval-dungeon-interior
+Concrete_1 texture from https://opengameart.org/content/medieval-dungeon-interior
+Other textures from https://opengameart.org/content/free-3d-castle-dungeon-tileset
 
 Ancient Palace by Tuomo Untinen with Stable Diffusion
 

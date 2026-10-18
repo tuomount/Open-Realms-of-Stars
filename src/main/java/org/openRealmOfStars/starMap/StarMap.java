@@ -1278,6 +1278,41 @@ public class StarMap {
     }
     return biggest;
   }
+
+  /**
+   * Retrieves the fleet with the highest mining bonus at a specified
+  coordinate for a given player.
+   *
+   * @param coord The coordinate to check for fleets.
+   * @param playerIndex The index of the player whose fleets are being
+  checked.
+   * @return The Fleet with the highest mining bonus at the specified
+  coordinate, or null if no such fleet exists
+   *         or the player is not found.
+   */
+
+  public Fleet getBiggestDriller(final Coordinate coord,
+      final int playerIndex) {
+    Fleet biggest = null;
+    PlayerInfo player = players.getPlayerInfoByIndex(playerIndex);
+    if (player == null) {
+      return null;
+    }
+    for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+      Fleet fleet = player.getFleets().getByIndex(j);
+      if (fleet.getCoordinate().sameAs(coord) && biggest == null) {
+        biggest = fleet;
+        continue;
+      }
+      if (fleet.getCoordinate().sameAs(coord) && biggest != null
+          && fleet.getMiningBonus() > biggest.getMiningBonus()) {
+        biggest = fleet;
+        continue;
+      }
+    }
+    return biggest;
+  }
+
   /**
    * Get the fleet tiles from the map.
    * These fleet positions are always calculated
@@ -1521,6 +1556,24 @@ public class StarMap {
         && fleetTiles[x][y] != null) {
       int playerIndex = fleetTiles[x][y].getPlayerIndex();
       return getBiggestFleet(new Coordinate(x, y), playerIndex);
+    }
+    return null;
+  }
+
+  /**
+   * Get Miner Fleet by coordinates. If not found then null is returned.
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return Fleet or null
+   */
+  public Fleet getMinerByCoordinate(final int x, final int y) {
+    if (fleetTiles == null) {
+      getFleetTiles();
+    }
+    if (isValidCoordinate(x, y) && fleetTiles != null
+        && fleetTiles[x][y] != null) {
+      int playerIndex = fleetTiles[x][y].getPlayerIndex();
+      return getBiggestDriller(new Coordinate(x, y), playerIndex);
     }
     return null;
   }
@@ -5126,7 +5179,7 @@ public class StarMap {
     boolean result = false;
     Planet planet = getPlanetByCoordinate(x, y);
     if (planet != null) {
-      Fleet fleet = getFleetByCoordinate(x, y);
+      Fleet fleet = getMinerByCoordinate(x, y);
       if (fleet != null && fleet.getMiningBonus() > 0) {
         return true;
       }
@@ -5148,7 +5201,7 @@ public class StarMap {
     boolean result = false;
     Planet planet = getPlanetByCoordinate(x, y);
     if (planet != null) {
-      Fleet fleet = getFleetByCoordinate(x, y);
+      Fleet fleet = getMinerByCoordinate(x, y);
       if (fleet != null && fleet.getMiningBonus() > 0
           && getPlayerInfoByFleet(fleet) == info) {
         return true;

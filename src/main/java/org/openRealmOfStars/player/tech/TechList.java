@@ -1161,7 +1161,7 @@ public class TechList {
       if (Game.getTutorial() == null || !info.isHuman() || !tutorialEnabled) {
         continue;
       }
-      showTutorial(13, info);
+      showTutorial("Research_Research_view", info);
       newTechTutorial(tech, info);
     }
   }
@@ -1179,79 +1179,79 @@ public class TechList {
     var techType = tech.getType();
 
     if (techHull != null || techComponent != null) {
-      showTutorial(70, info);
+      showTutorial("Ship Design_Design_principals", info);
     }
 
     if (techComponent != null) {
       if (techType == TechType.Defense
           && techComponent.startsWith("Shield Mk")) {
-        showTutorial(56, info);
+        showTutorial("Space Combat_Shields", info);
       }
       if (techType == TechType.Defense
           && techComponent.startsWith("Armor")) {
-        showTutorial(57, info);
+        showTutorial("Space Combat_Armors", info);
       }
       if (techType == TechType.Defense
           && techComponent.startsWith("Jammer")) {
-        showTutorial(58, info);
+        showTutorial("Space Combat_Jammers", info);
       }
 
       if (techType == TechType.Combat
           && techComponent.startsWith("Laser")) {
-        showTutorial(51, info);
+        showTutorial("Space Combat_Beam_weapons", info);
       }
       if (techType == TechType.Combat
           && techComponent.startsWith("Photon")) {
-        showTutorial(53, info);
+        showTutorial("Space Combat_Photon_Torpedos", info);
       }
       if (techType == TechType.Combat
           && techComponent.startsWith("Railgun")) {
-        showTutorial(52, info);
+        showTutorial("Space Combat_Mass_drives", info);
       }
       if (techType == TechType.Combat
           && techComponent.startsWith("Orbital")) {
-        showTutorial(81, info);
+        showTutorial("Ship Design_Orbital_bombs", info);
       }
       if (techType == TechType.Combat
           && techComponent.startsWith("HE missile")) {
-        showTutorial(54, info);
+        showTutorial("Space Combat_Missiles", info);
       }
       if (techType == TechType.Combat
           && techComponent.startsWith("ECM torpedo")) {
-        showTutorial(55, info);
+        showTutorial("Space Combat_ECM_Missile", info);
       }
 
       if (techType == TechType.Hulls
           && techComponent.startsWith("Privateering")) {
-        showTutorial(59, info);
-        showTutorial(73, info);
+        showTutorial("Space Combat_Privateering", info);
+        showTutorial("Ship Design_Hull_type_Privateer", info);
       }
 
       if (techType == TechType.Propulsion
           && techComponent.contains("source")) {
-        showTutorial(77, info);
+        showTutorial("Ship Design_Energy_source", info);
       }
       if (techType == TechType.Propulsion
           && techComponent.contains("drive")) {
-        showTutorial(76, info);
+        showTutorial("Ship Design_Engine", info);
       }
 
       if (techType == TechType.Electrics
           && techComponent.startsWith("Cloaking")) {
-        showTutorial(78, info);
+        showTutorial("Ship Design_Cloaking_device", info);
       }
       if (techType == TechType.Electrics
           && techComponent.startsWith("Espionage")) {
-        showTutorial(79, info);
+        showTutorial("Ship Design_Espionage_module", info);
       }
       if (techType == TechType.Electrics
           && techComponent.startsWith("Scanner")
           || techComponent.startsWith("LR scanner")) {
-        showTutorial(80, info);
+        showTutorial("Ship Design_Scanner", info);
       }
       if (techType == TechType.Electrics
           && techComponent.startsWith("Targeting computer")) {
-        showTutorial(60, info);
+        showTutorial("Space Combat_Targeting_computers", info);
       }
     }
 
@@ -1260,38 +1260,38 @@ public class TechList {
       if (techType == TechType.Hulls
           && techHull.startsWith("Probe")) {
         specialHull = true;
-        showTutorial(71, info);
+        showTutorial("Ship Design_Hull_type_Probe", info);
       }
       if (techType == TechType.Hulls
           && techHull.contains("Starbase")) {
         specialHull = true;
-        showTutorial(72, info);
+        showTutorial("Ship Design_Hull_type_Star_base", info);
       }
       if (techType == TechType.Hulls
           && techHull.contains("Privateer")) {
         specialHull = true;
-        showTutorial(73, info);
+        showTutorial("Ship Design_Hull_type_Privateer", info);
       }
       if (techType == TechType.Hulls
           && techHull.contains("Freighter")) {
         specialHull = true;
-        showTutorial(74, info);
+        showTutorial("Ship Design_Hull_type_Freighter", info);
       }
       if (techType == TechType.Hulls
           && !specialHull) {
-        showTutorial(75, info);
+        showTutorial("Ship Design_Hull_type_Normal", info);
       }
     }
   }
 
   /**
-   * Show tutorial by tutorial Index for specfied player.
-   * @param tutorialIdx tutorial index
+   * Show tutorial by tutorial reference for specified player.
+   * @param reference tutorial Reference
    * @param info PlayerInfo
    */
-  private static void showTutorial(final int tutorialIdx,
+  private static void showTutorial(final String reference,
       final PlayerInfo info) {
-    var tutorialText = Game.getTutorial().showTutorialText(tutorialIdx);
+    var tutorialText = Game.getTutorial().showTutorialText(reference);
     if (tutorialText != null) {
       var msg = new Message(new MessageType(MmType.INFORMATION,
           SmType.TUTORIAL), tutorialText,

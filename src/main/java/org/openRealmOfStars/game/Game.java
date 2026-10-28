@@ -26,13 +26,10 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -87,8 +84,7 @@ import org.openRealmOfStars.game.state.StatView;
 import org.openRealmOfStars.game.state.StoryView;
 import org.openRealmOfStars.game.state.VoteView;
 import org.openRealmOfStars.game.state.VotingSelectionView;
-import org.openRealmOfStars.game.tutorial.HelpLine;
-import org.openRealmOfStars.game.tutorial.TutorialList;
+import org.openRealmOfStars.game.tutorial.Tutorial;
 import org.openRealmOfStars.gui.graphs.BridgeGraphFactory;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
@@ -423,7 +419,7 @@ public class Game implements ActionListener {
   /**
    * Tutorial list of helps.
    */
-  private static TutorialList tutorialList;
+  private static Tutorial tutorial;
   /**
    * Flag if main method has called.
    */
@@ -514,11 +510,7 @@ public class Game implements ActionListener {
         System.setProperty("sun.java2d.opengl", "true");
       }
       gameFrame = new JFrame();
-      try {
-        readTutorial(null);
-      } catch (IOException e1) {
-        ErrorLogger.log(e1);
-      }
+      tutorial = new Tutorial();
       // Set look and feel match on CrossPlatform Look and feel
       try {
       UIManager
@@ -657,37 +649,7 @@ public class Game implements ActionListener {
    * @throws IOException IOException if reading fails.
    */
   public static void readTutorial(final String filename) throws IOException {
-    tutorialList = new TutorialList();
-    InputStream is;
-    if (filename == null) {
-      is = Game.class.getClassLoader().getResource(
-          "resources/tutorial.txt").openStream();
-    } else {
-      is = new FileInputStream(new File(filename));
-    }
-    try (BufferedInputStream bis = new BufferedInputStream(is)) {
-      // Two megabyte buffer
-      int bufferSize = 2 * 1024 * 1024;
-      byte[] buffer = new byte[bufferSize];
-      int offset = 0;
-      int readAmount = 0;
-      int left = bufferSize;
-      do {
-        readAmount = bis.read(buffer, offset, left);
-        if (readAmount > 0) {
-          offset = offset + readAmount;
-          left = left - readAmount;
-        }
-      } while (left > 0 && readAmount > 1);
-      String strBuffer = new String(buffer, 0, offset, StandardCharsets.UTF_8);
-      String[] lines = strBuffer.split("\n");
-      for (String line : lines) {
-        HelpLine helpLine = HelpLine.parseHelpline(line);
-        if (helpLine != null) {
-          tutorialList.add(helpLine);
-        }
-      }
-    }
+    tutorial = new Tutorial();
   }
   /**
    * Read config file from oros.cfg or generate
@@ -1438,7 +1400,7 @@ public class Game implements ActionListener {
    * Show Help panels
    */
   public void showHelp() {
-    helpView = new HelpView(tutorialList, starMap.isTutorialEnabled(), this);
+    helpView = new HelpView(tutorial, starMap.isTutorialEnabled(), this);
     this.updateDisplay(helpView);
   }
 
@@ -2706,11 +2668,7 @@ public class Game implements ActionListener {
    * save format to new one.
    */
   public static void saveGameUpdate() {
-    try {
-      readTutorial(null);
-    } catch (IOException e1) {
-      ErrorLogger.log(e1);
-    }
+    tutorial = new Tutorial();
     File folder = new File(Folders.getSavegamePath());
     File[] files = folder.listFiles(new GenericFileFilter(".save"));
     if (files == null) {
@@ -3930,7 +3888,8 @@ public class Game implements ActionListener {
         if (Game.getTutorial() != null
             && players.getCurrentPlayerInfo().isHuman()
             && starMap.isTutorialEnabled()) {
-          String tutorialText = Game.getTutorial().showTutorialText(85);
+          String tutorialText = Game.getTutorial().showTutorialText(
+              "Ship Design_Upgrade_ship");
           if (tutorialText != null) {
             Message msg = new Message(new MessageType(MmType.INFORMATION,
                 SmType.TUTORIAL), tutorialText,
@@ -4416,8 +4375,8 @@ public class Game implements ActionListener {
     if (map != null) {
       starMap = map;
       players = starMap.getPlayerList();
-      if (tutorialList != null) {
-        tutorialList.updateShownTutorial(starMap.getShownTutorialIndexes());
+      if (tutorial != null) {
+        tutorial.updateShownTutorial(starMap.getShownTutorialIndexes());
       }
       starMap.updateStarMapOnLoadGame();
       return true;
@@ -4496,10 +4455,10 @@ public class Game implements ActionListener {
 
   /**
    * Get Tutorial list.
-   * @return Tutorial list
+   * @return Tutorial
    */
-  public static TutorialList getTutorial() {
-    return tutorialList;
+  public static Tutorial getTutorial() {
+    return tutorial;
   }
 
   /**

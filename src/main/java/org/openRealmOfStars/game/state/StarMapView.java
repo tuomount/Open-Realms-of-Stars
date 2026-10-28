@@ -391,7 +391,8 @@ public class StarMapView extends BlackPanel {
     if (!planet.isEventActivated()
         && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
         && Game.getTutorial() != null && map.isTutorialEnabled()) {
-        String tutorialText = Game.getTutorial().showTutorialText(8);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Movement_Exploring_planets_with_away_team");
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL),
@@ -411,7 +412,8 @@ public class StarMapView extends BlackPanel {
     if (scan && !planet.isEventActivated()
         && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
         && Game.getTutorial() != null && map.isTutorialEnabled()) {
-        String tutorialText = Game.getTutorial().showTutorialText(8);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Movement_Exploring_planets_with_away_team");
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL),

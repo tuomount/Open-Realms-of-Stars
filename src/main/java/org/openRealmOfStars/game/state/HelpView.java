@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019-2022 Tuomo Untinen
+ * Copyright (C) 2019-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +40,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.tutorial.HelpLine;
-import org.openRealmOfStars.game.tutorial.TutorialList;
+import org.openRealmOfStars.game.tutorial.Tutorial;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
@@ -109,11 +109,11 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
   private int currentMatch;
   /**
    * Constructor for help view.
-   * @param tutorial Tutorial list of help lines
+   * @param tutorial Tutorial of help lines
    * @param tutorialEnabled Flag for if tutorial is enabled
    * @param listener ActionListener
    */
-  public HelpView(final TutorialList tutorial, final boolean tutorialEnabled,
+  public HelpView(final Tutorial tutorial, final boolean tutorialEnabled,
       final ActionListener listener) {
     InfoPanel base = new InfoPanel();
     base.setTitle("Game help");

@@ -3145,7 +3145,8 @@ public class StarMap {
       Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
       SquareInfo square = tileInfo[sx][sy];
       if (tile.isSpaceAnomaly()) {
-        String tutorialText = Game.getTutorial().showTutorialText(30);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Objects in Space_Space_anomaly");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL), tutorialText,
@@ -3156,7 +3157,8 @@ public class StarMap {
         }
       }
       if (tile.isBlackhole()) {
-        String tutorialText = Game.getTutorial().showTutorialText(31);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Objects in Space_Black_hole");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL), tutorialText,
@@ -3169,7 +3171,8 @@ public class StarMap {
       if (square.getType() == SquareInfo.TYPE_PLANET) {
         Planet planet = planetList.get(square.getValue());
         if (planet != null && planet.getPlanetPlayerInfo() != info) {
-          String tutorialText = Game.getTutorial().showTutorialText(20);
+          String tutorialText = Game.getTutorial().showTutorialText(
+              "Planet_Planet_discovered");
           if (tutorialText != null) {
             Message msg = new Message(new MessageType(MmType.PLANETARY,
                 SmType.TUTORIAL), tutorialText,
@@ -3181,7 +3184,8 @@ public class StarMap {
           }
           if (planet.getOrderNumber() == 0) {
             // Rogue planet
-            tutorialText = Game.getTutorial().showTutorialText(22);
+            tutorialText = Game.getTutorial().showTutorialText(
+                "Planet_Rogue_planet");
             if (tutorialText != null) {
               Message msg = new Message(new MessageType(MmType.PLANETARY,
                   SmType.TUTORIAL), tutorialText,
@@ -3194,7 +3198,8 @@ public class StarMap {
           }
           if (!planet.isColonizeablePlanet(info)) {
             // High radiation
-            tutorialText = Game.getTutorial().showTutorialText(23);
+            tutorialText = Game.getTutorial().showTutorialText(
+                "Planet_Suitability");
             if (tutorialText != null) {
               Message msg = new Message(new MessageType(MmType.PLANETARY,
                   SmType.TUTORIAL), tutorialText,
@@ -3208,7 +3213,8 @@ public class StarMap {
         }
       }
       if (square.getType() == SquareInfo.TYPE_GAS_PLANET) {
-        String tutorialText = Game.getTutorial().showTutorialText(21);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Planet_Gas_Giant");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.PLANETARY,
               SmType.TUTORIAL), tutorialText,
@@ -3221,7 +3227,8 @@ public class StarMap {
       }
       if (tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1)
           || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
-        String tutorialText = Game.getTutorial().showTutorialText(32);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Objects in Space_Deep_Space_Anchor");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL), tutorialText,
@@ -3233,7 +3240,8 @@ public class StarMap {
       }
       if (tile == Tiles.getTileByName(TileNames.WORM_HOLE1)
           || tile == Tiles.getTileByName(TileNames.WORM_HOLE2)) {
-        String tutorialText = Game.getTutorial().showTutorialText(33);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Objects in Space_Wormhole");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL), tutorialText,

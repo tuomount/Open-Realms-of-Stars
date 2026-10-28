@@ -2477,7 +2477,8 @@ public class Planet {
       if (Game.getTutorial() != null && map != null
           && map.isTutorialEnabled()
           && getTotalPopulation() >= 5) {
-        String tutorialText = Game.getTutorial().showTutorialText(128);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Leaders_Leader_recruit");
         if (tutorialText != null) {
           msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL), tutorialText,
@@ -2830,7 +2831,8 @@ public class Planet {
           if (Game.getTutorial() != null
               && map.isTutorialEnabled()
               && map.getPlayerList().getPlayerInfoByIndex(0).isHuman()) {
-            String tutorialText = Game.getTutorial().showTutorialText(155);
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Victory_Diplomatic_victory");
             if (tutorialText != null) {
               Message msgTut = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL),
@@ -2866,7 +2868,8 @@ public class Planet {
           vote.setPlanetName(getName());
           map.getVotes().getVotes().add(vote);
           if (Game.getTutorial() != null && map.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(98);
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Diplomacy_Galactic_Olympics");
             if (tutorialText != null) {
               msg = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL), tutorialText,
@@ -3311,7 +3314,8 @@ public class Planet {
       if (Game.getTutorial() != null && map != null
           && map.isTutorialEnabled()
           && map.getTurn() > 10) {
-        String tutorialText = Game.getTutorial().showTutorialText(122);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Leaders_Governor");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL),
@@ -4440,7 +4444,8 @@ public class Planet {
           ArtifactFactory.getRandomArtifact());
       if (Game.getTutorial() != null && realm.isHuman()
           && isTutorialEnabled) {
-        String tutorialText = Game.getTutorial().showTutorialText(15);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Research_Discovered_artifacts");
         if (tutorialText != null) {
           msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL), tutorialText,

@@ -2879,12 +2879,12 @@ public final class MissionHandling {
    * Adds possible tutorial text for player in index 0.
    * @param game Game class
    * @param meetingPlace can be planet or fleet where meeting happened
-   * @param tutorialIndex Tutorial index
+   * @param reference Tutorial reference
    */
   public static void addPossibleTutorial(final Game game,
-      final Object meetingPlace, final int tutorialIndex) {
+      final Object meetingPlace, final String reference) {
     if (Game.getTutorial() != null && game.getStarMap().isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(tutorialIndex);
+      String tutorialText = Game.getTutorial().showTutorialText(reference);
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL), tutorialText,
@@ -2997,7 +2997,7 @@ public final class MissionHandling {
           game.getStarMap().getNewsCorpData().addNews(
               NewsFactory.makeDefensiveActivation(info, defenseList));
         }
-        addPossibleTutorial(game, meetingPlace, 105);
+        addPossibleTutorial(game, meetingPlace, "Diplomacy_War");
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -3006,7 +3006,7 @@ public final class MissionHandling {
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
-        addPossibleTutorial(game, meetingPlace, 103);
+        addPossibleTutorial(game, meetingPlace, "Diplomacy_Alliance");
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.DEFENSIVE_PACT)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -3015,7 +3015,7 @@ public final class MissionHandling {
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
-        addPossibleTutorial(game, meetingPlace, 102);
+        addPossibleTutorial(game, meetingPlace, "Diplomacy_Defensive_pact");
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -3024,7 +3024,7 @@ public final class MissionHandling {
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
-        addPossibleTutorial(game, meetingPlace, 101);
+        addPossibleTutorial(game, meetingPlace, "Diplomacy_Trade_alliance");
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -3038,7 +3038,7 @@ public final class MissionHandling {
             game.getStarMap());
         defender.getMissions().removeAttackAgainstPlayer(info,
             game.getStarMap());
-        addPossibleTutorial(game, meetingPlace, 100);
+        addPossibleTutorial(game, meetingPlace, "Diplomacy_Peace_treaty");
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_EMBARGO)) {
         NegotiationOffer offer = trade.getFirstOffer().getEmbargoOffer();
@@ -3051,7 +3051,7 @@ public final class MissionHandling {
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
-        addPossibleTutorial(game, meetingPlace, 104);
+        addPossibleTutorial(game, meetingPlace, "Diplomacy_Trade_embargo");
       }
     } else {
       SpeechType type = trade.getSpeechTypeByOffer();
@@ -3096,7 +3096,7 @@ public final class MissionHandling {
           game.getStarMap().getNewsCorpData().addNews(
               NewsFactory.makeDefensiveActivation(info, defenseList));
         }
-        addPossibleTutorial(game, meetingPlace, 105);
+        addPossibleTutorial(game, meetingPlace, "Diplomacy_War");
       }
     }
     trade.updateMeetingNumbers();

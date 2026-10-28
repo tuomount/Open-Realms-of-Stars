@@ -1711,7 +1711,8 @@ public class StarMapGenerator {
       return;
     }
 
-    String tutorialText = Game.getTutorial().showTutorialText(0);
+    String tutorialText = Game.getTutorial().showTutorialText(
+        "Start_Start_of_Open_Realm_of_Stars");
     if (tutorialText != null) {
       Message msg = new Message(new MessageType(MmType.INFORMATION,
           SmType.TUTORIAL), tutorialText,
@@ -1719,7 +1720,7 @@ public class StarMapGenerator {
       playerInfo.getMsgList().addNewMessage(msg);
     }
 
-    tutorialText = Game.getTutorial().showTutorialText(1);
+    tutorialText = Game.getTutorial().showTutorialText("Start_First_planet");
     if (tutorialText != null) {
       Message msg = new Message(new MessageType(MmType.PLANETARY,
           SmType.TUTORIAL), tutorialText,
@@ -1729,7 +1730,7 @@ public class StarMapGenerator {
       playerInfo.getMsgList().addNewMessage(msg);
     }
 
-    tutorialText = Game.getTutorial().showTutorialText(2);
+    tutorialText = Game.getTutorial().showTutorialText("Start_First_Building");
     if (tutorialText != null) {
       Message msg = new Message(new MessageType(MmType.PLANETARY,
           SmType.TUTORIAL), tutorialText,
@@ -1752,7 +1753,8 @@ public class StarMapGenerator {
       return;
     }
 
-    String tutorialText = Game.getTutorial().showTutorialText(0);
+    String tutorialText = Game.getTutorial().showTutorialText(
+        "Start_Start_of_Open_Realm_of_Stars");
     if (tutorialText != null) {
       Message msg = new Message(new MessageType(MmType.INFORMATION,
           SmType.TUTORIAL), tutorialText,
@@ -1760,7 +1762,8 @@ public class StarMapGenerator {
       playerInfo.getMsgList().addNewMessage(msg);
     }
 
-    tutorialText = Game.getTutorial().showTutorialText(3);
+    tutorialText = Game.getTutorial().showTutorialText(
+        "Start_No_starting_planet");
     if (tutorialText != null) {
       Message msg = new Message(new MessageType(MmType.FLEET,
           SmType.TUTORIAL), tutorialText,
@@ -1783,7 +1786,8 @@ public class StarMapGenerator {
     if (ship.isColonyModule()) {
       if (Game.getTutorial() != null && playerInfo.isHuman()
           && starMap.isTutorialEnabled()) {
-        String tutorialText = Game.getTutorial().showTutorialText(7);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Movement_Exploring_with_Colony");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.FLEET,
               SmType.TUTORIAL), tutorialText,
@@ -1796,7 +1800,8 @@ public class StarMapGenerator {
     } else {
       if (Game.getTutorial() != null && playerInfo.isHuman()
           && starMap.isTutorialEnabled()) {
-        String tutorialText = Game.getTutorial().showTutorialText(5);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Movement_Basic_movement");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.FLEET,
               SmType.TUTORIAL), tutorialText,
@@ -1805,7 +1810,8 @@ public class StarMapGenerator {
           msg.setMatchByString(fleet.getName());
           playerInfo.getMsgList().addNewMessage(msg);
         }
-        tutorialText = Game.getTutorial().showTutorialText(6);
+        tutorialText = Game.getTutorial().showTutorialText(
+            "Movement_Exploring_the_space");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.FLEET,
               SmType.TUTORIAL), tutorialText,

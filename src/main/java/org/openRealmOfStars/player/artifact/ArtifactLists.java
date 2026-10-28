@@ -362,7 +362,8 @@ public class ArtifactLists {
     int limit = ArtifactFactory.getResearchCost(lvl, gameLength);
     if (artifactResearchPoints >= limit) {
       if (Game.getTutorial() != null  && info.isHuman() && tutorialEnabled) {
-        String tutorialText = Game.getTutorial().showTutorialText(16);
+        String tutorialText = Game.getTutorial().showTutorialText(
+            "Research_Researched_artifacts");
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.INFORMATION,
               SmType.TUTORIAL), tutorialText,

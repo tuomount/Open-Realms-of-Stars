@@ -251,14 +251,16 @@ public class SpaceAnomaly {
             ArtifactFactory.BROADCASTING_ELETRONIC));
     if (Game.getTutorial() != null  && info.isHuman()
         && map.isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(15);
+      String tutorialText = Game.getTutorial().showTutorialText(
+          "Research_Discovered_artifacts");
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         info.getMsgList().addNewMessage(msg);
       }
-      tutorialText = Game.getTutorial().showTutorialText(35);
+      tutorialText = Game.getTutorial().showTutorialText(
+          "Objects in Space_News_station");
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL), tutorialText,
@@ -292,14 +294,16 @@ public class SpaceAnomaly {
             ArtifactFactory.DESTROYED_PLANET_ARTIFACT));
     if (Game.getTutorial() != null  && info.isHuman()
         && map.isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(15);
+      String tutorialText = Game.getTutorial().showTutorialText(
+          "Research_Discovered_artifacts");
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL), tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         info.getMsgList().addNewMessage(msg);
       }
-      tutorialText = Game.getTutorial().showTutorialText(37);
+      tutorialText = Game.getTutorial().showTutorialText(
+          "Objects in Space_Destroyed_planet");
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL), tutorialText,
@@ -438,7 +442,8 @@ public class SpaceAnomaly {
               + " was found in the nebulae. Battle begins...");
           if (Game.getTutorial() != null  && info.isHuman()
               && map.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(36);
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Objects in Space_Monsters");
             if (tutorialText != null) {
               Message msg = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL), tutorialText,
@@ -561,7 +566,8 @@ public class SpaceAnomaly {
             info.getTechList().addTech(tech);
             if (Game.getTutorial() != null  && info.isHuman()
                 && map.isTutorialEnabled()) {
-              String tutorialText = Game.getTutorial().showTutorialText(14);
+              String tutorialText = Game.getTutorial().showTutorialText(
+                  "Research_Rare_technology");
               if (tutorialText != null) {
                 Message msg = new Message(new MessageType(MmType.INFORMATION,
                     SmType.TUTORIAL), tutorialText,
@@ -598,7 +604,8 @@ public class SpaceAnomaly {
               ArtifactFactory.getRandomNonFacility());
           if (Game.getTutorial() != null  && info.isHuman()
               && map.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(15);
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Research_Discovered_artifacts");
             if (tutorialText != null) {
               Message msg = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL), tutorialText,
@@ -724,7 +731,8 @@ public class SpaceAnomaly {
                   map.getAscensionEvents().getAscensionActivation()));
           if (Game.getTutorial() != null  && info.isHuman()
               && map.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(15);
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Research_Discovered_artifacts");
             if (tutorialText != null) {
               Message msg = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL), tutorialText,
@@ -763,7 +771,8 @@ public class SpaceAnomaly {
               + "Aggressive creature attack and battle begins...");
           if (Game.getTutorial() != null  && info.isHuman()
               && map.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(36);
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Objects in Space_Monsters");
             if (tutorialText != null) {
               Message msg = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL), tutorialText,

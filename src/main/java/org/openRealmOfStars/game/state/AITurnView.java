@@ -3199,14 +3199,16 @@ public class AITurnView extends BlackPanel {
               game.getStarMap(), news));
           if (Game.getTutorial() != null
               && game.getStarMap().isTutorialEnabled()) {
-                String tutorialText = Game.getTutorial().showTutorialText(129);
+                String tutorialText = Game.getTutorial().showTutorialText(
+                    "Leaders_Ruler_selected");
             if (tutorialText != null) {
               msg = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL),
                   tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
               realm.getMsgList().addUpcomingMessage(msg);
             }
-            tutorialText = Game.getTutorial().showTutorialText(121);
+            tutorialText = Game.getTutorial().showTutorialText(
+                "Leaders_Ruler");
             if (tutorialText != null) {
               msg = new Message(new MessageType(MmType.INFORMATION,
                   SmType.TUTORIAL),
@@ -3262,7 +3264,7 @@ public class AITurnView extends BlackPanel {
             if (Game.getTutorial() != null
                 && game.getStarMap().isTutorialEnabled()) {
                   String tutorialText = Game.getTutorial()
-                      .showTutorialText(131);
+                      .showTutorialText("Leaders_Corruption");
               if (tutorialText != null) {
                 msg = new Message(new MessageType(MmType.INFORMATION,
                     SmType.TUTORIAL),
@@ -3356,7 +3358,7 @@ public class AITurnView extends BlackPanel {
               if (Game.getTutorial() != null
                   && game.getStarMap().isTutorialEnabled()) {
                     String tutorialText = Game.getTutorial().showTutorialText(
-                        127);
+                        "Leaders_Death");
                   if (tutorialText != null) {
                     Message msg = new Message(new MessageType(
                         MmType.INFORMATION, SmType.TUTORIAL),
@@ -3440,7 +3442,7 @@ public class AITurnView extends BlackPanel {
           if (Game.getTutorial() != null
               && game.getStarMap().isTutorialEnabled()) {
                 String tutorialText = Game.getTutorial().showTutorialText(
-                    130);
+                    "Leaders_Unassigned_leader");
               if (tutorialText != null) {
                 msg = new Message(new MessageType(MmType.INFORMATION,
                     SmType.TUTORIAL),
@@ -3499,7 +3501,7 @@ public class AITurnView extends BlackPanel {
             if (Game.getTutorial() != null
                 && game.getStarMap().isTutorialEnabled()) {
                   String tutorialText = Game.getTutorial().showTutorialText(
-                      126);
+                      "Leaders_Heir_is_born");
                 if (tutorialText != null) {
                   Message msg = new Message(new MessageType(MmType.INFORMATION,
                       SmType.TUTORIAL),
@@ -3545,7 +3547,8 @@ public class AITurnView extends BlackPanel {
       if (leader.getExperience() >= required) {
         if (Game.getTutorial() != null
         && game.getStarMap().isTutorialEnabled()) {
-          String tutorialText = Game.getTutorial().showTutorialText(124);
+          String tutorialText = Game.getTutorial().showTutorialText(
+              "Leaders_Level_up");
           if (tutorialText != null) {
             Message msg = new Message(new MessageType(MmType.INFORMATION,
                 SmType.TUTORIAL), tutorialText,
@@ -3573,7 +3576,8 @@ public class AITurnView extends BlackPanel {
             && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
           if (Game.getTutorial() != null
               && game.getStarMap().isTutorialEnabled()) {
-                String tutorialText = Game.getTutorial().showTutorialText(125);
+                String tutorialText = Game.getTutorial().showTutorialText(
+                    "Leaders_Military_rank");
               if (tutorialText != null) {
                 msg = new Message(new MessageType(MmType.INFORMATION,
                     SmType.TUTORIAL), tutorialText,
@@ -3666,7 +3670,8 @@ public class AITurnView extends BlackPanel {
             if (Game.getTutorial() != null
                 && game.getStarMap().isTutorialEnabled()
                 && game.getStarMap().getTurn() > 15) {
-              String tutorialText = Game.getTutorial().showTutorialText(123);
+              String tutorialText = Game.getTutorial().showTutorialText(
+                  "Leaders_Commander");
               if (tutorialText != null) {
                 Message msg = new Message(new MessageType(MmType.INFORMATION,
                     SmType.TUTORIAL),
@@ -3914,7 +3919,8 @@ public class AITurnView extends BlackPanel {
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
     if (game.getStarMap().getTurn() == 1 && Game.getTutorial() != null
         && game.getStarMap().isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(12);
+      String tutorialText = Game.getTutorial().showTutorialText(
+          "Research_Boosting_research");
       if (tutorialText != null) {
         Message msg = new Message(new MessageType(MmType.INFORMATION,
             SmType.TUTORIAL), tutorialText,
@@ -3967,19 +3973,24 @@ public class AITurnView extends BlackPanel {
           && game.getStarMap().isTutorialEnabled()) {
         String tutorialText = null;
         if (news.getImageInstructions().contains("MOST OF PEOPLE")) {
-          tutorialText = Game.getTutorial().showTutorialText(154);
+          tutorialText = Game.getTutorial().showTutorialText(
+              "Victory_Population_victory");
         }
         if (news.getImageInstructions().contains("MOST CULTURAL POWER")) {
-          tutorialText = Game.getTutorial().showTutorialText(151);
+          tutorialText = Game.getTutorial().showTutorialText(
+              "Victory_Culture_victory");
         }
         if (news.getImageInstructions().contains("MOST SCIENTIFIC REALM")) {
-          tutorialText = Game.getTutorial().showTutorialText(153);
+          tutorialText = Game.getTutorial().showTutorialText(
+              "Victory_Scientific_victory");
         }
         if (news.getImageInstructions().contains("GREATEST REALM")) {
-          tutorialText = Game.getTutorial().showTutorialText(150);
+          tutorialText = Game.getTutorial().showTutorialText(
+              "Victory_Highest_score");
         }
         if (news.getImageInstructions().contains("GREATEST MILITARY")) {
-          tutorialText = Game.getTutorial().showTutorialText(152);
+          tutorialText = Game.getTutorial().showTutorialText(
+              "Victory_Domination_victory");
         }
         if (tutorialText != null) {
           Message msg = new Message(new MessageType(MmType.INFORMATION,

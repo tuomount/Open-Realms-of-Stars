@@ -591,7 +591,8 @@ public class MapPanel extends JPanel {
         }
         if (fleetOwner != info && Game.getTutorial() != null
             && starMap.isTutorialEnabled() && info.isHuman()) {
-          String tutorialText = Game.getTutorial().showTutorialText(50);
+          String tutorialText = Game.getTutorial().showTutorialText(
+              "Space Combat_Space_Combat");
           if (tutorialText != null) {
             Message msg = new Message(new MessageType(MmType.INFORMATION,
                 SmType.TUTORIAL),
@@ -599,7 +600,8 @@ public class MapPanel extends JPanel {
             msg.setCoordinate(new Coordinate(i + cx, j + cy));
             info.getMsgList().addNewMessage(msg);
           }
-          tutorialText = Game.getTutorial().showTutorialText(90);
+          tutorialText = Game.getTutorial().showTutorialText(
+              "Diplomacy_Diplomacy_with_other_Realms");
           if (tutorialText != null) {
             Message msg = new Message(new MessageType(MmType.INFORMATION,
                 SmType.TUTORIAL),

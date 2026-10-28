@@ -24,8 +24,7 @@ import java.awt.event.ActionListener;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.game.tutorial.HelpLine;
-import org.openRealmOfStars.game.tutorial.TutorialList;
+import org.openRealmOfStars.game.tutorial.Tutorial;
 /**
 *
 * JUnit for help view.
@@ -38,12 +37,7 @@ public class HelpViewTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    TutorialList tutorial = new TutorialList();
-    HelpLine helpLine = new HelpLine(0);
-    helpLine.setCategory("Test");
-    helpLine.setTitle("Test title");
-    helpLine.setText("Test text");
-    tutorial.add(helpLine);
+    Tutorial tutorial = new Tutorial();
     HelpView view = new HelpView(tutorial, false, listener);
     assertEquals(false, view.isTutorialEnabled());
     view = new HelpView(tutorial, true, listener);

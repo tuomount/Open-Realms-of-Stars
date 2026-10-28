@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.tutorial;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019 Tuomo Untinen
+ * Copyright (C) 2019-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,6 +45,11 @@ public class HelpLine {
   private String text;
 
   /**
+   * Tutorial reference text.
+   */
+  private String reference;
+
+  /**
    * Flag for shown tutorial line.
    */
   private boolean shown;
@@ -62,7 +67,21 @@ public class HelpLine {
   }
 
   /**
-   * Parse help line
+   * Constructor for help line
+   * @param reference Help line reference
+   */
+  public HelpLine(final String reference) {
+    index = 0;
+    category = "";
+    title = "";
+    text = "";
+    setShown(false);
+    this.setReference(reference);
+  }
+
+  /**
+   * Parse help line. This is the old way to parse tutorial.
+   * TODO: Remove this when JSON version works.
    * @param tutorialLine Single line for tutorial text
    * @return HelpLine if successfull or null
    */
@@ -139,6 +158,14 @@ public class HelpLine {
     return index;
   }
 
+  /**
+   * Set Help line index
+   * @param index Text line index
+   */
+  public void setIndex(final int index) {
+    this.index = index;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -164,6 +191,22 @@ public class HelpLine {
    */
   public void setShown(final boolean shown) {
     this.shown = shown;
+  }
+
+  /**
+   * Get tutorial line reference
+   * @return Reference
+   */
+  public String getReference() {
+    return reference;
+  }
+
+  /**
+   * Set Refenrence
+   * @param reference Tutorial line reference
+   */
+  public void setReference(final String reference) {
+    this.reference = reference;
   }
 
 }

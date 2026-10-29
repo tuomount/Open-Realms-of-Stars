@@ -18,7 +18,11 @@ package org.openRealmOfStars.game.tutorial;
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.TextUtilities;
@@ -127,6 +131,11 @@ public class Tutorial {
 
   /** HelpLine this factory knows. IDs are used as keys. */
   private HashMap<String, HelpLine> tutorial;
+  /**
+   * Tutorial list in order of indexes.
+   */
+  private ArrayList<String> tutorialList;
+
   /** Tracks if factory is initialized with data */
   private boolean initialized;
   /** JSON data loader */
@@ -137,6 +146,7 @@ public class Tutorial {
     this.tutorial = new HashMap<>();
     this.initialized = false;
     this.loader = new TutorialLoader();
+    this.tutorialList = new ArrayList<String>();
   }
 
   /**
@@ -148,7 +158,19 @@ public class Tutorial {
       initialized = true;
       init();
     }
-    return tutorial.values().toArray(new HelpLine[0]);
+    // Reserve result array for each tutorial line.
+    HelpLine[] result = new HelpLine[tutorialList.size()];
+    int count = 0;
+    for (String reference : tutorialList) {
+      // Get single line by reference
+      HelpLine line = tutorial.get(reference);
+      if (line != null && count < result.length) {
+        // Found one and not out of buffer
+        result[count] = line;
+        count++;
+      }
+    }
+    return result;
   }
 
   /**
@@ -166,10 +188,22 @@ public class Tutorial {
 
   /** (Re)Initialize the factory */
   private void init() {
+    ((TutorialLoader) loader).resetCount();
     tutorial.clear();
+    tutorialList.clear();
     final var basePath = "resources/data/tutorial/";
     String[] files = {"tutorial"};
     int linesLoaded = loader.loadAll(tutorial, basePath, files);
+    // Get tutorials just out from hash map
+    HelpLine[] lines = tutorial.values().toArray(new HelpLine[0]);
+    List<HelpLine> linesList = Arrays.asList(lines);
+    // Sort them in linesList with built-in collections.
+    Collections.sort(linesList,
+        Comparator.comparingInt(HelpLine::getIndex));
+    // Go through sorted list and add them into local tutorial list
+    for (HelpLine line : linesList) {
+      tutorialList.add(line.getReference());
+    }
     ErrorLogger.log("Tutorial lines loaded: " + linesLoaded);
   }
 }

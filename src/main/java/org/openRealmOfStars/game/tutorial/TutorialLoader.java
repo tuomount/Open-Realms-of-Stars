@@ -30,6 +30,18 @@ import org.openRealmOfStars.utilities.FileIo.DataLoader;
 public class TutorialLoader extends DataLoader<String, HelpLine> {
 
   /**
+   * Index count.
+   */
+  private int indexCount = 0;
+
+  /**
+   * Reset count.
+   */
+  public void resetCount() {
+    indexCount = 0;
+  }
+
+  /**
    * Parse Tutorial line from a JSON file.
    * <p>
    * JSON Tutorial object must have following format:<ul>
@@ -48,14 +60,14 @@ public class TutorialLoader extends DataLoader<String, HelpLine> {
     try {
       final var reference = jobj.getString("referenceKey");
       HelpLine tmp = new HelpLine(reference);
-      final int index = jobj.getInt("index");
-      tmp.setIndex(index);
+      tmp.setIndex(indexCount);
       final var category = jobj.getString("category");
       tmp.setCategory(category);
       final var title = jobj.getString("title");
       tmp.setTitle(title);
       final var text = jobj.getString("text");
       tmp.setText(text);
+      indexCount++;
       return Optional.of(tmp);
     } catch (JSONException e) {
       ErrorLogger.log(e);

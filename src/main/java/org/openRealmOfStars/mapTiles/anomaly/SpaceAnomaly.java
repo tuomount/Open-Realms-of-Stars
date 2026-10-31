@@ -401,6 +401,17 @@ public class SpaceAnomaly {
             lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
                 board, StarMap.ENEMY_PIRATE);
           }
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Objects in Space_Pirates");
+            if (tutorialText != null) {
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL), tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
           Combat fight = new Combat(fleet, lair, info, board,
               map.getStarYear());
           result.setCombat(fight);
@@ -421,6 +432,17 @@ public class SpaceAnomaly {
           PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet pirate = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
               board, StarMap.ENEMY_PIRATE);
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(
+                "Objects in Space_Pirates");
+            if (tutorialText != null) {
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL), tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
           Combat fight = new Combat(fleet, pirate, info, board,
               map.getStarYear());
           result.setCombat(fight);

@@ -210,6 +210,12 @@
         "text": "Space krakens and space worms are dangerous monsters lurking in deep space. These are slow creature but with dangerous claws and teeth. They will attack against armed fleets or when being annoyed. Scientific commanders might learn about them when fighting against them. There is also possibility to tame them by disabling their fins and possible attack means and then pulling it with tractor beam."
     },
     {
+        "referenceKey": "Objects in Space_Pirates",
+        "category": "Objects in Space",
+        "title": "Space pirates",
+        "text": "Space pirates are active in space, seeking riches and advanced technology. They may establish their operations from either stationary space stations or roaming fleets. As time progresses, they enhance their infrastructure by building new ships and upgrading existing stations.\n\nThe presence of space pirates can become problematic if left unchecked, allowing them to roam freely and increase their numbers throughout the galaxy. It is possible to engage with them through diplomatic means, such as trade agreements. However, should they manage to seize control of planets, their threat level escalates significantly, making it imperative to address the issue proactively."
+    },
+    {
         "referenceKey": "Objects in Space_Destroyed_planet",
         "category": "Objects in Space",
         "title": "Destroyed planet",
@@ -327,13 +333,19 @@
         "referenceKey": "Ship Design_Hull_type_Probe",
         "category": "Ship Design",
         "title": "Hull type Probe",
-        "text": "Probe is small hull type which cannot have weapons, cargo or privateering modules. Probes have increased moving, they can have increased FTL and even regular speed."
+        "text": "Probe is small hull type which cannot have weapons, cargo or privateering modules. Probes have increased moving, they can have increased FTL and even regular speed. Probes are good choice if you want to make unarmed spy ship."
     },
     {
         "referenceKey": "Ship Design_Hull_type_Star_base",
         "category": "Ship Design",
         "title": "Hull type Star base",
-        "text": "Star bases are special hull type which can have weapons and star base modules. They cannot have cargo space or privateering modules. Star bases can move before they are deployed. After deploying they will stay on that deep space anchor. When deployed star bases can use weapons and star base modules, but after deploying they cannot move anymore not even in the space combat. On the other hand star base weapons have increased range on weapons. Orbitals are like star bases, but they are built on planet and they do not need engine. Orbitals can also have star base modules."
+        "text": "Star bases are special hull type which can have weapons and star base modules. They cannot have cargo space or privateering modules. Star bases can move before they are deployed. After deploying they will stay on that deep space anchor. When deployed star bases can use weapons and star base modules, but after deploying they cannot move anymore not even in the space combat. On the other hand star base weapons have increased range on weapons."
+    },
+    {
+        "referenceKey": "Ship Design_Hull_type_Orbital",
+        "category": "Ship Design",
+        "title": "Hull type Orbital",
+        "text": "Orbitals are structures that can be equipped with weapons and star base modules but cannot accommodate cargo or privateering modules. They are permanently stationed at the planet where they were constructed and cannot be relocated.\n\nOrbitals provide strategic advantages to their home planet. For example, if equipped with a scanner module, they eliminate the need for a separate planetary scanner. Additionally, an orbital must be destroyed before its planet can be conquered. Orbital elevators or lifts depend on the presence of an orbital structure on the planet."
     },
     {
         "referenceKey": "Ship Design_Hull_type_Privateer",
@@ -351,7 +363,7 @@
         "referenceKey": "Ship Design_Hull_type_Normal",
         "category": "Ship Design",
         "title": "Hull type Normal",
-        "text": "Normal ships are one which carry weapons but no special modules. These type of hulls are good for space combat and exploring the unknown space."
+        "text": "Normal ships are one which carry weapons but no special modules. These type of hulls are good for space combat and exploring the unknown space. Normal hull types are also good choice for mining ships. Mining ships do not need cargo space."
     },
     {
         "referenceKey": "Ship Design_Engine",
@@ -387,7 +399,7 @@
         "referenceKey": "Ship Design_Robo_miner",
         "category": "Ship Design",
         "title": "Robo miner",
-        "text": "Robo miners are ship components that allow mining uncolonized planets. Mined metal can be then transported to planet which can build something with big freighter ships."
+        "text": "Robo miners are ship components that allow mining uncolonized planets. Mined metal can be then transported to planet which can build something with big freighter ships. Mining ships do not need cargo space, since these should stay on planet keep mining."
     },
     {
         "referenceKey": "Ship Design_Orbital_bombs",
@@ -396,16 +408,16 @@
         "text": "Orbital bombs are used when conquering enemy planet. These will destroy population and buildings from the surface. Bombs can be divided into two categories: regular ones and nuclear ones. Regular bombs require more usage than nuclear bombs and can destroy buildings more than population. Nuclear bombs are very effective to destroy population. Drawback from nuclear bombs is that planet's radiation might rise during bombing. Also other realms generally thinking using nuclear bomb is unethical."
     },
     {
-        "referenceKey": "Ship Design_Orbitals",
-        "category": "Ship Design",
-        "title": "Orbitals",
-        "text": "Orbitals are special hull type which can have weapons and star base modules. They cannot have cargo space, privateering modules or engines. Orbitals are always orbiting planet. Orbitals can be upgraded by building new orbital on planet. Orbitals cannot move in the space combat but their weapons have increased range on weapons even longer than star bases."
-    },
-    {
         "referenceKey": "Ship Design_Upgrade_ship",
         "category": "Ship Design",
         "title": "Upgrade ship",
         "text": "Ships can be upgrade while fleet is orbiting on planet which has space port. Upgrade can be found from fleet view and clicking upgrade ships -button. There you need to select which ship to upgrade from the fleet and where to upgrade.\\n\\nOld and new ship design differences are shown in center of screen. Notice that old and new ships need to share same hull. All other ship components can be changed except the hull. Upgrade cost is difference between new and old plus one metal per changed component and three credits per changed component. If planet does not have enough metal on surface then each metal cost is converted to credits by doubling the metal cost. Upgrading the ship is always paid with credits and metal on surface."
+    },
+    {
+        "referenceKey": "Ship Design_Obsolete_design",
+        "category": "Ship Design",
+        "title": "Obsolete design",
+        "text": "Every single ship design model is available for building on planets which have space port. Since there is no limit how many designs you can have it is important to make old designs obsolete. Obsoleted models are not visible in build menu, but can be still used in game."
     },
     {
         "referenceKey": "Diplomacy_Diplomacy_with_other_Realms",
@@ -569,6 +581,72 @@
         "title": "Corruption",
         "text": "Leaders can get corruption. Perk can be gained via level up or if realm population is unhappy or realm has lot of credits available. Also being longer in same job increases leader risk to get corrupted. Corrupted leaders also may cause other leaders to gain corruption. Corrupted leaders cost one extra credit per star year. Governments which are immune to happiness do not corrupt their leader in this manner."
     },
+    {
+        "referenceKey": "Espionage_general",
+        "category": "Espionage",
+        "title": "Espionage",
+        "text": "Within the field of espionage, missions are conducted to gain advantages over other realms. Each mission has a base success chance and a probability of being detected. Successful missions may still result in commanders getting caught, with consequences varying based on diplomatic relations. Cloaking device reduces getting caught chance and better espionage module increase success chance.\n\nIn order to do espionage mission it requires having a fleet next another realm's planet and fleet must have espionage module and commander. View the fleet and if 'Espionage mission' button is enabled you can make espionage mission. It always takes one star year to perform the actual mission."
+      },
+      {
+        "referenceKey": "Espionage_sabotage",
+        "category": "Espionage",
+        "title": "Sabotage",
+        "text": "The Sabotage mission aims to disrupt current production. With a success chance of 40% and a caught chance of 50%, if successful, it reduces production by half."
+      },
+      {
+        "referenceKey": "Espionage_assassination",
+        "category": "Espionage",
+        "title": "Assassinate the Governor",
+        "text": "This mission targets the elimination of a governor. It has a success chance of 20% and a caught chance of 60%, making it one of the riskier missions. Succesful mission kills current governor of target planet."
+      },
+      {
+        "referenceKey": "Espionage_steal_tech",
+        "category": "Espionage",
+        "title": "Steal Technology",
+        "text": "The mission to Steal Tech involves acquiring technology not yet possessed by your realm. It has a success chance of 50% and a caught chance of 50%. Successful mission steals technology from target realm."
+      },
+      {
+        "referenceKey": "Espionage_steal_credit",
+        "category": "Espionage",
+        "title": "Steal Credit from Planet's Treasury",
+        "text": "This mission involves stealing credits, with a success chance of 60% and a caught chance of 50%. Successful mission steals credits from target realm."
+      },
+      {
+        "referenceKey": "Espionage_terrorist_attack",
+        "category": "Espionage",
+        "title": "Terrorist Attack",
+        "text": "A Terrorist Attack mission causes casualties and destruction. It has a success chance of 40% and a caught chance of 70%, posing significant risks. Succesfull mission destroyes one random building from planet and kills population."
+      },
+      {
+        "referenceKey": "Espionage_demolish_building",
+        "category": "Espionage",
+        "title": "Demolition",
+        "text": "This mission aims to demolish a building without causing casualties. It has a success chance of 20% and a caught chance of 60%. Successful mission destroys one random building from the planet."
+      },
+      {
+        "referenceKey": "Espionage_gain_trust",
+        "category": "Espionage",
+        "title": "Gain Diplomatic Trust",
+        "text": "The mission to Gain Diplomatic Trust improves relations with the target realm. It has an 80% success chance and a caught chance of 20%, making it relatively safe. Succesfull mission improves diplomatic relations towards your realm."
+      },
+      {
+        "referenceKey": "Espionage_false_flag",
+        "category": "Espionage",
+        "title": "False Flag Operation",
+        "text": "A False Flag mission involves destroying an espionage ship while blaming another realm. It has a success chance of 50% and a caught chance of 60%. Successful false flag operation may grant casus belli on war declaration against target realm."
+      },
+      {
+        "referenceKey": "Espionage_deadly_virus",
+        "category": "Espionage",
+        "title": "Spread Deadly Virus",
+        "text": "This mission spreads a deadly virus, with an 80% success chance and a caught chance of 40%. It requires the virus to be previously discovered. If successful virus spreads on planet and killing all expect one single population. Draw back is that target realm also gains deadly virus and cannot be target of this espionage mission again."
+      },
+      {
+        "referenceKey": "Espionage_consequence",
+        "category": "Espionage",
+        "title": "Consequences",
+        "text": "If commanders are caught, consequences depend on diplomatic relations. Hostile contexts like wars increase execution risks. Certain missions can escalate tensions, potentially leading to war."
+      },
     {
         "referenceKey": "Victory_Highest_score",
         "category": "Victory",

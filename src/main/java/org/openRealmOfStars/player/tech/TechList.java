@@ -1303,6 +1303,11 @@ public class TechList {
         showTutorial("Ship Design_Hull_type_Freighter", info);
       }
       if (techType == TechType.Hulls
+          && techHull.contains("Orbital")) {
+        specialHull = true;
+        showTutorial("Ship Design_Hull_type_Orbital", info);
+      }
+      if (techType == TechType.Hulls
           && !specialHull) {
         showTutorial("Ship Design_Hull_type_Normal", info);
       }

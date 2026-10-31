@@ -27,7 +27,7 @@
         "referenceKey": "Start_GBNC",
         "category": "Start",
         "title": "Galactic Broadcasting News Company",
-        "text": "The Galactic Broadcasting News Company (GBNC) is an interesting group in space. It's led by a robot and collects facts about different places in the galaxy to share with everyone.\n\nTheir info is usually reliable, but be careful with military numbers—they might not always be true because realms can pay GBNC to lie about how strong their armies are. The only way to find out the real size of another realm’s military is by sending secret spy ships into their area."
+        "text": "The Galactic Broadcasting News Company (GBNC) is an interesting group in space. It's led by a robot and collects facts about different places in the galaxy to share with everyone.\n\nTheir info is usually reliable, but be careful with military power numbers. Those numbers might not always be true because realms can pay GBNC to lie about how strong their armies are. The only way to find out the real size of another realm’s military is by sending secret spy ships into their area."
     },
     {
         "referenceKey": "Movement_Basic_movement",
@@ -57,13 +57,13 @@
         "referenceKey": "Realm_Lie_military_size",
         "category": "Realm",
         "title": "Military size",
-        "text": "Every 20 star years, GBNC creates a statistical overview of the galaxy, including details about each realm's military size. Realms have the option to pay GBNC if they want their military strength reported inaccurately—either making it seem smaller or larger than it actually is.\n\nClaiming to have a stronger military might deter others from attacking, as they may believe you’re too powerful to challenge. Conversely, understating your military strength could tempt another realm into an attack, allowing you to defend without formally declaring war. However, avoiding official declarations of war can help maintain better diplomatic relations.\n\nThis can be find from space map view when clicking spying button."
+        "text": "Every 20 star years, GBNC creates a statistical overview of the galaxy, including details about each realm's military size. Realms have the option to pay GBNC if they want their military strength reported inaccurately. Realm may claim it seem smaller or larger than it actually is.\n\nClaiming to have a stronger military might deter others from attacking, as they may believe you’re too powerful to challenge. Conversely, understating your military strength could tempt another realm into an attack, allowing you to defend without formally declaring war. However, avoiding official declarations of war can help maintain better diplomatic relations.\n\nThis can be find from space map view when clicking spying button."
     },
     {
         "referenceKey": "Realm_Spying",
         "category": "Realm",
         "title": "Spying",
-        "text": "In the spying view, you get to see all realms within the galaxy, including your own. Each realm has an \"intelligence value, \" indicating how much information you possess about them—ranging up to a maximum of 10. This value increases with each ship equipped with an espionage module.\n\nBelow these values, you’ll find the current diplomatic status between your realm and the others. Each text box also shows two types of military data: \n\n1. Military Value: Your own assessment of that realm’s military strength.\n2. News Value: The figures from GBNC's previous report.\n\nAdditionally, there might be a special intelligence bonus that applies to that particular realm."
+        "text": "In the spying view, you get to see all realms within the galaxy, including your own. Each realm has an \"intelligence value, \" indicating how much information you possess about them. Maximum number of intelligence value is 10. This value increases with each ship equipped with an espionage module.\n\nBelow these values, you’ll find the current diplomatic status between your realm and the others. Each text box also shows two types of military data: \n\n1. Military Value: Your own assessment of that realm’s military strength.\n2. News Value: The figures from GBNC's previous report.\n\nAdditionally, there might be a special intelligence bonus that applies to that particular realm."
     },
     {
         "referenceKey": "Realm_SpaceRace_and_government",

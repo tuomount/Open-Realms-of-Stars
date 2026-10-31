@@ -23,6 +23,7 @@ import org.openRealmOfStars.ai.mission.Mission;
 import org.openRealmOfStars.ai.mission.MissionPhase;
 import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.ai.research.Research;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -1220,6 +1221,17 @@ public final class RandomEventUtility {
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
+        if (Game.getTutorial() != null) {
+          String tutorialText = Game.getTutorial().showTutorialText(
+              "Planet_Wild_life");
+          if (tutorialText != null) {
+            Message msgTut = new Message(new MessageType(MmType.INFORMATION,
+                SmType.TUTORIAL),
+                tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+            msgTut.setCoordinate(planet.getCoordinate());
+            info.getMsgList().addUpcomingMessage(msgTut);
+          }
+        }
       }
     }
   }

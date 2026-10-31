@@ -1153,7 +1153,6 @@ public class TechList {
         }
         break;
       }
-
       addTech(tech);
 
       showResearchComplete(tech, info);
@@ -1177,6 +1176,8 @@ public class TechList {
     var techComponent = tech.getComponent();
     var techHull = tech.getHull();
     var techType = tech.getType();
+
+    showTutorial("Research_Technology_categories", info);
 
     if (techHull != null || techComponent != null) {
       showTutorial("Ship Design_Design_principals", info);
@@ -1213,12 +1214,32 @@ public class TechList {
         showTutorial("Ship Design_Orbital_bombs", info);
       }
       if (techType == TechType.Combat
+          && techComponent.startsWith("Chaingun")) {
+        showTutorial("Space Combat_Chaingun", info);
+      }
+      if (techType == TechType.Combat
           && techComponent.startsWith("HE missile")) {
         showTutorial("Space Combat_Missiles", info);
       }
       if (techType == TechType.Combat
           && techComponent.startsWith("ECM torpedo")) {
         showTutorial("Space Combat_ECM_Missile", info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Plasma cannon")) {
+        showTutorial("Space Combat_Plasma_cannon", info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Ion cannon")) {
+        showTutorial("Space Combat_Ion_cannon", info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Tractor beam")) {
+        showTutorial("Space Combat_Tractor_beam", info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Gravity ripper")) {
+        showTutorial("Space Combat_Gravity_ripper", info);
       }
 
       if (techType == TechType.Hulls
@@ -1252,6 +1273,10 @@ public class TechList {
       if (techType == TechType.Electrics
           && techComponent.startsWith("Targeting computer")) {
         showTutorial("Space Combat_Targeting_computers", info);
+      }
+      if (techType == TechType.Electrics
+          && techComponent.startsWith("Robo miner")) {
+        showTutorial("Ship Design_Robo_miner", info);
       }
     }
 

@@ -609,6 +609,16 @@ public class MapPanel extends JPanel {
             msg.setCoordinate(new Coordinate(i + cx, j + cy));
             info.getMsgList().addNewMessage(msg);
           }
+          if (espionageDetected) {
+            tutorialText = Game.getTutorial().showTutorialText("Realm_Spying");
+            if (tutorialText != null) {
+              Message msg = new Message(new MessageType(MmType.INFORMATION,
+                  SmType.TUTORIAL),
+                  tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(new Coordinate(i + cx, j + cy));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
         }
       }
       if (drawShip) {

@@ -3929,6 +3929,18 @@ public class AITurnView extends BlackPanel {
           .addNewMessage(msg);
       }
     }
+    if (game.getStarMap().getTurn() == 19 && Game.getTutorial() != null
+        && game.getStarMap().isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(
+          "Realm_Lie_military_size");
+      if (tutorialText != null) {
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
+          .addNewMessage(msg);
+      }
+    }
     GameLengthState newState = game.getStarMap().getGameLengthState();
     if (game.getStarMap().getTurn() > 1) {
       PlayerInfo pirate = game.getPlayers().getSpacePiratePlayer();
@@ -3972,6 +3984,10 @@ public class AITurnView extends BlackPanel {
           && game.getStarMap().getPlayerList().getPlayerInfoByIndex(0).isHuman()
           && game.getStarMap().isTutorialEnabled()) {
         String tutorialText = null;
+        if (news.getImageInstructions().contains("FIRST STATISTICAL")) {
+          tutorialText = Game.getTutorial().showTutorialText(
+              "Start_GBNC");
+        }
         if (news.getImageInstructions().contains("MOST OF PEOPLE")) {
           tutorialText = Game.getTutorial().showTutorialText(
               "Victory_Population_victory");

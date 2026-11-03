@@ -3595,6 +3595,49 @@ public class AITurnView extends BlackPanel {
       realm.getLeaderPool().add(heir);
     }
   }
+
+  /**
+   * Create timed tutorial texts.
+   */
+  private void createTimedTutorialTexts() {
+    if (game.getStarMap().getTurn() == 1 && Game.getTutorial() != null
+        && game.getStarMap().isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(
+          "Research_Boosting_research");
+      if (tutorialText != null) {
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
+          .addNewMessage(msg);
+      }
+    }
+    if (game.getStarMap().getTurn() == 10 && Game.getTutorial() != null
+        && game.getStarMap().isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(
+          "Start_help");
+      if (tutorialText != null) {
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
+          .addNewMessage(msg);
+      }
+    }
+    if (game.getStarMap().getTurn() == 19 && Game.getTutorial() != null
+        && game.getStarMap().isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(
+          "Realm_Lie_military_size");
+      if (tutorialText != null) {
+        Message msg = new Message(new MessageType(MmType.INFORMATION,
+            SmType.TUTORIAL), tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
+          .addNewMessage(msg);
+      }
+    }
+  }
+
   /**
    * Update whole star map to next turn
    */
@@ -3917,30 +3960,7 @@ public class AITurnView extends BlackPanel {
     game.getStarMap().getHistory().updateCultureEventMap(game.getStarMap());
     GameLengthState oldState = game.getStarMap().getGameLengthState();
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
-    if (game.getStarMap().getTurn() == 1 && Game.getTutorial() != null
-        && game.getStarMap().isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(
-          "Research_Boosting_research");
-      if (tutorialText != null) {
-        Message msg = new Message(new MessageType(MmType.INFORMATION,
-            SmType.TUTORIAL), tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
-          .addNewMessage(msg);
-      }
-    }
-    if (game.getStarMap().getTurn() == 19 && Game.getTutorial() != null
-        && game.getStarMap().isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(
-          "Realm_Lie_military_size");
-      if (tutorialText != null) {
-        Message msg = new Message(new MessageType(MmType.INFORMATION,
-            SmType.TUTORIAL), tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
-          .addNewMessage(msg);
-      }
-    }
+    createTimedTutorialTexts();
     GameLengthState newState = game.getStarMap().getGameLengthState();
     if (game.getStarMap().getTurn() > 1) {
       PlayerInfo pirate = game.getPlayers().getSpacePiratePlayer();

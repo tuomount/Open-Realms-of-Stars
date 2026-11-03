@@ -30,6 +30,12 @@
         "text": "The Galactic Broadcasting News Company (GBNC) is an interesting group in space. It's led by a robot and collects facts about different places in the galaxy to share with everyone.\n\nTheir info is usually reliable, but be careful with military power numbers. Those numbers might not always be true because realms can pay GBNC to lie about how strong their armies are. The only way to find out the real size of another realm’s military is by sending secret spy ships into their area."
     },
     {
+        "referenceKey": "Start_help",
+        "category": "Start",
+        "title": "Help",
+        "text": "You can always look and review each tutorial text in help view. There is also possibility to search text from all help text in help view."
+    },
+    {
         "referenceKey": "Movement_Basic_movement",
         "category": "Movement",
         "title": "Basic movement",

@@ -38,7 +38,6 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.gui.util.UIScale;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MmType;
-import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
  *
@@ -186,7 +185,7 @@ public class MessagePanel extends JPanel {
     countLabel.setText(msgIndex + "/" + max);
     titleLabel.setText(msg.getType().getMainType().toString());
     titleLabel.setLeftIcon(msg.getIcon());
-    msgText.setText(TextUtilities.removeLineChanges(msg.getMessage()));
+    msgText.setText(msg.getMessage());
     msgText.setCaretPosition(0);
     msgText.repaint();
     if (filtered) {

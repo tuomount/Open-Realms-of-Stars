@@ -5218,4 +5218,52 @@ public class StarMap {
     return result;
   }
 
+  /**
+   * Score Colony mission based on distance and planet suitability.
+   * @param mission Colony mission
+   * @param info PlayerInfo
+   * @return score
+   */
+  public int scoreColonyMission(final Mission mission, final PlayerInfo info) {
+    Planet planet = this.getPlanetByCoordinate(mission.getX(), mission.getY());
+    if (planet != null) {
+      int worldValue = info.getPlanetSuitabilityValue(planet);
+      int size = planet.getGroundSize();
+      double dist = info.getCenterRealm().calculateDistance(
+          new Coordinate(mission.getX(), mission.getY()));
+      double maxDistPoints = this.getMaxX() / 4;
+      int score = (int) (maxDistPoints - dist);
+      if (score < -10) {
+        score = -10;
+      }
+      score = score + size * 2;
+      worldValue = (worldValue - 50) / 3;
+      score = score + worldValue;
+      return score;
+    }
+    return -1;
+  }
+
+  /**
+   * Score mining mission based on distance and amount of metal to mine.
+   * @param mission Mining mission
+   * @param info PlayerInfo
+   * @return score
+   */
+  public int scoreMiningMission(final Mission mission, final PlayerInfo info) {
+    Planet planet = this.getPlanetByCoordinate(mission.getX(), mission.getY());
+    if (planet != null) {
+      int worldValue = planet.getAmountMetalInGround() / 500;
+      double dist = info.getCenterRealm().calculateDistance(
+          new Coordinate(mission.getX(), mission.getY()));
+      double maxDistPoints = this.getMaxX() / 4;
+      int score = (int) (maxDistPoints - dist);
+      if (score < -10) {
+        score = -10;
+      }
+      score = score + worldValue;
+      return score;
+    }
+    return -1;
+  }
 }

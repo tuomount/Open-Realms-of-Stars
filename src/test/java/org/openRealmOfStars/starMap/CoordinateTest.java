@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2026 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,6 +37,20 @@ public class CoordinateTest {
 
     assertEquals(x, coordinate.getX());
     assertEquals(y, coordinate.getY());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCalculateDistance() {
+    int x = 50;
+    int y = 55;
+    Coordinate coordinate = new Coordinate(x, y);
+    int tx = 50;
+    int ty = 54;
+    Coordinate target = new Coordinate(tx, ty);
+    double distance = coordinate.calculateDistance(target);
+    System.out.println("Distance: " + distance);
+    assertEquals(1, distance, 0);
   }
 
   @Test

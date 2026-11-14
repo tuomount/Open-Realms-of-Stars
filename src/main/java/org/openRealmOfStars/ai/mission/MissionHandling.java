@@ -1848,8 +1848,8 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
-        previousTarget = game.getStarMap()
-            .getPlanetByCoordinate(mission.getX(), mission.getY());
+        previousTarget = game.getStarMap().getPlanetByName(
+            mission.getTargetPlanet());
         PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
           // Target planet where unloading happens
@@ -1938,7 +1938,7 @@ public final class MissionHandling {
       Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getCoordinate().calculateDistance(targetCoord) == 0) {
-        // Target acquired, let's do trade
+        // Target acquired, let's do mining
         mission.setPhase(MissionPhase.EXECUTING);
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
@@ -1947,6 +1947,10 @@ public final class MissionHandling {
       if (mission.getPhase() == MissionPhase.EXECUTING) {
         previousTarget = game.getStarMap()
             .getPlanetByCoordinate(fleet.getX(), fleet.getY());
+        if (previousTarget == null) {
+          mission.setPhase(MissionPhase.TREKKING);
+          return;
+        }
         PlayerInfo ownerInfo = previousTarget.getPlanetPlayerInfo();
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
           if (ownerInfo == null) {

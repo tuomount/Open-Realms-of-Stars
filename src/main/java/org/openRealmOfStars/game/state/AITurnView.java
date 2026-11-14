@@ -1293,34 +1293,56 @@ public class AITurnView extends BlackPanel {
     int bestScore = 0;
     Mission bestMission = null;
     for (Mission mission : colonyMissions) {
-      Planet planet = map.getPlanetByCoordinate(mission.getX(), mission.getY());
-      if (planet != null) {
-        int worldValue = info.getPlanetSuitabilityValue(planet);
-        int size = planet.getGroundSize();
-        double dist = info.getCenterRealm().calculateDistance(
-            new Coordinate(mission.getX(), mission.getY()));
-        double maxDistPoints = map.getMaxX() / 4;
-        int score = (int) (maxDistPoints - dist);
-        if (score < -10) {
-          score = -10;
-        }
-        score = score + size * 2;
-        worldValue = (worldValue - 50) / 3;
-        score = score + worldValue;
-        if (score > bestScore) {
-          bestScore = score;
-          bestMission = mission;
-        }
+      int score = map.scoreColonyMission(mission, info);
+      if (score > bestScore) {
+        bestScore = score;
+        bestMission = mission;
       }
     }
     if (bestMission != null) {
-      info.getMissions().addHighestPriority(bestMission);
+      Mission firstMission = info.getMissions().getMission(
+          MissionType.MINING, MissionPhase.PLANNING);
+      if (firstMission != null
+          && map.scoreColonyMission(firstMission, info) > bestScore) {
+        info.getMissions().add(bestMission);
+      } else {
+        info.getMissions().addHighestPriority(bestMission);
+      }
       Mission mission = info.getMissions().getMission(
           MissionType.COLONY_EXPLORE, MissionPhase.EXECUTING);
       if (mission != null
           && !info.getRace().hasTrait(TraitIds.SPORE_COLONIZATION)) {
         // Colony ship was exploring, calling it back to home
         mission.setPhase(MissionPhase.TREKKING);
+      }
+    }
+  }
+
+  /**
+   * Find best mining mission for realm.
+   * @param map StarMap
+   * @param miningMissions Array list of possible mining missions.
+   * @param info Realm which is selecting.
+   */
+  private static void findBestMiningMission(final StarMap map,
+      final ArrayList<Mission> miningMissions, final PlayerInfo info) {
+    int bestScore = 0;
+    Mission bestMission = null;
+    for (Mission mission : miningMissions) {
+      int score = map.scoreMiningMission(mission, info);
+      if (score > bestScore) {
+        bestScore = score;
+        bestMission = mission;
+      }
+    }
+    if (bestMission != null) {
+      Mission firstMission = info.getMissions().getMission(
+          MissionType.MINING, MissionPhase.PLANNING);
+      if (firstMission != null
+          && map.scoreMiningMission(firstMission, info) > bestScore) {
+        info.getMissions().add(bestMission);
+      } else {
+        info.getMissions().addHighestPriority(bestMission);
       }
     }
   }
@@ -1666,6 +1688,7 @@ public class AITurnView extends BlackPanel {
             // New planet to mine, adding it to mission list
             Mission mission = new Mission(MissionType.MINING,
                 MissionPhase.PLANNING, planet.getCoordinate());
+            mission.setTargetPlanet(planet.getName());
             if (info.getMissions().getMiningMission(mission.getX(),
                 mission.getY()) == null && minings < LIMIT_MININGS) {
               // No mining mission for this planet found, so adding it.
@@ -1780,6 +1803,7 @@ public class AITurnView extends BlackPanel {
         } // End of owned planet handling
       } // End of for loop of planets
       findBestColonyMission(game.getStarMap(), colonyMissions, info);
+      findBestMiningMission(game.getStarMap(), miningMissions, info);
       findBestAttackPlanet(attackMissions, info);
       findBestTradePlanet(tradeMissions, info);
     }

@@ -632,6 +632,11 @@ public final class PlanetHandling {
               Mission carryMetal = new Mission(MissionType.METAL_FREIGHTING,
                   MissionPhase.PLANNING,
                   new Coordinate(mission.getX(), mission.getY()));
+              Planet target = map.getPlanetNextToCoordinate(
+                  new Coordinate(mission.getX(), mission.getY()));
+              if (target != null) {
+                carryMetal.setTargetPlanet(target.getName());
+              }
               info.getMissions().add(carryMetal);
               break;
             }

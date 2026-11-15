@@ -25,6 +25,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -2475,4 +2477,81 @@ private int increaseHitChanceByComponent() {
     return cost;
   }
 
+  /**
+   * Is certain mission valid for this ship?
+   * @param mission Mission
+   * @return Mission or null
+   */
+  public Mission isValidMissionForShip(final Mission mission) {
+    if (mission == null) {
+      return null;
+    }
+    if (mission.getType() == MissionType.ATTACK
+        && getTotalMilitaryPower() > 0) {
+      return mission;
+    }
+    if ((mission.getType() == MissionType.COLONIZE
+        || mission.getType() == MissionType.SPORE_COLONY)
+        && isColonyModule()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.COLONY_EXPLORE
+        && isColonyModule()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.DEFEND
+        && getTotalMilitaryPower() > 0) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.DEPLOY_STARBASE
+        && isStarBase()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.DESTROY_FLEET
+        && getTotalMilitaryPower() > 0) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.DESTROY_STARBASE
+        && getTotalMilitaryPower() > 0) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.ESPIONAGE_MISSION && isSpyShip()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.EXPLORE && isScoutShip()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.GATHER
+        && getTotalMilitaryPower() > 0) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.INTERCEPT
+        && getTotalMilitaryPower() > 0) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.METAL_FREIGHTING
+        && isTradeShip()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.TRADE_FLEET
+        && isTradeShip()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.MINING && getMiningBonus() > 0) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.PRIVATEER && isPrivateeringShip()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.SPY_MISSION && isSpyShip()) {
+      return mission;
+    }
+    if (mission.getType() == MissionType.DEVOURER_ROAM
+        || mission.getType() == MissionType.ROAM
+        || mission.getType() == MissionType.MOVE
+        || mission.getType() == MissionType.REVEAL_VEINS) {
+      return mission;
+    }
+    return null;
+  }
 }

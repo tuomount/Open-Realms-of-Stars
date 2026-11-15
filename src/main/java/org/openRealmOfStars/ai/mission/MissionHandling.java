@@ -1799,8 +1799,15 @@ public final class MissionHandling {
         return;
       }
       if (mission.getPhase() == MissionPhase.LOADING) {
+        Planet targetPlanet = game.getStarMap().getPlanetByName(
+            mission.getTargetPlanet());
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
+        if (targetPlanet != null) {
+          route = new Route(fleet.getX(), fleet.getY(),
+              targetPlanet.getX(), targetPlanet.getY(),
+              fleet.getFleetFtlSpeed());
+        }
         fleet.setRoute(route);
         // Check if home planet matches mission's building target
         // Building planet is the one where to pick metal.

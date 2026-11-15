@@ -2999,6 +2999,7 @@ public class Planet {
             if (planetOwnerInfo.getMissions() != null) {
               Mission mission = planetOwnerInfo.getMissions()
                   .getMissionForPlanet(getName(), MissionPhase.BUILDING);
+              mission = ship.isValidMissionForShip(mission);
               if (mission == null) {
                 if (ship.isColonyShip()) {
                   mission = planetOwnerInfo.getMissions().getMission(

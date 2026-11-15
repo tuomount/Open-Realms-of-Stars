@@ -716,6 +716,29 @@ public final class DefaultScoring {
   }
 
   /**
+   * Score distance for trade/metal freighting fleets
+   * @param distance Distance
+   * @return score
+   */
+  private static int scoreDistance(final double distance) {
+    if (distance < 5) {
+      return 25;
+    }
+    if (distance < 10) {
+      return 20;
+    }
+    if (distance < 20) {
+      return 15;
+    }
+    if (distance < 25) {
+      return 10;
+    }
+    if (distance < 30) {
+      return 5;
+    }
+    return 0;
+  }
+  /**
    * Score trade ship. Separating this makes easier to do JUnits.
    * @param preScore Pre score from generic ship scoring.
    * @param ship Trade ship to score
@@ -738,7 +761,7 @@ public final class DefaultScoring {
         if (tradePlanet != null) {
           double distance = tradePlanet.getCoordinate().calculateDistance(
               planet.getCoordinate());
-          score = score + (int) Math.round(distance / 25);
+          score = score + scoreDistance(distance);
         }
         if (attitude == Attitude.MERCHANTICAL) {
           score = score + 20;
@@ -766,12 +789,15 @@ public final class DefaultScoring {
       Mission metalMission = info.getMissions().getMission(
           MissionType.METAL_FREIGHTING, MissionPhase.PLANNING);
       if (metalMission != null) {
+        if (score == -1) {
+          score = preScore;
+        }
         Planet metalPlanet = map.getPlanetByName(
             metalMission.getTargetPlanet());
         if (metalPlanet != null) {
           double distance = metalPlanet.getCoordinate().calculateDistance(
               planet.getCoordinate());
-          score += (int) Math.round(distance / 25);
+          score = score + scoreDistance(distance);
 
           // METAL_FREIGHTING scoring logic
           if (attitude == Attitude.MILITARISTIC

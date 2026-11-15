@@ -1368,11 +1368,11 @@ public final class ShipGenerator {
     ShipDesign result = null;
     result = new ShipDesign(hull);
     if (carrier) {
-      result.setName("Freighter Mk"
-            + (player.getShipStatHighestNumber("Freighter Mk") + 1));
-    } else {
       result.setName("Carrier Mk"
           + (player.getShipStatHighestNumber("Carrier Mk") + 1));
+    } else {
+      result.setName("Freighter Mk"
+          + (player.getShipStatHighestNumber("Freighter Mk") + 1));
     }
     ShipComponent engine = ShipComponentFactory
         .createByName(player.getTechList().getFastestFtlEngine()

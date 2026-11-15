@@ -391,10 +391,10 @@ public final class DefaultScoring {
     int reseProd = planet.getTotalProduction(Planet.PRODUCTION_RESEARCH);
     int cultProd = planet.getTotalProduction(Planet.PRODUCTION_CULTURE);
     if (metalProd < 4 && building.getName().equals("Basic mine")) {
-      score = score + 40;
+      score = score + 50;
     }
     if (prodProd < 4 && building.getName().equals("Basic factory")) {
-      score = score + 40;
+      score = score + 50;
     }
     if (metalProd > prodProd) {
       score = score + building.getFactBonus() * 20;

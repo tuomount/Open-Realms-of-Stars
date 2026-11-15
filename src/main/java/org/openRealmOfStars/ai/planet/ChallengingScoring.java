@@ -73,14 +73,14 @@ public final class ChallengingScoring {
             nearFleetLimit);
 
         if (building.getName().equals("Basic factory") && prod < 5) {
-          scores[i] = scores[i] + (50 - prod * 10);
+          scores[i] = scores[i] + (60 - prod * 10);
           if (!planet.hasCertainBuilding("Basic factory")) {
             scores[i] = scores[i] + 10;
           }
         }
         if (building.getName().equals("Basic mine") && metalProd < 5
             && planet.getAmountMetalInGround() > 0) {
-          scores[i] = scores[i] + (40 - metalProd * 10);
+          scores[i] = scores[i] + (50 - metalProd * 10);
           if (!planet.hasCertainBuilding("Basic factory")) {
             scores[i] = scores[i] - 15;
           }

@@ -399,8 +399,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
-    assertEquals(99, scores[3]);
-    assertEquals(99, scores[4]);
+    assertEquals(109, scores[3]);
+    assertEquals(109, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
@@ -410,8 +410,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
-    assertEquals(79, scores[3]);
-    assertEquals(99, scores[4]);
+    assertEquals(89, scores[3]);
+    assertEquals(109, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
     constructions = planet.getProductionList();
@@ -421,8 +421,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
-    assertEquals(99, scores[3]);
-    assertEquals(99, scores[4]);
+    assertEquals(109, scores[3]);
+    assertEquals(109, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
@@ -432,8 +432,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
-    assertEquals(79, scores[3]);
-    assertEquals(99, scores[4]);
+    assertEquals(89, scores[3]);
+    assertEquals(109, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
     constructions = planet.getProductionList();
@@ -443,7 +443,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
-    assertEquals(99, scores[3]);
+    assertEquals(109, scores[3]);
     assertEquals(59, scores[4]);
     assertEquals(-1, scores[6]);
 /*    for (int i = 0; i < constructions.length; i++) {
@@ -499,8 +499,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(119, scores[3]);
-    assertEquals(139, scores[4]);
+    assertEquals(139, scores[3]);
+    assertEquals(159, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab",
@@ -515,8 +515,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(134, scores[3]);
-    assertEquals(19, scores[4]);
+    assertEquals(154, scores[3]);
+    assertEquals(29, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicMine());
@@ -530,8 +530,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(119, scores[3]);
-    assertEquals(119, scores[4]);
+    assertEquals(139, scores[3]);
+    assertEquals(139, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicMine());
@@ -542,8 +542,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(89, scores[3]);
-    assertEquals(119, scores[4]);
+    assertEquals(109, scores[3]);
+    assertEquals(139, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicLab());
@@ -554,8 +554,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(89, scores[3]);
-    assertEquals(119, scores[4]);
+    assertEquals(109, scores[3]);
+    assertEquals(139, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicFactory());
@@ -566,8 +566,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(109, scores[3]);
-    assertEquals(69, scores[4]);
+    assertEquals(129, scores[3]);
+    assertEquals(79, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicMine());
@@ -580,8 +580,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(39, scores[3]);
-    assertEquals(69, scores[4]);
+    assertEquals(49, scores[3]);
+    assertEquals(79, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(79, scores[6]);
     assertEquals(-1, scores[8]);
@@ -600,8 +600,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(49, scores[2]);
-    assertEquals(39, scores[3]);
-    assertEquals(69, scores[4]);
+    assertEquals(49, scores[3]);
+    assertEquals(79, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(113, scores[6]);
     assertEquals(-1, scores[8]);
@@ -719,7 +719,7 @@ public class PlanetHandlingTest extends TestCase {
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
-    assertEquals(99,score);
+    assertEquals(109,score);
   }
 
   @Test
@@ -816,7 +816,7 @@ public class PlanetHandlingTest extends TestCase {
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
-    assertEquals(79, score);
+    assertEquals(89, score);
   }
 
   @Test

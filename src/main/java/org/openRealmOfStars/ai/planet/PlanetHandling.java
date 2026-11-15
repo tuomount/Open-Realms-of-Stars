@@ -542,7 +542,8 @@ public final class PlanetHandling {
         value = scores[i];
         highest = i;
       }
-      if (scores[i] >= HIGH_VALUE_SCORE) {
+      if (scores[i] >= HIGH_VALUE_SCORE
+          && info.getAiDifficulty() != AiDifficulty.WEAK) {
         over400 = true;
       }
     }

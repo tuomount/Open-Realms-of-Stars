@@ -39,7 +39,7 @@ public final class ConstructionFactory {
    * Remember to increase this when new construction is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_CONSTRUCTION = 4;
+  private static final int MAX_CONSTRUCTION = 2;
 
   /**
    * Construction extra credit
@@ -50,15 +50,6 @@ public final class ConstructionFactory {
    * Construction extra culture
    */
   private static final int CONSTRUCTION_EXTRA_CULTURE = 1;
-
-  /**
-   * Construction mechion citizen
-   */
-  private static final int CONSTRUCTION_MECHION_CITIZEN = 2;
-  /**
-   * Construction synthdroid citizen
-   */
-  private static final int CONSTRUCTION_SYNTHDROID_CITIZEN = 3;
 
   /**
    * Create planetary construction with index
@@ -74,22 +65,12 @@ public final class ConstructionFactory {
     case CONSTRUCTION_EXTRA_CULTURE:
       tmp = createConstruction(index);
       break; // Extra culture
-    case CONSTRUCTION_MECHION_CITIZEN:
-      tmp = createConstruction(index);
-      break; // Mechion citizen
-    case CONSTRUCTION_SYNTHDROID_CITIZEN:
-      tmp = createConstruction(index);
-      break; // Synthdroid citizen
     default:
       throw new IllegalArgumentException("Unknown construction: " + index);
     }
     return tmp;
   }
 
-  /**
-   * Mechion citizen construction
-   */
-  public static final String MECHION_CITIZEN = "Mechion citizen";
   /**
    * Extra credit construction
    */
@@ -98,10 +79,6 @@ public final class ConstructionFactory {
    * Extra culture construction
    */
   public static final String EXTRA_CULTURE = "Extra culture";
-  /**
-   * Synthdroid citizen construction
-   */
-  public static final String SYNTHDROID_CITIZEN = "Synthdroid citizen";
 
   /**
    * Create planetary construction with matching name
@@ -140,22 +117,6 @@ public final class ConstructionFactory {
       tmp.setProdCost(10);
       tmp.setMetalCost(0);
       tmp.setDescription("Build extra culture");
-      return tmp;
-    }
-    if (index == CONSTRUCTION_MECHION_CITIZEN) {
-      tmp = new Construction(MECHION_CITIZEN,
-          Icons.ICON_PEOPLE);
-      tmp.setProdCost(20);
-      tmp.setMetalCost(20);
-      tmp.setDescription("Build new mechion citizen");
-      return tmp;
-    }
-    if (index == CONSTRUCTION_SYNTHDROID_CITIZEN) {
-      tmp = new Construction(SYNTHDROID_CITIZEN,
-          Icons.ICON_PEOPLE);
-      tmp.setProdCost(30);
-      tmp.setMetalCost(2);
-      tmp.setDescription("Build new synthdroid citizen");
       return tmp;
     }
     return tmp;

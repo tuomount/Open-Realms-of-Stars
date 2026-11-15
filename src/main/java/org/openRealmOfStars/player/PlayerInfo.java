@@ -1951,7 +1951,8 @@ public class PlayerInfo {
     if (isHuman()) {
       sb.append("Human");
     } else {
-      sb.append("AI");
+      sb.append("AI - ");
+      sb.append(getAiDifficulty().name());
     }
     sb.append("\n");
     sb.append(race.toString());

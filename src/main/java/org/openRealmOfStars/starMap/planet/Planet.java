@@ -2611,10 +2611,6 @@ public class Planet {
     boolean robotsThatEat = false;
     boolean robotThatEatMetal = false;
     boolean robotPlants = false;
-    if (underConstruction.getName()
-        .equals(ConstructionFactory.MECHION_CITIZEN)) {
-      pureRobots = true;
-    }
     if (planetOwnerInfo.getRace().hasTrait(TraitIds.CONSTRUCTED_POP)
         && underConstruction.getName().endsWith(" citizen")) {
       if (planetOwnerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
@@ -2626,10 +2622,6 @@ public class Planet {
       } else {
         robotsThatEat = true;
       }
-    }
-    if (underConstruction.getName()
-        .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
-      robotsThatEat = true;
     }
 
     if (pureRobots || robotPlants) {
@@ -4140,9 +4132,25 @@ public class Planet {
     sb.append(coordinate.getX());
     sb.append(" Y: ");
     sb.append(coordinate.getY());
-    sb.append(" - ");
+    sb.append("\n");
     if (planetOwnerInfo != null) {
       sb.append(planetOwnerInfo.getEmpireName());
+      sb.append(" - ");
+      sb.append(getTotalPopulation());
+      sb.append(" pops");
+      sb.append("\n");
+      sb.append("Food: ");
+      sb.append(getTotalFoodProduction());
+      sb.append(" Metal: ");
+      sb.append(getTotalMetalProduction());
+      sb.append("\nProduction: ");
+      sb.append(getTotalProdProduction());
+      sb.append(" Research: ");
+      sb.append(getTotalResearchProduction());
+      sb.append("\nCredit: ");
+      sb.append(getTotalCreditProduction());
+      sb.append(" Culture: ");
+      sb.append(getTotalCultureProduction());
     } else {
       sb.append("Uncolonized");
     }

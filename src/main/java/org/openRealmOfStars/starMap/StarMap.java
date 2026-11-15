@@ -5266,4 +5266,26 @@ public class StarMap {
     }
     return -1;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(maxX);
+    sb.append(" x ");
+    sb.append(maxY);
+    sb.append(" - ");
+    sb.append(turn);
+    sb.append(" turns\n");
+    sb.append("Planets: ");
+    sb.append(planetList.size());
+    sb.append(" Suns: ");
+    sb.append(sunList.size());
+    sb.append(" Realms: ");
+    sb.append(players.getCurrentMaxRealms());
+    sb.append(" Board realms: ");
+    int board = players.getCurrentMaxPlayers() - players.getCurrentMaxRealms();
+    sb.append(board);
+    sb.append("\n");
+    return sb.toString();
+  }
 }

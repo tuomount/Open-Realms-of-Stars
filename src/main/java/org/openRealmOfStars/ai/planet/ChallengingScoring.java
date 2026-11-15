@@ -29,7 +29,6 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
-import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 
 /** Scoring methods for Challenging AI */
 public final class ChallengingScoring {
@@ -380,10 +379,6 @@ public final class ChallengingScoring {
       }
       if (time > 15 && scores[i] > 0) {
         scores[i] = scores[i] / 2;
-        if (constructions[i].getName()
-            .equals(ConstructionFactory.MECHION_CITIZEN)) {
-          scores[i] = scores[i] / 2;
-        }
       }
       if (scientificAchievement && time >= 30) {
         scores[i] = -1;

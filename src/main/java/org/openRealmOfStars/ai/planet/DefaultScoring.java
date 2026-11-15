@@ -37,7 +37,6 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
-import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 
 /** Scoring methods for Normal AI */
 public final class DefaultScoring {
@@ -335,10 +334,6 @@ public final class DefaultScoring {
       }
       if (time > 15 && scores[i] > 0) {
         scores[i] = scores[i] / 2;
-        if (constructions[i].getName()
-            .equals(ConstructionFactory.MECHION_CITIZEN)) {
-          scores[i] = scores[i] / 2;
-        }
       }
       if (time > 25) {
         scores[i] = -1;
